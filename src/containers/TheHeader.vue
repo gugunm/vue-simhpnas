@@ -18,16 +18,16 @@
 
     <CHeaderNav>
       <CHeaderNavItem class="px-3">
-        <CSelect
+        <!-- <CSelect
           class="mt-3"
           :options="langs"
           :value="locale"
           @update:value="selectLocale"
-        />
+        /> -->
       </CHeaderNavItem>
       <CHeaderNavItem class="px-3">
-        <button 
-          @click="() => $store.commit('toggle', 'darkMode')" 
+        <button
+          @click="() => $store.commit('toggle', 'darkMode')"
           class="c-header-nav-btn"
         >
           <CIcon v-if="$store.state.darkMode" name="cil-sun"/>
@@ -48,7 +48,7 @@
         </button>
       </CHeaderNavItem>
     </CHeaderNav>
- 
+
     <CSubheader class="px-3">
       <CBreadcrumbRouter class="border-0 mb-0"/>
     </CSubheader>

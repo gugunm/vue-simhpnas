@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 // SIMHPNAS
-const FormLhp = () => import('@/views/formLhp/Laporan')
+const FormLhp = () => import('@/views/modules/formLhp/Laporan')
 
 
 // Containers
