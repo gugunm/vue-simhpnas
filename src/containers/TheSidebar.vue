@@ -6,7 +6,7 @@
     @update:show="(value) => $store.commit('set', ['sidebarShow', value])"
   >
     <CSidebarBrand class="d-md-down-none" to="/">
-      <CIcon
+      <!-- <CIcon
         class="c-sidebar-brand-full"
         name="logo"
         size="custom-size"
@@ -19,6 +19,18 @@
         size="custom-size"
         :height="35"
         viewBox="0 0 110 134"
+      /> -->
+      <CImg
+        v-if="!this.$store.state.sidebarMinimize"
+        class="sidebar-logo g-logo-expand"
+        name="logo-expand"
+        src="img/simhp/logo.svg"
+      />
+      <CImg
+        v-if="this.$store.state.sidebarMinimize"
+        class="sidebar-logo-collapse g-logo-expand"
+        name="logo-expand"
+        src="img/simhp/letter-logo.png"
       />
     </CSidebarBrand>
     <CRenderFunction flat :contentToRender="nav"/>
@@ -136,7 +148,7 @@ export default {
     }
   },
   watch: {
-    locale: function(newVal, oldVal) { // watch it
+    locale: function () { //(newVal, oldVal) { // watch it
       this.downloadSidebarData()
     }
   },
@@ -153,3 +165,13 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.sidebar-logo {
+  max-width: 55%;
+}
+
+.sidebar-logo-collapse  {
+  max-width: 35%;
+}
+</style>

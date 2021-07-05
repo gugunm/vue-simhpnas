@@ -11,21 +11,27 @@
       @click="$store.commit('toggleSidebarDesktop')"
     />
     <CHeaderBrand class="mx-auto d-lg-none" to="/">
-      <CIcon name="logo" height="48" alt="Logo"/>
+      <!-- <CIcon name="logo" height="48" alt="Logo"/> -->
+      <CImg
+        class="sidebar-logo g-logo-expand"
+        name="logo-expand"
+        src="img/simhp/logo2.svg"
+        height="48"
+      />
     </CHeaderBrand>
 
     <CMenu/>
 
     <CHeaderNav>
-      <CHeaderNavItem class="px-3">
+      <!-- <CHeaderNavItem class="px-3"> -->
         <!-- <CSelect
           class="mt-3"
           :options="langs"
           :value="locale"
           @update:value="selectLocale"
         /> -->
-      </CHeaderNavItem>
-      <CHeaderNavItem class="px-3">
+      <!-- </CHeaderNavItem> -->
+      <CHeaderNavItem>
         <button
           @click="() => $store.commit('toggle', 'darkMode')"
           class="c-header-nav-btn"
@@ -35,10 +41,10 @@
         </button>
       </CHeaderNavItem>
       <TheHeaderDropdownNotif/>
-      <TheHeaderDropdownTasks/>
-      <TheHeaderDropdownMssgs/>
-      <TheHeaderDropdownAccnt/>
-      <CHeaderNavItem class="px-3">
+      <!-- <TheHeaderDropdownTasks/>
+      <TheHeaderDropdownMssgs/> -->
+      <TheHeaderDropdownAccnt class="pr-4"/>
+      <!-- <CHeaderNavItem class="px-3">
         <button
           in-header
           class="c-header-nav-btn"
@@ -46,7 +52,7 @@
         >
           <CIcon size="lg" name="cil-applications-settings" class="mr-2"/>
         </button>
-      </CHeaderNavItem>
+      </CHeaderNavItem> -->
     </CHeaderNav>
 
     <CSubheader class="px-3">
@@ -58,8 +64,8 @@
 <script>
 import TheHeaderDropdownAccnt from './TheHeaderDropdownAccnt'
 import TheHeaderDropdownNotif from './TheHeaderDropdownNotif'
-import TheHeaderDropdownTasks from './TheHeaderDropdownTasks'
-import TheHeaderDropdownMssgs from './TheHeaderDropdownMssgs'
+// import TheHeaderDropdownTasks from './TheHeaderDropdownTasks'
+// import TheHeaderDropdownMssgs from './TheHeaderDropdownMssgs'
 import CMenu from './Menu'
 import axios from 'axios'
 
@@ -68,8 +74,8 @@ export default {
   components: {
     TheHeaderDropdownAccnt,
     TheHeaderDropdownNotif,
-    TheHeaderDropdownTasks,
-    TheHeaderDropdownMssgs,
+    // TheHeaderDropdownTasks,
+    // TheHeaderDropdownMssgs,
     CMenu
   },
   data: function(){

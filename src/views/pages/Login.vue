@@ -46,7 +46,7 @@
               class="g-logo-collapse mb-3"
               name="logo-collapse"
               size="custom-size"
-              src="img/simhp/logo2.svg"
+              src="img/simhp/logo.svg"
             />
             <p class="c-grey" >Sistem Informasi Manajemen Hasil Pengawasan Nasional</p>
             <!-- <p class="c-grey">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p> -->
@@ -119,12 +119,12 @@ export default {
 }
 
 .login-logo {
-  background-color: #FAFAFB;
+  background-color: #303C50;
   width: inherit;
 }
 
 .c-grey {
-  color: #808080;
+  color: #EAF6FF;
 }
 
 .login-subtitle {

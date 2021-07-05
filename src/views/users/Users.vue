@@ -1,6 +1,6 @@
 <template>
   <CRow>
-    <CCol col="12" xl="8">
+    <CCol col="12" xl="12">
       <transition name="slide">
       <CCard>
         <CCardHeader>
@@ -97,11 +97,11 @@ export default {
     },
     deleteUser ( id ) {
       let self = this;
-      let userId = id;
+      // let userId = id;
       axios.post( this.$apiAdress + '/api/users/' + id + '?token=' + localStorage.getItem("api_token"), {
         _method: 'DELETE'
       })
-      .then(function (response) {
+      .then(function () {
           self.message = 'Successfully deleted user.';
           self.showAlert();
           self.getUsers();

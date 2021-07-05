@@ -1,6 +1,6 @@
 <template>
   <CRow>
-    <CCol col="12" lg="6">
+    <CCol col="12" lg="12">
       <CCard no-header>
         <CCardBody>
           <h3>
@@ -18,7 +18,7 @@
           <h4>User Roles</h4>
           {{ roles }}
           <h4>Name</h4>
-            <p 
+            <p
               v-for="lang in menuLangs"
               v-bind:key="lang.id"
             >
