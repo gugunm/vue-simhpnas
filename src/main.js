@@ -8,7 +8,7 @@ import store from './store'
 import vuexI18n from 'vuex-i18n';
 import Locales from './locale/vue-i18n-locales.generated.js';
 
-Vue.prototype.$apiAdress = 'http://35.193.226.106'
+Vue.prototype.$apiAdress = 'https://35.193.226.106'
 Vue.use(CoreuiVue)
 Vue.use(vuexI18n.plugin, store);
 Vue.i18n.add('en', Locales.en);
