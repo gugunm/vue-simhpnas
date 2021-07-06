@@ -11,10 +11,11 @@
                 <CInput
                   v-model="email"
                   prependHtml="<i class='cui-user'></i>"
-                  placeholder="Username"
-                  autocomplete="username email"
+                  placeholder="Email"
+                  autocomplete="email"
                 >
-                  <template #prepend-content><CIcon name="cil-user"/></template>
+                  <template #prepend-content>@</template>
+                  <!-- <template #prepend-content><CIcon name="cil-user"/></template> -->
                 </CInput>
                 <CInput
                   v-model="password"
@@ -27,13 +28,29 @@
                 </CInput>
                 <CRow>
                   <CCol col="6" class="text-left">
-                    <CButton type="submit" color="primary" class="px-4">Login</CButton>
+                    <CButton type="submit" color="dark" class="px-4">Login</CButton>
                   </CCol>
                   <CCol col="6" class="text-right">
-                    <CButton color="link" class="px-0">Forgot password?</CButton>
-                    <CButton color="link" class="d-md-none" @click="goRegister()">Register now!</CButton>
+                    <!-- <CButton color="link" class="px-0">Forgot password?</CButton> -->
+                    <!-- <CButton color="link" class="d-md-none" @click="goRegister()">Register now!</CButton> -->
                   </CCol>
                 </CRow>
+                  <CAlert
+                  class="mt-3"
+                    v-if="showMessage"
+                    color="danger"
+                    :show.sync="currentAlertCounter"
+                    closeButton
+                  >
+                    {{ message }}
+                    <CProgress
+                      :max="5"
+                      :value="currentAlertCounter"
+                      height="3px"
+                      color="danger"
+                      animate
+                    />
+                  </CAlert>
               </CForm>
             </CCardBody>
           </CCard>
@@ -78,6 +95,7 @@ export default {
       password: '',
       showMessage: false,
       message: '',
+      currentAlertCounter: 0
     }
   },
   methods: {
@@ -86,6 +104,9 @@ export default {
     },
     login() {
       let self = this;
+      self.showMessage = false;
+      self.currentAlertCounter= 5;
+
       axios.post( this.$apiAdress + '/api/login', {
         email: self.email,
         password: self.password,
@@ -97,12 +118,12 @@ export default {
         self.$router.push({ path: 'dashboard' });
       })
       .catch(function (error) {
-        self.message = 'Incorrect E-mail or password';
+        self.message = 'E-mail atau password anda salah!';
         self.showMessage = true;
         console.log(error);
       });
 
-    }
+    },
   }
 }
 
@@ -121,6 +142,10 @@ export default {
 .login-logo {
   background-color: #303C50;
   width: inherit;
+}
+
+.b-grey {
+  background-color: #303C50
 }
 
 .c-grey {
