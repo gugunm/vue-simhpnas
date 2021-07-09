@@ -1,9 +1,25 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-// SIMHPNAS
-const FormLhp = () => import('@/views/modules/formLhp/Laporan')
+// === SIMHPNAS ===
+/* Master */
+const MasterPenyebab = () => import('@/views/masters/mPenyebab/MasterPenyebab')
+const MasterReferensi = () => import('@/views/masters/mReferensi/MasterReferensi')
+const MasterRekomendasi = () => import('@/views/masters/mRekomendasi/MasterRekomendasi')
+const MasterTemuan = () => import('@/views/masters/mTemuan/MasterTemuan')
+const MasterTindakLanjut = () => import('@/views/masters/mTindakLanjut/MasterTindakLanjut')
+const MasterUnitKerja = () => import('@/views/masters/mUnitKerja/MasterUnitKerja')
+const MasterUserUnitKerja = () => import('@/views/masters/mUserUnitKerja/MasterUserUnitKerja')
+const MasterUserUtama = () => import('@/views/masters/mUserUtama/MasterUserUtama')
 
+/* Modules */
+const FormLhp = () => import('@/views/modules/formLhp/Laporan')
+const FormPelaku = () => import('@/views/modules/formPelaku/Pelaku')
+const FormPenyebab = () => import('@/views/modules/formPenyebab/Penyebab')
+const FormRekomendasi = () => import('@/views/modules/formRekomendasi/Rekomendasi')
+const FormTemuan = () => import('@/views/modules/formTemuan/Temuan')
+const FormTimAudit = () => import('@/views/modules/formTimAudit/TimAudit')
+const FormTindakLanjut = () => import('@/views/modules/formTindakLanjut/TindakLanjut')
 
 // Containers
 const TheContainer = () => import('@/containers/TheContainer')
@@ -154,6 +170,10 @@ router.beforeEach((to, from, next) => {
   if(to.matched.some(record => record.meta.requiresAdmin)) {
     if(roles != null && roles.indexOf('admin') >= 0 ){
       next()
+      // next({
+      //   path: '/login',
+      //   params: { nextUrl: to.fullPath }
+      // })
     }else{
       next({
         path: '/login',
@@ -184,10 +204,77 @@ function configRoutes () {
       name: 'Home',
       component: TheContainer,
       meta:{
-        requiresUser: true
+        requiresUser: true,
       },
       children: [
         // SIMHPNAS
+        /* Master */
+        {
+          path: 'master-penyebab',
+          name: 'Master Penyebab',
+          component: MasterPenyebab,
+          meta:{
+            requiresUser: true
+          }
+        },
+        {
+          path: 'master-referensi',
+          name: 'Master Referensi',
+          component: MasterReferensi,
+          meta:{
+            requiresUser: true
+          }
+        },
+        {
+          path: 'master-rekomendasi',
+          name: 'Master Rekomendasi',
+          component: MasterRekomendasi,
+          meta:{
+            requiresUser: true
+          }
+        },
+        {
+          path: 'master-temuan',
+          name: 'Master Temuan',
+          component: MasterTemuan,
+          meta:{
+            requiresUser: true
+          }
+        },
+        {
+          path: 'master-tindak-lanjut',
+          name: 'Master Tindak Lanjut',
+          component: MasterTindakLanjut,
+          meta:{
+            requiresUser: true
+          }
+        },
+        {
+          path: 'master-unit-kerja',
+          name: 'Master Unit Kerja',
+          component: MasterUnitKerja,
+          meta:{
+            requiresUser: true
+          }
+        },
+        {
+          path: 'master-user-unit-kerja',
+          name: 'Master User Unit Kerja',
+          component: MasterUserUnitKerja,
+          meta:{
+            requiresUser: true
+          }
+        },
+        {
+          path: 'master-user-utama',
+          name: 'Master User Utama',
+          component: MasterUserUtama,
+          meta:{
+            requiresUser: true
+          }
+        },
+
+        /* Modules */
         {
           path: 'lhp',
           name: 'Data LHP',
@@ -196,6 +283,55 @@ function configRoutes () {
             requiresUser: true
           }
         },
+        {
+          path: 'pelaku',
+          name: 'Pelaku',
+          component: FormPelaku,
+          meta:{
+            requiresUser: true
+          }
+        },
+        {
+          path: 'penyebab',
+          name: 'Penyebab',
+          component: FormPenyebab,
+          meta:{
+            requiresUser: true
+          }
+        },
+        {
+          path: 'rekomendasi',
+          name: 'Rekomendasi',
+          component: FormRekomendasi,
+          meta:{
+            requiresUser: true
+          }
+        },
+        {
+          path: 'temuan',
+          name: 'Temuan',
+          component: FormTemuan,
+          meta:{
+            requiresUser: true
+          }
+        },
+        {
+          path: 'tim-audit',
+          name: 'TimAudit',
+          component: FormTimAudit,
+          meta:{
+            requiresUser: true
+          }
+        },
+        {
+          path: 'tindak-lanjut',
+          name: 'Tindak Lanjut',
+          component: FormTindakLanjut,
+          meta:{
+            requiresUser: true
+          }
+        },
+
         // ========
         {
           path: 'media',
@@ -209,9 +345,9 @@ function configRoutes () {
           path: 'dashboard',
           name: 'Dashboard',
           component: Dashboard,
-          // meta:{
-          //   requiresUser: true
-          // }
+          meta:{
+            requiresUser: true
+          }
         },
         {
           path: 'colors',
