@@ -13,7 +13,7 @@ const MasterUserUnitKerja = () => import('@/views/masters/mUserUnitKerja/MasterU
 const MasterUserUtama = () => import('@/views/masters/mUserUtama/MasterUserUtama')
 
 /* Modules */
-const FormLhp = () => import('@/views/modules/formLhp/Laporan')
+const FormLha = () => import('@/views/modules/formLha/Laporan')
 const FormPelaku = () => import('@/views/modules/formPelaku/Pelaku')
 const FormPenyebab = () => import('@/views/modules/formPenyebab/Penyebab')
 const FormRekomendasi = () => import('@/views/modules/formRekomendasi/Rekomendasi')
@@ -276,9 +276,9 @@ function configRoutes () {
 
         /* Modules */
         {
-          path: 'lhp',
-          name: 'Data LHP',
-          component: FormLhp,
+          path: 'lha',
+          name: 'Data LHA',
+          component: FormLha,
           meta:{
             requiresUser: true
           }
