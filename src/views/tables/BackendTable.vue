@@ -1,10 +1,10 @@
 <template>
   <CCardBody>
-    This example simulates data passed lazily from backend.<br><br> 
-    <!-- 
+    This example simulates data passed lazily from backend.<br><br>
+    <!--
       This example simulates data passed lazily from backend.
       This example might be connected to backend, for items lazy loading.
-      To integrate with backend delete second CDataTable and implement 
+      To integrate with backend delete second CDataTable and implement
       API request in onTableChange() method
       -->
     <CDataTable
@@ -65,7 +65,7 @@ export default {
   },
   computed: {
     reloadParams () {
-      return [  
+      return [
         this.sorterValue,
         this.columnFilterValue,
         this.tableFilterValue,
