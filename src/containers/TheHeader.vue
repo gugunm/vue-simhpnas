@@ -3,14 +3,17 @@
     <CToggler
       in-header
       class="ml-3 d-lg-none"
-      @click="$store.commit('toggleSidebarMobile')"
+      @click="$store.commit('ui/toggleSidebarMobile')"
     />
     <CToggler
       in-header
       class="ml-3 d-md-down-none"
-      @click="$store.commit('toggleSidebarDesktop')"
+      @click="$store.commit('ui/toggleSidebarDesktop')"
     />
-    <CHeaderBrand class="mx-auto d-lg-none" to="/">
+    <CHeaderBrand
+      class="mx-auto d-lg-none"
+      to="/"
+    >
       <!-- <CIcon name="logo" height="48" alt="Logo"/> -->
       <CImg
         class="sidebar-logo g-logo-expand"
@@ -20,11 +23,11 @@
       />
     </CHeaderBrand>
 
-    <CMenu/>
+    <CMenu />
 
     <CHeaderNav>
       <!-- <CHeaderNavItem class="px-3"> -->
-        <!-- <CSelect
+      <!-- <CSelect
           class="mt-3"
           :options="langs"
           :value="locale"
@@ -33,17 +36,23 @@
       <!-- </CHeaderNavItem> -->
       <CHeaderNavItem>
         <button
-          @click="() => $store.commit('toggle', 'darkMode')"
           class="c-header-nav-btn"
+          @click="() => $store.commit('ui/toggle', 'darkMode')"
         >
-          <CIcon v-if="$store.state.darkMode" name="cil-sun"/>
-          <CIcon v-else name="cil-moon"/>
+          <CIcon
+            v-if="$store.state.ui.darkMode"
+            name="cil-sun"
+          />
+          <CIcon
+            v-else
+            name="cil-moon"
+          />
         </button>
       </CHeaderNavItem>
-      <TheHeaderDropdownNotif/>
+      <TheHeaderDropdownNotif />
       <!-- <TheHeaderDropdownTasks/>
       <TheHeaderDropdownMssgs/> -->
-      <TheHeaderDropdownAccnt class="pr-4"/>
+      <TheHeaderDropdownAccnt class="pr-4" />
       <!-- <CHeaderNavItem class="px-3">
         <button
           in-header
@@ -56,7 +65,7 @@
     </CHeaderNav>
 
     <CSubheader class="px-3">
-      <CBreadcrumbRouter class="border-0 mb-0"/>
+      <CBreadcrumbRouter class="border-0 mb-0" />
     </CSubheader>
   </CHeader>
 </template>
@@ -84,14 +93,6 @@ export default {
       locale: 'en',
     }
   },
-  methods:{
-    selectLocale: function(option){
-      localStorage.setItem("locale", option)
-      this.$i18n.set( option )
-      //location.reload()
-      this.$emit('change-locale', option)
-    }
-  },
   mounted () {
     let self = this;
     if(typeof localStorage.locale !== 'undefined'){
@@ -110,6 +111,14 @@ export default {
       console.log(error)
       self.$router.push({ path: '/login' })
     });
+  },
+  methods:{
+    selectLocale: function(option){
+      localStorage.setItem("locale", option)
+      this.$i18n.set( option )
+      //location.reload()
+      this.$emit('change-locale', option)
+    }
   }
 }
 </script>

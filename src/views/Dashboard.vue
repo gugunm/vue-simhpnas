@@ -1,37 +1,56 @@
 <template>
   <div>
-    <WidgetsDropdown/>
+    <WidgetsDropdown />
     <CCard>
       <CCardBody>
         <CRow>
           <CCol sm="5">
-            <h4 id="traffic" class="card-title mb-0">{{ $t('dashboard.Traffic') }}</h4>
-            <div class="small text-muted">{{ $t('dashboard.september') }} 2017</div>
+            <h4
+              id="traffic"
+              class="card-title mb-0"
+            >
+              {{ $t('dashboard.Traffic') }}
+            </h4>
+            <div class="small text-muted">
+              {{ $t('dashboard.september') }} 2017
+            </div>
           </CCol>
-          <CCol sm="7" class="d-none d-md-block">
-            <CButton color="primary" class="float-right">
-              <CIcon name="cil-cloud-download"/>
+          <CCol
+            sm="7"
+            class="d-none d-md-block"
+          >
+            <CButton
+              color="primary"
+              class="float-right"
+            >
+              <CIcon name="cil-cloud-download" />
             </CButton>
             <CButtonGroup class="float-right mr-3">
               <CButton
-                color="outline-secondary"
                 v-for="(value, key) in [$t('dashboard.day'), $t('dashboard.month'), $t('dashboard.year')]"
                 :key="key"
+                color="outline-secondary"
                 class="mx-0"
                 :pressed="value === selected ? true : false"
                 @click="selected = value"
               >
-                {{value}}
+                {{ value }}
               </CButton>
             </CButtonGroup>
           </CCol>
         </CRow>
-        <MainChartExample style="height:300px;margin-top:40px;"/>
+        <MainChartExample style="height:300px;margin-top:40px;" />
       </CCardBody>
       <CCardFooter>
         <CRow class="text-center">
-          <CCol md sm="12" class="mb-sm-2 mb-0">
-            <div class="text-muted">{{ $t('dashboard.visits') }}</div>
+          <CCol
+            md
+            sm="12"
+            class="mb-sm-2 mb-0"
+          >
+            <div class="text-muted">
+              {{ $t('dashboard.visits') }}
+            </div>
             <strong>29.703 {{ $t('dashboard.users') }} (40%)</strong>
             <CProgress
               class="progress-xs mt-2"
@@ -40,8 +59,14 @@
               :value="40"
             />
           </CCol>
-          <CCol md sm="12" class="mb-sm-2 mb-0 d-md-down-none">
-            <div class="text-muted">{{ $t('dashboard.unique') }}</div>
+          <CCol
+            md
+            sm="12"
+            class="mb-sm-2 mb-0 d-md-down-none"
+          >
+            <div class="text-muted">
+              {{ $t('dashboard.unique') }}
+            </div>
             <strong>24.093 {{ $t('dashboard.users') }} (20%)</strong>
             <CProgress
               class="progress-xs mt-2"
@@ -50,8 +75,14 @@
               :value="20"
             />
           </CCol>
-          <CCol md sm="12" class="mb-sm-2 mb-0">
-            <div class="text-muted">{{ $t('dashboard.pageviews') }}</div>
+          <CCol
+            md
+            sm="12"
+            class="mb-sm-2 mb-0"
+          >
+            <div class="text-muted">
+              {{ $t('dashboard.pageviews') }}
+            </div>
             <strong>78.706 {{ $t('dashboard.visits') }} (60%)</strong>
             <CProgress
               class="progress-xs mt-2"
@@ -60,8 +91,14 @@
               :value="60"
             />
           </CCol>
-          <CCol md sm="12" class="mb-sm-2 mb-0">
-            <div class="text-muted">{{ $t('dashboard.new_users') }}</div>
+          <CCol
+            md
+            sm="12"
+            class="mb-sm-2 mb-0"
+          >
+            <div class="text-muted">
+              {{ $t('dashboard.new_users') }}
+            </div>
             <strong>22.123 {{ $t('dashboard.users') }} (80%)</strong>
             <CProgress
               class="progress-xs mt-2"
@@ -70,8 +107,14 @@
               :value="80"
             />
           </CCol>
-          <CCol md sm="12" class="mb-sm-2 mb-0 d-md-down-none">
-            <div class="text-muted">{{ $t('dashboard.bounce_rate') }}</div>
+          <CCol
+            md
+            sm="12"
+            class="mb-sm-2 mb-0 d-md-down-none"
+          >
+            <div class="text-muted">
+              {{ $t('dashboard.bounce_rate') }}
+            </div>
             <strong>{{ $t('dashboard.bounce_rate') }} (40.15%)</strong>
             <CProgress
               class="progress-xs mt-2"
@@ -82,7 +125,7 @@
         </CRow>
       </CCardFooter>
     </CCard>
-    <WidgetsBrand/>
+    <WidgetsBrand />
     <CRow>
       <CCol md="12">
         <CCard>
@@ -91,7 +134,10 @@
           </CCardHeader>
           <CCardBody>
             <CRow>
-              <CCol sm="12" lg="6">
+              <CCol
+                sm="12"
+                lg="6"
+              >
                 <CRow>
                   <CCol sm="6">
                     <CCallout color="info">
@@ -242,15 +288,24 @@
                 </div>
                 <div class="legend text-center">
                   <small>
-                    <sup><CBadge shape="pill" color="info">&nbsp;</CBadge></sup>
+                    <sup><CBadge
+                      shape="pill"
+                      color="info"
+                    >&nbsp;</CBadge></sup>
                     {{ $t('dashboard.new_clients') }}
                     &nbsp;&nbsp;
-                    <sup><CBadge shape="pill" color="danger">&nbsp;</CBadge></sup>
+                    <sup><CBadge
+                      shape="pill"
+                      color="danger"
+                    >&nbsp;</CBadge></sup>
                     {{ $t('dashboard.recurring_clients') }}
                   </small>
                 </div>
               </CCol>
-              <CCol sm="12" lg="6">
+              <CCol
+                sm="12"
+                lg="6"
+              >
                 <CRow>
                   <CCol sm="6">
                     <CCallout color="warning">
@@ -269,7 +324,10 @@
                 <ul class="horizontal-bars type-2">
                   <div class="progress-group">
                     <div class="progress-group-header">
-                      <CIcon name="cil-user" class="progress-group-icon"/>
+                      <CIcon
+                        name="cil-user"
+                        class="progress-group-icon"
+                      />
                       <span class="title">{{ $t('dashboard.male') }}</span>
                       <span class="ml-auto font-weight-bold">43%</span>
                     </div>
@@ -283,7 +341,10 @@
                   </div>
                   <div class="progress-group mb-5">
                     <div class="progress-group-header">
-                      <CIcon name="cil-user-female" class="progress-group-icon"/>
+                      <CIcon
+                        name="cil-user-female"
+                        class="progress-group-icon"
+                      />
                       <span class="title">{{ $t('dashboard.female') }}</span>
                       <span class="ml-auto font-weight-bold">37%</span>
                     </div>
@@ -297,7 +358,10 @@
                   </div>
                   <div class="progress-group">
                     <div class="progress-group-header">
-                      <CIcon name="cil-globe-alt" class="progress-group-icon"/>
+                      <CIcon
+                        name="cil-globe-alt"
+                        class="progress-group-icon"
+                      />
                       <span class="title">{{ $t('dashboard.organic_search') }}</span>
                       <span class="ml-auto font-weight-bold">
                         191,235<span class="text-muted small">(56%)</span>
@@ -372,14 +436,18 @@
                     </div>
                   </div>
                   <div class="divider text-center">
-                    <CButton color="link" size="sm" class="text-muted">
-                      <CIcon name="cil-options"/>
+                    <CButton
+                      color="link"
+                      size="sm"
+                      class="text-muted"
+                    >
+                      <CIcon name="cil-options" />
                     </CButton>
                   </div>
                 </ul>
               </CCol>
             </CRow>
-            <br/>
+            <br>
             <CDataTable
               class="mb-0 table-outline"
               hover
@@ -388,22 +456,33 @@
               head-color="light"
               no-sorting
             >
-              <td slot="avatar" class="text-center" slot-scope="{item}">
+              <td
+                slot="avatar"
+                slot-scope="{item}"
+                class="text-center"
+              >
                 <div class="c-avatar">
-                  <img :src="item.avatar.url" class="c-avatar-img" alt="">
+                  <img
+                    :src="item.avatar.url"
+                    class="c-avatar-img"
+                    alt=""
+                  >
                   <span
                     class="c-avatar-status"
                     :class="`bg-${item.avatar.status || 'secondary'}`"
-                  ></span>
+                  />
                 </div>
               </td>
-              <td slot="user" slot-scope="{item}">
-                <div>{{item.user.name}}</div>
+              <td
+                slot="user"
+                slot-scope="{item}"
+              >
+                <div>{{ item.user.name }}</div>
                 <div class="small text-muted">
                   <span>
                     <template v-if="item.user.new">{{ $t('dashboard.new') }}</template>
                     <template v-else>{{ $t('dashboard.recurring') }}</template>
-                  </span> | {{ $t('dashboard.registered') }} : {{item.user.registered}}
+                  </span> | {{ $t('dashboard.registered') }} : {{ item.user.registered }}
                 </div>
               </td>
               <td
@@ -416,18 +495,21 @@
                   height="25"
                 />
               </td>
-              <td slot="usage" slot-scope="{item}">
+              <td
+                slot="usage"
+                slot-scope="{item}"
+              >
                 <div class="clearfix">
                   <div class="float-left">
-                    <strong>{{item.usage.value}}%</strong>
+                    <strong>{{ item.usage.value }}%</strong>
                   </div>
                   <div class="float-right">
-                    <small class="text-muted">{{item.usage.period}}</small>
+                    <small class="text-muted">{{ item.usage.period }}</small>
                   </div>
                 </div>
                 <CProgress
-                  class="progress-xs"
                   v-model="item.usage.value"
+                  class="progress-xs"
                   :color="color(item.usage.value)"
                 />
               </td>
@@ -441,9 +523,14 @@
                   height="25"
                 />
               </td>
-              <td slot="activity" slot-scope="{item}">
-                <div class="small text-muted">{{ $t('dashboard.last_login') }}</div>
-                <strong>{{item.activity}}</strong>
+              <td
+                slot="activity"
+                slot-scope="{item}"
+              >
+                <div class="small text-muted">
+                  {{ $t('dashboard.last_login') }}
+                </div>
+                <strong>{{ item.activity }}</strong>
               </td>
             </CDataTable>
           </CCardBody>

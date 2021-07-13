@@ -3,9 +3,12 @@
     :minimize="minimize"
     unfoldable
     :show="show"
-    @update:show="(value) => $store.commit('set', ['sidebarShow', value])"
+    @update:show="(value) => $store.commit('ui/set', ['sidebarShow', value])"
   >
-    <CSidebarBrand class="d-md-down-none" to="/">
+    <CSidebarBrand
+      class="d-md-down-none"
+      to="/"
+    >
       <!-- <CIcon
         class="c-sidebar-brand-full"
         name="logo"
@@ -21,22 +24,25 @@
         viewBox="0 0 110 134"
       /> -->
       <CImg
-        v-if="!this.$store.state.sidebarMinimize"
+        v-if="!this.$store.state.ui.sidebarMinimize"
         class="sidebar-logo g-logo-expand"
         name="logo-expand"
         src="img/simhp/logo.svg"
       />
       <CImg
-        v-if="this.$store.state.sidebarMinimize"
+        v-if="this.$store.state.ui.sidebarMinimize"
         class="sidebar-logo-collapse g-logo-expand"
         name="logo-expand"
         src="img/simhp/letter-logo.png"
       />
     </CSidebarBrand>
-    <CRenderFunction flat :contentToRender="nav"/>
+    <CRenderFunction
+      flat
+      :content-to-render="nav"
+    />
     <CSidebarMinimizer
       class="c-d-md-down-none"
-      @click.native="$store.commit('toggle', 'sidebarMinimize')"
+      @click.native="$store.commit('ui/toggle', 'sidebarMinimize')"
     />
   </CSidebar>
 </template>
@@ -57,11 +63,28 @@ export default {
   },
   computed: {
     show () {
-      return this.$store.state.sidebarShow
+      return this.$store.state.ui.sidebarShow
     },
     minimize () {
-      return this.$store.state.sidebarMinimize
+      // console.log(this.$store.getters['auth/token']);
+      return this.$store.state.ui.sidebarMinimize
     }
+  },
+  watch: {
+    locale: function () { //(newVal, oldVal) { // watch it
+      this.downloadSidebarData()
+    }
+  },
+  mounted () {
+    this.$root.$on('toggle-sidebar', () => {
+      const sidebarOpened = this.show === true || this.show === 'responsive'
+      this.show = sidebarOpened ? false : 'responsive'
+    })
+    this.$root.$on('toggle-sidebar-mobile', () => {
+      const sidebarClosed = this.show === 'responsive' || this.show === false
+      this.show = sidebarClosed ? true : 'responsive'
+    })
+    this.downloadSidebarData()
   },
   methods: {
     dropdown(data){
@@ -146,22 +169,6 @@ export default {
         self.$router.push({ path: '/login' })
       });
     }
-  },
-  watch: {
-    locale: function () { //(newVal, oldVal) { // watch it
-      this.downloadSidebarData()
-    }
-  },
-  mounted () {
-    this.$root.$on('toggle-sidebar', () => {
-      const sidebarOpened = this.show === true || this.show === 'responsive'
-      this.show = sidebarOpened ? false : 'responsive'
-    })
-    this.$root.$on('toggle-sidebar-mobile', () => {
-      const sidebarClosed = this.show === 'responsive' || this.show === false
-      this.show = sidebarClosed ? true : 'responsive'
-    })
-    this.downloadSidebarData()
   }
 }
 </script>

@@ -5,52 +5,73 @@
         <CCardGroup>
           <CCard class="p-4">
             <CCardBody>
-              <CForm @submit.prevent="login" method="POST">
+              <CForm
+                method="POST"
+                @submit.prevent="login"
+              >
                 <h1>Login</h1>
-                <p class="text-muted">Sign In to your account</p>
+                <p class="text-muted">
+                  Sign In to your account
+                </p>
                 <CInput
                   v-model="email"
-                  prependHtml="<i class='cui-user'></i>"
+                  prepend-html="<i class='cui-user'></i>"
                   placeholder="Email"
                   autocomplete="email"
                 >
-                  <template #prepend-content>@</template>
+                  <template #prepend-content>
+                    @
+                  </template>
                   <!-- <template #prepend-content><CIcon name="cil-user"/></template> -->
                 </CInput>
                 <CInput
                   v-model="password"
-                  prependHtml="<i class='cui-lock-locked'></i>"
+                  prepend-html="<i class='cui-lock-locked'></i>"
                   placeholder="Password"
                   type="password"
                   autocomplete="curent-password"
                 >
-                  <template #prepend-content><CIcon name="cil-lock-locked"/></template>
+                  <template #prepend-content>
+                    <CIcon name="cil-lock-locked" />
+                  </template>
                 </CInput>
                 <CRow>
-                  <CCol col="6" class="text-left">
-                    <CButton type="submit" color="dark" class="px-4">Login</CButton>
+                  <CCol
+                    col="6"
+                    class="text-left"
+                  >
+                    <CButton
+                      type="submit"
+                      color="dark"
+                      class="px-4"
+                    >
+                      Login
+                    </CButton>
                   </CCol>
-                  <CCol col="6" class="text-right">
+                  <CCol
+                    col="6"
+                    class="text-right"
+                  >
                     <!-- <CButton color="link" class="px-0">Forgot password?</CButton> -->
                     <!-- <CButton color="link" class="d-md-none" @click="goRegister()">Register now!</CButton> -->
                   </CCol>
                 </CRow>
-                  <CAlert
+                <CAlert
+                  v-if="showMessage"
                   class="mt-3"
-                    v-if="showMessage"
+                  color="danger"
+                  :show.sync="currentAlertCounter"
+                  close-button
+                >
+                  {{ message }}
+                  <CProgress
+                    :max="5"
+                    :value="currentAlertCounter"
+                    height="3px"
                     color="danger"
-                    :show.sync="currentAlertCounter"
-                    closeButton
-                  >
-                    {{ message }}
-                    <CProgress
-                      :max="5"
-                      :value="currentAlertCounter"
-                      height="3px"
-                      color="danger"
-                      animate
-                    />
-                  </CAlert>
+                    animate
+                  />
+                </CAlert>
               </CForm>
             </CCardBody>
           </CCard>
@@ -65,7 +86,9 @@
               size="custom-size"
               src="img/simhp/logo.svg"
             />
-            <p class="c-grey" >Sistem Informasi Manajemen Hasil Pengawasan Nasional</p>
+            <p class="c-grey">
+              Sistem Informasi Manajemen Hasil Pengawasan Nasional
+            </p>
             <!-- <p class="c-grey">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p> -->
             <!-- <CButton
               color="primary"

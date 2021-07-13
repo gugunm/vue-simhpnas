@@ -1,6 +1,9 @@
 <template>
   <CRow>
-    <CCol col="12" lg="6">
+    <CCol
+      col="12"
+      lg="6"
+    >
       <CCard no-header>
         <CCardBody>
           <h3>
@@ -11,78 +14,93 @@
             color="primary"
             fade
           >
-            ({{dismissCountDown}}) {{ message }}
+            ({{ dismissCountDown }}) {{ message }}
           </CAlert>
-            <CSelect
-              label="Menu"
-              :value.sync="menuelement.menu"
-              :plain="true"
-              :options="menulist"
-              @update:value="updateSelectParent()"
-            >
-            </CSelect>
-            <p>Roles</p>
-            <div class="m-3">
-              <CInputCheckbox
-                  v-for="rol in role"
-                  :key="rol"
-                  :label="rol"
-                  name="selectRoles"
-                  @update:checked="selectRadioSelectRole(rol)"
-              />
-            </div>
+          <CSelect
+            label="Menu"
+            :value.sync="menuelement.menu"
+            :plain="true"
+            :options="menulist"
+            @update:value="updateSelectParent()"
+          />
+          <p>Roles</p>
+          <div class="m-3">
+            <CInputCheckbox
+              v-for="rol in role"
+              :key="rol"
+              :label="rol"
+              name="selectRoles"
+              @update:checked="selectRadioSelectRole(rol)"
+            />
+          </div>
 
 
 
-            <p>Name</p>
+          <p>Name</p>
+          <CInput
+            v-for="lang in langs"
+            :key="lang.id"
+            :label="lang.name"
+            type="text"
+            :placeholder="lang.name"
+            @change="(state) => changeLang(state, lang.short_name)"
+          />
+
+
+
+
+
+          <CSelect
+            label="Type"
+            :value.sync="menuelement.type"
+            :plain="true"
+            :options="types"
+            @update:value="changeType()"
+          />
+          <p>Other</p>
+          <div v-if="divHref">
             <CInput
-              v-for="lang in langs"
-              v-bind:key="lang.id"
-              @change="(state) => changeLang(state, lang.short_name)"
-              :label="lang.name"
+              v-model="menuelement.href"
+              label="Href"
               type="text"
-              :placeholder="lang.name"
-            >
-            </CInput>
-
-
-
-
-
+              placeholder="Href"
+            />
+          </div>
+          <div v-if="divDropdownParent">
             <CSelect
-              label="Type"
-              :value.sync="menuelement.type"
+              label="Dropdown parent"
+              :value.sync="menuelement.parent"
               :plain="true"
-              :options="types"
-              @update:value="changeType()"
+              :options="parents"
+            />
+          </div>
+          <div v-if="divIcon">
+            Icon - Find icon class in:
+            <a
+              href="https://coreui.io/docs/icons/icons-list/#coreui-icons-free-502-icons"
+              target="_blank"
             >
-            </CSelect>
-            <p>Other</p>
-            <div v-if="divHref">
-              <CInput label="Href" type="text" placeholder="Href" v-model="menuelement.href"></CInput>
-            </div>
-            <div v-if="divDropdownParent">
-              <CSelect
-                label="Dropdown parent"
-                :value.sync="menuelement.parent"
-                :plain="true"
-                :options="parents"
-              >
-              </CSelect>
-            </div>
-            <div v-if="divIcon">
-              Icon - Find icon class in:
-              <a
-                href="https://coreui.io/docs/icons/icons-list/#coreui-icons-free-502-icons"
-                target="_blank"
-              >
-                CoreUI icons documentation
-              </a>
-              <br>
-              <CInput type="text" placeholder="CoreUI Icon class - example: cil-bell" v-model="menuelement.icon"></CInput>
-            </div>
-          <CButton color="primary" @click="store()">Create</CButton>
-          <CButton color="primary" @click="goBack">Back</CButton>
+              CoreUI icons documentation
+            </a>
+            <br>
+            <CInput
+              v-model="menuelement.icon"
+              type="text"
+              placeholder="CoreUI Icon class - example: cil-bell"
+            />
+          </div>
+          <CButton
+            color="primary"
+            @click="store()"
+          >
+            Create
+          </CButton>
+          <CButton
+            color="primary"
+            @click="goBack"
+          >
+            Back
+          </CButton>
         </CCardBody>
       </CCard>
     </CCol>
@@ -121,6 +139,12 @@ export default {
         divDropdownParent: false,
         divIcon: false,
     }
+  },
+  mounted: function(){
+    this.getData()
+    this.menuelement.menu = this.$route.params.menu
+    this.updateSelectParent()
+    this.changeType()
   },
   methods: {
     goBack() {
@@ -182,7 +206,7 @@ export default {
             if(error.response.data.message == 'The given data was invalid.'){
               self.message = '';
               for (let key in error.response.data.errors) {
-                if (error.response.data.errors.hasOwnProperty.call(key)) {
+                if (error.response.data.errors.hasOwnProperty(key)) {
                   self.message += error.response.data.errors[key][0] + '  ';
                 }
               }
@@ -214,12 +238,6 @@ export default {
         self.$router.push({ path: '/login' });
       });
     }
-  },
-  mounted: function(){
-    this.getData()
-    this.menuelement.menu = this.$route.params.menu
-    this.updateSelectParent()
-    this.changeType()
   }
 }
 

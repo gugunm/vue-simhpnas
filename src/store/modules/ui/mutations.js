@@ -1,15 +1,4 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-Vue.use(Vuex)
-
-const state = {
-  sidebarShow: 'responsive',
-  sidebarMinimize: false,
-  asideShow: false,
-  darkMode: false
-}
-
-const mutations = {
+export default {
   toggleSidebarDesktop (state) {
     const sidebarOpened = [true, 'responsive'].includes(state.sidebarShow)
     state.sidebarShow = sidebarOpened ? false : 'responsive'
@@ -24,9 +13,4 @@ const mutations = {
   toggle (state, variable) {
     state[variable] = !state[variable]
   }
-}
-
-export default new Vuex.Store({
-  state,
-  mutations
-})
+};

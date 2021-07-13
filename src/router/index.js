@@ -170,10 +170,6 @@ router.beforeEach((to, from, next) => {
   if(to.matched.some(record => record.meta.requiresAdmin)) {
     if(roles != null && roles.indexOf('admin') >= 0 ){
       next()
-      // next({
-      //   path: '/login',
-      //   params: { nextUrl: to.fullPath }
-      // })
     }else{
       next({
         path: '/login',
@@ -204,7 +200,7 @@ function configRoutes () {
       name: 'Home',
       component: TheContainer,
       meta:{
-        requiresUser: true,
+        requiresUser: true
       },
       children: [
         // SIMHPNAS

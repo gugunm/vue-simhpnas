@@ -1,18 +1,21 @@
 <template>
-  <div class="c-app" :class="{ 'c-dark-theme': $store.state.darkMode }">
-    <TheSidebar :locale="locale"/>
-    <TheAside/>
+  <div
+    class="c-app"
+    :class="{ 'c-dark-theme': $store.state.ui.darkMode }"
+  >
+    <TheSidebar :locale="locale" />
+    <TheAside />
     <CWrapper>
-      <TheHeader v-on:change-locale="changeLocale"/>
+      <TheHeader @change-locale="changeLocale" />
       <div class="c-body">
         <main class="c-main">
           <CContainer fluid>
             <transition name="fade">
-              <router-view></router-view>
+              <router-view />
             </transition>
           </CContainer>
         </main>
-        <TheFooter/>
+        <TheFooter />
       </div>
     </CWrapper>
   </div>
