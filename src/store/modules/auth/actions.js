@@ -1,4 +1,3 @@
-import qs from 'qs';
 import axios from 'axios';
 
 let timer;
@@ -7,7 +6,7 @@ export default {
   async login(context, payload) {
     return context.dispatch('auth', {
       ...payload,
-      mode: 'login'
+      // mode: 'login'
     });
   },
   async signup(context, payload) {
@@ -17,44 +16,18 @@ export default {
     });
   },
   async auth(context, payload) {
-    const mode = payload.mode;
-    // let url =
-    //   'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBvOcmh_Avvu08bFdUHdmJzA06c6vV4h0E';
-
-    let url = 'https://map.bpkp.go.id/api/v3/login'
-
-    if (mode === 'signup') {
-      url =
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBvOcmh_Avvu08bFdUHdmJzA06c6vV4h0E';
-    }
-
-    // const response = await fetch(url, {
-    //   method: 'POST',
-    //   body: JSON.stringify({
-    //     "username": payload.username,
-    //     "password": payload.password,
-    //     "kelas_user": 0
-    //     // returnSecureToken: true
-    //   }),
-    //   headers: {
-    //     'content-type': 'application/x-www-form-urlencoded'
-    //   }
-    // });
+    let url = payload.endpoint
 
     const response = await axios({
       method: 'POST',
       url: url,
-      data: qs.stringify({
-        "username": payload.username,
-        "password": payload.password,
-        "kelas_user": 0
-      }),
-      headers: {
-        'content-type': 'application/x-www-form-urlencoded'
+      data: {
+        email: payload.email,
+        password: payload.password
       }
     })
 
-    const responseData = await  response.data;
+    const responseData = await response.data;
 
     if (response.status != 200) {
       const error = new Error(
@@ -63,16 +36,13 @@ export default {
       throw error;
     }
 
-    // ini kalo api nya ngasih property expiresIn
-    // const expiresIn = +responseData.expiresIn * 1000;
-
     // expire login dalam 1 jam
-    const expiresIn = 3600000;
+    const expiresIn = responseData.expires_in * 1000;
+    // const expiresIn = 10000;
     const expirationDate = new Date().getTime() + expiresIn;
-    
-    localStorage.setItem('token', responseData.api_token);
-    localStorage.setItem('userId', responseData.message.user_nip);
-    localStorage.setItem('imageLink', responseData.broadcast.images);
+
+    localStorage.setItem('api_token', responseData.access_token);
+    localStorage.setItem('roles', responseData.roles);
     localStorage.setItem('tokenExpiration', expirationDate);
 
     timer = setTimeout(function() {
@@ -80,15 +50,13 @@ export default {
     }, expiresIn);
 
     context.commit('setUser', {
-      token: responseData.api_token,
-      userId: responseData.message.user_nip,
-      imageLink: responseData.broadcast.images
+      token: responseData.access_token,
+      roles: responseData.roles
     });
   },
   tryLogin(context) {
-    const token = localStorage.getItem('token');
-    const userId = localStorage.getItem('userId');
-    const imageLink = localStorage.getItem('imageLink');
+    const token = localStorage.getItem('api_token');
+    const roles = localStorage.getItem('roles');
     const tokenExpiration = localStorage.getItem('tokenExpiration');
 
     const expiresIn = +tokenExpiration - new Date().getTime();
@@ -101,26 +69,23 @@ export default {
       context.dispatch('autoLogout');
     }, expiresIn);
 
-    if (token && userId && imageLink) {
+    if (token) {
       context.commit('setUser', {
-        token: token,
-        userId: userId,
-        imageLink: imageLink
+        token: api_token,
+        roles
       });
     }
   },
   logout(context) {
-    localStorage.removeItem('token');
-    localStorage.removeItem('userId');
-    localStorage.removeItem('imageLink');
+    localStorage.removeItem('api_token');
+    localStorage.removeItem('roles');
     localStorage.removeItem('tokenExpiration');
 
     clearTimeout(timer);
 
     context.commit('setUser', {
       token: null,
-      userId: null,
-      imageLink: null
+      roles: null
     });
   },
   autoLogout(context) {

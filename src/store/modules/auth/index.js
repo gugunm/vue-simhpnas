@@ -5,10 +5,8 @@ import getters from './getters.js';
 export default {
   namespaced: true,
   state: () => ({
-    userId: null,
     token: null,
-    imageLink: null,
-    didAutoLogout: false
+    roles: null
   }),
   mutations,
   actions,

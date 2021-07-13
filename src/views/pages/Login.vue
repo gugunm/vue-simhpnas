@@ -7,7 +7,7 @@
             <CCardBody>
               <CForm
                 method="POST"
-                @submit.prevent="login"
+                @submit.prevent="submitForm"
               >
                 <h1>Login</h1>
                 <p class="text-muted">
@@ -118,7 +118,9 @@ export default {
       password: '',
       showMessage: false,
       message: '',
-      currentAlertCounter: 0
+      currentAlertCounter: 0,
+      mode: 'login',
+      error: null
     }
   },
   methods: {
@@ -136,7 +138,7 @@ export default {
       }).then(function (response) {
         self.email = '';
         self.password = '';
-        localStorage.setItem("api_token", response.data.access_token);
+        localStorage.setItem('api_token', response.data.access_token);
         localStorage.setItem('roles', response.data.roles);
         self.$router.push({ path: 'dashboard' });
       })
@@ -146,6 +148,29 @@ export default {
         console.log(error);
       });
 
+    },
+    async submitForm() {
+      let self = this;
+      self.showMessage = false;
+      self.currentAlertCounter= 5;
+
+      const actionPayload = {
+        email: self.email,
+        password: self.password,
+        endpoint: this.$apiAdress + '/api/login'
+      };
+
+      try {
+        await this.$store.dispatch('auth/login', actionPayload);
+        self.email = '';
+        self.password = '';
+        this.$router.push({ path: 'dashboard' });
+      } catch (err) {
+        self.message = 'E-mail atau password anda salah!';
+        self.showMessage = true;
+        self.error = err.message || 'Failed to authenticate, try later.';
+        console.log(error);
+      }
     },
   }
 }
