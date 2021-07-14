@@ -156,8 +156,7 @@ export default {
 
       const actionPayload = {
         email: self.email,
-        password: self.password,
-        endpoint: this.$apiAdress + '/api/login'
+        password: self.password
       };
 
       try {

@@ -4,10 +4,12 @@ Vue.use(Vuex)
 
 import auth from './modules/auth/index';
 import ui from './modules/ui/index';
+import unit_kerja from './modules/unit_kerja/index';
 
 export default new Vuex.Store({
   modules: {
     ui,
-    auth
+    auth,
+    unit_kerja
   }
 })

@@ -8,7 +8,9 @@ import { iconsSet as icons } from './assets/icons/icons.js'
 import vuexI18n from 'vuex-i18n';
 import Locales from './locale/vue-i18n-locales.generated.js';
 
-Vue.prototype.$apiAdress = 'http://10.10.20.43:8001'
+import { API_URL } from './utils/api.js';
+
+Vue.prototype.$apiAdress = API_URL
 Vue.use(CoreuiVue)
 Vue.use(vuexI18n.plugin, store);
 Vue.i18n.add('en', Locales.en);

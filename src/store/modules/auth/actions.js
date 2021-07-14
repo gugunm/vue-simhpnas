@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { API_URL } from '../../../utils/api.js'
 
 let timer;
 
@@ -16,11 +17,9 @@ export default {
     });
   },
   async auth(context, payload) {
-    let url = payload.endpoint
-
     const response = await axios({
       method: 'POST',
-      url: url,
+      url: API_URL + '/api/login',
       data: {
         email: payload.email,
         password: payload.password
