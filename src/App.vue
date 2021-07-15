@@ -20,9 +20,9 @@ export default {
       }
     }
   },
-  // created() {
-  //   this.$store.dispatch('auth/tryLogin');
-  // }
+  created() {
+    this.$store.dispatch('auth/tryLogin');
+  }
 }
 </script>
 

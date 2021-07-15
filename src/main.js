@@ -10,6 +10,12 @@ import Locales from './locale/vue-i18n-locales.generated.js';
 
 import { API_URL } from './utils/api.js';
 
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+library.add(fas)
+Vue.component('font-awesome-icon', FontAwesomeIcon);
+
 Vue.prototype.$apiAdress = API_URL
 Vue.use(CoreuiVue)
 Vue.use(vuexI18n.plugin, store);

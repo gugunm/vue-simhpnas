@@ -70,7 +70,7 @@ export default {
 
     if (token) {
       context.commit('setUser', {
-        token: api_token,
+        token,
         roles
       });
     }
