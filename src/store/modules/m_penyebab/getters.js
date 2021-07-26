@@ -1,9 +1,9 @@
 export default {
-  unitKerja(state) {
-    return state.unitKerja;
+  penyebab(state) {
+    return state.penyebab;
   },
-  hasUnitKerja(state) {
-    return state.unitKerja && state.unitKerja.length > 0;
+  hasPenyebab(state) {
+    return state.penyebab && state.penyebab.length > 0;
   },
   shouldUpdate(state) {
     const lastFetch = state.lastFetch;

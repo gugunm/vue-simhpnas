@@ -1,9 +1,9 @@
 export default {
-  unitKerja(state) {
-    return state.unitKerja;
+  jenisTemuan(state) {
+    return state.jenisTemuan;
   },
-  hasUnitKerja(state) {
-    return state.unitKerja && state.unitKerja.length > 0;
+  hasJenisTemuan(state) {
+    return state.jenisTemuan && state.jenisTemuan.length > 0;
   },
   shouldUpdate(state) {
     const lastFetch = state.lastFetch;

@@ -160,6 +160,11 @@
           </CForm>
         </CCardBody>
       </template>
+      <footer>
+        <modal-footer>
+          <button>OKEE</button>
+        </modal-footer>
+      </footer>
     </CModal>
   </div>
 </template>

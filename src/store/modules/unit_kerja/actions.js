@@ -25,18 +25,18 @@ export default {
 
     for (const key in responseData) {
       const uk = {
-        id: responseData[key]["ID"],
-        namaUnit: responseData[key]["Nama Unit"],
-        namaPimpinan: responseData[key]["Nama Pimpinan"],
-        nipPimpinan: responseData[key]["NIP Pimpinan"],
+        id: responseData[key]["Kode_Unit_Obrik"],
+        namaUnit: responseData[key]["Nama_Unit"],
+        namaPimpinan: responseData[key]["Nama_Pimpinan"],
+        nipPimpinan: responseData[key]["NIP_Pimpinan"],
         alamat: responseData[key]["Alamat"],
         provinsi: responseData[key]["Provinsi"],
-        kabkot: responseData[key]["Kabupaten/ Kota"],
+        kabkot: responseData[key]["Kabupaten_kota"],
         kecamatan: responseData[key]["Kecamatan"],
         kelurahan: responseData[key]["Kelurahan"],
-        jumlahObrik: responseData[key]["Jumlah Obrik"],
-        jumlahObrikBersih: responseData[key]["Jumlah Obrik Bersih"],
-        telpon: responseData[key]["Telpon"],
+        jumlahObrik: responseData[key]["Jumlah_Obrik"],
+        jumlahObrikBersih: responseData[key]["Jumlah_Obrik_Bersih"],
+        telpon: responseData[key]["telpon"],
       };
       unitKerja.push(uk);
     }
