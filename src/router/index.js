@@ -6,7 +6,11 @@ import Router from 'vue-router'
 const MasterPenyebab = () => import('@/views/masters/mPenyebab/MasterPenyebab')
 const MasterReferensi = () => import('@/views/masters/mReferensi/MasterReferensi')
 const MasterRekomendasi = () => import('@/views/masters/mRekomendasi/MasterRekomendasi')
+
 const MasterTemuan = () => import('@/views/masters/mTemuan/MasterTemuan')
+const MasterKlpTemuan = () => import('@/views/masters/mTemuan/MasterKlpTemuan')
+const MasterSubKlpTemuan = () => import('@/views/masters/mTemuan/MasterSubKlpTemuan')
+
 const MasterTindakLanjut = () => import('@/views/masters/mTindakLanjut/MasterTindakLanjut')
 const MasterUnitKerja = () => import('@/views/masters/mUnitKerja/MasterUnitKerja')
 const MasterUserUnitKerja = () => import('@/views/masters/mUserUnitKerja/MasterUserUnitKerja')
@@ -236,6 +240,24 @@ function configRoutes () {
           meta:{
             requiresUser: true
           }
+        },
+        {
+          path: 'master-kelompok-temuan/:idJenisTemuan',
+          name: 'mkelompoktemuan',
+          component: MasterKlpTemuan,
+          meta:{
+            requiresUser: true
+          },
+          props: true
+        },
+        {
+          path: 'master-sub-kelompok-temuan/:idKlpTemuan',
+          name: 'msubkelompoktemuan',
+          component: MasterSubKlpTemuan,
+          meta:{
+            requiresUser: true
+          },
+          props: true
         },
         {
           path: 'master-tindak-lanjut',

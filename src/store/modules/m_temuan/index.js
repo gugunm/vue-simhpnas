@@ -8,6 +8,8 @@ export default {
     return {
       lastFetch: null,
       jenisTemuan: [],
+      kelompokTemuan: [],
+      subKelompokTemuan: [],
     };
   },
   mutations,

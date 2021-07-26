@@ -5,6 +5,18 @@ export default {
   hasJenisTemuan(state) {
     return state.jenisTemuan && state.jenisTemuan.length > 0;
   },
+  kelompokTemuan(state) {
+    return state.kelompokTemuan;
+  },
+  hasKelompokTemuan(state) {
+    return state.kelompokTemuan && state.kelompokTemuan.length > 0;
+  },
+  subKelompokTemuan(state) {
+    return state.subKelompokTemuan;
+  },
+  hasSubKelompokTemuan(state) {
+    return state.subKelompokTemuan && state.subKelompokTemuan.length > 0;
+  },
   shouldUpdate(state) {
     const lastFetch = state.lastFetch;
     if (!lastFetch) {

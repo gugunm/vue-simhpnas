@@ -7,7 +7,7 @@
         sm="12"
       >
         <h4 class="my-0 mt-1">
-          Master Jenis Temuan
+          Master Kelompok Temuan {{ idJenisTemuan }}
         </h4>
       </CCol>
       <CCol
@@ -23,7 +23,7 @@
             name="cil-plus"
             size="lg"
             class="my-0 mb-1 mr-2"
-          />Tambah Jenis Temuan
+          />Tambah Kelompok Temuan
         </CButton>
       </CCol>
     </CRow>
@@ -40,7 +40,7 @@
           sorter
           pagination
           clickable-rows
-          @row-clicked="showDetailTemuan"
+          @row-clicked="showDetailKlpTemuan"
         >
           <!-- <template #actions="{item}"> -->
           <template #actions>
@@ -69,6 +69,16 @@
         </CDataTable>
       </CCardBody>
     </CCard>
+    <CButton
+      color="primary"
+      class="mb-3"
+      @click="$router.go(-1)"
+    >
+      <font-awesome-icon
+        class="mr-1"
+        :icon="['fas', 'chevron-left']"
+      /> Kembali
+    </CButton>
   </div>
 </template>
 
@@ -91,36 +101,44 @@ const fields = [
 
 export default {
   name: 'AdvancedTables',
+  props: {
+    idJenisTemuan: {
+      type: String,
+      default: '0'
+    }
+  },
   data () {
     return {
-      jenisTemuan: null,
+      kelompokTemuan: null,
       fields,
       selectedItem: null
     }
   },
   computed: {
     items() {
-      return this.jenisTemuan ? this.jenisTemuan.map((item, idx) => { return {...item, idx}}) : [];
+      return this.kelompokTemuan ? this.kelompokTemuan.map((item, idx) => { return {...item, idx}}) : [];
     }
   },
   created () {
-    this.loadJenisTemuan();
+    this.loadKelompokTemuan();
   },
   methods: {
-    async loadJenisTemuan(refresh = false) {
+    async loadKelompokTemuan(refresh = false) {
       this.loading = true;
       try {
-        await this.$store.dispatch('m_temuan/loadJenisTemuan', {
+        await this.$store.dispatch('m_temuan/loadKelompokTemuan', {
+          idJenisTemuan: this.idJenisTemuan,
           forceRefresh: refresh,
         });
-        this.jenisTemuan = this.$store.getters['m_temuan/jenisTemuan'];
+        this.kelompokTemuan = this.$store.getters['m_temuan/kelompokTemuan'];
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
       this.loading = false;
     },
-    showDetailTemuan(item) {
-      this.$router.push({ name: 'mkelompoktemuan', params: { idJenisTemuan: item.id } })
+    showDetailKlpTemuan(item) {
+      console.log(item)
+      this.$router.push({ name: 'msubkelompoktemuan', params: { idKlpTemuan: item.id } })
     }
   }
 }
