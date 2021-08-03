@@ -141,10 +141,10 @@ export default {
     async loadUnitKerja(refresh = false) {
       this.loading = true;
       try {
-        await this.$store.dispatch('unit_kerja/loadUnitKerja', {
+        await this.$store.dispatch('m_unit_kerja/loadUnitKerja', {
           forceRefresh: refresh,
         });
-        this.unitKerja = this.$store.getters['unit_kerja/unitKerja'];
+        this.unitKerja = this.$store.getters['m_unit_kerja/unitKerja'];
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }

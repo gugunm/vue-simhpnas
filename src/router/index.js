@@ -3,10 +3,19 @@ import Router from 'vue-router'
 
 // === SIMHPNAS ===
 /* Master */
-const MasterPenyebab = () => import('@/views/masters/mPenyebab/MasterPenyebab')
+const MasterPenyebab = () => import('@/views/masters/mPenyebab')
+const MasterRekomendasi = () => import('@/views/masters/mRekomendasi')
+const MasterTindakLanjut = () => import('@/views/masters/mTindakLanjut')
+const MasterUnitKerja = () => import('@/views/masters/mUnitKerja')
+const MasterUserUnitKerja = () => import('@/views/masters/mUserUnitKerja')
+const MasterUserUtama = () => import('@/views/masters/mUserUtama')
 
 // master referensi
-const MasterRefWilayah = () => import('@/views/masters/mReferensi/refWilayah')
+const MasterRefWilayah = () => import('@/views/masters/mReferensi/refWilayah/provinsi')
+const MasterRefWilayahKabkot = () => import('@/views/masters/mReferensi/refWilayah/kabkot')
+const MasterRefWilayahKecamatan = () => import('@/views/masters/mReferensi/refWilayah/kecamatan')
+const MasterRefWilayahKelurahan = () => import('@/views/masters/mReferensi/refWilayah/kelurahan')
+
 const MasterRefObrik = () => import('@/views/masters/mReferensi/refObrik')
 const MasterRefLingkupAudit = () => import('@/views/masters/mReferensi/refLingkupAudit')
 const MasterRefJabatan = () => import('@/views/masters/mReferensi/refJabatan')
@@ -14,25 +23,19 @@ const MasterRefJenisAnggaran = () => import('@/views/masters/mReferensi/refJenis
 const MasterRefJenisObrik = () => import('@/views/masters/mReferensi/refJenisObrik')
 const MasterRefUnitAudit = () => import('@/views/masters/mReferensi/refUnitAudit')
 
-const MasterRekomendasi = () => import('@/views/masters/mRekomendasi/MasterRekomendasi')
-
-const MasterTemuan = () => import('@/views/masters/mTemuan/MasterTemuan')
-const MasterKlpTemuan = () => import('@/views/masters/mTemuan/MasterKlpTemuan')
-const MasterSubKlpTemuan = () => import('@/views/masters/mTemuan/MasterSubKlpTemuan')
-
-const MasterTindakLanjut = () => import('@/views/masters/mTindakLanjut/MasterTindakLanjut')
-const MasterUnitKerja = () => import('@/views/masters/mUnitKerja/MasterUnitKerja')
-const MasterUserUnitKerja = () => import('@/views/masters/mUserUnitKerja/MasterUserUnitKerja')
-const MasterUserUtama = () => import('@/views/masters/mUserUtama/MasterUserUtama')
+// master temuan
+const MasterTemuan = () => import('@/views/masters/mTemuan/jenisTemuan')
+const MasterKlpTemuan = () => import('@/views/masters/mTemuan/klpTemuan')
+const MasterSubKlpTemuan = () => import('@/views/masters/mTemuan/subKlpTemuan')
 
 /* Modules */
-const FormLha = () => import('@/views/modules/formLha/Laporan')
-const FormPelaku = () => import('@/views/modules/formPelaku/Pelaku')
-const FormPenyebab = () => import('@/views/modules/formPenyebab/Penyebab')
-const FormRekomendasi = () => import('@/views/modules/formRekomendasi/Rekomendasi')
-const FormTemuan = () => import('@/views/modules/formTemuan/Temuan')
-const FormTimAudit = () => import('@/views/modules/formTimAudit/TimAudit')
-const FormTindakLanjut = () => import('@/views/modules/formTindakLanjut/TindakLanjut')
+const FormLha = () => import('@/views/modules/formLha')
+const FormPelaku = () => import('@/views/modules/formPelaku')
+const FormPenyebab = () => import('@/views/modules/formPenyebab')
+const FormRekomendasi = () => import('@/views/modules/formRekomendasi')
+const FormTemuan = () => import('@/views/modules/formTemuan')
+const FormTimAudit = () => import('@/views/modules/formTimAudit')
+const FormTindakLanjut = () => import('@/views/modules/formTindakLanjut')
 
 // Containers
 const TheContainer = () => import('@/containers/TheContainer')
@@ -238,11 +241,51 @@ function configRoutes () {
           children: [
             {
               path: 'wilayah',
-              name: 'master-ref-wilayah',
-              component: MasterRefWilayah,
-              meta:{
-                requiresUser: true
-              }
+              component: {
+                render (c) { return c('router-view') }
+              },
+              children: [
+                // MasterRefWilayah
+                {
+                  path: '/',
+                  name: 'master-ref-wilayah',
+                  component: MasterRefWilayah,
+                  meta:{
+                    requiresUser: true
+                  },
+                  props: true
+                },
+                // MasterRefWilayahKabkot
+                {
+                  path: 'provinsi/:idProvinsi',
+                  name: 'master-ref-wilayah-provinsi',
+                  component: MasterRefWilayahKabkot,
+                  meta:{
+                    requiresUser: true
+                  },
+                  props: true
+                },
+                // MasterRefWilayahKecamatan
+                {
+                  path: 'kabkot/:idKabkot',
+                  name: 'master-ref-wilayah-kabkot',
+                  component: MasterRefWilayahKecamatan,
+                  meta:{
+                    requiresUser: true
+                  },
+                  props: true
+                },
+                // MasterRefWilayahKelurahan
+                {
+                  path: 'kecamatan/:idKecamatan',
+                  name: 'master-ref-wilayah-kecamatan',
+                  component: MasterRefWilayahKelurahan,
+                  meta:{
+                    requiresUser: true
+                  },
+                  props: true
+                },
+              ]
             },
             {
               path: 'obrik',
