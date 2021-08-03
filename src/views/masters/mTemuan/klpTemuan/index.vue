@@ -7,7 +7,7 @@
         sm="12"
       >
         <h4 class="my-0 mt-1">
-          Master Kelompok Temuan {{ idJenisTemuan }}
+          Master Kelompok Temuan
         </h4>
       </CCol>
       <CCol
