@@ -7,7 +7,7 @@
         sm="12"
       >
         <h4 class="my-0 mt-1">
-          Data Kelurahan di Kec. {{ deskripsi }}
+          Master Referensi Unit Obrik
         </h4>
       </CCol>
       <CCol
@@ -23,7 +23,7 @@
             name="cil-plus"
             size="lg"
             class="my-0 mb-1 mr-2"
-          />Tambah Kecamatan
+          />Tambah Unit Obrik
         </CButton>
       </CCol>
     </CRow>
@@ -39,6 +39,8 @@
           hover
           sorter
           pagination
+          clickable-rows
+          @row-clicked="showDetailUnitObrik"
         >
           <!-- <template #actions="{item}"> -->
           <template #actions>
@@ -67,16 +69,6 @@
         </CDataTable>
       </CCardBody>
     </CCard>
-    <CButton
-      color="primary"
-      class="mb-3"
-      @click="$router.go(-1)"
-    >
-      <font-awesome-icon
-        class="mr-1"
-        :icon="['fas', 'chevron-left']"
-      /> Kembali
-    </CButton>
   </div>
 </template>
 
@@ -84,7 +76,7 @@
 const fields = [
   {
     key: 'id',
-    label: 'ID Kelurahan',
+    label: 'ID Unit Obrik',
     _style: "width: 15%"
   },
   {
@@ -99,44 +91,36 @@ const fields = [
 
 export default {
   name: 'AdvancedTables',
-  props: {
-    idKecamatan: {
-      type: String,
-      default: '0'
-    },
-    deskripsi: {
-      type: String,
-      default: '0'
-    }
-  },
   data () {
     return {
-      refKelurahan: null,
+      refUnitObrik: null,
       fields,
       selectedItem: null
     }
   },
   computed: {
     items() {
-      return this.refKelurahan ? this.refKelurahan.map((item, idx) => { return {...item, idx}}) : [];
+      return this.refUnitObrik ? this.refUnitObrik.map((item, idx) => { return {...item, idx}}) : [];
     }
   },
   created () {
-    this.loadRefKelurahan();
+    this.loadRefUnitObrik();
   },
   methods: {
-    async loadRefKelurahan(refresh = false) {
+    async loadRefUnitObrik(refresh = false) {
       this.loading = true;
       try {
-        await this.$store.dispatch('m_ref_wilayah/loadRefKelurahan', {
-          idKecamatan: this.idKecamatan,
+        await this.$store.dispatch('m_ref_unit_obrik/loadRefUnitObrik', {
           forceRefresh: refresh,
         });
-        this.refKelurahan = this.$store.getters['m_ref_wilayah/refKelurahan'];
+        this.refUnitObrik = this.$store.getters['m_ref_unit_obrik/refUnitObrik'];
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
       this.loading = false;
+    },
+    showDetailUnitObrik(item) {
+      this.$router.push({ name: 'master-ref-bidang-obrik', params: { idUnitObrik: item.id, deskripsi: item.deskripsi } })
     }
   }
 }

@@ -3,16 +3,16 @@
     <CRow class="px-3">
       <CCol
         class="px-0"
-        lg="6"
+        lg="8"
         sm="12"
       >
-        <h4 class="my-0 mt-1">
-          Data Kelurahan di Kec. {{ deskripsi }}
+        <h4 class="my-0 mb-3">
+          Bidang Obrik pada {{ descUnitObrik }}
         </h4>
       </CCol>
       <CCol
         class="px-0 text-right"
-        lg="6"
+        lg="4"
         sm="12"
       >
         <CButton
@@ -23,7 +23,7 @@
             name="cil-plus"
             size="lg"
             class="my-0 mb-1 mr-2"
-          />Tambah Kecamatan
+          />Tambah Bidang Obrik
         </CButton>
       </CCol>
     </CRow>
@@ -39,6 +39,8 @@
           hover
           sorter
           pagination
+          clickable-rows
+          @row-clicked="showDetailBidangObrik"
         >
           <!-- <template #actions="{item}"> -->
           <template #actions>
@@ -81,10 +83,13 @@
 </template>
 
 <script>
+import axios from 'axios';
+import { API_URL } from '@/utils/api.js';
+
 const fields = [
   {
     key: 'id',
-    label: 'ID Kelurahan',
+    label: 'ID KabKot',
     _style: "width: 15%"
   },
   {
@@ -100,43 +105,63 @@ const fields = [
 export default {
   name: 'AdvancedTables',
   props: {
-    idKecamatan: {
-      type: String,
-      default: '0'
-    },
-    deskripsi: {
+    idUnitObrik: {
       type: String,
       default: '0'
     }
   },
   data () {
     return {
-      refKelurahan: null,
+      refBidangObrik: null,
+      descUnitObrik: null,
       fields,
-      selectedItem: null
+      selectedItem: null,
     }
   },
   computed: {
     items() {
-      return this.refKelurahan ? this.refKelurahan.map((item, idx) => { return {...item, idx}}) : [];
+      return this.refBidangObrik ? this.refBidangObrik.map((item, idx) => { return {...item, idx}}) : [];
     }
   },
   created () {
-    this.loadRefKelurahan();
+    this.loadRefBidangObrik();
+    this.loadDescUnitObrik();
   },
   methods: {
-    async loadRefKelurahan(refresh = false) {
+    async loadRefBidangObrik(refresh = false) {
       this.loading = true;
       try {
-        await this.$store.dispatch('m_ref_wilayah/loadRefKelurahan', {
-          idKecamatan: this.idKecamatan,
+        await this.$store.dispatch('m_ref_unit_obrik/loadRefBidangObrik', {
+          idUnitObrik: this.idUnitObrik,
           forceRefresh: refresh,
         });
-        this.refKelurahan = this.$store.getters['m_ref_wilayah/refKelurahan'];
+        this.refBidangObrik = this.$store.getters['m_ref_unit_obrik/refBidangObrik'];
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
       this.loading = false;
+    },
+    showDetailBidangObrik(item) {
+      this.$router.push({ name: 'master-ref-sub-bidang-obrik', params: { idBidangObrik: item.id, deskripsi: item.deskripsi } })
+    },
+    async loadDescUnitObrik(){
+      const response = await axios({
+        method: 'GET',
+        baseURL: API_URL,
+        url: `/api/unitobrik/${this.idUnitObrik}`,
+        params: {
+          token: localStorage.getItem('api_token')
+        },
+      })
+
+      if (response.status != 200) {
+        const error = new Error(
+          responseData.message || 'Failed to fetch data unit kerja.'
+        );
+        throw error;
+      }
+
+      this.descUnitObrik = await response.data.diskripsi
     }
   }
 }

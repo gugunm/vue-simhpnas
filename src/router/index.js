@@ -16,7 +16,10 @@ const MasterRefWilayahKabkot = () => import('@/views/masters/mReferensi/refWilay
 const MasterRefWilayahKecamatan = () => import('@/views/masters/mReferensi/refWilayah/kecamatan')
 const MasterRefWilayahKelurahan = () => import('@/views/masters/mReferensi/refWilayah/kelurahan')
 
-const MasterRefObrik = () => import('@/views/masters/mReferensi/refObrik')
+const MasterRefUnitObrik = () => import('@/views/masters/mReferensi/refObrik/unitObrik')
+const MasterRefBidangObrik = () => import('@/views/masters/mReferensi/refObrik/bidangObrik')
+const MasterRefSubBidangObrik = () => import('@/views/masters/mReferensi/refObrik/subBidangObrik')
+
 const MasterRefLingkupAudit = () => import('@/views/masters/mReferensi/refLingkupAudit')
 const MasterRefJabatan = () => import('@/views/masters/mReferensi/refJabatan')
 const MasterRefJenisAnggaran = () => import('@/views/masters/mReferensi/refJenisAnggaran')
@@ -253,7 +256,6 @@ function configRoutes () {
                   meta:{
                     requiresUser: true
                   },
-                  props: true
                 },
                 // MasterRefWilayahKabkot
                 {
@@ -289,11 +291,40 @@ function configRoutes () {
             },
             {
               path: 'obrik',
-              name: 'master-ref-obrik',
-              component: MasterRefObrik,
-              meta:{
-                requiresUser: true
-              }
+              component: {
+                render (c) { return c('router-view') }
+              },
+              children: [
+                // Master Ref Obrik
+                {
+                  path: '/',
+                  name: 'master-ref-obrik',
+                  component: MasterRefUnitObrik,
+                  meta:{
+                    requiresUser: true
+                  },
+                },
+                // Master Ref Bidang Obrik
+                {
+                  path: 'bidang-obrik/:idUnitObrik',
+                  name: 'master-ref-bidang-obrik',
+                  component: MasterRefBidangObrik,
+                  meta:{
+                    requiresUser: true
+                  },
+                  props: true
+                },
+                // Master Ref Sub Bidang Obrik
+                {
+                  path: 'sub-bidang-obrik/:idBidangObrik',
+                  name: 'master-ref-sub-bidang-obrik',
+                  component: MasterRefSubBidangObrik,
+                  meta:{
+                    requiresUser: true
+                  },
+                  props: true
+                },
+              ]
             },
             {
               path: 'lingkup-audit',

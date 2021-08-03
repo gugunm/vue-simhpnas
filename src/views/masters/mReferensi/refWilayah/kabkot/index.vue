@@ -7,7 +7,7 @@
         sm="12"
       >
         <h4 class="my-0 mt-1">
-          Master {{ deskripsi }}
+          Kab./Kota di {{ descProvinsi }}
         </h4>
       </CCol>
       <CCol
@@ -83,6 +83,9 @@
 </template>
 
 <script>
+import axios from 'axios';
+import { API_URL } from '@/utils/api.js';
+
 const fields = [
   {
     key: 'id',
@@ -105,15 +108,12 @@ export default {
     idProvinsi: {
       type: String,
       default: '0'
-    },
-    deskripsi: {
-      type: String,
-      default: '0'
     }
   },
   data () {
     return {
       refKabkot: null,
+      descProvinsi: null,
       fields,
       selectedItem: null
     }
@@ -125,6 +125,7 @@ export default {
   },
   created () {
     this.loadRefKabkot();
+    this.loadDescProvinsi();
   },
   methods: {
     async loadRefKabkot(refresh = false) {
@@ -142,6 +143,25 @@ export default {
     },
     showDetailKabkot(item) {
       this.$router.push({ name: 'master-ref-wilayah-kabkot', params: { idKabkot: item.id, deskripsi: item.deskripsi } })
+    },
+    async loadDescProvinsi() {
+      const response = await axios({
+        method: 'GET',
+        baseURL: API_URL,
+        url: `/api/provinsi/${this.idProvinsi}`,
+        params: {
+          token: localStorage.getItem('api_token')
+        },
+      })
+
+      if (response.status != 200) {
+        const error = new Error(
+          responseData.message || 'Failed to fetch data unit kerja.'
+        );
+        throw error;
+      }
+
+      this.descProvinsi = await response.data.diskripsi
     }
   }
 }

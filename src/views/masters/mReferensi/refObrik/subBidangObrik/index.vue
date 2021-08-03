@@ -3,16 +3,16 @@
     <CRow class="px-3">
       <CCol
         class="px-0"
-        lg="6"
+        lg="8"
         sm="12"
       >
-        <h4 class="my-0 mt-1">
-          Data Kelurahan di Kec. {{ deskripsi }}
+        <h4 class="my-0 mb-3">
+          Sub Bidang Obrik pada {{ deskripsi }}
         </h4>
       </CCol>
       <CCol
         class="px-0 text-right"
-        lg="6"
+        lg="4"
         sm="12"
       >
         <CButton
@@ -23,7 +23,7 @@
             name="cil-plus"
             size="lg"
             class="my-0 mb-1 mr-2"
-          />Tambah Kecamatan
+          />Tambah Sub Bidang Obrik
         </CButton>
       </CCol>
     </CRow>
@@ -84,7 +84,7 @@
 const fields = [
   {
     key: 'id',
-    label: 'ID Kelurahan',
+    label: 'ID KabKot',
     _style: "width: 15%"
   },
   {
@@ -100,7 +100,7 @@ const fields = [
 export default {
   name: 'AdvancedTables',
   props: {
-    idKecamatan: {
+    idBidangObrik: {
       type: String,
       default: '0'
     },
@@ -111,28 +111,28 @@ export default {
   },
   data () {
     return {
-      refKelurahan: null,
+      refSubBidangObrik: null,
       fields,
       selectedItem: null
     }
   },
   computed: {
     items() {
-      return this.refKelurahan ? this.refKelurahan.map((item, idx) => { return {...item, idx}}) : [];
+      return this.refSubBidangObrik ? this.refSubBidangObrik.map((item, idx) => { return {...item, idx}}) : [];
     }
   },
   created () {
-    this.loadRefKelurahan();
+    this.loadRefSubBidangObrik();
   },
   methods: {
-    async loadRefKelurahan(refresh = false) {
+    async loadRefSubBidangObrik(refresh = false) {
       this.loading = true;
       try {
-        await this.$store.dispatch('m_ref_wilayah/loadRefKelurahan', {
-          idKecamatan: this.idKecamatan,
+        await this.$store.dispatch('m_ref_unit_obrik/loadRefSubBidangObrik', {
+          idBidangObrik: this.idBidangObrik,
           forceRefresh: refresh,
         });
-        this.refKelurahan = this.$store.getters['m_ref_wilayah/refKelurahan'];
+        this.refSubBidangObrik = this.$store.getters['m_ref_unit_obrik/refSubBidangObrik'];
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
