@@ -1,6 +1,6 @@
 <template>
-    <CHeaderNav class="d-md-down-none mr-auto">
-      <!-- <CHeaderNavItem
+  <CHeaderNav class="d-md-down-none mr-auto">
+    <!-- <CHeaderNavItem
         v-for="n in nav"
         v-bind:key="n.name"
       >
@@ -29,7 +29,7 @@
           </CDropdownItem>
         </CDropdown>
       </CHeaderNavItem> -->
-    </CHeaderNav>
+  </CHeaderNav>
 </template>
 
 <script>
@@ -43,6 +43,20 @@ export default {
       //show: true,
       buffor: [],
     }
+  },
+  mounted () {
+    let self = this;
+    let locale = 'en';
+    if(typeof localStorage.locale !== 'undefined'){
+      locale = localStorage.getItem("locale")
+    }
+    axios.get(    this.$apiAdress + '/api/menu?token=' + localStorage.getItem("api_token") + '&menu=' + 'top_menu' + '&locale=' + locale)
+    .then(function (response) {
+      self.nav = self.rebuildData(response.data);
+    }).catch(function (error) {
+      console.log(error);
+      self.$router.push({ path: '/login' });
+    });
   },
   methods: {
     dropdown(data){
@@ -110,20 +124,6 @@ export default {
       }
       return this.buffor;
     }
-  },
-  mounted () {
-    let self = this;
-    let locale = 'en';
-    if(typeof localStorage.locale !== 'undefined'){
-      locale = localStorage.getItem("locale")
-    }
-    axios.get(    this.$apiAdress + '/api/menu?token=' + localStorage.getItem("api_token") + '&menu=' + 'top_menu' + '&locale=' + locale)
-    .then(function (response) {
-      self.nav = self.rebuildData(response.data);
-    }).catch(function (error) {
-      console.log(error);
-      self.$router.push({ path: '/login' });
-    });
   }
 }
 </script>

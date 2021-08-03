@@ -4,7 +4,16 @@ import Router from 'vue-router'
 // === SIMHPNAS ===
 /* Master */
 const MasterPenyebab = () => import('@/views/masters/mPenyebab/MasterPenyebab')
-const MasterReferensi = () => import('@/views/masters/mReferensi/MasterReferensi')
+
+// master referensi
+const MasterRefWilayah = () => import('@/views/masters/mReferensi/refWilayah')
+const MasterRefObrik = () => import('@/views/masters/mReferensi/refObrik')
+const MasterRefLingkupAudit = () => import('@/views/masters/mReferensi/refLingkupAudit')
+const MasterRefJabatan = () => import('@/views/masters/mReferensi/refJabatan')
+const MasterRefJenisAnggaran = () => import('@/views/masters/mReferensi/refJenisAnggaran')
+const MasterRefJenisObrik = () => import('@/views/masters/mReferensi/refJenisObrik')
+const MasterRefUnitAudit = () => import('@/views/masters/mReferensi/refUnitAudit')
+
 const MasterRekomendasi = () => import('@/views/masters/mRekomendasi/MasterRekomendasi')
 
 const MasterTemuan = () => import('@/views/masters/mTemuan/MasterTemuan')
@@ -219,11 +228,71 @@ function configRoutes () {
         },
         {
           path: 'master-referensi',
-          name: 'Master Referensi',
-          component: MasterReferensi,
+          name: 'master-referensi',
+          component: {
+            render (c) { return c('router-view') }
+          },
           meta:{
             requiresUser: true
-          }
+          },
+          children: [
+            {
+              path: 'wilayah',
+              name: 'master-ref-wilayah',
+              component: MasterRefWilayah,
+              meta:{
+                requiresUser: true
+              }
+            },
+            {
+              path: 'obrik',
+              name: 'master-ref-obrik',
+              component: MasterRefObrik,
+              meta:{
+                requiresUser: true
+              }
+            },
+            {
+              path: 'lingkup-audit',
+              name: 'master-ref-lingkup-audit',
+              component: MasterRefLingkupAudit,
+              meta:{
+                requiresUser: true
+              }
+            },
+            {
+              path: 'jabatan',
+              name: 'master-ref-jabatan',
+              component: MasterRefJabatan,
+              meta:{
+                requiresUser: true
+              }
+            },
+            {
+              path: 'jenis-anggaran',
+              name: 'master-ref-jenis-anggaran',
+              component: MasterRefJenisAnggaran,
+              meta:{
+                requiresUser: true
+              }
+            },
+            {
+              path: 'jenis-obrik',
+              name: 'master-ref-jenis-obrik',
+              component: MasterRefJenisObrik,
+              meta:{
+                requiresUser: true
+              }
+            },
+            {
+              path: 'unit-audit',
+              name: 'master-ref-unit-audit',
+              component: MasterRefUnitAudit,
+              meta:{
+                requiresUser: true
+              }
+            },
+          ]
         },
         {
           path: 'master-rekomendasi',
