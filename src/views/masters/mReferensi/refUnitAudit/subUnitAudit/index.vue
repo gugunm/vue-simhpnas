@@ -3,16 +3,16 @@
     <CRow class="px-3">
       <CCol
         class="px-0"
-        lg="6"
+        lg="8"
         sm="12"
       >
-        <h4 class="my-0 mt-1">
-          Master Referensi Jenis Anggaran
+        <h4 class="my-0 mb-3">
+          Sub Unit Audit pada {{ deskripsi }}
         </h4>
       </CCol>
       <CCol
         class="px-0 text-right"
-        lg="6"
+        lg="4"
         sm="12"
       >
         <CButton
@@ -23,7 +23,7 @@
             name="cil-plus"
             size="lg"
             class="my-0 mb-1 mr-2"
-          />Tambah Jenis Anggaran
+          />Tambah Lingkup Audit
         </CButton>
       </CCol>
     </CRow>
@@ -40,6 +40,7 @@
           sorter
           pagination
         >
+          <!-- <template #actions="{item}"> -->
           <template #actions>
             <td class="py-2 d-flex justify-content-center">
               <CButton
@@ -66,6 +67,16 @@
         </CDataTable>
       </CCardBody>
     </CCard>
+    <CButton
+      color="primary"
+      class="mb-3"
+      @click="$router.go(-1)"
+    >
+      <font-awesome-icon
+        class="mr-1"
+        :icon="['fas', 'chevron-left']"
+      /> Kembali
+    </CButton>
   </div>
 </template>
 
@@ -78,7 +89,7 @@ const fields = [
   },
   {
     key: 'deskripsi',
-    label: 'Deskripsi Jenis Anggaran',
+    label: 'Deskripsi Sub Unit Audit',
     _style: 'width: 70%',
   },
   {
@@ -89,36 +100,44 @@ const fields = [
 
 export default {
   name: 'AdvancedTables',
+  props: {
+    idUnitAudit: {
+      type: String,
+      default: '0',
+    },
+    deskripsi: {
+      type: String,
+      default: '0',
+    },
+  },
   data() {
     return {
-      refJenisAnggaran: null,
+      refUnitAudit: null,
       fields,
     };
   },
   computed: {
     items() {
-      return this.refJenisAnggaran
-        ? this.refJenisAnggaran.map((item, idx) => {
+      return this.refUnitAudit
+        ? this.refUnitAudit.map((item, idx) => {
             return { ...item, idx };
           })
         : [];
     },
   },
   created() {
-    this.loadRefJenisAnggaran();
+    this.loadRefSubUnitAudit();
   },
   methods: {
-    async loadRefJenisAnggaran(refresh = false) {
+    async loadRefSubUnitAudit(refresh = false) {
       this.loading = true;
       try {
-        await this.$store.dispatch(
-          'm_ref_jenis_anggaran/loadRefJenisAnggaran',
-          {
-            forceRefresh: refresh,
-          }
-        );
-        this.refJenisAnggaran =
-          this.$store.getters['m_ref_jenis_anggaran/refJenisAnggaran'];
+        await this.$store.dispatch('m_ref_unit_audit/loadRefSubUnitAudit', {
+          idUnitAudit: this.idUnitAudit,
+          forceRefresh: refresh,
+        });
+        this.refUnitAudit =
+          this.$store.getters['m_ref_unit_audit/refSubUnitAudit'];
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }

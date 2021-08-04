@@ -89,41 +89,46 @@ import { API_URL } from '@/utils/api.js';
 const fields = [
   {
     key: 'id',
-    label: 'ID KabKot',
-    _style: "width: 15%"
+    label: 'Kode',
+    _style: 'width: 15%',
   },
   {
     key: 'deskripsi',
-    _style: "width: 70%"
+    label: 'Deskripsi Bidang Obrik',
+    _style: 'width: 70%',
   },
   {
-    key:'actions',
-    _style: "width: 15%",
-  }
-]
+    key: 'actions',
+    _style: 'width: 15%',
+  },
+];
 
 export default {
   name: 'AdvancedTables',
   props: {
     idUnitObrik: {
       type: String,
-      default: '0'
-    }
+      default: '0',
+    },
   },
-  data () {
+  data() {
     return {
       refBidangObrik: null,
       descUnitObrik: null,
       fields,
       selectedItem: null,
-    }
+    };
   },
   computed: {
     items() {
-      return this.refBidangObrik ? this.refBidangObrik.map((item, idx) => { return {...item, idx}}) : [];
-    }
+      return this.refBidangObrik
+        ? this.refBidangObrik.map((item, idx) => {
+            return { ...item, idx };
+          })
+        : [];
+    },
   },
-  created () {
+  created() {
     this.loadRefBidangObrik();
     this.loadDescUnitObrik();
   },
@@ -135,24 +140,28 @@ export default {
           idUnitObrik: this.idUnitObrik,
           forceRefresh: refresh,
         });
-        this.refBidangObrik = this.$store.getters['m_ref_unit_obrik/refBidangObrik'];
+        this.refBidangObrik =
+          this.$store.getters['m_ref_unit_obrik/refBidangObrik'];
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
       this.loading = false;
     },
     showDetailBidangObrik(item) {
-      this.$router.push({ name: 'master-ref-sub-bidang-obrik', params: { idBidangObrik: item.id, deskripsi: item.deskripsi } })
+      this.$router.push({
+        name: 'master-ref-sub-bidang-obrik',
+        params: { idBidangObrik: item.id, deskripsi: item.deskripsi },
+      });
     },
-    async loadDescUnitObrik(){
+    async loadDescUnitObrik() {
       const response = await axios({
         method: 'GET',
         baseURL: API_URL,
         url: `/api/unitobrik/${this.idUnitObrik}`,
         params: {
-          token: localStorage.getItem('api_token')
+          token: localStorage.getItem('api_token'),
         },
-      })
+      });
 
       if (response.status != 200) {
         const error = new Error(
@@ -161,14 +170,14 @@ export default {
         throw error;
       }
 
-      this.descUnitObrik = await response.data.diskripsi
-    }
-  }
-}
+      this.descUnitObrik = await response.data.diskripsi;
+    },
+  },
+};
 </script>
 
 <style>
-.modal-master-detail .form-control[readonly]{
+.modal-master-detail .form-control[readonly] {
   background-color: rgba(0, 0, 0, 0.04);
 }
 </style>

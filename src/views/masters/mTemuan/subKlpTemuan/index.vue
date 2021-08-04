@@ -84,45 +84,50 @@
 const fields = [
   {
     key: 'id',
-    label: 'ID Jenis Temuan',
-    _style: "width: 15%"
+    label: 'Kode',
+    _style: 'width: 15%',
   },
   {
     key: 'deskripsi',
-    _style: "width: 55%"
+    label: 'Deskripsi Sub Kelompok Temuan',
+    _style: 'width: 55%',
   },
   {
     key: 'saran',
     label: 'Rekomendasi',
-    _style: "width: 20%"
+    _style: 'width: 20%',
   },
   {
-    key:'actions',
-    _style: "width: 10%",
-  }
-]
+    key: 'actions',
+    _style: 'width: 10%',
+  },
+];
 
 export default {
   name: 'AdvancedTables',
   props: {
     idKlpTemuan: {
       type: String,
-      default: '0'
-    }
+      default: '0',
+    },
   },
-  data () {
+  data() {
     return {
       subKelompokTemuan: null,
       fields,
-      selectedItem: null
-    }
+      selectedItem: null,
+    };
   },
   computed: {
     items() {
-      return this.subKelompokTemuan ? this.subKelompokTemuan.map((item, idx) => { return {...item, idx}}) : [];
-    }
+      return this.subKelompokTemuan
+        ? this.subKelompokTemuan.map((item, idx) => {
+            return { ...item, idx };
+          })
+        : [];
+    },
   },
-  created () {
+  created() {
     this.loadSubKelompokTemuan();
   },
   methods: {
@@ -133,18 +138,19 @@ export default {
           idKlpTemuan: this.idKlpTemuan,
           forceRefresh: refresh,
         });
-        this.subKelompokTemuan = this.$store.getters['m_temuan/subKelompokTemuan'];
+        this.subKelompokTemuan =
+          this.$store.getters['m_temuan/subKelompokTemuan'];
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
       this.loading = false;
     },
-  }
-}
+  },
+};
 </script>
 
 <style>
-.modal-master-detail .form-control[readonly]{
+.modal-master-detail .form-control[readonly] {
   background-color: rgba(0, 0, 0, 0.04);
 }
 </style>

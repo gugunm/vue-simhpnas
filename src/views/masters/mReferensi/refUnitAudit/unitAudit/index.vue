@@ -7,7 +7,7 @@
         sm="12"
       >
         <h4 class="my-0 mt-1">
-          Master Referensi Jenis Anggaran
+          Master Referensi Unit Audit
         </h4>
       </CCol>
       <CCol
@@ -23,7 +23,7 @@
             name="cil-plus"
             size="lg"
             class="my-0 mb-1 mr-2"
-          />Tambah Jenis Anggaran
+          />Tambah Unit Audit
         </CButton>
       </CCol>
     </CRow>
@@ -39,7 +39,10 @@
           hover
           sorter
           pagination
+          clickable-rows
+          @row-clicked="showDetailUnitAudit"
         >
+          <!-- <template #actions="{item}"> -->
           <template #actions>
             <td class="py-2 d-flex justify-content-center">
               <CButton
@@ -78,7 +81,7 @@ const fields = [
   },
   {
     key: 'deskripsi',
-    label: 'Deskripsi Jenis Anggaran',
+    label: 'Deskripsi Unit Audit',
     _style: 'width: 70%',
   },
   {
@@ -91,38 +94,41 @@ export default {
   name: 'AdvancedTables',
   data() {
     return {
-      refJenisAnggaran: null,
+      refUnitAudit: null,
       fields,
     };
   },
   computed: {
     items() {
-      return this.refJenisAnggaran
-        ? this.refJenisAnggaran.map((item, idx) => {
+      return this.refUnitAudit
+        ? this.refUnitAudit.map((item, idx) => {
             return { ...item, idx };
           })
         : [];
     },
   },
   created() {
-    this.loadRefJenisAnggaran();
+    this.loadRefUnitAudit();
   },
   methods: {
-    async loadRefJenisAnggaran(refresh = false) {
+    async loadRefUnitAudit(refresh = false) {
       this.loading = true;
       try {
-        await this.$store.dispatch(
-          'm_ref_jenis_anggaran/loadRefJenisAnggaran',
-          {
-            forceRefresh: refresh,
-          }
-        );
-        this.refJenisAnggaran =
-          this.$store.getters['m_ref_jenis_anggaran/refJenisAnggaran'];
+        await this.$store.dispatch('m_ref_unit_audit/loadRefUnitAudit', {
+          forceRefresh: refresh,
+        });
+        this.refUnitAudit =
+          this.$store.getters['m_ref_unit_audit/refUnitAudit'];
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
       this.loading = false;
+    },
+    showDetailUnitAudit(item) {
+      this.$router.push({
+        name: 'master-ref-sub-unit-audit',
+        params: { idUnitAudit: item.id, deskripsi: item.deskripsi },
+      });
     },
   },
 };

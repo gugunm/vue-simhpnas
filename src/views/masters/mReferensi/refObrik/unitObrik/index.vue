@@ -76,34 +76,39 @@
 const fields = [
   {
     key: 'id',
-    label: 'ID Unit Obrik',
-    _style: "width: 15%"
+    label: 'Kode',
+    _style: 'width: 15%',
   },
   {
     key: 'deskripsi',
-    _style: "width: 70%"
+    label: 'Deskripsi Unit Obrik',
+    _style: 'width: 70%',
   },
   {
-    key:'actions',
-    _style: "width: 15%",
-  }
-]
+    key: 'actions',
+    _style: 'width: 15%',
+  },
+];
 
 export default {
   name: 'AdvancedTables',
-  data () {
+  data() {
     return {
       refUnitObrik: null,
       fields,
-      selectedItem: null
-    }
+      selectedItem: null,
+    };
   },
   computed: {
     items() {
-      return this.refUnitObrik ? this.refUnitObrik.map((item, idx) => { return {...item, idx}}) : [];
-    }
+      return this.refUnitObrik
+        ? this.refUnitObrik.map((item, idx) => {
+            return { ...item, idx };
+          })
+        : [];
+    },
   },
-  created () {
+  created() {
     this.loadRefUnitObrik();
   },
   methods: {
@@ -113,21 +118,25 @@ export default {
         await this.$store.dispatch('m_ref_unit_obrik/loadRefUnitObrik', {
           forceRefresh: refresh,
         });
-        this.refUnitObrik = this.$store.getters['m_ref_unit_obrik/refUnitObrik'];
+        this.refUnitObrik =
+          this.$store.getters['m_ref_unit_obrik/refUnitObrik'];
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
       this.loading = false;
     },
     showDetailUnitObrik(item) {
-      this.$router.push({ name: 'master-ref-bidang-obrik', params: { idUnitObrik: item.id, deskripsi: item.deskripsi } })
-    }
-  }
-}
+      this.$router.push({
+        name: 'master-ref-bidang-obrik',
+        params: { idUnitObrik: item.id, deskripsi: item.deskripsi },
+      });
+    },
+  },
+};
 </script>
 
 <style>
-.modal-master-detail .form-control[readonly]{
+.modal-master-detail .form-control[readonly] {
   background-color: rgba(0, 0, 0, 0.04);
 }
 </style>

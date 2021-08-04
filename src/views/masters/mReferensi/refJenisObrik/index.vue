@@ -73,35 +73,39 @@
 const fields = [
   {
     key: 'id',
-    label: 'ID',
-    _style: "width: 15%"
+    label: 'Kode',
+    _style: 'width: 15%',
   },
   {
     key: 'deskripsi',
-    label: 'Jenis Obrik',
-    _style: "width: 70%"
+    label: 'Deskripsi Jenis Obrik',
+    _style: 'width: 70%',
   },
   {
-    key:'actions',
-    _style: "width: 15%",
-  }
-]
+    key: 'actions',
+    _style: 'width: 15%',
+  },
+];
 
 export default {
   name: 'AdvancedTables',
-  data () {
+  data() {
     return {
       refJenisObrik: null,
       fields,
-      selectedItem: null
-    }
+      selectedItem: null,
+    };
   },
   computed: {
     items() {
-      return this.refJenisObrik ? this.refJenisObrik.map((item, idx) => { return {...item, idx}}) : [];
-    }
+      return this.refJenisObrik
+        ? this.refJenisObrik.map((item, idx) => {
+            return { ...item, idx };
+          })
+        : [];
+    },
   },
-  created () {
+  created() {
     this.loadRefJenisObrik();
   },
   methods: {
@@ -111,18 +115,19 @@ export default {
         await this.$store.dispatch('m_ref_jenis_obrik/loadRefJenisObrik', {
           forceRefresh: refresh,
         });
-        this.refJenisObrik = this.$store.getters['m_ref_jenis_obrik/refJenisObrik'];
+        this.refJenisObrik =
+          this.$store.getters['m_ref_jenis_obrik/refJenisObrik'];
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
       this.loading = false;
     },
-  }
-}
+  },
+};
 </script>
 
 <style>
-.modal-master-detail .form-control[readonly]{
+.modal-master-detail .form-control[readonly] {
   background-color: rgba(0, 0, 0, 0.04);
 }
 </style>

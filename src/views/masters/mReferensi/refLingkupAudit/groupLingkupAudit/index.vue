@@ -76,11 +76,12 @@
 const fields = [
   {
     key: 'id',
-    label: 'ID Grp Lingkup Audit',
+    label: 'Kode',
     _style: 'width: 15%',
   },
   {
     key: 'deskripsi',
+    label: 'Deskripsi Group Lingkup Audit',
     _style: 'width: 70%',
   },
   {

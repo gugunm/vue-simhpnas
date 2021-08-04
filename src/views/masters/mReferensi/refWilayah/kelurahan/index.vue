@@ -23,7 +23,7 @@
             name="cil-plus"
             size="lg"
             class="my-0 mb-1 mr-2"
-          />Tambah Kecamatan
+          />Tambah Kelurahan
         </CButton>
       </CCol>
     </CRow>
@@ -84,44 +84,49 @@
 const fields = [
   {
     key: 'id',
-    label: 'ID Kelurahan',
-    _style: "width: 15%"
+    label: 'Kode',
+    _style: 'width: 15%',
   },
   {
     key: 'deskripsi',
-    _style: "width: 70%"
+    label: 'Nama Kelurahan',
+    _style: 'width: 70%',
   },
   {
-    key:'actions',
-    _style: "width: 15%",
-  }
-]
+    key: 'actions',
+    _style: 'width: 15%',
+  },
+];
 
 export default {
   name: 'AdvancedTables',
   props: {
     idKecamatan: {
       type: String,
-      default: '0'
+      default: '0',
     },
     deskripsi: {
       type: String,
-      default: '0'
-    }
+      default: '0',
+    },
   },
-  data () {
+  data() {
     return {
       refKelurahan: null,
       fields,
-      selectedItem: null
-    }
+      selectedItem: null,
+    };
   },
   computed: {
     items() {
-      return this.refKelurahan ? this.refKelurahan.map((item, idx) => { return {...item, idx}}) : [];
-    }
+      return this.refKelurahan
+        ? this.refKelurahan.map((item, idx) => {
+            return { ...item, idx };
+          })
+        : [];
+    },
   },
-  created () {
+  created() {
     this.loadRefKelurahan();
   },
   methods: {
@@ -137,13 +142,13 @@ export default {
         this.error = error.message || 'Something went wrong!';
       }
       this.loading = false;
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style>
-.modal-master-detail .form-control[readonly]{
+.modal-master-detail .form-control[readonly] {
   background-color: rgba(0, 0, 0, 0.04);
 }
 </style>

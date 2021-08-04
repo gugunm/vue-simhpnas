@@ -84,44 +84,49 @@
 const fields = [
   {
     key: 'id',
-    label: 'ID KabKot',
-    _style: "width: 15%"
+    label: 'Kode',
+    _style: 'width: 15%',
   },
   {
     key: 'deskripsi',
-    _style: "width: 70%"
+    label: 'Deskripsi Sub Bidang Obrik',
+    _style: 'width: 70%',
   },
   {
-    key:'actions',
-    _style: "width: 15%",
-  }
-]
+    key: 'actions',
+    _style: 'width: 15%',
+  },
+];
 
 export default {
   name: 'AdvancedTables',
   props: {
     idBidangObrik: {
       type: String,
-      default: '0'
+      default: '0',
     },
     deskripsi: {
       type: String,
-      default: '0'
-    }
+      default: '0',
+    },
   },
-  data () {
+  data() {
     return {
       refSubBidangObrik: null,
       fields,
-      selectedItem: null
-    }
+      selectedItem: null,
+    };
   },
   computed: {
     items() {
-      return this.refSubBidangObrik ? this.refSubBidangObrik.map((item, idx) => { return {...item, idx}}) : [];
-    }
+      return this.refSubBidangObrik
+        ? this.refSubBidangObrik.map((item, idx) => {
+            return { ...item, idx };
+          })
+        : [];
+    },
   },
-  created () {
+  created() {
     this.loadRefSubBidangObrik();
   },
   methods: {
@@ -132,18 +137,19 @@ export default {
           idBidangObrik: this.idBidangObrik,
           forceRefresh: refresh,
         });
-        this.refSubBidangObrik = this.$store.getters['m_ref_unit_obrik/refSubBidangObrik'];
+        this.refSubBidangObrik =
+          this.$store.getters['m_ref_unit_obrik/refSubBidangObrik'];
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
       this.loading = false;
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style>
-.modal-master-detail .form-control[readonly]{
+.modal-master-detail .form-control[readonly] {
   background-color: rgba(0, 0, 0, 0.04);
 }
 </style>

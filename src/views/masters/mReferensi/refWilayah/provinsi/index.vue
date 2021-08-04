@@ -76,34 +76,39 @@
 const fields = [
   {
     key: 'id',
-    label: 'ID Provinsi',
-    _style: "width: 15%"
+    label: 'Kode',
+    _style: 'width: 15%',
   },
   {
     key: 'deskripsi',
-    _style: "width: 70%"
+    label: 'Nama Provinsi',
+    _style: 'width: 70%',
   },
   {
-    key:'actions',
-    _style: "width: 15%",
-  }
-]
+    key: 'actions',
+    _style: 'width: 15%',
+  },
+];
 
 export default {
   name: 'AdvancedTables',
-  data () {
+  data() {
     return {
       refProvinsi: null,
       fields,
-      selectedItem: null
-    }
+      selectedItem: null,
+    };
   },
   computed: {
     items() {
-      return this.refProvinsi ? this.refProvinsi.map((item, idx) => { return {...item, idx}}) : [];
-    }
+      return this.refProvinsi
+        ? this.refProvinsi.map((item, idx) => {
+            return { ...item, idx };
+          })
+        : [];
+    },
   },
-  created () {
+  created() {
     this.loadRefProvinsi();
   },
   methods: {
@@ -120,14 +125,17 @@ export default {
       this.loading = false;
     },
     showDetailProvinsi(item) {
-      this.$router.push({ name: 'master-ref-wilayah-provinsi', params: { idProvinsi: item.id, deskripsi: item.deskripsi } })
-    }
-  }
-}
+      this.$router.push({
+        name: 'master-ref-wilayah-provinsi',
+        params: { idProvinsi: item.id, deskripsi: item.deskripsi },
+      });
+    },
+  },
+};
 </script>
 
 <style>
-.modal-master-detail .form-control[readonly]{
+.modal-master-detail .form-control[readonly] {
   background-color: rgba(0, 0, 0, 0.04);
 }
 </style>

@@ -26,7 +26,9 @@ const MasterRefLingkupAudit = () => import('@/views/masters/mReferensi/refLingku
 const MasterRefJabatan = () => import('@/views/masters/mReferensi/refJabatan')
 const MasterRefJenisAnggaran = () => import('@/views/masters/mReferensi/refJenisAnggaran')
 const MasterRefJenisObrik = () => import('@/views/masters/mReferensi/refJenisObrik')
-const MasterRefUnitAudit = () => import('@/views/masters/mReferensi/refUnitAudit')
+
+const MasterRefUnitAudit = () => import('@/views/masters/mReferensi/refUnitAudit/unitAudit')
+const MasterRefSubUnitAudit = () => import('@/views/masters/mReferensi/refUnitAudit/subUnitAudit')
 
 // master temuan
 const MasterTemuan = () => import('@/views/masters/mTemuan/jenisTemuan')
@@ -379,11 +381,28 @@ function configRoutes () {
             },
             {
               path: 'unit-audit',
-              name: 'master-ref-unit-audit',
-              component: MasterRefUnitAudit,
-              meta:{
-                requiresUser: true
-              }
+              component: {
+                render (c) { return c('router-view') }
+              },
+              children: [
+                {
+                  path: '/',
+                  name: 'master-ref-unit-audit',
+                  component: MasterRefUnitAudit,
+                  meta:{
+                    requiresUser: true
+                  },
+                },
+                {
+                  path: ':idUnitAudit',
+                  name: 'master-ref-sub-unit-audit',
+                  component: MasterRefSubUnitAudit,
+                  meta:{
+                    requiresUser: true
+                  },
+                  props: true
+                }
+              ]
             },
           ]
         },

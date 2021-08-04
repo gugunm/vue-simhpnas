@@ -89,41 +89,46 @@ import { API_URL } from '@/utils/api.js';
 const fields = [
   {
     key: 'id',
-    label: 'ID KabKot',
-    _style: "width: 15%"
+    label: 'Kode',
+    _style: 'width: 15%',
   },
   {
     key: 'deskripsi',
-    _style: "width: 70%"
+    label: 'Nama Kab/Kota',
+    _style: 'width: 70%',
   },
   {
-    key:'actions',
-    _style: "width: 15%",
-  }
-]
+    key: 'actions',
+    _style: 'width: 15%',
+  },
+];
 
 export default {
   name: 'AdvancedTables',
   props: {
     idProvinsi: {
       type: String,
-      default: '0'
-    }
+      default: '0',
+    },
   },
-  data () {
+  data() {
     return {
       refKabkot: null,
       descProvinsi: null,
       fields,
-      selectedItem: null
-    }
+      selectedItem: null,
+    };
   },
   computed: {
     items() {
-      return this.refKabkot ? this.refKabkot.map((item, idx) => { return {...item, idx}}) : [];
-    }
+      return this.refKabkot
+        ? this.refKabkot.map((item, idx) => {
+            return { ...item, idx };
+          })
+        : [];
+    },
   },
-  created () {
+  created() {
     this.loadRefKabkot();
     this.loadDescProvinsi();
   },
@@ -142,7 +147,10 @@ export default {
       this.loading = false;
     },
     showDetailKabkot(item) {
-      this.$router.push({ name: 'master-ref-wilayah-kabkot', params: { idKabkot: item.id, deskripsi: item.deskripsi } })
+      this.$router.push({
+        name: 'master-ref-wilayah-kabkot',
+        params: { idKabkot: item.id, deskripsi: item.deskripsi },
+      });
     },
     async loadDescProvinsi() {
       const response = await axios({
@@ -150,9 +158,9 @@ export default {
         baseURL: API_URL,
         url: `/api/provinsi/${this.idProvinsi}`,
         params: {
-          token: localStorage.getItem('api_token')
+          token: localStorage.getItem('api_token'),
         },
-      })
+      });
 
       if (response.status != 200) {
         const error = new Error(
@@ -161,14 +169,14 @@ export default {
         throw error;
       }
 
-      this.descProvinsi = await response.data.diskripsi
-    }
-  }
-}
+      this.descProvinsi = await response.data.diskripsi;
+    },
+  },
+};
 </script>
 
 <style>
-.modal-master-detail .form-control[readonly]{
+.modal-master-detail .form-control[readonly] {
   background-color: rgba(0, 0, 0, 0.04);
 }
 </style>
