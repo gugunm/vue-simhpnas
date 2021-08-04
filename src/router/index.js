@@ -20,7 +20,9 @@ const MasterRefUnitObrik = () => import('@/views/masters/mReferensi/refObrik/uni
 const MasterRefBidangObrik = () => import('@/views/masters/mReferensi/refObrik/bidangObrik')
 const MasterRefSubBidangObrik = () => import('@/views/masters/mReferensi/refObrik/subBidangObrik')
 
-const MasterRefLingkupAudit = () => import('@/views/masters/mReferensi/refLingkupAudit')
+const MasterRefGroupLingkupAudit = () => import('@/views/masters/mReferensi/refLingkupAudit/groupLingkupAudit')
+const MasterRefLingkupAudit = () => import('@/views/masters/mReferensi/refLingkupAudit/lingkupAudit')
+
 const MasterRefJabatan = () => import('@/views/masters/mReferensi/refJabatan')
 const MasterRefJenisAnggaran = () => import('@/views/masters/mReferensi/refJenisAnggaran')
 const MasterRefJenisObrik = () => import('@/views/masters/mReferensi/refJenisObrik')
@@ -328,11 +330,28 @@ function configRoutes () {
             },
             {
               path: 'lingkup-audit',
-              name: 'master-ref-lingkup-audit',
-              component: MasterRefLingkupAudit,
-              meta:{
-                requiresUser: true
-              }
+              component: {
+                render (c) { return c('router-view') }
+              },
+              children: [
+                {
+                  path: '/',
+                  name: 'master-ref-group-lingkup-audit',
+                  component: MasterRefGroupLingkupAudit,
+                  meta:{
+                    requiresUser: true
+                  },
+                },
+                {
+                  path: ':idGroupLingkupAudit',
+                  name: 'master-ref-lingkup-audit',
+                  component: MasterRefLingkupAudit,
+                  meta:{
+                    requiresUser: true
+                  },
+                  props: true
+                }
+              ]
             },
             {
               path: 'jabatan',

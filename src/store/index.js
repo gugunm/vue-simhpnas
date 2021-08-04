@@ -11,6 +11,7 @@ import m_temuan from './modules/m_temuan';
 import m_ref_wilayah from './modules/m_ref_wilayah';
 import m_ref_jenis_obrik from './modules/m_ref_jenis_obrik';
 import m_ref_unit_obrik from './modules/m_ref_unit_obrik';
+import m_ref_lingkup_audit from './modules/m_ref_lingkup_audit';
 
 export default new Vuex.Store({
   modules: {
@@ -21,6 +22,7 @@ export default new Vuex.Store({
     m_temuan,
     m_ref_wilayah,
     m_ref_jenis_obrik,
-    m_ref_unit_obrik
+    m_ref_unit_obrik,
+    m_ref_lingkup_audit
   }
 })
