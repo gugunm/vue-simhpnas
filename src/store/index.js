@@ -7,6 +7,8 @@ import ui from './modules/ui';
 import m_unit_kerja from './modules/m_unit_kerja';
 import m_penyebab from './modules/m_penyebab';
 import m_temuan from './modules/m_temuan';
+import m_rekomendasi from './modules/m_rekomendasi';
+import m_tindak_lanjut from './modules/m_tindak_lanjut';
 
 import m_ref_wilayah from './modules/m_ref_wilayah';
 import m_ref_jenis_obrik from './modules/m_ref_jenis_obrik';
@@ -23,12 +25,14 @@ export default new Vuex.Store({
     m_unit_kerja,
     m_penyebab,
     m_temuan,
+    m_rekomendasi,
+    m_tindak_lanjut,
     m_ref_wilayah,
     m_ref_jenis_obrik,
     m_ref_unit_obrik,
     m_ref_lingkup_audit,
     m_ref_jabatan,
     m_ref_jenis_anggaran,
-    m_ref_unit_audit
+    m_ref_unit_audit,
   }
 })

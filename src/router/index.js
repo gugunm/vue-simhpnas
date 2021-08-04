@@ -4,11 +4,15 @@ import Router from 'vue-router'
 // === SIMHPNAS ===
 /* Master */
 const MasterPenyebab = () => import('@/views/masters/mPenyebab')
-const MasterRekomendasi = () => import('@/views/masters/mRekomendasi')
-const MasterTindakLanjut = () => import('@/views/masters/mTindakLanjut')
 const MasterUnitKerja = () => import('@/views/masters/mUnitKerja')
 const MasterUserUnitKerja = () => import('@/views/masters/mUserUnitKerja')
 const MasterUserUtama = () => import('@/views/masters/mUserUtama')
+
+const MasterTindakLanjut = () => import('@/views/masters/mTindakLanjut/tindakLanjut')
+const MasterSubTindakLanjut = () => import('@/views/masters/mTindakLanjut/subTindakLanjut')
+
+const MasterRekomendasi = () => import('@/views/masters/mRekomendasi/rekomendasi')
+const MasterSubRekomendasi = () => import('@/views/masters/mRekomendasi/subRekomendasi')
 
 // master referensi
 const MasterRefWilayah = () => import('@/views/masters/mReferensi/refWilayah/provinsi')
@@ -408,11 +412,53 @@ function configRoutes () {
         },
         {
           path: 'master-rekomendasi',
-          name: 'Master Rekomendasi',
-          component: MasterRekomendasi,
-          meta:{
-            requiresUser: true
-          }
+          component: {
+            render (c) { return c('router-view') }
+          },
+          children: [
+            {
+              path: '/',
+              name: 'master-klp-rekomendasi',
+              component: MasterRekomendasi,
+              meta:{
+                requiresUser: true
+              },
+            },
+            {
+              path: ':idKlpRekomendasi',
+              name: 'master-sub-klp-rekomendasi',
+              component: MasterSubRekomendasi,
+              meta:{
+                requiresUser: true
+              },
+              props: true
+            }
+          ]
+        },
+        {
+          path: 'master-tindak-lanjut',
+          component: {
+            render (c) { return c('router-view') }
+          },
+          children: [
+            {
+              path: '/',
+              name: 'master-tl',
+              component: MasterTindakLanjut,
+              meta:{
+                requiresUser: true
+              },
+            },
+            {
+              path: ':idKlpTindakLanjut',
+              name: 'master-sub-tl',
+              component: MasterSubTindakLanjut,
+              meta:{
+                requiresUser: true
+              },
+              props: true
+            },
+          ]
         },
         {
           path: 'master-temuan',
@@ -439,14 +485,6 @@ function configRoutes () {
             requiresUser: true
           },
           props: true
-        },
-        {
-          path: 'master-tindak-lanjut',
-          name: 'Master Tindak Lanjut',
-          component: MasterTindakLanjut,
-          meta:{
-            requiresUser: true
-          }
         },
         {
           path: 'master-unit-kerja',
