@@ -23,7 +23,7 @@
             name="cil-plus"
             size="lg"
             class="my-0 mb-1 mr-2"
-          />Tambah Lingkup Audit
+          />Tambah Sub Unit Audit
         </CButton>
       </CCol>
     </CRow>
