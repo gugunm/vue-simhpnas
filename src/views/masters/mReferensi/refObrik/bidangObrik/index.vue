@@ -51,9 +51,8 @@ export default {
   data() {
     return {
       refBidangObrik: null,
-      descUnitObrik: null,
       fields,
-      selectedItem: null,
+      descUnitObrik: null,
     };
   },
   computed: {

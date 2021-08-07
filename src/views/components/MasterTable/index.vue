@@ -3,16 +3,16 @@
     <CRow class="px-3">
       <CCol
         class="px-0"
-        lg="6"
+        lg="8"
         sm="12"
       >
-        <h4 class="my-0 mt-1">
+        <h4 class="my-0 mt-1 mb-3">
           {{ topTitle }} {{ title }} {{ descTitle }}
         </h4>
       </CCol>
       <CCol
         class="px-0 text-right"
-        lg="6"
+        lg="4"
         sm="12"
       >
         <CButton

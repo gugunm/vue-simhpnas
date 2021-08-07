@@ -1,86 +1,22 @@
 <template>
   <div>
-    <CRow class="px-3">
-      <CCol
-        class="px-0"
-        lg="6"
-        sm="12"
-      >
-        <h4 class="my-0 mt-1">
-          Data Kelurahan di Kec. {{ deskripsi }}
-        </h4>
-      </CCol>
-      <CCol
-        class="px-0 text-right"
-        lg="6"
-        sm="12"
-      >
-        <CButton
-          color="primary"
-          class="mb-3"
-        >
-          <CIcon
-            name="cil-plus"
-            size="lg"
-            class="my-0 mb-1 mr-2"
-          />Tambah Kelurahan
-        </CButton>
-      </CCol>
-    </CRow>
-    <CCard>
-      <CCardBody>
-        <CDataTable
-          :items="items"
-          :fields="fields"
-          column-filter
-          table-filter
-          items-per-page-select
-          :items-per-page="5"
-          hover
-          sorter
-          pagination
-        >
-          <!-- <template #actions="{item}"> -->
-          <template #actions>
-            <td class="py-2 d-flex justify-content-center">
-              <CButton
-                color="warning"
-                variant="outline"
-                square
-                size="sm"
-                class="mr-3"
-              >
-                <font-awesome-icon :icon="['fas', 'pen']" />
-                <!-- <CIcon name="cil-pencil" /> -->
-              </CButton>
-              <CButton
-                color="danger"
-                variant="outline"
-                square
-                size="sm"
-              >
-                <font-awesome-icon :icon="['fas', 'trash-alt']" />
-                <!-- <CIcon name="cil-trash" /> -->
-              </CButton>
-            </td>
-          </template>
-        </CDataTable>
-      </CCardBody>
-    </CCard>
-    <CButton
-      color="primary"
-      class="mb-3"
-      @click="$router.go(-1)"
-    >
-      <font-awesome-icon
-        class="mr-1"
-        :icon="['fas', 'chevron-left']"
-      /> Kembali
-    </CButton>
+    <master-table
+      top-title="Data"
+      title="Kelurahan"
+      :desc-title="'di Kec. ' + descKecamatan"
+      :items="items"
+      :fields="fields"
+    />
+    <back-button title="Kembali" />
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+import { API_URL } from '@/utils/api.js';
+import MasterTable from '@/views/components/MasterTable';
+import BackButton from '@/views/components/BackButton';
+
 const fields = [
   {
     key: 'id',
@@ -100,12 +36,12 @@ const fields = [
 
 export default {
   name: 'AdvancedTables',
+  components: {
+    MasterTable,
+    BackButton,
+  },
   props: {
     idKecamatan: {
-      type: String,
-      default: '0',
-    },
-    deskripsi: {
       type: String,
       default: '0',
     },
@@ -114,7 +50,7 @@ export default {
     return {
       refKelurahan: null,
       fields,
-      selectedItem: null,
+      descKecamatan: null,
     };
   },
   computed: {
@@ -128,6 +64,7 @@ export default {
   },
   created() {
     this.loadRefKelurahan();
+    this.loadDescKecamatan();
   },
   methods: {
     async loadRefKelurahan(refresh = false) {
@@ -142,6 +79,25 @@ export default {
         this.error = error.message || 'Something went wrong!';
       }
       this.loading = false;
+    },
+    async loadDescKecamatan() {
+      const response = await axios({
+        method: 'GET',
+        baseURL: API_URL,
+        url: `/api/kecamatan/${this.idKecamatan}`,
+        params: {
+          token: localStorage.getItem('api_token'),
+        },
+      });
+
+      if (response.status != 200) {
+        const error = new Error(
+          responseData.message || 'Failed to fetch data unit kerja.'
+        );
+        throw error;
+      }
+
+      this.descKecamatan = await response.data.diskripsi;
     },
   },
 };

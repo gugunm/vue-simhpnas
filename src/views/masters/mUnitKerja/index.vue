@@ -1,33 +1,14 @@
 <template>
   <div>
-    <CRow class="px-3">
-      <CCol
-        class="px-0"
-        lg="6"
-        sm="12"
-      >
-        <h4 class="my-0 mt-1">
-          Master Unit Kerja
-        </h4>
-      </CCol>
-      <CCol
-        class="px-0 text-right"
-        lg="6"
-        sm="12"
-      >
-        <CButton
-          color="primary"
-          class="mb-3"
-        >
-          <CIcon
-            name="cil-plus"
-            size="lg"
-            class="my-0 mb-1 mr-2"
-          />Tambah Unit Kerja
-        </CButton>
-      </CCol>
-    </CRow>
-    <CCard>
+    <master-table
+      top-title="Master"
+      title="Unit Kerja"
+      :items="items"
+      :fields="fields"
+      :clickable-rows="true"
+      @clicked-row="openModalDetails"
+    />
+    <!-- <CCard>
       <CCardBody>
         <CDataTable
           :items="items"
@@ -50,7 +31,6 @@
                 @click="openModalDetails(item)"
               >
                 <font-awesome-icon :icon="['fas', 'eye']" />
-                <!-- <CIcon name="cil-lightbulb" /> -->
               </CButton>
               <CButton
                 color="warning"
@@ -59,7 +39,6 @@
                 size="sm"
               >
                 <font-awesome-icon :icon="['fas', 'pen']" />
-                <!-- <CIcon name="cil-pencil" /> -->
               </CButton>
               <CButton
                 color="danger"
@@ -68,13 +47,12 @@
                 size="sm"
               >
                 <font-awesome-icon :icon="['fas', 'trash-alt']" />
-                <!-- <CIcon name="cil-trash" /> -->
               </CButton>
             </td>
           </template>
         </CDataTable>
       </CCardBody>
-    </CCard>
+    </CCard> -->
     <CModal
       v-if="selectedItem != null"
       :title="'Detail ' + selectedItem.namaUnit"
@@ -160,16 +138,18 @@
           </CForm>
         </CCardBody>
       </template>
-      <footer>
+      <!-- <footer>
         <modal-footer>
           <button>OKEE</button>
         </modal-footer>
-      </footer>
+      </footer> -->
     </CModal>
   </div>
 </template>
 
 <script>
+import MasterTable from '@/views/components/MasterTable';
+
 const fields = [
   {
     key: 'id',
@@ -196,26 +176,33 @@ const fields = [
     label: 'Jumlah Obrik',
   },
   {
-    key: 'actions'
-  }
-]
+    key: 'actions',
+  },
+];
 
 export default {
-  name: 'AdvancedTables',
-  data () {
+  name: 'MasterUnitKerja',
+  components: {
+    MasterTable,
+  },
+  data() {
     return {
       unitKerja: null,
       fields,
       isShowModal: false,
-      selectedItem: null
-    }
+      selectedItem: null,
+    };
   },
   computed: {
     items() {
-      return this.unitKerja ? this.unitKerja.map((item, idx) => { return {...item, idx}}) : [];
-    }
+      return this.unitKerja
+        ? this.unitKerja.map((item, idx) => {
+            return { ...item, idx };
+          })
+        : [];
+    },
   },
-  created () {
+  created() {
     this.loadUnitKerja();
   },
   methods: {
@@ -235,12 +222,12 @@ export default {
       }
       this.loading = false;
     },
-  }
-}
+  },
+};
 </script>
 
 <style>
-.modal-master-detail .form-control[readonly]{
+.modal-master-detail .form-control[readonly] {
   background-color: rgba(0, 0, 0, 0.04);
 }
 </style>

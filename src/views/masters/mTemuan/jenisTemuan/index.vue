@@ -1,7 +1,8 @@
 <template>
   <div>
     <master-table
-      title="Master Temuan"
+      top-title="Master"
+      title="Jenis Temuan"
       :items="items"
       :fields="fields"
       :clickable-rows="true"
