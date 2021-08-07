@@ -1,78 +1,18 @@
 <template>
   <div>
-    <CRow class="px-3">
-      <CCol
-        class="px-0"
-        lg="6"
-        sm="12"
-      >
-        <h4 class="my-0 mt-1">
-          Master Referensi Group Lingkup Audit
-        </h4>
-      </CCol>
-      <CCol
-        class="px-0 text-right"
-        lg="6"
-        sm="12"
-      >
-        <CButton
-          color="primary"
-          class="mb-3"
-        >
-          <CIcon
-            name="cil-plus"
-            size="lg"
-            class="my-0 mb-1 mr-2"
-          />Tambah Group Lingkup Audit
-        </CButton>
-      </CCol>
-    </CRow>
-    <CCard>
-      <CCardBody>
-        <CDataTable
-          :items="items"
-          :fields="fields"
-          column-filter
-          table-filter
-          items-per-page-select
-          :items-per-page="5"
-          hover
-          sorter
-          pagination
-          clickable-rows
-          @row-clicked="showDetailGroupLingkupAudit"
-        >
-          <!-- <template #actions="{item}"> -->
-          <template #actions>
-            <td class="py-2 d-flex justify-content-center">
-              <CButton
-                color="warning"
-                variant="outline"
-                square
-                size="sm"
-                class="mr-3"
-              >
-                <font-awesome-icon :icon="['fas', 'pen']" />
-                <!-- <CIcon name="cil-pencil" /> -->
-              </CButton>
-              <CButton
-                color="danger"
-                variant="outline"
-                square
-                size="sm"
-              >
-                <font-awesome-icon :icon="['fas', 'trash-alt']" />
-                <!-- <CIcon name="cil-trash" /> -->
-              </CButton>
-            </td>
-          </template>
-        </CDataTable>
-      </CCardBody>
-    </CCard>
+    <master-table
+      top-title="Master Referensi"
+      title="Lingkup Audit"
+      :items="items"
+      :fields="fields"
+      :clickable-rows="true"
+      @clicked-row="showDetailGroupLingkupAudit"
+    />
   </div>
 </template>
 
 <script>
+import MasterTable from '@/views/components/MasterTable';
 const fields = [
   {
     key: 'id',
@@ -91,7 +31,10 @@ const fields = [
 ];
 
 export default {
-  name: 'AdvancedTables',
+  name: 'MasterGroupLingkupAudit',
+  components: {
+    MasterTable,
+  },
   data() {
     return {
       refGroupLingkupAudit: null,

@@ -1,90 +1,23 @@
 <template>
   <div>
-    <CRow class="px-3">
-      <CCol
-        class="px-0"
-        lg="8"
-        sm="12"
-      >
-        <h4 class="my-0 mb-3">
-          Bidang Obrik pada {{ descUnitObrik }}
-        </h4>
-      </CCol>
-      <CCol
-        class="px-0 text-right"
-        lg="4"
-        sm="12"
-      >
-        <CButton
-          color="primary"
-          class="mb-3"
-        >
-          <CIcon
-            name="cil-plus"
-            size="lg"
-            class="my-0 mb-1 mr-2"
-          />Tambah Bidang Obrik
-        </CButton>
-      </CCol>
-    </CRow>
-    <CCard>
-      <CCardBody>
-        <CDataTable
-          :items="items"
-          :fields="fields"
-          column-filter
-          table-filter
-          items-per-page-select
-          :items-per-page="5"
-          hover
-          sorter
-          pagination
-          clickable-rows
-          @row-clicked="showDetailBidangObrik"
-        >
-          <!-- <template #actions="{item}"> -->
-          <template #actions>
-            <td class="py-2 d-flex justify-content-center">
-              <CButton
-                color="warning"
-                variant="outline"
-                square
-                size="sm"
-                class="mr-3"
-              >
-                <font-awesome-icon :icon="['fas', 'pen']" />
-                <!-- <CIcon name="cil-pencil" /> -->
-              </CButton>
-              <CButton
-                color="danger"
-                variant="outline"
-                square
-                size="sm"
-              >
-                <font-awesome-icon :icon="['fas', 'trash-alt']" />
-                <!-- <CIcon name="cil-trash" /> -->
-              </CButton>
-            </td>
-          </template>
-        </CDataTable>
-      </CCardBody>
-    </CCard>
-    <CButton
-      color="primary"
-      class="mb-3"
-      @click="$router.go(-1)"
-    >
-      <font-awesome-icon
-        class="mr-1"
-        :icon="['fas', 'chevron-left']"
-      /> Kembali
-    </CButton>
+    <master-table
+      top-title="Master"
+      title="Bidang Obrik"
+      :desc-title="descUnitObrik"
+      :items="items"
+      :fields="fields"
+      :clickable-rows="true"
+      @clicked-row="showDetailBidangObrik"
+    />
+    <back-button title="Kembali" />
   </div>
 </template>
 
 <script>
 import axios from 'axios';
 import { API_URL } from '@/utils/api.js';
+import MasterTable from '@/views/components/MasterTable';
+import BackButton from '@/views/components/BackButton';
 
 const fields = [
   {
@@ -105,6 +38,10 @@ const fields = [
 
 export default {
   name: 'AdvancedTables',
+  components: {
+    MasterTable,
+    BackButton,
+  },
   props: {
     idUnitObrik: {
       type: String,
