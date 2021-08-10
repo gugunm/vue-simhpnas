@@ -15,7 +15,7 @@
     <CModal
       v-if="selectedItem && modalMode == 'view'"
       add-content-classes="modal-master-detail"
-      :title="'Detail ' + selectedItem.namaUnit"
+      :title="'Detail Unit Kerja ' + selectedItem.namaUnit"
       :show.sync="isOpenModal"
       size="lg"
     >
@@ -26,6 +26,29 @@
       />
       <template #footer>
         <div />
+      </template>
+    </CModal>
+    <!-- Form Edit -->
+    <CModal
+      v-if="selectedItem && modalMode == 'edit'"
+      :close-on-backdrop="false"
+      add-content-classes="modal-master-detail"
+      :title="'Edit Unit Kerja ' + selectedItem.namaUnit"
+      :show.sync="isOpenModal"
+      size="lg"
+    >
+      <form-unit-kerja
+        :mode="modalMode"
+        :selected-item="selectedItem"
+        :is-show-modal="isOpenModal"
+      />
+      <template #footer>
+        <div />
+        <modal-footer
+          title-btn1="Cancel"
+          title-btn2="Submit Edit"
+          @clicked-btn1="isOpenModal = false"
+        />
       </template>
     </CModal>
     <!-- Form Create -->
@@ -46,28 +69,6 @@
         <modal-footer
           title-btn1="Cancel"
           title-btn2="Submit"
-          @clicked-btn1="isOpenModal = false"
-        />
-      </template>
-    </CModal>
-    <!-- Form Edit -->
-    <CModal
-      v-if="selectedItem && modalMode == 'edit'"
-      :close-on-backdrop="false"
-      add-content-classes="modal-master-detail"
-      title="Edit Unit Kerja"
-      :show.sync="isOpenModal"
-      size="lg"
-    >
-      <form-unit-kerja
-        :mode="modalMode"
-        :selected-item="selectedItem"
-        :is-show-modal="isOpenModal"
-      />
-      <template #footer>
-        <modal-footer
-          title-btn1="Cancel"
-          title-btn2="Submit Edit"
           @clicked-btn1="isOpenModal = false"
         />
       </template>
@@ -146,6 +147,7 @@ export default {
     isOpenModal: function (newStatus, oldStatus) {
       if (newStatus === false) {
         this.selectedItem = '';
+        this.modalMode = '';
       }
     },
   },
@@ -162,7 +164,6 @@ export default {
     },
     openCreateModal() {
       this.modalMode = 'create';
-      this.selectedItem = '';
       this.isOpenModal = true;
     },
     openEditModal(item) {

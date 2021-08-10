@@ -195,24 +195,22 @@ export default {
   props: ['mode', 'selectedItem', 'isShowModal', 'optionsProvinsi'],
   data() {
     return {
-      item:
-        this.mode == 'edit' || 'view'
-          ? { ...this.selectedItem }
-          : { ...this.emptyItem },
-      emptyItem: {
-        id: '',
-        namaUnit: '',
-        namaPimpinan: '',
-        nipPimpinan: '',
-        alamat: '',
-        provinsi: '',
-        kabkot: '',
-        kecamatan: '',
-        kelurahan: '',
-        jumlahObrik: '',
-        jumlahObrikBersih: '',
-        telpon: '',
-      },
+      item: { ...this.selectedItem },
+      //   this.mode == 'edit' ? { ...this.selectedItem } : { ...this.emptyItem },
+      // emptyItem: {
+      //   id: '',
+      //   namaUnit: '',
+      //   namaPimpinan: '',
+      //   nipPimpinan: '',
+      //   alamat: '',
+      //   provinsi: '',
+      //   kabkot: '',
+      //   kecamatan: '',
+      //   kelurahan: '',
+      //   jumlahObrik: '',
+      //   jumlahObrikBersih: '',
+      //   telpon: '',
+      // },
       selectedProvinsi: this.selectedItem ? this.selectedItem.provinsi : '',
     };
   },
@@ -227,7 +225,7 @@ export default {
     },
     isShowModal: function (newValue, oldValue) {
       if (newValue === false) {
-        this.item = this.emptyItem;
+        // this.item = this.emptyItem;
         this.selectedProvinsi = '';
       }
     },
