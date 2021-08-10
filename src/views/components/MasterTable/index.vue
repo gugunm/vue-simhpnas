@@ -18,6 +18,7 @@
         <CButton
           color="primary"
           class="mb-3"
+          @click="openCreateModal"
         >
           <CIcon
             name="cil-plus"
@@ -32,18 +33,31 @@
         <CDataTable
           :items="items"
           :fields="fields"
+          hover
           column-filter
+          sorter
           table-filter
           items-per-page-select
           :items-per-page="5"
-          hover
-          sorter
           pagination
-          :clickable-rows="clickableRows"
-          @row-clicked="clickedRow"
         >
-          <!-- <template #actions="{item}"> -->
-          <template #actions>
+          <!-- :clickable-rows="clickableRows"
+          @row-clicked="clickedRow" -->
+          <template #id="{item}">
+            <td
+              v-if="clickableRows"
+              class="text-primary"
+              style="cursor:pointer;"
+              @click="clickedRow(item)"
+            >
+              {{ item.id }}
+            </td>
+            <td v-else>
+              {{ item.id }}
+            </td>
+          </template>
+          <!-- <template #actions> -->
+          <template #actions="{item}">
             <td class="py-2 d-flex justify-content-center">
               <CButton
                 color="warning"
@@ -51,15 +65,17 @@
                 square
                 size="sm"
                 class="mr-3"
+                @click="openEditModal(item)"
               >
                 <font-awesome-icon :icon="['fas', 'pen']" />
-                <!-- <CIcon name="cil-pencil" /> -->
               </CButton>
+              <!-- <CIcon name="cil-pencil" /> -->
               <CButton
                 color="danger"
                 variant="outline"
                 square
                 size="sm"
+                @click="openDeleteModal(item.id)"
               >
                 <font-awesome-icon :icon="['fas', 'trash-alt']" />
                 <!-- <CIcon name="cil-trash" /> -->
@@ -76,10 +92,24 @@
 export default {
   name: 'MasterTable',
   props: ['topTitle', 'title', 'descTitle', 'items', 'fields', 'clickableRows'],
-  emits: ['clicked-row'],
+  emits: [
+    'clicked-row',
+    'open-create-modal',
+    'open-edit-modal',
+    'open-delete-modal',
+  ],
   methods: {
     clickedRow(item) {
       this.$emit('clicked-row', item);
+    },
+    openCreateModal() {
+      this.$emit('open-create-modal');
+    },
+    openEditModal(item) {
+      this.$emit('open-edit-modal', item);
+    },
+    openDeleteModal(id) {
+      this.$emit('open-delete-modal', id);
     },
   },
 };

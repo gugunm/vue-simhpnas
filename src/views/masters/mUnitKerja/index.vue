@@ -6,149 +6,79 @@
       :items="items"
       :fields="fields"
       :clickable-rows="true"
-      @clicked-row="openModalDetails"
+      @clicked-row="openViewModal"
+      @open-create-modal="openCreateModal"
+      @open-edit-modal="openEditModal"
+      @open-delete-modal="openDeleteModal"
     />
-    <!-- <CCard>
-      <CCardBody>
-        <CDataTable
-          :items="items"
-          :fields="fields"
-          column-filter
-          table-filter
-          items-per-page-select
-          :items-per-page="5"
-          hover
-          sorter
-          pagination
-        >
-          <template #actions="{item}">
-            <td class="py-2 d-flex justify-content-around">
-              <CButton
-                color="primary"
-                variant="outline"
-                square
-                size="sm"
-                @click="openModalDetails(item)"
-              >
-                <font-awesome-icon :icon="['fas', 'eye']" />
-              </CButton>
-              <CButton
-                color="warning"
-                variant="outline"
-                square
-                size="sm"
-              >
-                <font-awesome-icon :icon="['fas', 'pen']" />
-              </CButton>
-              <CButton
-                color="danger"
-                variant="outline"
-                square
-                size="sm"
-              >
-                <font-awesome-icon :icon="['fas', 'trash-alt']" />
-              </CButton>
-            </td>
-          </template>
-        </CDataTable>
-      </CCardBody>
-    </CCard> -->
+    <!-- Form View -->
     <CModal
-      v-if="selectedItem != null"
-      :title="'Detail ' + selectedItem.namaUnit"
-      :show.sync="isShowModal"
-      size="lg"
+      v-if="selectedItem && modalMode == 'view'"
       add-content-classes="modal-master-detail"
+      :title="'Detail ' + selectedItem.namaUnit"
+      :show.sync="isOpenModal"
+      size="lg"
     >
-      <template>
-        <CCardBody>
-          <CForm>
-            <CInput
-              label="ID Unit"
-              :value="selectedItem.id"
-              horizontal
-              :readonly="true"
-            />
-            <CInput
-              label="Nama Unit"
-              :value="selectedItem.namaUnit"
-              horizontal
-              :readonly="true"
-            />
-            <CInput
-              label="Nama Pimpinan"
-              :value="selectedItem.namaPimpinan"
-              horizontal
-              :readonly="true"
-            />
-            <CInput
-              label="NIP Pimpinan"
-              :value="selectedItem.nipPimpinan"
-              horizontal
-              :readonly="true"
-            />
-            <CInput
-              label="Alamat"
-              :value="selectedItem.alamat"
-              horizontal
-              :readonly="true"
-            />
-            <CInput
-              label="Provinsi"
-              :value="selectedItem.provinsi"
-              horizontal
-              :readonly="true"
-            />
-            <CInput
-              label="Kab/Kota"
-              :value="selectedItem.kabkot"
-              horizontal
-              :readonly="true"
-            />
-            <CInput
-              label="Kecamatan"
-              :value="selectedItem.kecamatan"
-              horizontal
-              :readonly="true"
-            />
-            <CInput
-              label="Kelurahan"
-              :value="selectedItem.kelurahan"
-              horizontal
-              :readonly="true"
-            />
-            <CInput
-              label="Jumlah Obrik"
-              :value="selectedItem.jumlahObrik"
-              horizontal
-              :readonly="true"
-            />
-            <CInput
-              label="Jumlah Obrik Bersih"
-              :value="selectedItem.jumlahObrikBersih"
-              horizontal
-              :readonly="true"
-            />
-            <CInput
-              label="Telpon"
-              :value="selectedItem.telpon"
-              horizontal
-              :readonly="true"
-            />
-          </CForm>
-        </CCardBody>
+      <form-unit-kerja
+        :mode="modalMode"
+        :selected-item="selectedItem"
+        :is-show-modal="isOpenModal"
+      />
+      <template #footer>
+        <div />
       </template>
-      <!-- <footer>
-        <modal-footer>
-          <button>OKEE</button>
-        </modal-footer>
-      </footer> -->
+    </CModal>
+    <!-- Form Create -->
+    <CModal
+      v-if="optionsWilayah.provinsi && modalMode == 'create'"
+      :close-on-backdrop="false"
+      add-content-classes="modal-master-detail"
+      title="Create Unit Kerja"
+      :show.sync="isOpenModal"
+      size="lg"
+    >
+      <form-unit-kerja
+        :mode="modalMode"
+        :is-show-modal="isOpenModal"
+        :options-provinsi="optionsWilayah.provinsi"
+      />
+      <template #footer>
+        <modal-footer
+          title-btn1="Cancel"
+          title-btn2="Submit"
+          @clicked-btn1="isOpenModal = false"
+        />
+      </template>
+    </CModal>
+    <!-- Form Edit -->
+    <CModal
+      v-if="selectedItem && modalMode == 'edit'"
+      :close-on-backdrop="false"
+      add-content-classes="modal-master-detail"
+      title="Edit Unit Kerja"
+      :show.sync="isOpenModal"
+      size="lg"
+    >
+      <form-unit-kerja
+        :mode="modalMode"
+        :selected-item="selectedItem"
+        :is-show-modal="isOpenModal"
+      />
+      <template #footer>
+        <modal-footer
+          title-btn1="Cancel"
+          title-btn2="Submit Edit"
+          @clicked-btn1="isOpenModal = false"
+        />
+      </template>
     </CModal>
   </div>
 </template>
 
 <script>
 import MasterTable from '@/views/components/MasterTable';
+import FormUnitKerja from './FormUnitKerja.vue';
+import ModalFooter from './ModalFooter.vue';
 
 const fields = [
   {
@@ -184,13 +114,22 @@ export default {
   name: 'MasterUnitKerja',
   components: {
     MasterTable,
+    FormUnitKerja,
+    ModalFooter,
   },
   data() {
     return {
       unitKerja: null,
       fields,
-      isShowModal: false,
-      selectedItem: null,
+      selectedItem: '',
+      modalMode: '',
+      isOpenModal: false,
+      optionsWilayah: {
+        provinsi: '',
+        kabkot: '',
+        kecamatan: '',
+        kelurahan: '',
+      },
     };
   },
   computed: {
@@ -202,13 +141,37 @@ export default {
         : [];
     },
   },
+  watch: {
+    // whenever question isShowEditModal, this function will run
+    isOpenModal: function (newStatus, oldStatus) {
+      if (newStatus === false) {
+        this.selectedItem = '';
+      }
+    },
+  },
   created() {
     this.loadUnitKerja();
+    this.loadProvinsi();
+    this.loadKabkot();
   },
   methods: {
-    openModalDetails(item) {
+    openViewModal(item) {
+      this.modalMode = 'view';
       this.selectedItem = item;
-      this.isShowModal = true;
+      this.isOpenModal = true;
+    },
+    openCreateModal() {
+      this.modalMode = 'create';
+      this.selectedItem = '';
+      this.isOpenModal = true;
+    },
+    openEditModal(item) {
+      this.modalMode = 'edit';
+      this.selectedItem = item;
+      this.isOpenModal = true;
+    },
+    openDeleteModal(id) {
+      this.isOpenModal = true;
     },
     async loadUnitKerja(refresh = false) {
       this.loading = true;
@@ -222,12 +185,30 @@ export default {
       }
       this.loading = false;
     },
+    async loadProvinsi(refresh = false) {
+      try {
+        await this.$store.dispatch('m_ref_wilayah/loadRefProvinsi', {
+          forceRefresh: refresh,
+        });
+        this.optionsWilayah.provinsi =
+          this.$store.getters['m_ref_wilayah/refProvinsi'];
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
+    },
+    async loadKabkot(refresh = false) {
+      try {
+        await this.$store.dispatch('m_ref_wilayah/loadRefKabkot', {
+          idProvinsi: this.idProvinsi,
+          forceRefresh: refresh,
+        });
+        this.optionsKabkot = this.$store.getters['m_ref_wilayah/refKabkot'];
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
+    },
   },
 };
 </script>
 
-<style>
-.modal-master-detail .form-control[readonly] {
-  background-color: rgba(0, 0, 0, 0.04);
-}
-</style>
+

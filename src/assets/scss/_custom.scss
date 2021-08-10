@@ -1,5 +1,20 @@
 // Here you can add other styles
+.bg-color-navy-1 {
+    background-color: $color-navy-1;
+}
 
+.color-white {
+    color: $color-white
+}
+
+.btn-close-modal {
+    background-color: $color-navy-1;
+}
+
+.btn-close-modal:hover {
+    cursor: pointer;
+    background-color: $color-navy-2;
+}
 
 .select-lang-menu{
     max-width:128px;
@@ -22,5 +37,33 @@
 #cropp-img-img{
     max-width:500px;
     max-height:500px;
+}
+
+// MODAL MASTER
+.modal-master-detail {
+    color: $color-navy-1;
+    .modal-header{
+        background-color: $color-navy-1;
+        color: white;
+    }
+    .modal-body {
+        padding: 1.25rem;
+    }
+    .card-body {
+        padding: 0;
+    }
+    .form-control {
+        color: $color-navy-1;
+    }
+    .form-control[readonly] {
+        background-color: $color-blue-sky-1;
+        label {
+            color: $color-navy-1;
+        }
+    }
+    .vs__search, .vs__search:focus {
+        padding: 0.13rem 0.75rem;
+        color: $color-navy-1;
+    }
 }
 
