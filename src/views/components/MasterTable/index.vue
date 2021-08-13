@@ -16,7 +16,7 @@
         sm="12"
       >
         <CButton
-          color="primary"
+          color="info"
           class="mb-3"
           @click="openCreateModal"
         >
