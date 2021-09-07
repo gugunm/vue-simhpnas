@@ -2,6 +2,9 @@ export default {
   unitKerja(state) {
     return state.unitKerja;
   },
+  unitKerjaById(state) {
+    return state.unitKerjaById;
+  },
   hasUnitKerja(state) {
     return state.unitKerja && state.unitKerja.length > 0;
   },

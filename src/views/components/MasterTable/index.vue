@@ -60,6 +60,7 @@
           <template #actions="{item}">
             <td class="py-2 d-flex justify-content-center">
               <CButton
+                v-if="isEditButton"
                 color="warning"
                 variant="outline"
                 square
@@ -91,7 +92,27 @@
 <script>
 export default {
   name: 'MasterTable',
-  props: ['topTitle', 'title', 'descTitle', 'items', 'fields', 'clickableRows'],
+  props: {
+    topTitle: {
+      type: String,
+      default: '',
+    },
+    title: {
+      type: String,
+      default: '',
+    },
+    descTitle: {
+      type: String,
+      default: '',
+    },
+    items: Object,
+    fields: Object,
+    clickableRows: Boolean,
+    isEditButton: {
+      type: Boolean,
+      default: true,
+    },
+  },
   emits: [
     'clicked-row',
     'open-create-modal',

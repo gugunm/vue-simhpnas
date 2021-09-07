@@ -43,5 +43,44 @@ export default {
 
     context.commit('setUnitKerja', unitKerja);
     context.commit('setFetchTimestamp');
+  },
+  async loadUnitKerjaById(context, payload) {
+    const response = await axios({
+      method: 'GET',
+      baseURL: API_URL,
+      url: `/api/unitkerja/${payload.idUnitKerja}`,
+      params: {
+        token: localStorage.getItem('api_token'),
+      },
+    });
+
+    const responseData = await response.data;
+
+    if (response.status != 200) {
+      const error = new Error(
+        responseData.message || 'Failed to fetch data unit kerja.'
+      );
+      throw error;
+    }
+
+    const unitKerjaById = {
+      id: responseData["Kode_Unit_Obrik"],
+      namaUnit: responseData["Nama_Unit"],
+      namaPimpinan: responseData["Nama_Pimpinan"],
+      nipPimpinan: responseData["NIP_Pimpinan"],
+      alamat: responseData["Alamat"],
+      provinsi: responseData["Provinsi"],
+      kabkot: responseData["Kabupaten_kota"],
+      kecamatan: responseData["Kecamatan"],
+      kelurahan: responseData["Kelurahan"],
+      jumlahObrik: responseData["Jumlah_Obrik"],
+      jumlahObrikBersih: responseData["Jumlah_Obrik_Bersih"],
+      telpon: responseData["telpon"],
+    };
+
+    context.commit('setUnitKerjaById', unitKerjaById);
+  },
+  resetUnitKerjaById(context) {
+    context.commit('setUnitKerjaById', '');
   }
 };

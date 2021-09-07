@@ -6,35 +6,16 @@
       :items="items"
       :fields="fields"
       :clickable-rows="true"
-      @clicked-row="openViewModal"
-      @open-create-modal="openCreateModal"
-      @open-edit-modal="openEditModal"
+      :is-edit-button="false"
+      @clicked-row="openDetail"
+      @open-create-modal="openCreate"
       @open-delete-modal="openDeleteModal"
-    />
-    <!-- Form View -->
-    <form-unit-kerja
-      v-if="modalMode == 'view'"
-      :mode="modalMode"
-      :modal-title="'Detail ' + selectedItem.namaUnit"
-      :selected-item="selectedItem"
-      :is-show-modal="isOpenModal"
-      @toggle-modal="toggleModal"
-    />
-    <!-- Form Create and Edit -->
-    <form-unit-kerja
-      v-if="modalMode === 'create' || modalMode === 'edit'"
-      :mode="modalMode"
-      :modal-title="modalMode === 'create' ? 'Create New Data' : `Edit Data ${selectedItem.namaUnit}`"
-      :is-show-modal="isOpenModal"
-      :selected-item="selectedItem"
-      @toggle-modal="toggleModal"
     />
   </div>
 </template>
 
 <script>
 import MasterTable from '@/views/components/MasterTable';
-import FormUnitKerja from './FormUnitKerja.vue';
 import { loadItemsComponent } from './fetchApiFunctions';
 
 const fields = [
@@ -64,6 +45,7 @@ const fields = [
   },
   {
     key: 'actions',
+    label: 'Delete',
   },
 ];
 
@@ -71,53 +53,30 @@ export default {
   name: 'MasterUnitKerja',
   components: {
     MasterTable,
-    FormUnitKerja,
   },
   data() {
     return {
-      items: null,
+      items: '',
       fields,
-      selectedItem: '',
-      modalMode: '',
-      isOpenModal: false,
-      error: '',
     };
-  },
-  watch: {
-    isOpenModal: function (newStatus, oldStatus) {
-      if (newStatus === false && oldStatus === true) {
-        this.selectedItem = '';
-        this.modalMode = '';
-      }
-    },
   },
   created() {
     this.loadUnitKerja();
   },
   methods: {
-    toggleModal(value) {
-      if (value === false) {
-        this.isOpenModal = true;
-      } else {
-        this.isOpenModal = false;
-      }
-    },
-    openViewModal(item) {
-      this.modalMode = 'view';
-      this.selectedItem = item;
-      this.isOpenModal = true;
-    },
-    openCreateModal() {
-      this.modalMode = 'create';
-      this.isOpenModal = true;
-    },
-    openEditModal(item) {
-      this.modalMode = 'edit';
-      this.selectedItem = item;
-      this.isOpenModal = true;
-    },
     openDeleteModal(id) {
       this.isOpenModal = true;
+    },
+    openDetail(item) {
+      this.$router.push({
+        name: 'master-unit-kerja-detail',
+        params: { idUnitKerja: item.id },
+      });
+    },
+    openCreate() {
+      this.$router.push({
+        name: 'master-unit-kerja-create',
+      });
     },
     loadUnitKerja(refresh = false) {
       loadItemsComponent({

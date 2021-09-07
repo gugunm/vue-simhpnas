@@ -4,7 +4,11 @@ import Router from 'vue-router'
 // === SIMHPNAS ===
 /* Master */
 const MasterPenyebab = () => import('@/views/masters/mPenyebab')
-const MasterUnitKerja = () => import('@/views/masters/mUnitKerja')
+
+const MasterUnitKerja = () => import('@/views/masters/mUnitKerja/index.vue')
+const MasterCreateUnitKerja = () => import('@/views/masters/mUnitKerja/Create.vue')
+const MasterDetailUnitKerja = () => import('@/views/masters/mUnitKerja/Detail.vue')
+
 const MasterUserUnitKerja = () => import('@/views/masters/mUserUnitKerja')
 const MasterUserUtama = () => import('@/views/masters/mUserUtama')
 
@@ -160,16 +164,16 @@ const EditResource = () => import('@/views/resources/EditResource')
 const DeleteResource = () => import('@/views/resources/DeleteResource')
 
 //Email
-const Emails        = () => import('@/views/email/Emails')
-const CreateEmail  = () => import('@/views/email/CreateEmail')
-const EditEmail    = () => import('@/views/email/EditEmail')
-const ShowEmail     = () => import('@/views/email/ShowEmail')
-const SendEmail     = () => import('@/views/email/SendEmail')
+const Emails = () => import('@/views/email/Emails')
+const CreateEmail = () => import('@/views/email/CreateEmail')
+const EditEmail = () => import('@/views/email/EditEmail')
+const ShowEmail = () => import('@/views/email/ShowEmail')
+const SendEmail = () => import('@/views/email/SendEmail')
 
-const Menus       = () => import('@/views/menu/MenuIndex')
-const CreateMenu  = () => import('@/views/menu/CreateMenu')
-const EditMenu    = () => import('@/views/menu/EditMenu')
-const DeleteMenu  = () => import('@/views/menu/DeleteMenu')
+const Menus = () => import('@/views/menu/MenuIndex')
+const CreateMenu = () => import('@/views/menu/CreateMenu')
+const EditMenu = () => import('@/views/menu/EditMenu')
+const DeleteMenu = () => import('@/views/menu/DeleteMenu')
 
 const MenuElements = () => import('@/views/menuElements/ElementsIndex')
 const CreateMenuElement = () => import('@/views/menuElements/CreateMenuElement')
@@ -182,7 +186,7 @@ const Media = () => import('@/views/media/Media')
 Vue.use(Router)
 
 let router = new Router({
-  mode: 'hash', // https://router.vuejs.org/api/#mode
+  mode: 'history', // https://router.vuejs.org/api/#mode
   linkActiveClass: 'active',
   scrollBehavior: () => ({ y: 0 }),
   routes: configRoutes()
@@ -191,42 +195,42 @@ let router = new Router({
 
 router.beforeEach((to, from, next) => {
   let roles = localStorage.getItem("roles");
-  if(roles != null){
+  if (roles != null) {
     roles = roles.split(',')
   }
-  if(to.matched.some(record => record.meta.requiresAdmin)) {
-    if(roles != null && roles.indexOf('admin') >= 0 ){
+  if (to.matched.some(record => record.meta.requiresAdmin)) {
+    if (roles != null && roles.indexOf('admin') >= 0) {
       next()
-    }else{
+    } else {
       next({
         path: '/login',
         params: { nextUrl: to.fullPath }
       })
     }
-  }else if(to.matched.some(record => record.meta.requiresUser)) {
-    if(roles != null && roles.indexOf('user') >= 0 ){
+  } else if (to.matched.some(record => record.meta.requiresUser)) {
+    if (roles != null && roles.indexOf('user') >= 0) {
       next()
-    }else{
+    } else {
       next({
         path: '/login',
         params: { nextUrl: to.fullPath }
       })
     }
-  }else{
+  } else {
     next()
   }
 })
 
 export default router
 
-function configRoutes () {
+function configRoutes() {
   return [
     {
       path: '/',
       redirect: '/dashboard',
       name: 'Home',
       component: TheContainer,
-      meta:{
+      meta: {
         requiresUser: true
       },
       children: [
@@ -236,7 +240,7 @@ function configRoutes () {
           path: 'master-penyebab',
           name: 'Master Penyebab',
           component: MasterPenyebab,
-          meta:{
+          meta: {
             requiresUser: true
           }
         },
@@ -244,16 +248,16 @@ function configRoutes () {
           path: 'master-referensi',
           name: 'master-referensi',
           component: {
-            render (c) { return c('router-view') }
+            render(c) { return c('router-view') }
           },
-          meta:{
+          meta: {
             requiresUser: true
           },
           children: [
             {
               path: 'wilayah',
               component: {
-                render (c) { return c('router-view') }
+                render(c) { return c('router-view') }
               },
               children: [
                 // MasterRefWilayah
@@ -261,7 +265,7 @@ function configRoutes () {
                   path: '/',
                   name: 'master-ref-wilayah',
                   component: MasterRefWilayah,
-                  meta:{
+                  meta: {
                     requiresUser: true
                   },
                 },
@@ -270,7 +274,7 @@ function configRoutes () {
                   path: 'provinsi/:idProvinsi',
                   name: 'master-ref-wilayah-provinsi',
                   component: MasterRefWilayahKabkot,
-                  meta:{
+                  meta: {
                     requiresUser: true
                   },
                   props: true
@@ -280,7 +284,7 @@ function configRoutes () {
                   path: 'kabkot/:idKabkot',
                   name: 'master-ref-wilayah-kabkot',
                   component: MasterRefWilayahKecamatan,
-                  meta:{
+                  meta: {
                     requiresUser: true
                   },
                   props: true
@@ -290,7 +294,7 @@ function configRoutes () {
                   path: 'kecamatan/:idKecamatan',
                   name: 'master-ref-wilayah-kecamatan',
                   component: MasterRefWilayahKelurahan,
-                  meta:{
+                  meta: {
                     requiresUser: true
                   },
                   props: true
@@ -300,7 +304,7 @@ function configRoutes () {
             {
               path: 'obrik',
               component: {
-                render (c) { return c('router-view') }
+                render(c) { return c('router-view') }
               },
               children: [
                 // Master Ref Obrik
@@ -308,7 +312,7 @@ function configRoutes () {
                   path: '/',
                   name: 'master-ref-obrik',
                   component: MasterRefUnitObrik,
-                  meta:{
+                  meta: {
                     requiresUser: true
                   },
                 },
@@ -317,7 +321,7 @@ function configRoutes () {
                   path: 'bidang-obrik/:idUnitObrik',
                   name: 'master-ref-bidang-obrik',
                   component: MasterRefBidangObrik,
-                  meta:{
+                  meta: {
                     requiresUser: true
                   },
                   props: true
@@ -327,7 +331,7 @@ function configRoutes () {
                   path: 'sub-bidang-obrik/:idBidangObrik',
                   name: 'master-ref-sub-bidang-obrik',
                   component: MasterRefSubBidangObrik,
-                  meta:{
+                  meta: {
                     requiresUser: true
                   },
                   props: true
@@ -337,14 +341,14 @@ function configRoutes () {
             {
               path: 'lingkup-audit',
               component: {
-                render (c) { return c('router-view') }
+                render(c) { return c('router-view') }
               },
               children: [
                 {
                   path: '/',
                   name: 'master-ref-group-lingkup-audit',
                   component: MasterRefGroupLingkupAudit,
-                  meta:{
+                  meta: {
                     requiresUser: true
                   },
                 },
@@ -352,7 +356,7 @@ function configRoutes () {
                   path: ':idGroupLingkupAudit',
                   name: 'master-ref-lingkup-audit',
                   component: MasterRefLingkupAudit,
-                  meta:{
+                  meta: {
                     requiresUser: true
                   },
                   props: true
@@ -363,7 +367,7 @@ function configRoutes () {
               path: 'jabatan',
               name: 'master-ref-jabatan',
               component: MasterRefJabatan,
-              meta:{
+              meta: {
                 requiresUser: true
               }
             },
@@ -371,7 +375,7 @@ function configRoutes () {
               path: 'jenis-anggaran',
               name: 'master-ref-jenis-anggaran',
               component: MasterRefJenisAnggaran,
-              meta:{
+              meta: {
                 requiresUser: true
               }
             },
@@ -379,21 +383,21 @@ function configRoutes () {
               path: 'jenis-obrik',
               name: 'master-ref-jenis-obrik',
               component: MasterRefJenisObrik,
-              meta:{
+              meta: {
                 requiresUser: true
               }
             },
             {
               path: 'unit-audit',
               component: {
-                render (c) { return c('router-view') }
+                render(c) { return c('router-view') }
               },
               children: [
                 {
                   path: '/',
                   name: 'master-ref-unit-audit',
                   component: MasterRefUnitAudit,
-                  meta:{
+                  meta: {
                     requiresUser: true
                   },
                 },
@@ -401,7 +405,7 @@ function configRoutes () {
                   path: ':idUnitAudit',
                   name: 'master-ref-sub-unit-audit',
                   component: MasterRefSubUnitAudit,
-                  meta:{
+                  meta: {
                     requiresUser: true
                   },
                   props: true
@@ -413,14 +417,14 @@ function configRoutes () {
         {
           path: 'master-rekomendasi',
           component: {
-            render (c) { return c('router-view') }
+            render(c) { return c('router-view') }
           },
           children: [
             {
               path: '/',
               name: 'master-klp-rekomendasi',
               component: MasterRekomendasi,
-              meta:{
+              meta: {
                 requiresUser: true
               },
             },
@@ -428,7 +432,7 @@ function configRoutes () {
               path: ':idKlpRekomendasi',
               name: 'master-sub-klp-rekomendasi',
               component: MasterSubRekomendasi,
-              meta:{
+              meta: {
                 requiresUser: true
               },
               props: true
@@ -438,14 +442,14 @@ function configRoutes () {
         {
           path: 'master-tindak-lanjut',
           component: {
-            render (c) { return c('router-view') }
+            render(c) { return c('router-view') }
           },
           children: [
             {
               path: '/',
               name: 'master-tl',
               component: MasterTindakLanjut,
-              meta:{
+              meta: {
                 requiresUser: true
               },
             },
@@ -453,7 +457,7 @@ function configRoutes () {
               path: ':idKlpTindakLanjut',
               name: 'master-sub-tl',
               component: MasterSubTindakLanjut,
-              meta:{
+              meta: {
                 requiresUser: true
               },
               props: true
@@ -464,7 +468,7 @@ function configRoutes () {
           path: 'master-temuan',
           name: 'Master Temuan',
           component: MasterTemuan,
-          meta:{
+          meta: {
             requiresUser: true
           }
         },
@@ -472,7 +476,7 @@ function configRoutes () {
           path: 'master-kelompok-temuan/:idJenisTemuan',
           name: 'mkelompoktemuan',
           component: MasterKlpTemuan,
-          meta:{
+          meta: {
             requiresUser: true
           },
           props: true
@@ -481,7 +485,7 @@ function configRoutes () {
           path: 'master-sub-kelompok-temuan/:idKlpTemuan',
           name: 'msubkelompoktemuan',
           component: MasterSubKlpTemuan,
-          meta:{
+          meta: {
             requiresUser: true
           },
           props: true
@@ -489,16 +493,42 @@ function configRoutes () {
         {
           path: 'master-unit-kerja',
           name: 'Master Unit Kerja',
-          component: MasterUnitKerja,
-          meta:{
-            requiresUser: true
-          }
+          component: {
+            render(c) { return c('router-view') }
+          },
+          children: [
+            {
+              path: '/',
+              name: 'master-unit-kerja-index',
+              component: MasterUnitKerja,
+              meta: {
+                requiresUser: true
+              },
+            },
+            {
+              path: 'create',
+              name: 'master-unit-kerja-create',
+              component: MasterCreateUnitKerja,
+              meta: {
+                requiresUser: true
+              },
+            },
+            {
+              path: ':idUnitKerja',
+              name: 'master-unit-kerja-detail',
+              component: MasterDetailUnitKerja,
+              meta: {
+                requiresUser: true
+              },
+              props: true
+            },
+          ]
         },
         {
           path: 'master-user-unit-kerja',
           name: 'Master User Unit Kerja',
           component: MasterUserUnitKerja,
-          meta:{
+          meta: {
             requiresUser: true
           }
         },
@@ -506,7 +536,7 @@ function configRoutes () {
           path: 'master-user-utama',
           name: 'Master User Utama',
           component: MasterUserUtama,
-          meta:{
+          meta: {
             requiresUser: true
           }
         },
@@ -516,7 +546,7 @@ function configRoutes () {
           path: 'lha',
           name: 'Data LHA',
           component: FormLha,
-          meta:{
+          meta: {
             requiresUser: true
           }
         },
@@ -524,7 +554,7 @@ function configRoutes () {
           path: 'pelaku',
           name: 'Pelaku',
           component: FormPelaku,
-          meta:{
+          meta: {
             requiresUser: true
           }
         },
@@ -532,7 +562,7 @@ function configRoutes () {
           path: 'penyebab',
           name: 'Penyebab',
           component: FormPenyebab,
-          meta:{
+          meta: {
             requiresUser: true
           }
         },
@@ -540,7 +570,7 @@ function configRoutes () {
           path: 'rekomendasi',
           name: 'Rekomendasi',
           component: FormRekomendasi,
-          meta:{
+          meta: {
             requiresUser: true
           }
         },
@@ -548,7 +578,7 @@ function configRoutes () {
           path: 'temuan',
           name: 'Temuan',
           component: FormTemuan,
-          meta:{
+          meta: {
             requiresUser: true
           }
         },
@@ -556,7 +586,7 @@ function configRoutes () {
           path: 'tim-audit',
           name: 'TimAudit',
           component: FormTimAudit,
-          meta:{
+          meta: {
             requiresUser: true
           }
         },
@@ -564,7 +594,7 @@ function configRoutes () {
           path: 'tindak-lanjut',
           name: 'Tindak Lanjut',
           component: FormTindakLanjut,
-          meta:{
+          meta: {
             requiresUser: true
           }
         },
@@ -574,7 +604,7 @@ function configRoutes () {
           path: 'media',
           name: 'Media',
           component: Media,
-          meta:{
+          meta: {
             requiresAdmin: true
           }
         },
@@ -582,7 +612,7 @@ function configRoutes () {
           path: 'dashboard',
           name: 'Dashboard',
           component: Dashboard,
-          meta:{
+          meta: {
             requiresUser: true
           }
         },
@@ -590,7 +620,7 @@ function configRoutes () {
           path: 'colors',
           name: 'Colors',
           component: Colors,
-          meta:{
+          meta: {
             requiresAdmin: true
           }
         },
@@ -598,7 +628,7 @@ function configRoutes () {
           path: 'typography',
           name: 'Typography',
           component: Typography,
-          meta:{
+          meta: {
             requiresAdmin: true
           }
         },
@@ -606,7 +636,7 @@ function configRoutes () {
           path: 'charts',
           name: 'Charts',
           component: Charts,
-          meta:{
+          meta: {
             requiresAdmin: true
           }
         },
@@ -615,14 +645,14 @@ function configRoutes () {
           redirect: '/tables/tables',
           name: 'Tables',
           component: {
-            render (c) { return c('router-view') }
+            render(c) { return c('router-view') }
           },
           children: [
             {
               path: 'tables',
               name: 'Basic tables',
               component: Tables,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -630,7 +660,7 @@ function configRoutes () {
               path: 'advanced-tables',
               name: 'Advanced tables',
               component: AdvancedTables,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -638,7 +668,7 @@ function configRoutes () {
               path: 'lazy-loading-tables',
               name: 'Lazy loading tables',
               component: LazyLoadingTables,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -646,7 +676,7 @@ function configRoutes () {
               path: 'lazy-loading-tables-scroll',
               name: 'Lazy loading tables scroll',
               component: LazyLoadingTablesScroll,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             }
@@ -659,15 +689,15 @@ function configRoutes () {
         },
         {
           path: 'menu',
-          meta: { label: 'Menu'},
+          meta: { label: 'Menu' },
           component: {
-            render (c) { return c('router-view') }
+            render(c) { return c('router-view') }
           },
           children: [
             {
               path: '',
               component: Menus,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -676,7 +706,7 @@ function configRoutes () {
               // meta: { label: 'Create Menu' },
               name: 'CreateMenu',
               component: CreateMenu,
-              meta:{
+              meta: {
                 label: 'Create Menu',
                 requiresAdmin: true
               }
@@ -686,7 +716,7 @@ function configRoutes () {
               // meta: { label: 'Edit Menu' },
               name: 'EditMenu',
               component: EditMenu,
-              meta:{
+              meta: {
                 label: 'Edit Menu',
                 requiresAdmin: true
               }
@@ -696,7 +726,7 @@ function configRoutes () {
               // meta: { label: 'Delete Menu' },
               name: 'DeleteMenu',
               component: DeleteMenu,
-              meta:{
+              meta: {
                 label: 'Delete Menu',
                 requiresAdmin: true
               }
@@ -705,15 +735,15 @@ function configRoutes () {
         },
         {
           path: 'menuelement',
-          meta: { label: 'MenuElement'},
+          meta: { label: 'MenuElement' },
           component: {
-            render (c) { return c('router-view') }
+            render(c) { return c('router-view') }
           },
           children: [
             {
               path: ':menu/menuelement',
               component: MenuElements,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -722,7 +752,7 @@ function configRoutes () {
               // meta: { label: 'Create Menu Element' },
               name: 'Create Menu Element',
               component: CreateMenuElement,
-              meta:{
+              meta: {
                 label: 'Create Menu Element',
                 requiresAdmin: true
               }
@@ -732,7 +762,7 @@ function configRoutes () {
               // meta: { label: 'Menu Element Details'},
               name: 'Menu Element',
               component: ShowMenuElement,
-              meta:{
+              meta: {
                 label: 'Menu Element Details',
                 requiresAdmin: true
               }
@@ -742,7 +772,7 @@ function configRoutes () {
               // meta: { label: 'Edit Menu Element' },
               name: 'Edit Menu Element',
               component: EditMenuElement,
-              meta:{
+              meta: {
                 label: 'Edit Menu Element',
                 requiresAdmin: true
               }
@@ -752,7 +782,7 @@ function configRoutes () {
               // meta: { label: 'Delete Menu Element' },
               name: 'Delete Menu Element',
               component: DeleteMenuElement,
-              meta:{
+              meta: {
                 label: 'Delete Menu Element',
                 requiresAdmin: true
               }
@@ -761,15 +791,15 @@ function configRoutes () {
         },
         {
           path: 'users',
-          meta: { label: 'Users'},
+          meta: { label: 'Users' },
           component: {
-            render (c) { return c('router-view') }
+            render(c) { return c('router-view') }
           },
           children: [
             {
               path: '',
               component: Users,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -778,7 +808,7 @@ function configRoutes () {
               // meta: { label: 'User Details'},
               name: 'User',
               component: User,
-              meta:{
+              meta: {
                 label: 'User Details',
                 requiresAdmin: true
               }
@@ -788,7 +818,7 @@ function configRoutes () {
               // meta: { label: 'Edit User' },
               name: 'EditUser',
               component: EditUser,
-              meta:{
+              meta: {
                 label: 'Edit User',
                 requiresAdmin: true
               }
@@ -797,15 +827,15 @@ function configRoutes () {
         },
         {
           path: 'notes',
-          meta: { label: 'Notes'},
+          meta: { label: 'Notes' },
           component: {
-            render (c) { return c('router-view') }
+            render(c) { return c('router-view') }
           },
           children: [
             {
               path: '',
               component: Notes,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -814,7 +844,7 @@ function configRoutes () {
               // meta: { label: 'Create Note' },
               name: 'CreateNote',
               component: CreateNote,
-              meta:{
+              meta: {
                 label: 'Create Note',
                 requiresAdmin: true
               }
@@ -824,7 +854,7 @@ function configRoutes () {
               // meta: { label: 'Note Details'},
               name: 'Note',
               component: Note,
-              meta:{
+              meta: {
                 label: 'Note Details',
                 requiresAdmin: true
               }
@@ -834,7 +864,7 @@ function configRoutes () {
               // meta: { label: 'Edit Note' },
               name: 'EditNote',
               component: EditNote,
-              meta:{
+              meta: {
                 label: 'Edit Note',
                 requiresAdmin: true
               }
@@ -843,15 +873,15 @@ function configRoutes () {
         },
         {
           path: 'roles',
-          meta: { label: 'Roles'},
+          meta: { label: 'Roles' },
           component: {
-            render (c) { return c('router-view') }
+            render(c) { return c('router-view') }
           },
           children: [
             {
               path: '',
               component: Roles,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -860,7 +890,7 @@ function configRoutes () {
               // meta: { label: 'Create Role' },
               name: 'Create Note',
               component: CreateRole,
-              meta:{
+              meta: {
                 label: 'Create Role',
                 requiresAdmin: true
               }
@@ -870,7 +900,7 @@ function configRoutes () {
               // meta: { label: 'Role Details'},
               name: 'Role',
               component: Role,
-              meta:{
+              meta: {
                 label: 'Role Details',
                 requiresAdmin: true
               }
@@ -880,7 +910,7 @@ function configRoutes () {
               // meta: { label: 'Edit Role' },
               name: 'Edit Role',
               component: EditRole,
-              meta:{
+              meta: {
                 label: 'Edit Role',
                 requiresAdmin: true
               }
@@ -889,15 +919,15 @@ function configRoutes () {
         },
         {
           path: 'bread',
-          meta: { label: 'Bread'},
+          meta: { label: 'Bread' },
           component: {
-            render (c) { return c('router-view') }
+            render(c) { return c('router-view') }
           },
           children: [
             {
               path: '',
               component: Breads,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -906,7 +936,7 @@ function configRoutes () {
               // meta: { label: 'Create Bread' },
               name: 'CreateBread',
               component: CreateBread,
-              meta:{
+              meta: {
                 label: 'Create Bread',
                 requiresAdmin: true
               }
@@ -916,7 +946,7 @@ function configRoutes () {
               // meta: { label: 'Bread Details'},
               name: 'Bread',
               component: Bread,
-              meta:{
+              meta: {
                 label: 'Bread Details',
                 requiresAdmin: true
               }
@@ -926,7 +956,7 @@ function configRoutes () {
               // meta: { label: 'Edit Bread' },
               name: 'Edit Bread',
               component: EditBread,
-              meta:{
+              meta: {
                 label: 'Edit Bread',
                 requiresAdmin: true
               }
@@ -936,7 +966,7 @@ function configRoutes () {
               // meta: { label: 'Delete Bread' },
               name: 'Delete Bread',
               component: DeleteBread,
-              meta:{
+              meta: {
                 label: 'Delete Bread',
                 requiresAdmin: true
               }
@@ -945,15 +975,15 @@ function configRoutes () {
         },
         {
           path: 'email',
-          meta: { label: 'Emails'},
+          meta: { label: 'Emails' },
           component: {
-            render (c) { return c('router-view') }
+            render(c) { return c('router-view') }
           },
           children: [
             {
               path: '',
               component: Emails,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -962,7 +992,7 @@ function configRoutes () {
               // meta: { label: 'Create Email Template' },
               name: 'Create Email Template',
               component: CreateEmail,
-              meta:{
+              meta: {
                 label: 'Create Email Template',
                 requiresAdmin: true
               }
@@ -972,7 +1002,7 @@ function configRoutes () {
               // meta: { label: 'Show Email Template'},
               name: 'Show Email Tempalte',
               component: ShowEmail,
-              meta:{
+              meta: {
                 label: 'Show Email Template',
                 requiresAdmin: true
               }
@@ -982,7 +1012,7 @@ function configRoutes () {
               // meta: { label: 'Edit Email Tempalate' },
               name: 'Edit Email Template',
               component: EditEmail,
-              meta:{
+              meta: {
                 label: 'Edit Email Tempalate',
                 requiresAdmin: true
               }
@@ -992,7 +1022,7 @@ function configRoutes () {
               // meta: { label: 'Send Email' },
               name: 'Send Email',
               component: SendEmail,
-              meta:{
+              meta: {
                 label: 'Send Email',
                 requiresAdmin: true
               }
@@ -1001,9 +1031,9 @@ function configRoutes () {
         },
         {
           path: 'resource',
-          meta: { label: 'Resources'},
+          meta: { label: 'Resources' },
           component: {
-            render (c) { return c('router-view') }
+            render(c) { return c('router-view') }
           },
           children: [
             {
@@ -1018,7 +1048,7 @@ function configRoutes () {
             },
             {
               path: ':bread/resource/:id',
-              meta: { label: 'Resource Details'},
+              meta: { label: 'Resource Details' },
               name: 'Resource',
               component: Resource,
             },
@@ -1041,14 +1071,14 @@ function configRoutes () {
           redirect: '/base/cards',
           name: 'Base',
           component: {
-            render (c) { return c('router-view') }
+            render(c) { return c('router-view') }
           },
           children: [
             {
               path: 'breadcrumb',
               name: 'Breadcrumb',
               component: Breadcrumbs,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -1056,7 +1086,7 @@ function configRoutes () {
               path: 'cards',
               name: 'Cards',
               component: Cards,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -1064,7 +1094,7 @@ function configRoutes () {
               path: 'carousel',
               name: 'Carousel',
               component: Carousels,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -1072,7 +1102,7 @@ function configRoutes () {
               path: 'collapse',
               name: 'Collapse',
               component: Collapses,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -1080,7 +1110,7 @@ function configRoutes () {
               path: 'jumbotron',
               name: 'Jumbotron',
               component: Jumbotrons,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -1088,7 +1118,7 @@ function configRoutes () {
               path: 'list-group',
               name: 'List Group',
               component: ListGroups,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -1096,7 +1126,7 @@ function configRoutes () {
               path: 'navs',
               name: 'Navs',
               component: Navs,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -1104,7 +1134,7 @@ function configRoutes () {
               path: 'navbars',
               name: 'Navbars',
               component: Navbars,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -1112,7 +1142,7 @@ function configRoutes () {
               path: 'pagination',
               name: 'Pagination',
               component: Paginations,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -1120,7 +1150,7 @@ function configRoutes () {
               path: 'popovers',
               name: 'Popovers',
               component: Popovers,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -1128,7 +1158,7 @@ function configRoutes () {
               path: 'progress',
               name: 'Progress',
               component: ProgressBars,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -1136,7 +1166,7 @@ function configRoutes () {
               path: 'switches',
               name: 'Switches',
               component: Switches,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -1144,7 +1174,7 @@ function configRoutes () {
               path: 'tabs',
               name: 'Tabs',
               component: Tabs,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -1152,7 +1182,7 @@ function configRoutes () {
               path: 'tooltips',
               name: 'Tooltips',
               component: Tooltips,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             }
@@ -1163,14 +1193,14 @@ function configRoutes () {
           redirect: '/buttons/standard-buttons',
           name: 'Buttons',
           component: {
-            render (c) { return c('router-view') }
+            render(c) { return c('router-view') }
           },
           children: [
             {
               path: 'buttons',
               name: 'Standard Buttons',
               component: StandardButtons,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -1178,7 +1208,7 @@ function configRoutes () {
               path: 'button-group',
               name: 'Button Group',
               component: ButtonGroups,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -1186,7 +1216,7 @@ function configRoutes () {
               path: 'dropdowns',
               name: 'Dropdowns',
               component: Dropdowns,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -1194,7 +1224,7 @@ function configRoutes () {
               path: 'brand-buttons',
               name: 'Brand Buttons',
               component: BrandButtons,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             }
@@ -1205,14 +1235,14 @@ function configRoutes () {
           redirect: '/editors/text-editors',
           name: 'Editors',
           component: {
-            render (c) { return c('router-view') }
+            render(c) { return c('router-view') }
           },
           children: [
             {
               path: 'text-editors',
               name: 'Text Editors',
               component: TextEditors,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -1220,7 +1250,7 @@ function configRoutes () {
               path: 'code-editors',
               name: 'Code Editors',
               component: CodeEditors,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             }
@@ -1231,14 +1261,14 @@ function configRoutes () {
           redirect: '/forms/basic-forms',
           name: 'Forms',
           component: {
-            render (c) { return c('router-view') }
+            render(c) { return c('router-view') }
           },
           children: [
             {
               path: 'basic-forms',
               name: 'Basic Forms',
               component: BasicForms,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -1246,7 +1276,7 @@ function configRoutes () {
               path: 'advanced-forms',
               name: 'Advanced Forms',
               component: AdvancedForms,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -1254,7 +1284,7 @@ function configRoutes () {
               path: 'validation-forms',
               name: 'Form Validation',
               component: ValidationForms,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             }
@@ -1264,7 +1294,7 @@ function configRoutes () {
           path: 'google-maps',
           name: 'Google Maps',
           component: GoogleMaps,
-          meta:{
+          meta: {
             requiresAdmin: true
           }
         },
@@ -1273,14 +1303,14 @@ function configRoutes () {
           redirect: '/icon/coreui-icons',
           name: 'CoreUI Icons',
           component: {
-            render (c) { return c('router-view') }
+            render(c) { return c('router-view') }
           },
           children: [
             {
               path: 'coreui-icons',
               name: 'Standard CoreUI Icons',
               component: CoreUIIcons,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -1288,7 +1318,7 @@ function configRoutes () {
               path: 'brands',
               name: 'Brands',
               component: Brands,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -1296,7 +1326,7 @@ function configRoutes () {
               path: 'flags',
               name: 'Flags',
               component: Flags,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             }
@@ -1307,14 +1337,14 @@ function configRoutes () {
           redirect: '/notifications/alerts',
           name: 'Notifications',
           component: {
-            render (c) { return c('router-view') }
+            render(c) { return c('router-view') }
           },
           children: [
             {
               path: 'alerts',
               name: 'Alerts',
               component: Alerts,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -1322,7 +1352,7 @@ function configRoutes () {
               path: 'badge',
               name: 'Badge',
               component: Badges,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -1330,7 +1360,7 @@ function configRoutes () {
               path: 'modals',
               name: 'Modals',
               component: Modals,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -1338,7 +1368,7 @@ function configRoutes () {
               path: 'toaster',
               name: 'Toaster',
               component: Toaster,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             }
@@ -1349,14 +1379,14 @@ function configRoutes () {
           redirect: '/plugins/draggable',
           name: 'Plugins',
           component: {
-            render (c) { return c('router-view') }
+            render(c) { return c('router-view') }
           },
           children: [
             {
               path: 'draggable',
               name: 'Draggable Cards',
               component: Draggable,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -1364,7 +1394,7 @@ function configRoutes () {
               path: 'calendar',
               name: 'Calendar',
               component: Calendar,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             },
@@ -1372,7 +1402,7 @@ function configRoutes () {
               path: 'spinners',
               name: 'Spinners',
               component: Spinners,
-              meta:{
+              meta: {
                 requiresAdmin: true
               }
             }
@@ -1383,7 +1413,7 @@ function configRoutes () {
           path: 'apps',
           name: 'Apps',
           component: {
-            render (c) { return c('router-view') }
+            render(c) { return c('router-view') }
           },
           children: [
             {
@@ -1391,14 +1421,14 @@ function configRoutes () {
               redirect: '/apps/invoicing/invoice',
               name: 'Invoicing',
               component: {
-                render (c) { return c('router-view') }
+                render(c) { return c('router-view') }
               },
               children: [
                 {
                   path: 'invoice',
                   name: 'Invoice',
                   component: Invoice,
-                  meta:{
+                  meta: {
                     requiresAdmin: true
                   }
                 }
@@ -1409,14 +1439,14 @@ function configRoutes () {
               redirect: '/apps/email/inbox',
               name: 'Email',
               component: {
-                render (c) { return c('router-view') }
+                render(c) { return c('router-view') }
               },
               children: [
                 {
                   path: 'compose',
                   name: 'Compose',
                   component: Compose,
-                  meta:{
+                  meta: {
                     requiresAdmin: true
                   }
                 },
@@ -1424,7 +1454,7 @@ function configRoutes () {
                   path: 'inbox',
                   name: 'Inbox',
                   component: Inbox,
-                  meta:{
+                  meta: {
                     requiresAdmin: true
                   }
                 },
@@ -1432,7 +1462,7 @@ function configRoutes () {
                   path: 'message',
                   name: 'Message',
                   component: Message,
-                  meta:{
+                  meta: {
                     requiresAdmin: true
                   }
                 }
@@ -1447,7 +1477,7 @@ function configRoutes () {
       redirect: '/pages/404',
       name: 'Pages',
       component: {
-        render (c) { return c('router-view') }
+        render(c) { return c('router-view') }
       },
       children: [
         {
@@ -1467,7 +1497,7 @@ function configRoutes () {
       redirect: '/login',
       name: 'Auth',
       component: {
-        render (c) { return c('router-view') }
+        render(c) { return c('router-view') }
       },
       children: [
         {
