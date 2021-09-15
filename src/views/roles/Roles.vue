@@ -1,17 +1,25 @@
 <template>
   <CRow>
-    <CCol col="12" xl="12">
+    <CCol
+      col="12"
+      xl="12"
+    >
       <transition name="slide">
-      <CCard>
-        <CCardBody>
+        <CCard>
+          <CCardBody>
             <h4>Roles</h4>
-            <CButton color="primary" @click="createRole()">Create Role</CButton>
+            <CButton
+              color="primary"
+              @click="createRole()"
+            >
+              Create Role
+            </CButton>
             <CAlert
               :show.sync="dismissCountDown"
               color="primary"
               fade
             >
-              ({{dismissCountDown}}) {{ message }}
+              ({{ dismissCountDown }}) {{ message }}
             </CAlert>
             <CDataTable
               hover
@@ -22,42 +30,67 @@
             >
               <template #name="{item}">
                 <td>
-                  <strong>{{item.name}}</strong>
+                  <strong>{{ item.name }}</strong>
                 </td>
               </template>
               <template #hierarchy="{item}">
                 <td>
-                  <strong>{{item.hierarchy}}</strong>
+                  <strong>{{ item.hierarchy }}</strong>
                 </td>
               </template>
               <template #move-up="{item}">
                 <td>
-                  <CButton color="primary" @click="moveUp( item.id )">Move Up</CButton>
+                  <CButton
+                    color="primary"
+                    @click="moveUp( item.id )"
+                  >
+                    Move Up
+                  </CButton>
                 </td>
               </template>
               <template #move-down="{item}">
                 <td>
-                  <CButton color="primary" @click="moveDown( item.id )">Move Down</CButton>
+                  <CButton
+                    color="primary"
+                    @click="moveDown( item.id )"
+                  >
+                    Move Down
+                  </CButton>
                 </td>
               </template>
               <template #show="{item}">
                 <td>
-                  <CButton color="primary" @click="showRole( item.id )">Show</CButton>
+                  <CButton
+                    color="primary"
+                    @click="showRole( item.id )"
+                  >
+                    Show
+                  </CButton>
                 </td>
               </template>
               <template #edit="{item}">
                 <td>
-                  <CButton color="primary" @click="editRole( item.id )">Edit</CButton>
+                  <CButton
+                    color="primary"
+                    @click="editRole( item.id )"
+                  >
+                    Edit
+                  </CButton>
                 </td>
               </template>
               <template #delete="{item}">
                 <td>
-                  <CButton color="danger" @click="deleteRole( item.id )">Delete</CButton>
+                  <CButton
+                    color="danger"
+                    @click="deleteRole( item.id )"
+                  >
+                    Delete
+                  </CButton>
                 </td>
               </template>
             </CDataTable>
-        </CCardBody>  
-      </CCard>
+          </CCardBody>  
+        </CCard>
       </transition>
     </CCol>
   </CRow>
@@ -84,6 +117,9 @@ export default {
     }
   },
   computed: {
+  },
+  mounted: function(){
+    this.getRoles();
   },
   methods: {
     getRowCount (items) {
@@ -166,9 +202,6 @@ export default {
         self.$router.push({ path: '/login' });
       });
     }
-  },
-  mounted: function(){
-    this.getRoles();
   }
 }
 </script>

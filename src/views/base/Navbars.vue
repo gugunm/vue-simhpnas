@@ -2,7 +2,7 @@
   <div>
     <CCard>
       <CCardHeader>
-        <CIcon name="cil-justify-center"/>
+        <CIcon name="cil-justify-center" />
         <strong> Bootstrap Navbar </strong>
         <div class="card-header-actions">
           <a 
@@ -20,23 +20,44 @@
           expandable="md"
           color="info"
         >
-          <CToggler inNavbar @click="show=!show"/>
-          <CNavbarBrand href="#">NavBar</CNavbarBrand>
-          <CCollapse :show="show" navbar>
+          <CToggler
+            in-navbar
+            @click="show=!show"
+          />
+          <CNavbarBrand href="#">
+            NavBar
+          </CNavbarBrand>
+          <CCollapse
+            :show="show"
+            navbar
+          >
             <CNavbarNav>
-              <CNavItem href="#">Link</CNavItem>
-              <CNavItem href="#" disabled>Disabled</CNavItem>
+              <CNavItem href="#">
+                Link
+              </CNavItem>
+              <CNavItem
+                href="#"
+                disabled
+              >
+                Disabled
+              </CNavItem>
             </CNavbarNav>
 
             <!-- Right aligned nav items -->
             <CNavbarNav class="ml-auto">
-              <CForm inline class="align-middle">
+              <CForm
+                inline
+                class="align-middle"
+              >
                 <CInput
                   class="mr-2 my-0"
                   placeholder="Search"
                   size="sm"
                 />
-                <CButton color="light" size="sm">
+                <CButton
+                  color="light"
+                  size="sm"
+                >
                   Search
                 </CButton>
               </CForm>
@@ -45,10 +66,10 @@
                 toggler-text="Lang"
                 in-nav
               >
-                  <CDropdownItem>EN</CDropdownItem>
-                  <CDropdownItem>ES</CDropdownItem>
-                  <CDropdownItem>RU</CDropdownItem>
-                  <CDropdownItem>FA</CDropdownItem>
+                <CDropdownItem>EN</CDropdownItem>
+                <CDropdownItem>ES</CDropdownItem>
+                <CDropdownItem>RU</CDropdownItem>
+                <CDropdownItem>FA</CDropdownItem>
               </CDropdown>
 
               <CDropdown
@@ -65,14 +86,21 @@
     </CCard>
     <CCard>
       <CCardHeader>
-        <CIcon name="cil-justify-center"/> <strong> Navbar </strong>
+        <CIcon name="cil-justify-center" /> <strong> Navbar </strong>
         <small>brand</small>
       </CCardHeader>
       <CCardBody>
         <!-- Image and text -->
-        <CNavbar color="faded" light>
+        <CNavbar
+          color="faded"
+          light
+        >
           <CNavbarBrand href="#">
-            <img src="https://placekitten.com/g/30/30" class="d-inline-block align-top" alt="CoreuiVue">
+            <img
+              src="https://placekitten.com/g/30/30"
+              class="d-inline-block align-top"
+              alt="CoreuiVue"
+            >
             CoreuiVue
           </CNavbarBrand>
         </CNavbar>
@@ -80,14 +108,24 @@
     </CCard>
     <CCard>
       <CCardHeader>
-        <CIcon name="cil-justify-center"/> <strong> Navbar </strong>
+        <CIcon name="cil-justify-center" /> <strong> Navbar </strong>
         <small>text</small>
       </CCardHeader>
       <CCardBody>
-        <CNavbar toggleable="sm" light color="light">
-          <CToggler inNavbar @click="navbarText=!navbarText"/>
+        <CNavbar
+          toggleable="sm"
+          light
+          color="light"
+        >
+          <CToggler
+            in-navbar
+            @click="navbarText=!navbarText"
+          />
           <CNavbarBrand>CoreuiVue</CNavbarBrand>
-          <CCollapse :show="navbarText" navbar>
+          <CCollapse
+            :show="navbarText"
+            navbar
+          >
             <CNavbarNav>
               <CNavbarText>Navbar text</CNavbarText>
             </CNavbarNav>
@@ -97,16 +135,29 @@
     </CCard>
     <CCard>
       <CCardHeader>
-        <CIcon name="cil-justify-center"/> <strong> Navbar </strong>
+        <CIcon name="cil-justify-center" /> <strong> Navbar </strong>
         <small>dropdown</small>
       </CCardHeader>
       <CCardBody>
-        <CNavbar expandable="sm" color="primary" >
-          <CToggler inNavbar @click="navbarDropdown = !navbarDropdown"/>
-          <CCollapse :show="navbarDropdown" navbar>
+        <CNavbar
+          expandable="sm"
+          color="primary"
+        >
+          <CToggler
+            in-navbar
+            @click="navbarDropdown = !navbarDropdown"
+          />
+          <CCollapse
+            :show="navbarDropdown"
+            navbar
+          >
             <CNavbarNav>
-              <CNavItem href="#">Home</CNavItem>
-              <CNavItem href="#">Link</CNavItem>
+              <CNavItem href="#">
+                Home
+              </CNavItem>
+              <CNavItem href="#">
+                Link
+              </CNavItem>
               <!-- Navbar dropdowns -->
               <CDropdown
                 toggler-text="Lang"
@@ -131,29 +182,41 @@
     </CCard>
     <CCard>
       <CCardHeader>
-        <CIcon name="cil-justify-center"/> <strong> Navbar </strong>
+        <CIcon name="cil-justify-center" /> <strong> Navbar </strong>
         <small>form</small>
       </CCardHeader>
       <CCardBody>
-        <CNavbar light color="light">
+        <CNavbar
+          light
+          color="light"
+        >
           <CForm inline>
             <CInput
               class="mr-sm-2"
               placeholder="Search"
               size="sm"
             />
-            <CButton color="outline-success" class="my-2 my-sm-0" type="submit">Search</CButton>
+            <CButton
+              color="outline-success"
+              class="my-2 my-sm-0"
+              type="submit"
+            >
+              Search
+            </CButton>
           </CForm>
         </CNavbar>
       </CCardBody>
     </CCard>
     <CCard>
       <CCardHeader>
-        <CIcon name="cil-justify-center"/> <strong> Navbar </strong>
+        <CIcon name="cil-justify-center" /> <strong> Navbar </strong>
         <small>input group</small>
       </CCardHeader>
       <CCardBody>
-        <CNavbar light color="light">
+        <CNavbar
+          light
+          color="light"
+        >
           <CForm inline>
             <CInput
               class="mr-sm-2"

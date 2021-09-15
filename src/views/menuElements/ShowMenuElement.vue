@@ -1,6 +1,9 @@
 <template>
   <CRow>
-    <CCol col="12" lg="12">
+    <CCol
+      col="12"
+      lg="12"
+    >
       <CCard no-header>
         <CCardBody>
           <h3>
@@ -11,19 +14,19 @@
             color="primary"
             fade
           >
-            ({{dismissCountDown}}) {{ message }}
+            ({{ dismissCountDown }}) {{ message }}
           </CAlert>
           <h4>Menu</h4>
           {{ menuelement.menu_name }}
           <h4>User Roles</h4>
           {{ roles }}
           <h4>Name</h4>
-            <p
-              v-for="lang in menuLangs"
-              v-bind:key="lang.id"
-            >
-              {{ lang.lang }} - {{ lang.name }}
-            </p>
+          <p
+            v-for="lang in menuLangs"
+            :key="lang.id"
+          >
+            {{ lang.lang }} - {{ lang.name }}
+          </p>
           <h4>Type</h4>
           {{ menuelement.slug }}
           <h4>Href</h4>
@@ -33,7 +36,12 @@
           <h4>Icon</h4>
           {{ menuelement.icon }}
           <br><br>
-          <CButton color="primary" @click="goBack">Back</CButton>
+          <CButton
+            color="primary"
+            @click="goBack"
+          >
+            Back
+          </CButton>
         </CCardBody>
       </CCard>
     </CCol>
@@ -55,6 +63,9 @@ export default {
         dismissCountDown: 0,
         showDismissibleAlert: false,
     }
+  },
+  mounted: function(){
+    this.getData()
   },
   methods: {
     goBack() {
@@ -80,9 +91,6 @@ export default {
         self.$router.push({ path: '/login' });
       });
     },
-  },
-  mounted: function(){
-    this.getData()
   }
 }
 

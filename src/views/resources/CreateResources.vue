@@ -1,9 +1,12 @@
 <template>
   <CRow>
-    <CCol col="12" xl="6">
+    <CCol
+      col="12"
+      xl="6"
+    >
       <transition name="slide">
-      <CCard>
-        <CCardBody>
+        <CCard>
+          <CCardBody>
             <h3>
               Create {{ form.name }}
             </h3>
@@ -12,26 +15,36 @@
               color="primary"
               fade
             >
-              ({{dismissCountDown}}) {{ message }}
+              ({{ dismissCountDown }}) {{ message }}
             </CAlert>
 
             <CreateResourceField
               v-for="column in columns"
-              v-bind:key="column.id"
+              :key="column.id"
               :column="column"
               :relations="relations"
               :options="inputOptions"
 
+              :get-data="getData"
               @sendData="receiveDataFormField"
-              :getData="getData"
+            />
+
+            <CButton
+              class="mt-2"
+              color="primary"
+              @click="storeFirstStep()"
             >
-            </CreateResourceField>
-
-            <CButton class="mt-2" color="primary" @click="storeFirstStep()">Create</CButton>
-            <CButton class="mt-2" color="primary" @click="goBack">Back</CButton>            
-
-        </CCardBody>
-      </CCard>
+              Create
+            </CButton>
+            <CButton
+              class="mt-2"
+              color="primary"
+              @click="goBack"
+            >
+              Back
+            </CButton>
+          </CCardBody>
+        </CCard>
       </transition>
     </CCol>
   </CRow>
@@ -59,12 +72,15 @@ export default {
       getData: false,
     }
   },
+  computed: {
+  },
   watch: {
     activePage(){
       this.getResources();
     },
   },
-  computed: {
+  mounted: function(){
+    this.getFields();
   },
   methods: {
     goBack() {
@@ -127,9 +143,6 @@ export default {
         self.$router.push({ path: '/login' })
       });
     },
-  },
-  mounted: function(){
-    this.getFields();
   }
 }
 </script>

@@ -1,17 +1,25 @@
 <template>
   <CRow>
-    <CCol col="12" xl="12">
+    <CCol
+      col="12"
+      xl="12"
+    >
       <transition name="slide">
-      <CCard>
-        <CCardBody>
+        <CCard>
+          <CCardBody>
             <h4>Breads</h4>
-            <CButton color="primary" @click="createBread()">Create Bread</CButton>
+            <CButton
+              color="primary"
+              @click="createBread()"
+            >
+              Create Bread
+            </CButton>
             <CAlert
               :show.sync="dismissCountDown"
               color="primary"
               fade
             >
-              ({{dismissCountDown}}) {{ message }}
+              ({{ dismissCountDown }}) {{ message }}
             </CAlert>
             <CDataTable
               hover
@@ -22,32 +30,52 @@
             >
               <template #name="{item}">
                 <td>
-                  <strong>{{item.name}}</strong>
+                  <strong>{{ item.name }}</strong>
                 </td>
               </template>
               <template #goto="{item}">
                 <td>
-                  <CButton color="primary" @click="goto( item.id )">Go to resources</CButton>
+                  <CButton
+                    color="primary"
+                    @click="goto( item.id )"
+                  >
+                    Go to resources
+                  </CButton>
                 </td>
               </template>
               <template #show="{item}">
                 <td>
-                  <CButton color="primary" @click="showBread( item.id )">Show</CButton>
+                  <CButton
+                    color="primary"
+                    @click="showBread( item.id )"
+                  >
+                    Show
+                  </CButton>
                 </td>
               </template>
               <template #edit="{item}">
                 <td>
-                  <CButton color="primary" @click="editBread( item.id )">Edit</CButton>
+                  <CButton
+                    color="primary"
+                    @click="editBread( item.id )"
+                  >
+                    Edit
+                  </CButton>
                 </td>
               </template>
               <template #delete="{item}">
                 <td>
-                  <CButton color="danger" @click="deleteBread( item.id )">Delete</CButton>
+                  <CButton
+                    color="danger"
+                    @click="deleteBread( item.id )"
+                  >
+                    Delete
+                  </CButton>
                 </td>
               </template>
             </CDataTable>
-        </CCardBody>  
-      </CCard>
+          </CCardBody>  
+        </CCard>
       </transition>
     </CCol>
   </CRow>
@@ -73,6 +101,9 @@ export default {
     }
   },
   computed: {
+  },
+  mounted: function(){
+    this.getBreads();
   },
   methods: {
     goto( id){
@@ -115,9 +146,6 @@ export default {
         self.$router.push({ path: '/login' });
       });
     }
-  },
-  mounted: function(){
-    this.getBreads();
   }
 }
 </script>

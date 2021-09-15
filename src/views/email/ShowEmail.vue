@@ -1,6 +1,9 @@
 <template>
   <CRow>
-    <CCol col="12" lg="6">
+    <CCol
+      col="12"
+      lg="6"
+    >
       <CCard no-header>
         <CCardBody>
           <h3>Show Email Template</h3>
@@ -12,7 +15,12 @@
           <h4>Content:</h4> 
           <p>{{ template.content }}</p>
 
-          <CButton color="primary" @click="goBack">Back</CButton>
+          <CButton
+            color="primary"
+            @click="goBack"
+          >
+            Back
+          </CButton>
         </CCardBody>
       </CCard>
     </CCol>
@@ -28,12 +36,6 @@ export default {
       template: [],
     }
   },
-  methods: {
-    goBack() {
-      this.$router.go(-1)
-      // this.$router.replace({path: '/users'})
-    }
-  },
   mounted: function(){
     let self = this;
     axios.get(   this.$apiAdress + '/api/mail/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"))
@@ -43,6 +45,12 @@ export default {
       console.log(error);
       self.$router.push({ path: '/login' });
     });
+  },
+  methods: {
+    goBack() {
+      this.$router.go(-1)
+      // this.$router.replace({path: '/users'})
+    }
   }
 }
 

@@ -1,7 +1,17 @@
 <template>
-  <CSidebar :fixed="false" color-scheme="light">
-    <CButton class="d-flex m-3" to="./compose" color="success">
-      <CIcon name="cil-inbox" class="c-sidebar-nav-icon"/>New Email
+  <CSidebar
+    :fixed="false"
+    color-scheme="light"
+  >
+    <CButton
+      class="d-flex m-3"
+      to="./compose"
+      color="success"
+    >
+      <CIcon
+        name="cil-inbox"
+        class="c-sidebar-nav-icon"
+      />New Email
     </CButton>
     <CSidebarNav>
       <CSidebarNavItem 

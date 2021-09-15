@@ -2,19 +2,22 @@
   <div>
     <CCard>
       <CCardHeader>
-        <CIcon name="cil-basket"/> Brand icons
+        <CIcon name="cil-basket" /> Brand icons
       </CCardHeader>
       <CCardBody>
         <CRow class="text-center">
           <template v-for="(brand, brandName) in $options.brands">
             <CCol
+              :key="brandName"
               class="mb-5"
               col="3"
               sm="2"
-              :key="brandName"
             >
-              <CIcon :height="42" :content="brand"/>
-              <div>{{toKebabCase(brandName)}}</div>
+              <CIcon
+                :height="42"
+                :content="brand"
+              />
+              <div>{{ toKebabCase(brandName) }}</div>
             </CCol>
           </template>
         </CRow>

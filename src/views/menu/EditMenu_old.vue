@@ -1,6 +1,9 @@
 <template>
   <CRow>
-    <CCol col="12" xl="6">
+    <CCol
+      col="12"
+      xl="6"
+    >
       <transition name="slide">
         <CCard>
           <CCardBody>
@@ -10,7 +13,12 @@
                 :options="roles"
                 label="Select role assigned to menu"
               />
-              <CButton color="primary" @click="selectRole()">Edit</CButton>
+              <CButton
+                color="primary"
+                @click="selectRole()"
+              >
+                Edit
+              </CButton>
             </div>
             <div v-else>
               <CDataTable
@@ -20,15 +28,28 @@
               >
                 <template #assigned="{item}">
                   <td v-if="item.assigned">
-                    <CButton color="primary" @click="toggleElement( item.id )">Hide</CButton>
+                    <CButton
+                      color="primary"
+                      @click="toggleElement( item.id )"
+                    >
+                      Hide
+                    </CButton>
                   </td>
                   <td v-else>
-                    <CButton color="danger" @click="toggleElement( item.id )">Show</CButton>
+                    <CButton
+                      color="danger"
+                      @click="toggleElement( item.id )"
+                    >
+                      Show
+                    </CButton>
                   </td>
                 </template>
                 <template #dropdown="{item}">
                   <td>
-                    <i v-if="item.dropdown" class="cui-chevron-right icons font-2xl d-block"></i>
+                    <i
+                      v-if="item.dropdown"
+                      class="cui-chevron-right icons font-2xl d-block"
+                    />
                   </td>
                 </template>
               </CDataTable>
@@ -54,6 +75,17 @@ export default {
       fields: ['assigned', 'dropdown', 'slug', 'name'],
       thisMenuRole: null,
     }
+  },
+  mounted () {
+    this.$root.$on('toggle-sidebar', () => this.show = !this.show)
+    let self = this;
+    axios.get(   this.$apiAdress + '/api/menu/edit?token=' + localStorage.getItem("api_token") )
+    .then(function (response) {
+      self.roles = response.data.roles;
+    }).catch(function (error) {
+      console.log(error);
+      self.$router.push({ path: '/login' });
+    });
   },
   methods: {
     addElementToBuffor(data, icon){
@@ -115,17 +147,6 @@ export default {
         self.$router.push({ path: '/login' });
       });
     }
-  },
-  mounted () {
-    this.$root.$on('toggle-sidebar', () => this.show = !this.show)
-    let self = this;
-    axios.get(   this.$apiAdress + '/api/menu/edit?token=' + localStorage.getItem("api_token") )
-    .then(function (response) {
-      self.roles = response.data.roles;
-    }).catch(function (error) {
-      console.log(error);
-      self.$router.push({ path: '/login' });
-    });
   }
 }
 </script>

@@ -1,6 +1,9 @@
 <template>
   <CRow>
-    <CCol col="12" lg="6">
+    <CCol
+      col="12"
+      lg="6"
+    >
       <CCard no-header>
         <CCardBody>
           <h3>
@@ -11,13 +14,28 @@
             color="primary"
             fade
           >
-            ({{dismissCountDown}}) {{ message }}
+            ({{ dismissCountDown }}) {{ message }}
           </CAlert>
 
-          <CInput label="Name" type="text" placeholder="Name" v-model="name"></CInput>
+          <CInput
+            v-model="name"
+            label="Name"
+            type="text"
+            placeholder="Name"
+          />
 
-          <CButton color="primary" @click="store()">Create</CButton>
-          <CButton color="primary" @click="goBack">Back</CButton>
+          <CButton
+            color="primary"
+            @click="store()"
+          >
+            Create
+          </CButton>
+          <CButton
+            color="primary"
+            @click="goBack"
+          >
+            Back
+          </CButton>
         </CCardBody>
       </CCard>
     </CCol>
@@ -36,6 +54,9 @@ export default {
         dismissCountDown: 0,
         showDismissibleAlert: false
     }
+  },
+  mounted: function(){
+
   },
   methods: {
     goBack() {
@@ -72,9 +93,6 @@ export default {
     showAlert () {
       this.dismissCountDown = this.dismissSecs
     },
-  },
-  mounted: function(){
-
   }
 }
 

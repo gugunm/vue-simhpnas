@@ -1,6 +1,9 @@
 <template>
   <CRow>
-    <CCol col="12" lg="6">
+    <CCol
+      col="12"
+      lg="6"
+    >
       <CCard no-header>
         <CCardBody>
           <h3>
@@ -11,13 +14,28 @@
             color="primary"
             fade
           >
-            ({{dismissCountDown}}) {{ message }}
+            ({{ dismissCountDown }}) {{ message }}
           </CAlert>
 
-          <CInput label="Name" type="text" placeholder="Name" v-model="role.name"></CInput>
+          <CInput
+            v-model="role.name"
+            label="Name"
+            type="text"
+            placeholder="Name"
+          />
 
-          <CButton color="primary" @click="store()">Create</CButton>
-          <CButton color="primary" @click="goBack">Back</CButton>
+          <CButton
+            color="primary"
+            @click="store()"
+          >
+            Create
+          </CButton>
+          <CButton
+            color="primary"
+            @click="goBack"
+          >
+            Back
+          </CButton>
         </CCardBody>
       </CCard>
     </CCol>
@@ -46,6 +64,16 @@ export default {
         dismissCountDown: 0,
         showDismissibleAlert: false
     }
+  },
+  mounted: function(){
+    let self = this;
+    axios.get(   this.$apiAdress + '/api/roles/create?token=' + localStorage.getItem("api_token"))
+    .then(function (response) {
+        self.statuses = response.data;
+    }).catch(function (error) {
+        console.log(error);
+        self.$router.push({ path: 'login' });
+    });
   },
   methods: {
     goBack() {
@@ -90,16 +118,6 @@ export default {
     showAlert () {
       this.dismissCountDown = this.dismissSecs
     },
-  },
-  mounted: function(){
-    let self = this;
-    axios.get(   this.$apiAdress + '/api/roles/create?token=' + localStorage.getItem("api_token"))
-    .then(function (response) {
-        self.statuses = response.data;
-    }).catch(function (error) {
-        console.log(error);
-        self.$router.push({ path: 'login' });
-    });
   }
 }
 

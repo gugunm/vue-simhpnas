@@ -3,8 +3,10 @@
   <div>
     <CCard>
       <CCardHeader>
-        <CIcon :content="$options.freeSet.cilHandPointDown"/> CoreUI Icons
-        <CBadge color="info">New</CBadge>
+        <CIcon :content="$options.freeSet.cilHandPointDown" /> CoreUI Icons
+        <CBadge color="info">
+          New
+        </CBadge>
         <div class="card-header-actions">
           <a
             href="https://github.com/coreui/coreui-icons"
@@ -20,13 +22,16 @@
         <CRow class="text-center">
           <template v-for="(icon, iconName) in $options.freeSet">
             <CCol
+              :key="iconName"
               class="mb-5"
               col="3"
               sm="2"
-              :key="iconName"
             >
-              <CIcon :height="42" :content="icon"/>
-              <div>{{toKebabCase(iconName)}}</div>
+              <CIcon
+                :height="42"
+                :content="icon"
+              />
+              <div>{{ toKebabCase(iconName) }}</div>
             </CCol>
           </template>
         </CRow>

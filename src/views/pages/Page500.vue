@@ -3,9 +3,15 @@
     <CRow class="w-100 justify-content-center">
       <CCol md="6">
         <div class="clearfix">
-          <h1 class="float-left display-3 mr-4">500</h1>
-          <h4 class="pt-3">Maaf sekali, server kami sedang bermasalah!</h4>
-          <p class="text-muted">Mohon kunjungi situs kami di lain waktu, terima kasih.</p>
+          <h1 class="float-left display-3 mr-4">
+            500
+          </h1>
+          <h4 class="pt-3">
+            Maaf sekali, server kami sedang bermasalah!
+          </h4>
+          <p class="text-muted">
+            Mohon kunjungi situs kami di lain waktu, terima kasih.
+          </p>
         </div>
       </CCol>
     </CRow>

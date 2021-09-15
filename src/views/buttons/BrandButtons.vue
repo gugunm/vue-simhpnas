@@ -5,20 +5,20 @@
         <CCardHeader>
           <strong>Brand Button</strong>
           <div class="card-header-actions">
-              <a 
-                href="https://coreui.io/vue/docs/components/button-components" 
-                class="card-header-action" 
-                rel="noreferrer noopener" 
-                target="_blank"
-              >
-                <small class="text-muted">docs</small>
-              </a>
-            </div>
+            <a 
+              href="https://coreui.io/vue/docs/components/button-components" 
+              class="card-header-action" 
+              rel="noreferrer noopener" 
+              target="_blank"
+            >
+              <small class="text-muted">docs</small>
+            </a>
+          </div>
         </CCardHeader>
         <CCardBody>
           <small>Usage </small>
           <code>{{ $options.usage }}</code>
-          <hr/>
+          <hr>
           <h6>
             Size Small
             <small>Add <code>size="sm"</code></small>
@@ -26,13 +26,16 @@
           <p>
             <template v-for="(brandName, key) in $options.brands">
               <CButton
+                :key="key"
                 :name="brandName"
                 size="sm"
-                :key="key"
                 :color="brandName"
               >
-                <CIcon size="sm" :name="'cib-' + brandName"/>
-                <span>{{brandName}}</span>
+                <CIcon
+                  size="sm"
+                  :name="'cib-' + brandName"
+                />
+                <span>{{ brandName }}</span>
               </CButton>
             </template>
           </p>
@@ -40,12 +43,12 @@
           <p>
             <template v-for="(brandName, key) in $options.brands">
               <CButton
-                :name="brandName"
                 :key="key"
+                :name="brandName"
                 :color="brandName"
               >
-                <CIcon :name="'cib-' + brandName"/>
-                <span>{{brandName}}</span>
+                <CIcon :name="'cib-' + brandName" />
+                <span>{{ brandName }}</span>
               </CButton>
             </template>
           </p>
@@ -53,13 +56,16 @@
           <p>
             <template v-for="(brandName, key) in $options.brands">
               <CButton
+                :key="key"
                 :name="brandName"
                 size="lg"
-                :key="key"
                 :color="brandName"
               >
-                <CIcon size="lg" :name="'cib-' + brandName"/>
-                <span>{{brandName}}</span>
+                <CIcon
+                  size="lg"
+                  :name="'cib-' + brandName"
+                />
+                <span>{{ brandName }}</span>
               </CButton>
             </template>
           </p>
@@ -73,18 +79,21 @@
         </CCardHeader>
         <CCardBody>
           <small>Usage </small>
-            <code>{{ $options.iconsOnlyUsage }}</code>
-          <hr/>
+          <code>{{ $options.iconsOnlyUsage }}</code>
+          <hr>
           <h6>Size Small <small>Add <code>size="sm"</code></small></h6>
           <p>
             <template v-for="(brandName, key) in $options.brands">
               <CButton
+                :key="key"
                 :name="brandName"
                 size="sm"
-                :key="key"
                 :color="brandName"
               >
-                <CIcon size="sm" :name="'cib-' + brandName"/>
+                <CIcon
+                  size="sm"
+                  :name="'cib-' + brandName"
+                />
               </CButton>
             </template>
           </p>
@@ -92,11 +101,11 @@
           <p>
             <template v-for="(brandName, key) in $options.brands">
               <CButton
-                :name="brandName"
                 :key="key"
+                :name="brandName"
                 :color="brandName"
               >
-                <CIcon :name="'cib-' + brandName"/>
+                <CIcon :name="'cib-' + brandName" />
               </CButton>
             </template>
           </p>
@@ -104,12 +113,15 @@
           <p>
             <template v-for="(brandName, key) in $options.brands">
               <CButton
+                :key="key"
                 :name="brandName"
                 size="lg"
-                :key="key"
                 :color="brandName"
               >
-                <CIcon size="lg" :name="'cib-' + brandName"/>
+                <CIcon
+                  size="lg"
+                  :name="'cib-' + brandName"
+                />
               </CButton>
             </template>
           </p>
@@ -127,16 +139,16 @@
           <code>
             {{ $options.textOnlyUsage }}
           </code>
-          <hr/>
+          <hr>
           <h6>Size Small <small>Add <code>size="sm"</code></small></h6>
           <p>
             <template v-for="(brandName, key) in $options.brands">
               <CButton
-                size="sm"
                 :key="key"
+                size="sm"
                 :color="brandName"
               >
-                <span>{{brandName}}</span>
+                <span>{{ brandName }}</span>
               </CButton>
             </template>
           </p>
@@ -147,7 +159,7 @@
                 :key="key"
                 :color="brandName"
               >
-                <span>{{brandName}}</span>
+                <span>{{ brandName }}</span>
               </CButton>
             </template>
           </p>
@@ -155,11 +167,11 @@
           <p>
             <template v-for="(brandName, key) in $options.brands">
               <CButton
-                size="lg"
                 :key="key"
+                size="lg"
                 :color="brandName"
               >
-                <span>{{brandName}}</span>
+                <span>{{ brandName }}</span>
               </CButton>
             </template>
           </p>

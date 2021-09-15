@@ -1,16 +1,24 @@
 <template>
   <CRow>
-    <CCol col="12" xl="12">
+    <CCol
+      col="12"
+      xl="12"
+    >
       <transition name="slide">
-      <CCard>
-        <CCardBody>
-            <CButton color="primary" @click="createNote()">Create Note</CButton>
+        <CCard>
+          <CCardBody>
+            <CButton
+              color="primary"
+              @click="createNote()"
+            >
+              Create Note
+            </CButton>
             <CAlert
               :show.sync="dismissCountDown"
               color="primary"
               fade
             >
-              ({{dismissCountDown}}) {{ message }}
+              ({{ dismissCountDown }}) {{ message }}
             </CAlert>
             <CDataTable
               hover
@@ -21,52 +29,70 @@
             >
               <template #author="{item}">
                 <td>
-                  <strong>{{item.author}}</strong>
+                  <strong>{{ item.author }}</strong>
                 </td>
               </template>
               <template #title="{item}">
                 <td>
-                  <strong>{{item.title}}</strong>
+                  <strong>{{ item.title }}</strong>
                 </td>
               </template>
               <template #content="{item}">
                 <td>
-                  {{item.content}}
+                  {{ item.content }}
                 </td>  
               </template>
               <template #applies_to_date="{item}">
                 <td>
-                  {{item.applies_to_date}}
+                  {{ item.applies_to_date }}
                 </td>
               </template>
               <template #status="{item}">
                 <td>
-                  <CBadge :color="item.status_class">{{item.status}}</CBadge>
+                  <CBadge :color="item.status_class">
+                    {{ item.status }}
+                  </CBadge>
                 </td>
               </template>
               <template #note_type="{item}">
                 <td>
-                  <strong>{{item.note_type}}</strong>
+                  <strong>{{ item.note_type }}</strong>
                 </td>
               </template>
               <template #show="{item}">
                 <td>
-                  <CButton color="primary" @click="showNote( item.id )">Show</CButton>
+                  <CButton
+                    color="primary"
+                    @click="showNote( item.id )"
+                  >
+                    Show
+                  </CButton>
                 </td>
               </template>
               <template #edit="{item}">
                 <td>
-                  <CButton color="primary" @click="editNote( item.id )">Edit</CButton>
+                  <CButton
+                    color="primary"
+                    @click="editNote( item.id )"
+                  >
+                    Edit
+                  </CButton>
                 </td>
               </template>
               <template #delete="{item}">
                 <td>
-                  <CButton v-if="you!=item.id" color="danger" @click="deleteNote( item.id )">Delete</CButton>
+                  <CButton
+                    v-if="you!=item.id"
+                    color="danger"
+                    @click="deleteNote( item.id )"
+                  >
+                    Delete
+                  </CButton>
                 </td>
               </template>
             </CDataTable>
-        </CCardBody>  
-      </CCard>
+          </CCardBody>  
+        </CCard>
       </transition>
     </CCol>
   </CRow>
@@ -106,6 +132,9 @@ export default {
     }
   },
   computed: {
+  },
+  mounted: function(){
+    this.getNotes();
   },
   methods: {
     getRowCount (items) {
@@ -159,9 +188,6 @@ export default {
         self.$router.push({ path: '/login' });
       });
     }
-  },
-  mounted: function(){
-    this.getNotes();
   }
 }
 </script>

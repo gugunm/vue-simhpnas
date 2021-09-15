@@ -26,141 +26,141 @@
         </CCardHeader>
         <CCardBody>
           <CFormGroup
-            wrapperClasses="input-group pt-2"
+            wrapper-classes="input-group pt-2"
             description="ex. 99/99/9999"
           >
             <template #prepend-content>
-              <CIcon name="cil-calendar"/>
+              <CIcon name="cil-calendar" />
             </template>
             <template #label>
               Date input
             </template>
             <template #input>
               <masked-input
+                v-model="date"
                 type="text"
                 name="date"
                 class="form-control"
-                v-model="date"
                 :mask="[/0|1|2|3/, /\d/, '/', /0|1|2|3/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]"
                 :guide="true"
-                placeholderChar="_"
-                :showMask="true"
-                :keepCharPositions="true"
+                placeholder-char="_"
+                :show-mask="true"
+                :keep-char-positions="true"
               />
             </template>
           </CFormGroup>
 
           <CFormGroup
-            wrapperClasses="input-group pt-2"
+            wrapper-classes="input-group pt-2"
             description="ex. (999) 999-9999"
           >
             <template #prepend-content>
-              <CIcon name="cil-phone"/>
+              <CIcon name="cil-phone" />
             </template>
             <template #label>
               Phone Number
             </template>
             <template #input>
               <masked-input
+                v-model="phone"
                 type="tel"
                 name="phone"
                 class="form-control"
-                v-model="phone"
                 :mask="['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]"
                 :guide="true"
-                placeholderChar="#"
+                placeholder-char="#"
               />
             </template>
           </CFormGroup>
 
           <CFormGroup
-            wrapperClasses="input-group pt-2"
+            wrapper-classes="input-group pt-2"
             description="ex. 99-9999999"
           >
             <template #prepend-content>
-              <CIcon name="cil-dollar"/>
+              <CIcon name="cil-dollar" />
             </template>
             <template #label>
               Taxpayer Identification Number
             </template>
             <template #input>
               <masked-input
+                v-model="taxid"
                 type="text"
                 name="taxid"
                 class="form-control"
-                v-model="taxid"
                 :mask="[/\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/]"
                 :guide="true"
-                placeholderChar="#"
+                placeholder-char="#"
               />
             </template>
           </CFormGroup>
 
           <CFormGroup
-            wrapperClasses="input-group pt-2"
+            wrapper-classes="input-group pt-2"
             description="ex. 999-99-9999"
           >
             <template #prepend-content>
-              <CIcon name="cil-user"/>
+              <CIcon name="cil-user" />
             </template>
             <template #label>
               Social Security Number
             </template>
             <template #input>
               <masked-input
+                v-model="ssn"
                 type="text"
                 name="ssn"
                 class="form-control"
-                v-model="ssn"
                 :mask="[/\d/, /\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]"
                 :guide="true"
-                placeholderChar="#"
+                placeholder-char="#"
               />
             </template>
           </CFormGroup>
 
           <CFormGroup
-            wrapperClasses="input-group pt-2"
+            wrapper-classes="input-group pt-2"
             description="ex. ~9.99 ~9.99 999"
           >
             <template #prepend-content>
-              <CIcon name="cil-drop"/>
+              <CIcon name="cil-drop" />
             </template>          
             <template #label>
               Eye Script
             </template>
             <template #input>
               <masked-input
+                v-model="eye"
                 type="text"
                 name="eye"
                 class="form-control"
-                v-model="eye"
                 :mask="['~', /\d/, '.', /\d/, /\d/, ' ', '~', /\d/, '.', /\d/, /\d/, ' ', /\d/, /\d/, /\d/]"
                 :guide="true"
-                placeholderChar="#"
+                placeholder-char="#"
               />
             </template>
           </CFormGroup>
 
           <CFormGroup
-            wrapperClasses="input-group pt-2"
+            wrapper-classes="input-group pt-2"
             description="ex. 9999 9999 9999 9999"
           >
             <template #prepend-content>
-              <CIcon name="cil-credit-card"/>
+              <CIcon name="cil-credit-card" />
             </template>
             <template #label>
               Credit Card Number
             </template>
             <template #input>
               <masked-input
+                v-model="ccn"
                 type="text"
                 name="ccn"
                 class="form-control"
-                v-model="ccn"
                 :mask="[/\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/]"
                 :guide="true"
-                placeholderChar="#"
+                placeholder-char="#"
               />
             </template>
           </CFormGroup>
@@ -256,12 +256,12 @@
         </CCardHeader>
         <CCardBody>
           <v-date-picker
-            mode="range"
             v-model="selectedDate"
+            mode="range"
             is-inline
           />
           <p>
-            start: {{ selectedDate.start.toLocaleDateString() }} <br/>
+            start: {{ selectedDate.start.toLocaleDateString() }} <br>
             end: {{ selectedDate.end.toLocaleDateString() }}
           </p>
         </CCardBody>
@@ -281,7 +281,7 @@ import 'vue-multiselect/dist/vue-multiselect.min.css'
 const today = new Date()
 
 export default {
-  name: 'advanced-forms',
+  name: 'AdvancedForms',
   components: {
     MaskedInput,
     Multiselect,

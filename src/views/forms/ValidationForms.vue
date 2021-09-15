@@ -1,8 +1,11 @@
 <template>
   <CCard>
     <CCardHeader>
-      <CIcon name="cil-notes"/> Form Validation
-      <a class="badge badge-danger" href="https://coreui.io/pro/vue/">CoreUI Pro</a>
+      <CIcon name="cil-notes" /> Form Validation
+      <a
+        class="badge badge-danger"
+        href="https://coreui.io/pro/vue/"
+      >CoreUI Pro</a>
       <div class="card-header-actions">
         <a 
           class="card-header-action" 
@@ -33,30 +36,30 @@
               label="First Name"
               :lazy="false"
               :value.sync="$v.form.firstName.$model"
-              :isValid="checkIfValid('firstName')"
+              :is-valid="checkIfValid('firstName')"
               placeholder="First Name"
               autocomplete="given-name"
-              invalidFeedback="This is a required field and must be at least 2 characters"
+              invalid-feedback="This is a required field and must be at least 2 characters"
             />
 
             <CInput
               label="Last Name"
               :lazy="false"
               :value.sync="$v.form.lastName.$model"
-              :isValid="checkIfValid('lastName')"
+              :is-valid="checkIfValid('lastName')"
               placeholder="Last Name"
               autocomplete="family-name"
-              invalidFeedback="This is a required field and must be at least 1 character"
+              invalid-feedback="This is a required field and must be at least 1 character"
             />
 
             <CInput
               label="User Name"
               :lazy="false"
               :value.sync="$v.form.userName.$model"
-              :isValid="checkIfValid('userName')"
+              :is-valid="checkIfValid('userName')"
               placeholder="User Name"
               autocomplete="username"
-              invalidFeedback="This is a required field and must be at least 5 character"
+              invalid-feedback="This is a required field and must be at least 5 character"
             />
 
             <CInput
@@ -64,41 +67,41 @@
               type="email"
               :lazy="false"
               :value.sync="$v.form.email.$model"
-              :isValid="checkIfValid('email')"
+              :is-valid="checkIfValid('email')"
               placeholder="Email"
               autocomplete="email"
-              invalidFeedback="This is a required field and must be valid e-mail address"
+              invalid-feedback="This is a required field and must be valid e-mail address"
             />
 
             <CRow>
               <CCol md="6">
                 <CInput
-                  :isValid="checkIfValid('password')"
+                  :is-valid="checkIfValid('password')"
                   :value.sync="$v.form.password.$model"
                   label="Password"
                   type="password"
                   placeholder="Password"
                   autocomplete="new-password"
-                  invalidFeedback="Required password containing at least: number, uppercase and lowercase letter, 8 characters"
+                  invalid-feedback="Required password containing at least: number, uppercase and lowercase letter, 8 characters"
                 />
               </CCol>
               <CCol md="6">
                 <CInput
-                  :isValid="checkIfValid('password')"
+                  :is-valid="checkIfValid('password')"
                   :value.sync="$v.form.confirmPassword.$model"
                   label="Confirm Password"
                   type="password"
                   placeholder="Password"
                   autocomplete="new-password"
-                  invalidFeedback="Passwords must match"
+                  invalid-feedback="Passwords must match"
                 />
               </CCol>
             </CRow>
             <CInputCheckbox
-              :isValid="checkIfValid('accept')"
+              :is-valid="checkIfValid('accept')"
               :checked.sync="$v.form.accept.$model"
               label="I accept the terms of use"
-              invalidFeedback="You must accept before submitting"
+              invalid-feedback="You must accept before submitting"
               custom
               class="mb-4"
             />
@@ -126,12 +129,12 @@
               Reset
             </CButton>
           </CForm>
-          <br/>
+          <br>
         </CCol>
 
         <CCol lg="6">
           <CCard :class="`bg-${submitted ? 'info' : 'secondary' }`">
-            <pre>{{formString}}</pre>
+            <pre>{{ formString }}</pre>
           </CCard>
         </CCol>
       </CRow>
@@ -145,6 +148,7 @@ import { required, minLength, email, sameAs, helpers } from "vuelidate/lib/valid
 
 export default {
   name: 'ValidationForms',
+  mixins: [validationMixin],
   data() {
     return {
       form: this.getEmptyForm(),
@@ -156,7 +160,6 @@ export default {
     isValid () { return !this.$v.form.$invalid },
     isDirty () { return this.$v.form.$anyDirty },
   },
-  mixins: [validationMixin],
   validations: {
     form: {
       firstName: {

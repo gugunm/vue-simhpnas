@@ -1,6 +1,9 @@
 <template>
   <CRow>
-    <CCol col="12" lg="6">
+    <CCol
+      col="12"
+      lg="6"
+    >
       <CCard>
         <CCardBody>
           <h3>
@@ -11,11 +14,26 @@
             color="primary"
             fade
           >
-            ({{dismissCountDown}}) {{ message }}
+            ({{ dismissCountDown }}) {{ message }}
           </CAlert>
-          <CInput label="Name" type="text" placeholder="Name" v-model="name"></CInput>
-          <CButton color="primary" @click="update()">Save</CButton>
-          <CButton color="primary" @click="goBack">Back</CButton>
+          <CInput
+            v-model="name"
+            label="Name"
+            type="text"
+            placeholder="Name"
+          />
+          <CButton
+            color="primary"
+            @click="update()"
+          >
+            Save
+          </CButton>
+          <CButton
+            color="primary"
+            @click="goBack"
+          >
+            Back
+          </CButton>
         </CCardBody>
       </CCard>
     </CCol>
@@ -33,6 +51,16 @@ export default {
         dismissSecs: 7,
         dismissCountDown: 0,
     }
+  },
+  mounted: function(){
+    let self = this;
+    axios.get(   this.$apiAdress + '/api/menu/menu/edit?token=' + localStorage.getItem("api_token") + '&id=' + self.$route.params.id)
+    .then(function (response) {
+        self.name = response.data.menulist.name;
+    }).catch(function (error) {
+        console.log(error);
+        self.$router.push({ path: '/login' });
+    });
   },
   methods: {
     goBack() {
@@ -66,16 +94,6 @@ export default {
     showAlert () {
       this.dismissCountDown = this.dismissSecs
     },
-  },
-  mounted: function(){
-    let self = this;
-    axios.get(   this.$apiAdress + '/api/menu/menu/edit?token=' + localStorage.getItem("api_token") + '&id=' + self.$route.params.id)
-    .then(function (response) {
-        self.name = response.data.menulist.name;
-    }).catch(function (error) {
-        console.log(error);
-        self.$router.push({ path: '/login' });
-    });
   }
 }
 

@@ -5,42 +5,59 @@
         <CCol md="6">
           <CCard class="mx-4 mb-0">
             <CCardBody class="p-4">
-              <CForm @submit.prevent="register" method="POST">
+              <CForm
+                method="POST"
+                @submit.prevent="register"
+              >
                 <h1>Register</h1>
-                <p class="text-muted">Create your account</p>
+                <p class="text-muted">
+                  Create your account
+                </p>
                 <CInput
+                  v-model="name"
                   placeholder="Username"
                   autocomplete="username"
-                  v-model="name"
                 >
-                  <template #prepend-content><CIcon name="cil-user"/></template>
+                  <template #prepend-content>
+                    <CIcon name="cil-user" />
+                  </template>
                 </CInput>
                 <CInput
+                  v-model="email"
                   placeholder="Email"
                   prepend="@"
                   autocomplete="email"
-                  v-model="email"
                 />
                 <CInput
+                  v-model="password"
                   placeholder="Password"
                   type="password"
-                  prependHtml="<i class='cui-lock-locked'></i>"
+                  prepend-html="<i class='cui-lock-locked'></i>"
                   autocomplete="new-password"
-                  v-model="password"
                 >
-                  <template #prepend-content><CIcon name="cil-lock-locked"/></template>
+                  <template #prepend-content>
+                    <CIcon name="cil-lock-locked" />
+                  </template>
                 </CInput>
                 <CInput
+                  v-model="password_confirmation"
                   placeholder="Repeat password"
                   type="password"
-                  prependHtml="<i class='cui-lock-locked'></i>"
+                  prepend-html="<i class='cui-lock-locked'></i>"
                   autocomplete="new-password"
                   class="mb-4"
-                  v-model="password_confirmation"
                 >
-                  <template #prepend-content><CIcon name="cil-lock-locked"/></template>
+                  <template #prepend-content>
+                    <CIcon name="cil-lock-locked" />
+                  </template>
                 </CInput>
-                <CButton type="submit" color="success" block>Create Account</CButton>
+                <CButton
+                  type="submit"
+                  color="success"
+                  block
+                >
+                  Create Account
+                </CButton>
               </CForm>
             </CCardBody>
             <!-- <CCardFooter class="p-4">

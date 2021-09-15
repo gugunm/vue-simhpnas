@@ -30,8 +30,8 @@
       Documentation
     </CButton>
     <GridLayout
-      :layout.sync="layout"
       :key="gridKey"
+      :layout.sync="layout"
       :cols="{ lg: 12, md: 8, sm: 8, xs: 4, xxs: 4 }"
       :row-height="10"
       :is-draggable="true"

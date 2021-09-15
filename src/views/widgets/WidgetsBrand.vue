@@ -1,7 +1,10 @@
 <template>
   <CRow>
     <template v-if="!noCharts">
-      <CCol md="3" sm="6">
+      <CCol
+        md="3"
+        sm="6"
+      >
         <CWidgetBrand
           color="facebook"
           right-header="89k"
@@ -22,8 +25,11 @@
             labels="months"
           />
         </CWidgetBrand>
-       </CCol>
-       <CCol md="3" sm="6">
+      </CCol>
+      <CCol
+        md="3"
+        sm="6"
+      >
         <CWidgetBrand
           color="twitter"
           right-header="973k"
@@ -44,8 +50,11 @@
             labels="months"
           />
         </CWidgetBrand>
-       </CCol>
-       <CCol md="3" sm="6">
+      </CCol>
+      <CCol
+        md="3"
+        sm="6"
+      >
         <CWidgetBrand
           color="linkedin"
           right-header="500+"
@@ -66,8 +75,11 @@
             labels="months"
           />
         </CWidgetBrand>
-       </CCol>
-       <CCol md="3" sm="6">
+      </CCol>
+      <CCol
+        md="3"
+        sm="6"
+      >
         <CWidgetBrand
           right-header="12"
           right-footer="events"
@@ -91,7 +103,10 @@
       </CCol>
     </template>
     <template v-else>
-      <CCol md="3" sm="6">
+      <CCol
+        md="3"
+        sm="6"
+      >
         <CWidgetBrand
           color="facebook"
           right-header="89k"
@@ -105,8 +120,11 @@
             class="my-4"
           />
         </CWidgetBrand>
-       </CCol>
-       <CCol md="3" sm="6">
+      </CCol>
+      <CCol
+        md="3"
+        sm="6"
+      >
         <CWidgetBrand
           color="twitter"
           right-header="973k"
@@ -120,8 +138,11 @@
             class="my-4"
           />
         </CWidgetBrand>
-       </CCol>
-       <CCol md="3" sm="6">
+      </CCol>
+      <CCol
+        md="3"
+        sm="6"
+      >
         <CWidgetBrand
           color="linkedin"
           right-header="500+"
@@ -135,8 +156,11 @@
             class="my-4"
           />
         </CWidgetBrand>
-       </CCol>
-      <CCol md="3" sm="6">
+      </CCol>
+      <CCol
+        md="3"
+        sm="6"
+      >
         <CWidgetBrand
           right-header="12"
           right-footer="events"

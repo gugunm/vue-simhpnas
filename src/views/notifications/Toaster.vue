@@ -2,7 +2,7 @@
   <CCard>
     <CCardHeader>
       <div>
-        <CIcon name="cil-task"/> Toasts
+        <CIcon name="cil-task" /> Toasts
         <a 
           href="https://coreui.io/pro/vue/" 
           rel="noreferrer noopener" 
@@ -24,7 +24,10 @@
       </div>
     </CCardHeader>
     <CRow>
-      <CCol sm="12" lg="6">
+      <CCol
+        sm="12"
+        lg="6"
+      >
         <CForm class="m-4">
           <h5>Add toast with following props:</h5>
           <CInputCheckbox
@@ -72,12 +75,15 @@
           </CButton>
         </CForm>
       </CCol>
-      <CCol sm="12" lg="6">
+      <CCol
+        sm="12"
+        lg="6"
+      >
         <div class="m-4">
           <CToaster 
             v-for="(toaster, toasterKey) in toasters"
-            :position="toasterKey"
             :key="'toaster' + toasterKey"
+            :position="toasterKey"
           >
             <template v-for="(toast, key) in toaster">
               <CToast
@@ -85,7 +91,7 @@
                 :show="true"
                 v-bind="toast"
               >
-                {{`This is a toast in ${toasterKey} positioned toaster number ${key + 1}.`}}
+                {{ `This is a toast in ${toasterKey} positioned toaster number ${key + 1}.` }}
               </CToast>
             </template>
           </CToaster>

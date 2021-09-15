@@ -1,9 +1,12 @@
 <template>
   <CRow>
-    <CCol md="12" lg="7">
+    <CCol
+      md="12"
+      lg="7"
+    >
       <CCard>
         <CCardHeader>
-          <CIcon name="cil-justify-center"/>
+          <CIcon name="cil-justify-center" />
           <strong> Bootstrap Carousel</strong>
           <div class="card-header-actions">
             <a 
@@ -24,17 +27,17 @@
             height="400px"
           >
             <CCarouselItem
-              captionHeader="First Slide"
+              caption-header="First Slide"
               image="https://picsum.photos/1024/480/?image=52"
-              captionText="Nulla vitae elit libero, a pharetra augue mollis interdum."
+              caption-text="Nulla vitae elit libero, a pharetra augue mollis interdum."
             />
             <CCarouselItem
-              captionHeader="Blank page"
+              caption-header="Blank page"
               :image="{ placeholderColor: 'grey' }"
-              captionText="Nulla vitae elit libero, a pharetra augue mollis interdum."
+              caption-text="Nulla vitae elit libero, a pharetra augue mollis interdum."
             />
             <CCarouselItem
-            image="https://picsum.photos/1024/480/?image=54"
+              image="https://picsum.photos/1024/480/?image=54"
             />
           </CCarousel>
         </CCardBody>

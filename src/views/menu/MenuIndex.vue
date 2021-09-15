@@ -1,41 +1,65 @@
 <template>
   <CRow>
-    <CCol col="12" xl="12">
+    <CCol
+      col="12"
+      xl="12"
+    >
       <transition name="slide">
         <CCard>
           <CCardBody>
             <h4>
               Menus
             </h4>
-              <CButton color="primary" @click="addMenu()" class="mb-3">Add Menu</CButton>
-              <CDataTable
-                hover
-                :items="items"
-                :fields="fields"
-                :items-per-page="10"
-                pagination
-              >
-                <template #name="{item}">
-                  <td>
-                    <strong>{{item.name}}</strong>
-                  </td>
-                </template>
-                <template #menu_elements="{item}">
-                  <td>
-                    <CButton color="primary" @click="menuElements( item.id )">Menu Elements</CButton>
-                  </td>
-                </template>
-                <template #edit="{item}">
-                  <td>
-                    <CButton color="primary" @click="editMenu( item.id )">Edit</CButton>
-                  </td>
-                </template>
-                <template #delete="{item}">
-                  <td>
-                    <CButton color="danger" @click="deleteMenu( item.id )">Delete</CButton>
-                  </td>
-                </template>
-              </CDataTable>
+            <CButton
+              color="primary"
+              class="mb-3"
+              @click="addMenu()"
+            >
+              Add Menu
+            </CButton>
+            <CDataTable
+              hover
+              :items="items"
+              :fields="fields"
+              :items-per-page="10"
+              pagination
+            >
+              <template #name="{item}">
+                <td>
+                  <strong>{{ item.name }}</strong>
+                </td>
+              </template>
+              <template #menu_elements="{item}">
+                <td>
+                  <CButton
+                    color="primary"
+                    @click="menuElements( item.id )"
+                  >
+                    Menu Elements
+                  </CButton>
+                </td>
+              </template>
+              <template #edit="{item}">
+                <td>
+                  <CButton
+                    color="primary"
+                    @click="editMenu( item.id )"
+                  >
+                    Edit
+                  </CButton>
+                </td>
+              </template>
+              <template #delete="{item}">
+                <td>
+                  <CButton
+                    color="danger"
+                    @click="deleteMenu( item.id )"
+                  >
+                    Delete
+                  </CButton>
+                </td>
+              </template>
+            </CDataTable>
           </CCardBody>
         </CCard>
       </transition>
@@ -52,6 +76,9 @@ export default {
       fields: ['name', 'menu_elements', 'edit', 'delete'],
       items: [],
     }
+  },
+  mounted(){
+    this.getMenus();
   },
   methods: {
     menuElements(id){
@@ -77,9 +104,6 @@ export default {
         self.$router.push({ path: '/login' });
       });
     }
-  },
-  mounted(){
-    this.getMenus();
   }
 }
 </script>

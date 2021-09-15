@@ -1,9 +1,12 @@
 <template>
   <CRow>
-    <CCol col="12" md="6">
+    <CCol
+      col="12"
+      md="6"
+    >
       <CCard>
         <CCardHeader>
-          <CIcon name="cil-justify-center"/>
+          <CIcon name="cil-justify-center" />
           <strong> Bootstrap Collapse </strong>
           <div class="card-header-actions">
             <a 
@@ -17,35 +20,52 @@
           </div>
         </CCardHeader>
         <CCardBody>
-          <CButton @click="collapse = !collapse" color="primary">
+          <CButton
+            color="primary"
+            @click="collapse = !collapse"
+          >
             Toggle Collapse
           </CButton>
-          <CCollapse :show="collapse" class="mt-2">
+          <CCollapse
+            :show="collapse"
+            class="mt-2"
+          >
             <CCard body-wrapper>
               <CCardText>Collapse contents Here</CCardText>
               <CButton  
-                @click="innerCollapse = !innerCollapse" 
                 size="sm" 
-                color="secondary"
+                color="secondary" 
+                @click="innerCollapse = !innerCollapse"
               >
                 Toggle Inner Collapse
               </CButton>
-              <CCollapse :show="innerCollapse" class="mt-2">
-                <CCard body-wrapper>Hello!</CCard>
+              <CCollapse
+                :show="innerCollapse"
+                class="mt-2"
+              >
+                <CCard body-wrapper>
+                  Hello!
+                </CCard>
               </CCollapse>
             </CCard>
           </CCollapse>
         </CCardBody>
       </CCard>
     </CCol>
-    <CCol col="12" md="6">
+    <CCol
+      col="12"
+      md="6"
+    >
       <CCard>
-        <CCardHeader @click="cardCollapse = !cardCollapse" class="btn text-left"> 
+        <CCardHeader
+          class="btn text-left"
+          @click="cardCollapse = !cardCollapse"
+        > 
           <strong>Collapsible card</strong>
         </CCardHeader>
         <CCollapse :show="cardCollapse">
           <CCardBody>
-            {{text}}
+            {{ text }}
           </CCardBody>
         </CCollapse>
       </CCard>

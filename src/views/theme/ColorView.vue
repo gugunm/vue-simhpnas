@@ -1,14 +1,22 @@
 <template>
   <table class="w-100">
     <tbody>
-    <tr>
-      <td class="text-muted">HEX:</td>
-      <td class="font-weight-bold">{{this.hexColor}}</td>
-    </tr>
-    <tr>
-      <td class="text-muted">RGB:</td>
-      <td class="font-weight-bold">{{this.bgColor}}</td>
-    </tr>
+      <tr>
+        <td class="text-muted">
+          HEX:
+        </td>
+        <td class="font-weight-bold">
+          {{ this.hexColor }}
+        </td>
+      </tr>
+      <tr>
+        <td class="text-muted">
+          RGB:
+        </td>
+        <td class="font-weight-bold">
+          {{ this.bgColor }}
+        </td>
+      </tr>
     </tbody>
   </table>
 </template>
@@ -27,15 +35,15 @@ export default {
       return rgbToHex(this.bgColor)
     }
   },
+  mounted () {
+    this.setColor()
+  },
   methods: {
     setColor () {
       const elem = this.$parent.$el.children[0]
       const color = window.getComputedStyle(elem).getPropertyValue('background-color')
       this.bgColor = color || this.bgColor
     }
-  },
-  mounted () {
-    this.setColor()
   }
 }
 </script>

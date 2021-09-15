@@ -4,7 +4,7 @@
       <CCol>
         <CCard>
           <CCardHeader>
-            <CIcon name="cil-justify-center"/>
+            <CIcon name="cil-justify-center" />
             <strong> Bootstrap Jumbotron </strong>
             <div class="card-header-actions">
               <a 
@@ -19,10 +19,19 @@
           </CCardHeader>
           <CCardBody>
             <CJumbotron>
-              <h1 class="display-3">Bootstrap 4</h1>
-              <p class="lead">Bootstrap 4 Components for Vue.js 2.6+</p>
+              <h1 class="display-3">
+                Bootstrap 4
+              </h1>
+              <p class="lead">
+                Bootstrap 4 Components for Vue.js 2.6+
+              </p>
               <p>For more information visit website</p>
-              <CButton color="primary" href="#">More Info</CButton>
+              <CButton
+                color="primary"
+                href="#"
+              >
+                More Info
+              </CButton>
             </CJumbotron>
           </CCardBody>
         </CCard>
@@ -30,12 +39,17 @@
       <CCol>
         <CCard>
           <CCardHeader>
-            <CIcon name="cil-justify-center"/> <strong> Jumbotron </strong>
+            <CIcon name="cil-justify-center" /> <strong> Jumbotron </strong>
             <small>with slots</small>
           </CCardHeader>
           <CCardBody>
-            <CJumbotron header="Bootstrap 4" lead="">
-              <h1 class="display-3">Bootstrap 4</h1>
+            <CJumbotron
+              header="Bootstrap 4"
+              lead=""
+            >
+              <h1 class="display-3">
+                Bootstrap 4
+              </h1>
               <p class="lead">
                 This is a simple hero unit, a simple jumbotron-style component for
                 calling extra attention to featured content or information.
@@ -45,8 +59,18 @@
                 It uses utility classes for typography and spacing to space content
                 out within the larger container.
               </p>
-              <CButton color="primary" href="#">Do Something</CButton>
-              <CButton color="success" href="#">Do Something Else</CButton>
+              <CButton
+                color="primary"
+                href="#"
+              >
+                Do Something
+              </CButton>
+              <CButton
+                color="success"
+                href="#"
+              >
+                Do Something Else
+              </CButton>
             </CJumbotron>
           </CCardBody>
         </CCard>
@@ -56,7 +80,7 @@
       <CCol>
         <CCard>
           <CCardHeader>
-            <CIcon name="cil-justify-center"/> <strong> Jumbotron </strong>
+            <CIcon name="cil-justify-center" /> <strong> Jumbotron </strong>
             <small>colors</small>
           </CCardHeader>
           <CCardBody>
@@ -65,7 +89,9 @@
               text-color="white"
               border-color="dark"
             >
-              <h1 class="display-3">Bootstrap 4</h1>
+              <h1 class="display-3">
+                Bootstrap 4
+              </h1>
               <p class="lead">
                 This is a simple hero unit, a simple jumbotron-style component for
                 calling extra attention to featured content or information.

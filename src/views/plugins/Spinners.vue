@@ -2,7 +2,7 @@
   <div class="animated fadeIn">
     <CCard>
       <CCardHeader>
-        <CIcon name="cil-circle"/> Base spinners
+        <CIcon name="cil-circle" /> Base spinners
         <div class="card-header-actions">
           <a 
             href="https://coreui.io/vue/docs/components/spinner.html" 
@@ -16,15 +16,24 @@
       </CCardHeader>
       <CCardBody>
         <div class="d-flex justify-content-between align-items-center">
-          <CSpinner color="success" size="sm"/>
-          <CSpinner color="info"/>
+          <CSpinner
+            color="success"
+            size="sm"
+          />
+          <CSpinner color="info" />
           <CSpinner
             color="primary"
             style="width:4rem;height:4rem;"
           />
 
-          <CSpinner grow size="sm"/>
-          <CSpinner color="warning" grow/>
+          <CSpinner
+            grow
+            size="sm"
+          />
+          <CSpinner
+            color="warning"
+            grow
+          />
           <CSpinner
             style="width:4rem;height:4rem;"
             color="danger"
@@ -35,7 +44,7 @@
     </CCard>
     <CCard>
       <CCardHeader>
-        <CIcon name="cil-circle"/> Spinners - SpinKit
+        <CIcon name="cil-circle" /> Spinners - SpinKit
         <a 
           href="https://coreui.io/pro/vue/" 
           rel="noreferrer noopener" 
@@ -62,192 +71,240 @@
       </CCardBody>
     </CCard>
     <CRow>
-      <CCol xl="3" lg="4" md="6">
+      <CCol
+        xl="3"
+        lg="4"
+        md="6"
+      >
         <CCard>
           <CCardHeader>
             Rotating plane
           </CCardHeader>
           <CCardBody>
-            <div class="sk-plane"></div>
+            <div class="sk-plane" />
           </CCardBody>
-        </CCard >
+        </CCard>
       </CCol>
-      <CCol xl="3" lg="4" md="6">
+      <CCol
+        xl="3"
+        lg="4"
+        md="6"
+      >
         <CCard>
           <CCardHeader>
             Double bounce
           </CCardHeader>
           <CCardBody>
             <div class="sk-bounce">
-              <div class="sk-bounce-dot"></div>
-              <div class="sk-bounce-dot"></div>
+              <div class="sk-bounce-dot" />
+              <div class="sk-bounce-dot" />
             </div>
           </CCardBody>
-        </CCard >
+        </CCard>
       </CCol>
-      <CCol xl="3" lg="4" md="6">
+      <CCol
+        xl="3"
+        lg="4"
+        md="6"
+      >
         <CCard>
           <CCardHeader>
             Wave
           </CCardHeader>
           <CCardBody>
             <div class="sk-wave">
-              <div class="sk-wave-rect"></div>
-              <div class="sk-wave-rect"></div>
-              <div class="sk-wave-rect"></div>
-              <div class="sk-wave-rect"></div>
-              <div class="sk-wave-rect"></div>
+              <div class="sk-wave-rect" />
+              <div class="sk-wave-rect" />
+              <div class="sk-wave-rect" />
+              <div class="sk-wave-rect" />
+              <div class="sk-wave-rect" />
             </div>
           </CCardBody>
-        </CCard >
+        </CCard>
       </CCol>
-      <CCol xl="3" lg="4" md="6">
+      <CCol
+        xl="3"
+        lg="4"
+        md="6"
+      >
         <CCard>
           <CCardHeader>
             Wandering cubes
           </CCardHeader>
           <CCardBody>
             <div class="sk-wander">
-              <div class="sk-wander-cube"></div>
-              <div class="sk-wander-cube"></div>
+              <div class="sk-wander-cube" />
+              <div class="sk-wander-cube" />
             </div>
           </CCardBody>
-        </CCard >
+        </CCard>
       </CCol>
-      <CCol xl="3" lg="4" md="6">
+      <CCol
+        xl="3"
+        lg="4"
+        md="6"
+      >
         <CCard>
           <CCardHeader>
             Pulse
           </CCardHeader>
           <CCardBody>
-            <div class="sk-pulse"></div>
+            <div class="sk-pulse" />
           </CCardBody>
-        </CCard >
+        </CCard>
       </CCol>
-      <CCol xl="3" lg="4" md="6">
+      <CCol
+        xl="3"
+        lg="4"
+        md="6"
+      >
         <CCard>
           <CCardHeader>
             Chasing dots
           </CCardHeader>
           <CCardBody>
             <div class="sk-chase">
-              <div class="sk-chase-dot"></div>
-              <div class="sk-chase-dot"></div>
-              <div class="sk-chase-dot"></div>
-              <div class="sk-chase-dot"></div>
-              <div class="sk-chase-dot"></div>
-              <div class="sk-chase-dot"></div>
+              <div class="sk-chase-dot" />
+              <div class="sk-chase-dot" />
+              <div class="sk-chase-dot" />
+              <div class="sk-chase-dot" />
+              <div class="sk-chase-dot" />
+              <div class="sk-chase-dot" />
             </div>
           </CCardBody>
-        </CCard >
+        </CCard>
       </CCol>
-      <CCol xl="3" lg="4" md="6">
+      <CCol
+        xl="3"
+        lg="4"
+        md="6"
+      >
         <CCard>
           <CCardHeader>
             Swing
           </CCardHeader>
           <CCardBody>
             <div class="sk-swing">
-              <div class="sk-swing-dot"></div>
-              <div class="sk-swing-dot"></div>
+              <div class="sk-swing-dot" />
+              <div class="sk-swing-dot" />
             </div>
           </CCardBody>
-        </CCard >
+        </CCard>
       </CCol>
-      <CCol xl="3" lg="4" md="6">
+      <CCol
+        xl="3"
+        lg="4"
+        md="6"
+      >
         <CCard>
           <CCardHeader>
             Flow
           </CCardHeader>
           <CCardBody>
             <div class="sk-flow">
-              <div class="sk-flow-dot"></div>
-              <div class="sk-flow-dot"></div>
-              <div class="sk-flow-dot"></div>
+              <div class="sk-flow-dot" />
+              <div class="sk-flow-dot" />
+              <div class="sk-flow-dot" />
             </div>
           </CCardBody>
-        </CCard >
+        </CCard>
       </CCol>
-      <CCol xl="3" lg="4" md="6">
+      <CCol
+        xl="3"
+        lg="4"
+        md="6"
+      >
         <CCard>
           <CCardHeader>
             Circle
           </CCardHeader>
           <CCardBody>
             <div class="sk-circle">
-              <div class="sk-circle-dot"></div>
-              <div class="sk-circle-dot"></div>
-              <div class="sk-circle-dot"></div>
-              <div class="sk-circle-dot"></div>
-              <div class="sk-circle-dot"></div>
-              <div class="sk-circle-dot"></div>
-              <div class="sk-circle-dot"></div>
-              <div class="sk-circle-dot"></div>
-              <div class="sk-circle-dot"></div>
-              <div class="sk-circle-dot"></div>
-              <div class="sk-circle-dot"></div>
-              <div class="sk-circle-dot"></div>
+              <div class="sk-circle-dot" />
+              <div class="sk-circle-dot" />
+              <div class="sk-circle-dot" />
+              <div class="sk-circle-dot" />
+              <div class="sk-circle-dot" />
+              <div class="sk-circle-dot" />
+              <div class="sk-circle-dot" />
+              <div class="sk-circle-dot" />
+              <div class="sk-circle-dot" />
+              <div class="sk-circle-dot" />
+              <div class="sk-circle-dot" />
+              <div class="sk-circle-dot" />
             </div>
           </CCardBody>
-        </CCard >
+        </CCard>
       </CCol>
-      <CCol xl="3" lg="4" md="6">
+      <CCol
+        xl="3"
+        lg="4"
+        md="6"
+      >
         <CCard>
           <CCardHeader>
             Cube grid
           </CCardHeader>
           <CCardBody>
             <div class="sk-grid">
-              <div class="sk-grid-cube"></div>
-              <div class="sk-grid-cube"></div>
-              <div class="sk-grid-cube"></div>
-              <div class="sk-grid-cube"></div>
-              <div class="sk-grid-cube"></div>
-              <div class="sk-grid-cube"></div>
-              <div class="sk-grid-cube"></div>
-              <div class="sk-grid-cube"></div>
-              <div class="sk-grid-cube"></div>
+              <div class="sk-grid-cube" />
+              <div class="sk-grid-cube" />
+              <div class="sk-grid-cube" />
+              <div class="sk-grid-cube" />
+              <div class="sk-grid-cube" />
+              <div class="sk-grid-cube" />
+              <div class="sk-grid-cube" />
+              <div class="sk-grid-cube" />
+              <div class="sk-grid-cube" />
             </div>
           </CCardBody>
-        </CCard >
+        </CCard>
       </CCol>
-      <CCol xl="3" lg="4" md="6">
+      <CCol
+        xl="3"
+        lg="4"
+        md="6"
+      >
         <CCard>
           <CCardHeader>
             Fading circle
           </CCardHeader>
           <CCardBody>
             <div class="sk-circle-fade">
-              <div class="sk-circle-fade-dot"></div>
-              <div class="sk-circle-fade-dot"></div>
-              <div class="sk-circle-fade-dot"></div>
-              <div class="sk-circle-fade-dot"></div>
-              <div class="sk-circle-fade-dot"></div>
-              <div class="sk-circle-fade-dot"></div>
-              <div class="sk-circle-fade-dot"></div>
-              <div class="sk-circle-fade-dot"></div>
-              <div class="sk-circle-fade-dot"></div>
-              <div class="sk-circle-fade-dot"></div>
-              <div class="sk-circle-fade-dot"></div>
-              <div class="sk-circle-fade-dot"></div>
+              <div class="sk-circle-fade-dot" />
+              <div class="sk-circle-fade-dot" />
+              <div class="sk-circle-fade-dot" />
+              <div class="sk-circle-fade-dot" />
+              <div class="sk-circle-fade-dot" />
+              <div class="sk-circle-fade-dot" />
+              <div class="sk-circle-fade-dot" />
+              <div class="sk-circle-fade-dot" />
+              <div class="sk-circle-fade-dot" />
+              <div class="sk-circle-fade-dot" />
+              <div class="sk-circle-fade-dot" />
+              <div class="sk-circle-fade-dot" />
             </div>
           </CCardBody>
-        </CCard >
+        </CCard>
       </CCol>
-      <CCol xl="3" lg="4" md="6">
+      <CCol
+        xl="3"
+        lg="4"
+        md="6"
+      >
         <CCard>
           <CCardHeader>
             Folding Cube
           </CCardHeader>
           <CCardBody>
             <div class="sk-fold">
-              <div class="sk-fold-cube"></div>
-              <div class="sk-fold-cube"></div>
-              <div class="sk-fold-cube"></div>
-              <div class="sk-fold-cube"></div>
+              <div class="sk-fold-cube" />
+              <div class="sk-fold-cube" />
+              <div class="sk-fold-cube" />
+              <div class="sk-fold-cube" />
             </div>
           </CCardBody>
-        </CCard >
+        </CCard>
       </CCol>
     </CRow>
   </div>
@@ -255,7 +312,7 @@
 
 <script>
   export default {
-    name: 'spinners',
+    name: 'Spinners',
   }
 </script>
 

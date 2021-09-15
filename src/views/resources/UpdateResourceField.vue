@@ -1,76 +1,76 @@
 <template>
-    <div class="mb-1 mt-1">
-        <div v-if="flag">
-            <div v-if="column.type == 'checkbox'">
-              <CInputCheckbox
-                :label="column.name"
-                value="true"
-                :checked="false"
-                v-model="model"
-              />
-            </div>
-            <div v-else-if="column.type == 'radio'">
-              <label class="mt-3"> {{ column.name }} </label>
-              <CInputRadio
-                label="yes"
-                type="radio"
-                value="true"
-                :name="column.column_name"
-                :checked="false"
-              />
-              <CInputRadio
-                label="no"
-                type="radio"
-                value="false"
-                :name="column.column_name"
-                :checked="false"
-              />
-            </div>
-            <div v-else>
-              <CInput 
-                :label="column.name" 
-                :type="column.type" 
-                :placeholder="column.name" 
-                v-model="model"
-              ></CInput>
-            </div>
-        </div>
-        <div v-else-if="column.type == 'relation_select'">
-          <CSelect
-            :label="column.name"
-            :options="relations['relation_' + column.column_name]"
-            :value.sync="model"
-          />
-        </div>
-        <div v-else-if="column.type == 'relation_radio'">
-          <label class="mt-3">{{ column.name }}</label>
-          <CInputRadio
-            v-for="relation in relations['relation_' + column.column_name]"
-            :key="relation.value"
-            :label="relation.label"
-            type="radio"
-            :value="relation.value"
-            :name="column.column_name"
-          />        
-        </div>
-        <div v-else-if="column.type == 'file' || column.type == 'image'">
-          <CInputFile
-            :label="column.name" 
-            v-on:change="handleFileUpload"
-          />
-        </div>
-        <div v-else-if="column.type == 'text_area'">
-          <CTextarea
-            :label="column.name"
-            :placeholder="column.name"
-            rows="9"
-            v-model="model"
-          />
-        </div>
-        <div v-else>
-          <p>Not recognize field type: {{ column.type }}</p>
-        </div>
+  <div class="mb-1 mt-1">
+    <div v-if="flag">
+      <div v-if="column.type == 'checkbox'">
+        <CInputCheckbox
+          v-model="model"
+          :label="column.name"
+          value="true"
+          :checked="false"
+        />
+      </div>
+      <div v-else-if="column.type == 'radio'">
+        <label class="mt-3"> {{ column.name }} </label>
+        <CInputRadio
+          label="yes"
+          type="radio"
+          value="true"
+          :name="column.column_name"
+          :checked="false"
+        />
+        <CInputRadio
+          label="no"
+          type="radio"
+          value="false"
+          :name="column.column_name"
+          :checked="false"
+        />
+      </div>
+      <div v-else>
+        <CInput 
+          v-model="model" 
+          :label="column.name" 
+          :type="column.type" 
+          :placeholder="column.name"
+        />
+      </div>
     </div>
+    <div v-else-if="column.type == 'relation_select'">
+      <CSelect
+        :label="column.name"
+        :options="relations['relation_' + column.column_name]"
+        :value.sync="model"
+      />
+    </div>
+    <div v-else-if="column.type == 'relation_radio'">
+      <label class="mt-3">{{ column.name }}</label>
+      <CInputRadio
+        v-for="relation in relations['relation_' + column.column_name]"
+        :key="relation.value"
+        :label="relation.label"
+        type="radio"
+        :value="relation.value"
+        :name="column.column_name"
+      />        
+    </div>
+    <div v-else-if="column.type == 'file' || column.type == 'image'">
+      <CInputFile
+        :label="column.name" 
+        @change="handleFileUpload"
+      />
+    </div>
+    <div v-else-if="column.type == 'text_area'">
+      <CTextarea
+        v-model="model"
+        :label="column.name"
+        :placeholder="column.name"
+        rows="9"
+      />
+    </div>
+    <div v-else>
+      <p>Not recognize field type: {{ column.type }}</p>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -101,6 +101,16 @@ export default {
           return flag
       }
   },
+  watch:{
+      'getData': function(){
+          if(this.getData === true){
+            this.getDataFunction()
+          }
+      }
+  },
+  mounted:function(){
+    this.model = this.column.value
+  },
   methods:{
     handleFileUpload(files, event){
       this.model = files[0];
@@ -115,16 +125,6 @@ export default {
       }
       this.$emit('sendData', data)
     }
-  },
-  watch:{
-      'getData': function(){
-          if(this.getData === true){
-            this.getDataFunction()
-          }
-      }
-  },
-  mounted:function(){
-    this.model = this.column.value
   }
 }
 </script>

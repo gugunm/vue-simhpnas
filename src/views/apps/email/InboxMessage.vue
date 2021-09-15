@@ -5,16 +5,22 @@
     :class="{ 'c-message-read': read }"
   >
     <div class="c-message-actions">
-      <CIcon name="cil-star"/>
+      <CIcon name="cil-star" />
     </div>
     <div class="c-message-details">
       <div class="c-message-headers">
-        <div class="c-message-headers-from">{{from}}</div>
-        <div class="c-message-headers-date">{{date}}</div>
-        <div class="c-message-headers-subject">{{title}}</div>
+        <div class="c-message-headers-from">
+          {{ from }}
+        </div>
+        <div class="c-message-headers-date">
+          {{ date }}
+        </div>
+        <div class="c-message-headers-subject">
+          {{ title }}
+        </div>
       </div>
       <div class="c-message-body">
-        {{description}}
+        {{ description }}
       </div>
     </div>
   </CLink>

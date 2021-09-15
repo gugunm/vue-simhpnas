@@ -1,6 +1,9 @@
 <template>
   <CRow>
-    <CCol col="12" lg="6">
+    <CCol
+      col="12"
+      lg="6"
+    >
       <CCard no-header>
         <CCardBody>
           <h4>
@@ -11,17 +14,43 @@
             color="primary"
             fade
           >
-            ({{dismissCountDown}}) {{ message }}
+            ({{ dismissCountDown }}) {{ message }}
           </CAlert>
 
-            <CInput label="Name" type="text" placeholder="Name" v-model="template.name"></CInput>
+          <CInput
+            v-model="template.name"
+            label="Name"
+            type="text"
+            placeholder="Name"
+          />
 
-            <CInput label="Subject" type="text" placeholder="Subject" v-model="template.subject"></CInput>
+          <CInput
+            v-model="template.subject"
+            label="Subject"
+            type="text"
+            placeholder="Subject"
+          />
 
-            <CTextarea textarea="true" label="Content" :rows="15" placeholder="Content.." v-model="template.content"></CTextarea>
+          <CTextarea
+            v-model="template.content"
+            textarea="true"
+            label="Content"
+            :rows="15"
+            placeholder="Content.."
+          />
 
-          <CButton color="primary" @click="store()">Create</CButton>
-          <CButton color="primary" @click="goBack">Back</CButton>
+          <CButton
+            color="primary"
+            @click="store()"
+          >
+            Create
+          </CButton>
+          <CButton
+            color="primary"
+            @click="goBack"
+          >
+            Back
+          </CButton>
         </CCardBody>
       </CCard>
     </CCol>
@@ -44,6 +73,9 @@ export default {
         dismissCountDown: 0,
         showDismissibleAlert: false
     }
+  },
+  mounted: function(){
+
   },
   methods: {
     goBack() {
@@ -84,9 +116,6 @@ export default {
     showAlert () {
       this.dismissCountDown = this.dismissSecs
     },
-  },
-  mounted: function(){
-
   }
 }
 

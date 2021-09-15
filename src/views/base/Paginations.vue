@@ -2,7 +2,7 @@
   <div>
     <CCard>
       <CCardHeader>
-        <CIcon name="cil-justify-center"/>
+        <CIcon name="cil-justify-center" />
         <strong> Pagination </strong>
         <small>size</small>
         <div class="card-header-actions">
@@ -29,7 +29,8 @@
         <CPagination
           size="sm"
           :active-page.sync="currentPage"
-          :pages="10"/>
+          :pages="10"
+        />
         <br>
 
         <div class="d-md-down-none">
@@ -43,12 +44,12 @@
           <br>
         </div>
 
-        <div>currentPage: {{currentPage}}</div>
+        <div>currentPage: {{ currentPage }}</div>
       </CCardBody>
     </CCard>
     <CCard>
       <CCardHeader>
-        <CIcon name="cil-justify-center"/>
+        <CIcon name="cil-justify-center" />
         <strong> Pagination </strong>
         <small>alignment</small>
       </CCardHeader>
@@ -76,7 +77,7 @@
         />
         <br>
 
-        <div>currentPage: {{currentPage}}</div>
+        <div>currentPage: {{ currentPage }}</div>
       </CCardBody>
     </CCard>
   </div>

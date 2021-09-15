@@ -2,7 +2,7 @@
   <div>
     <CCard>
       <CCardHeader>
-        <CIcon name="cil-justify-center"/>
+        <CIcon name="cil-justify-center" />
         <strong> Bootstrap Tooltips </strong>
         <small><code>v-c-tooltip</code> directive</small>
         <div class="card-header-actions">
@@ -21,8 +21,8 @@
           <CCol col="6">
             <div class="text-center my-3">
               <CButton 
-                color="secondary"
                 v-c-tooltip.hover.click="'I am a tooltip!'"
+                color="secondary"
               >
                 Hover Me
               </CButton>
@@ -43,7 +43,7 @@
     </CCard>
     <CCard>
       <CCardHeader>
-        <CIcon name="cil-justify-center"/>
+        <CIcon name="cil-justify-center" />
         <strong> Tooltips </strong>
         <small>placement</small>
       </CCardHeader>
@@ -51,17 +51,17 @@
         <div class="my-3">
           <CRow>
             <CCol
-              md="4"
-              class="py-4 text-center"
               v-for="placement in placements"
               :key="placement"
+              md="4"
+              class="py-4 text-center"
             >
               <CButton
-                color="primary"
                 v-c-tooltip.hover="{
                   content: `Placement ${placement}`,
                   placement
                 }"
+                color="primary"
               >
                 {{ placement }}
               </CButton>

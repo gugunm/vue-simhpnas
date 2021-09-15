@@ -1,6 +1,9 @@
 <template>
   <CRow>
-    <CCol col="6" lg="6">
+    <CCol
+      col="6"
+      lg="6"
+    >
       <CCard>
         <CCardBody>
           <h4>Delete</h4>
@@ -10,11 +13,21 @@
             color="primary"
             fade
           >
-            ({{dismissCountDown}}) {{ message }}
+            ({{ dismissCountDown }}) {{ message }}
           </CAlert>
 
-          <CButton color="danger" @click="deleteBread()">Delete</CButton>
-          <CButton color="primary" @click="goBack">Back</CButton>
+          <CButton
+            color="danger"
+            @click="deleteBread()"
+          >
+            Delete
+          </CButton>
+          <CButton
+            color="primary"
+            @click="goBack"
+          >
+            Back
+          </CButton>
         </CCardBody>
       </CCard>
     </CCol>
@@ -31,6 +44,8 @@ export default {
         dismissSecs: 7,
         dismissCountDown: 0,
     }
+  },
+  mounted: function(){
   },
   methods: {
     goBack() {
@@ -51,8 +66,6 @@ export default {
     showAlert () {
       this.dismissCountDown = this.dismissSecs
     },
-  },
-  mounted: function(){
   }
 }
 

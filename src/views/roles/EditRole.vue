@@ -1,6 +1,9 @@
 <template>
   <CRow>
-    <CCol col="12" lg="6">
+    <CCol
+      col="12"
+      lg="6"
+    >
       <CCard>
         <CCardBody>
           <h3>
@@ -11,11 +14,26 @@
             color="primary"
             fade
           >
-            ({{dismissCountDown}}) {{ message }}
+            ({{ dismissCountDown }}) {{ message }}
           </CAlert>
-            <CInput label="Name" type="text" placeholder="Name" v-model="role.name"/>
-          <CButton color="primary" @click="update()">Save</CButton>
-          <CButton color="primary" @click="goBack">Back</CButton>
+          <CInput
+            v-model="role.name"
+            label="Name"
+            type="text"
+            placeholder="Name"
+          />
+          <CButton
+            color="primary"
+            @click="update()"
+          >
+            Save
+          </CButton>
+          <CButton
+            color="primary"
+            @click="goBack"
+          >
+            Back
+          </CButton>
         </CCardBody>
       </CCard>
     </CCol>
@@ -44,6 +62,16 @@ export default {
         dismissSecs: 7,
         dismissCountDown: 0,
     }
+  },
+  mounted: function(){
+    let self = this;
+    axios.get(   this.$apiAdress + '/api/roles/' + self.$route.params.id + '/edit?token=' + localStorage.getItem("api_token"))
+    .then(function (response) {
+        self.role = response.data;
+    }).catch(function (error) {
+        console.log(error);
+        self.$router.push({ path: '/login' });
+    });
   },
   methods: {
     goBack() {
@@ -77,16 +105,6 @@ export default {
     showAlert () {
       this.dismissCountDown = this.dismissSecs
     },
-  },
-  mounted: function(){
-    let self = this;
-    axios.get(   this.$apiAdress + '/api/roles/' + self.$route.params.id + '/edit?token=' + localStorage.getItem("api_token"))
-    .then(function (response) {
-        self.role = response.data;
-    }).catch(function (error) {
-        console.log(error);
-        self.$router.push({ path: '/login' });
-    });
   }
 }
 

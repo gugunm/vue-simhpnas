@@ -6,7 +6,7 @@
         lg="8"
         sm="12"
       >
-        <h4 class="my-0 mt-1 mb-3">
+        <h4 class="my-0 mt-1 mb-3 text-2xl">
           {{ topTitle }} {{ title }} {{ descTitle }}
         </h4>
       </CCol>

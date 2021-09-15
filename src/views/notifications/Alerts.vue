@@ -1,9 +1,12 @@
 <template>
   <CRow>
-    <CCol col="12" md="6">
+    <CCol
+      col="12"
+      md="6"
+    >
       <CCard>
         <CCardHeader>
-          <CIcon name="cil-justify-center"/>
+          <CIcon name="cil-justify-center" />
           <strong> Bootstrap Alert</strong>
           <div class="card-header-actions">
             <a 
@@ -18,65 +21,166 @@
         </CCardHeader>
         <CCardBody>
           <div>
-            <p></p>
-            <CAlert show color="primary">Primary Alert</CAlert>
-            <CAlert show color="secondary">Secondary Alert</CAlert>
-            <CAlert show color="success">Success Alert</CAlert>
-            <CAlert show color="danger">Danger Alert</CAlert>
-            <CAlert show color="warning">Warning Alert</CAlert>
-            <CAlert show color="info">Info Alert</CAlert>
-            <CAlert show color="light">Light Alert</CAlert>
-            <CAlert show color="dark">Dark Alert</CAlert>
+            <p />
+            <CAlert
+              show
+              color="primary"
+            >
+              Primary Alert
+            </CAlert>
+            <CAlert
+              show
+              color="secondary"
+            >
+              Secondary Alert
+            </CAlert>
+            <CAlert
+              show
+              color="success"
+            >
+              Success Alert
+            </CAlert>
+            <CAlert
+              show
+              color="danger"
+            >
+              Danger Alert
+            </CAlert>
+            <CAlert
+              show
+              color="warning"
+            >
+              Warning Alert
+            </CAlert>
+            <CAlert
+              show
+              color="info"
+            >
+              Info Alert
+            </CAlert>
+            <CAlert
+              show
+              color="light"
+            >
+              Light Alert
+            </CAlert>
+            <CAlert
+              show
+              color="dark"
+            >
+              Dark Alert
+            </CAlert>
           </div>
         </CCardBody>
       </CCard>
     </CCol>
-    <CCol col="12" md="6">
+    <CCol
+      col="12"
+      md="6"
+    >
       <CCard>
         <CCardHeader>
-          <CIcon name="cil-justify-center"/> Alert
+          <CIcon name="cil-justify-center" /> Alert
           <small> use <code>.alert-link</code> to provide links</small>
         </CCardHeader>
         <CCardBody>
           <div>
-            <CAlert show color="primary">
-              Primary Alert with <a href="#" class="alert-link">an example link</a>.
+            <CAlert
+              show
+              color="primary"
+            >
+              Primary Alert with <a
+                href="#"
+                class="alert-link"
+              >an example link</a>.
             </CAlert>
-            <CAlert show color="secondary">
-              Secondary Alert with <a href="#" class="alert-link">an example link</a>.
+            <CAlert
+              show
+              color="secondary"
+            >
+              Secondary Alert with <a
+                href="#"
+                class="alert-link"
+              >an example link</a>.
             </CAlert>
-            <CAlert show color="success">
-              Success Alert with <a href="#" class="alert-link">an example link</a>.
+            <CAlert
+              show
+              color="success"
+            >
+              Success Alert with <a
+                href="#"
+                class="alert-link"
+              >an example link</a>.
             </CAlert>
-            <CAlert show color="danger">
-              Danger Alert with <a href="#" class="alert-link">an example link</a>.
+            <CAlert
+              show
+              color="danger"
+            >
+              Danger Alert with <a
+                href="#"
+                class="alert-link"
+              >an example link</a>.
             </CAlert>
-            <CAlert show color="warning">
-              Warning Alert with <a href="#" class="alert-link">an example link</a>.
+            <CAlert
+              show
+              color="warning"
+            >
+              Warning Alert with <a
+                href="#"
+                class="alert-link"
+              >an example link</a>.
             </CAlert>
-            <CAlert show color="info">
-              Info Alert with <a href="#" class="alert-link">an example link</a>.
+            <CAlert
+              show
+              color="info"
+            >
+              Info Alert with <a
+                href="#"
+                class="alert-link"
+              >an example link</a>.
             </CAlert>
-            <CAlert show color="light">
-              Light Alert with <a href="#" class="alert-link">an example link</a>.
+            <CAlert
+              show
+              color="light"
+            >
+              Light Alert with <a
+                href="#"
+                class="alert-link"
+              >an example link</a>.
             </CAlert>
-            <CAlert show color="dark">
+            <CAlert
+              show
+              color="dark"
+            >
               Dark Alert with
-              <CLink href="#" class="alert-link">an example link</CLink>
+              <CLink
+                href="#"
+                class="alert-link"
+              >
+                an example link
+              </CLink>
               .
             </CAlert>
           </div>
         </CCardBody>
       </CCard>
     </CCol>
-    <CCol col="12" md="6">
+    <CCol
+      col="12"
+      md="6"
+    >
       <CCard>
         <CCardHeader>
-          <CIcon name="cil-justify-center"/> Alerts <small>with additional content</small>
+          <CIcon name="cil-justify-center" /> Alerts <small>with additional content</small>
         </CCardHeader>
         <CCardBody>
-          <CAlert show color="success">
-            <h4 class="alert-heading">Well done!</h4>
+          <CAlert
+            show
+            color="success"
+          >
+            <h4 class="alert-heading">
+              Well done!
+            </h4>
             <p>
               Aww yeah, you successfully read this important alert message.
               This example text is going to run a bit longer so that you can see
@@ -90,16 +194,19 @@
         </CCardBody>
       </CCard>
     </CCol>
-    <CCol col="12" md="6">
+    <CCol
+      col="12"
+      md="6"
+    >
       <CCard>
         <CCardHeader>
-          <CIcon name="cil-justify-center"/> Alerts
+          <CIcon name="cil-justify-center" /> Alerts
           <small>dismissible</small>
         </CCardHeader>
         <CCardBody>
           <CAlert
             color="secondary"
-            closeButton
+            close-button
             :show.sync="alert1"
           >
             Dismissible Alert!
@@ -121,9 +228,9 @@
             </CButton>
           </CAlert>
           <CButton
-            @click="showDismissibleAlerts"
             color="info"
             class="m-1"
+            @click="showDismissibleAlerts"
           >
             Show dismissible alerts
           </CButton>
@@ -131,27 +238,27 @@
       </CCard>
       <CCard>
         <CCardHeader>
-          <CIcon name="cil-justify-center"/> Alerts
+          <CIcon name="cil-justify-center" /> Alerts
           <small>auto dismissible</small>
         </CCardHeader>
         <CCardBody>
           <div>
             <CAlert
               :show.sync="dismissCountDown"
-              closeButton
+              close-button
               color="warning"
               fade
             >
               Alert will dismiss after
-              <strong>{{dismissCountDown}}</strong> seconds...
+              <strong>{{ dismissCountDown }}</strong> seconds...
             </CAlert>
 
             <CAlert
               :show.sync="dismissCountDown"
-              closeButton
+              close-button
               color="info"
             >
-              Alert will dismiss after {{dismissCountDown}} seconds...
+              Alert will dismiss after {{ dismissCountDown }} seconds...
               <CProgress
                 color="info"
                 :max="dismissSecs"
@@ -159,7 +266,11 @@
                 height="4px"
               />
             </CAlert>
-            <CButton @click="showAlert" color="info" class="m-1">
+            <CButton
+              color="info"
+              class="m-1"
+              @click="showAlert"
+            >
               Show alert with timer
             </CButton>
           </div>

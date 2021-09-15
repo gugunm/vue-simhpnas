@@ -2,7 +2,7 @@
   <div>
     <CCard>
       <CCardHeader>
-        <CIcon name="cil-justify-center"/>
+        <CIcon name="cil-justify-center" />
         <strong> Bootstrap Popovers</strong>
         <div class="card-header-actions">
           <a 
@@ -20,11 +20,11 @@
           <CCol col="6">
             <div class="my-3 text-center">
               <CButton
-                color="primary"
                 v-c-popover="{
                   header: 'Popover header',
                   content: 'I am popover content!'
                 }"
+                color="primary"
               >
                 Click Me
               </CButton>
@@ -33,12 +33,12 @@
           <CCol col="6">
             <div class="my-3 text-center">
               <CButton
-                color="primary"
                 v-c-popover="{
                   header: 'Popover!',
                   content: 'I start <strong>open</strong>',
                   active: true
                 }"
+                color="primary"
               >
                 Click me
               </CButton>
@@ -49,25 +49,25 @@
     </CCard>
     <CCard>
       <CCardHeader>
-        <CIcon name="cil-justify-center"/>
+        <CIcon name="cil-justify-center" />
         <strong> Popovers </strong>
         <small>placement</small>
       </CCardHeader>
       <CCardBody class="my-3">
         <CRow>
           <CCol
-            md="4"
-            class="py-4 text-center"
             v-for="placement in placements"
             :key="placement"
+            md="4"
+            class="py-4 text-center"
           >
             <CButton
-              color="primary"
               v-c-popover="{
                 header: 'Popover!',
                 content: `Placement ${placement}`,
                 placement
               }"
+              color="primary"
             >
               {{ placement }}
             </CButton>

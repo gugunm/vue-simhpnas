@@ -1,6 +1,9 @@
 <template>
   <CRow>
-    <CCol col="12" lg="6">
+    <CCol
+      col="12"
+      lg="6"
+    >
       <CCard>
         <CCardBody>
           <h3>
@@ -11,28 +14,54 @@
             color="primary"
             fade
           >
-            ({{dismissCountDown}}) {{ message }}
+            ({{ dismissCountDown }}) {{ message }}
           </CAlert>
-            <CInput label="Title" type="text" id="title" placeholder="Title" v-model="note.title"/>
-            <CInput
-              label="Content"
-              placeholder="Content.."
+          <CInput
+            id="title"
+            v-model="note.title"
+            label="Title"
+            type="text"
+            placeholder="Title"
+          />
+          <CInput
+            v-model="note.content"
+            label="Content"
               
-              textarea="true"
-              rows="9"
-              v-model="note.content"
-            />
-            <CInput label="Applies to date" type="date" id="applies_to_date" v-model="note.applies_to_date"/>
-            <CSelect 
-              id="status_id" 
-              :value.sync="note.status_id"
-              :options="statuses"
-              label="Status"
-            />
-            <CInput label="Note type" type="text" id="note_type" v-model="note.note_type"></CInput>
+            placeholder="Content.."
+            textarea="true"
+            rows="9"
+          />
+          <CInput
+            id="applies_to_date"
+            v-model="note.applies_to_date"
+            label="Applies to date"
+            type="date"
+          />
+          <CSelect 
+            id="status_id" 
+            :value.sync="note.status_id"
+            :options="statuses"
+            label="Status"
+          />
+          <CInput
+            id="note_type"
+            v-model="note.note_type"
+            label="Note type"
+            type="text"
+          />
        
-          <CButton color="primary" @click="update()">Save</CButton>
-          <CButton color="primary" @click="goBack">Back</CButton>
+          <CButton
+            color="primary"
+            @click="update()"
+          >
+            Save
+          </CButton>
+          <CButton
+            color="primary"
+            @click="goBack"
+          >
+            Back
+          </CButton>
         </CCardBody>
       </CCard>
     </CCol>
@@ -64,6 +93,18 @@ export default {
         dismissSecs: 7,
         dismissCountDown: 0,
     }
+  },
+  mounted: function(){
+    let self = this;
+    axios.get( this.$apiAdress + '/api/notes/' + self.$route.params.id + '/edit?token=' + localStorage.getItem("api_token"))
+    .then(function (response) {
+        self.note = response.data.note;
+        self.statuses = response.data.statuses;
+        self.$forceUpdate()
+    }).catch(function (error) {
+        console.log(error);
+        self.$router.push({ path: '/login' });
+    });
   },
   methods: {
     goBack() {
@@ -102,18 +143,6 @@ export default {
     showAlert () {
       this.dismissCountDown = this.dismissSecs
     },
-  },
-  mounted: function(){
-    let self = this;
-    axios.get( this.$apiAdress + '/api/notes/' + self.$route.params.id + '/edit?token=' + localStorage.getItem("api_token"))
-    .then(function (response) {
-        self.note = response.data.note;
-        self.statuses = response.data.statuses;
-        self.$forceUpdate()
-    }).catch(function (error) {
-        console.log(error);
-        self.$router.push({ path: '/login' });
-    });
   }
 }
 

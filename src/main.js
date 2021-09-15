@@ -10,9 +10,12 @@ import Locales from './locale/vue-i18n-locales.generated.js';
 
 import { API_URL } from './utils/api.js';
 
+import './assets/tailwind.css'
+
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import './assets/tailwind.css'
 library.add(fas)
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 

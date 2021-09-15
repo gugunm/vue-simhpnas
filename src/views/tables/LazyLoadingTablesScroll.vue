@@ -16,7 +16,6 @@
           </div>
         </CCardHeader>
         <CCardBody>
-
           <CDataTable
             :items="items"
             :fields="lazyTableFields"
@@ -25,43 +24,45 @@
             footer
             table-column
             :sorter="{ external: true, resetable: true }"
-            :columnFilter="{ external: true, lazy: true }"
+            :column-filter="{ external: true, lazy: true }"
             :table-filter="{ external: true, lazy: true }"
             :sorter-value.sync="sorter"
             :column-filter-value.sync="columnFilter"
             :table-filter-value.sync="tableFilter"
-            :addTableClasses="lazyTableClass"
+            :add-table-classes="lazyTableClass"
           >
-              <template #author="{item}">
-                <td>
-                  <strong>{{item.author}}</strong>
-                </td>
-              </template>
-              <template #title="{item}">
-                <td>
-                  <strong>{{item.title}}</strong>
-                </td>
-              </template>
-              <template #content="{item}">
-                <td>
-                  {{item.content}}
-                </td>  
-              </template>
-              <template #applies_to_date="{item}">
-                <td>
-                  {{item.applies_to_date}}
-                </td>
-              </template>
-              <template #status="{item}">
-                <td>
-                  <CBadge :color="item.status_class">{{item.status}}</CBadge>
-                </td>
-              </template>
-              <template #note_type="{item}">
-                <td>
-                  <strong>{{item.note_type}}</strong>
-                </td>
-              </template>
+            <template #author="{item}">
+              <td>
+                <strong>{{ item.author }}</strong>
+              </td>
+            </template>
+            <template #title="{item}">
+              <td>
+                <strong>{{ item.title }}</strong>
+              </td>
+            </template>
+            <template #content="{item}">
+              <td>
+                {{ item.content }}
+              </td>  
+            </template>
+            <template #applies_to_date="{item}">
+              <td>
+                {{ item.applies_to_date }}
+              </td>
+            </template>
+            <template #status="{item}">
+              <td>
+                <CBadge :color="item.status_class">
+                  {{ item.status }}
+                </CBadge>
+              </td>
+            </template>
+            <template #note_type="{item}">
+              <td>
+                <strong>{{ item.note_type }}</strong>
+              </td>
+            </template>
           </CDataTable>
         </CCardBody>
       </CCard>
@@ -145,6 +146,15 @@ export default {
       this.items = [];
       this.getNotes();
     }
+  }, 
+  mounted: function(){
+    this.scrolledElement = document.getElementsByClassName("lazyTable");
+    this.scrolledElement[0].onscroll = this.handleScroll;
+    this.items = [];
+    this.getNotes();
+  },
+  destroyed () {
+    this.scrolledElement = null;
   },
   methods: {
     handleScroll (e) {
@@ -179,15 +189,6 @@ export default {
         console.log(error);
       });
     },
-  }, 
-  mounted: function(){
-    this.scrolledElement = document.getElementsByClassName("lazyTable");
-    this.scrolledElement[0].onscroll = this.handleScroll;
-    this.items = [];
-    this.getNotes();
-  },
-  destroyed () {
-    this.scrolledElement = null;
   }
 
 

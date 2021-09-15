@@ -1,6 +1,9 @@
 <template>
   <div>
-    <CCardGroup columns class="card-columns cols-2">
+    <CCardGroup
+      columns
+      class="card-columns cols-2"
+    >
       <CCard>
         <CCardHeader>
           Line Chart
@@ -16,42 +19,50 @@
           </div>
         </CCardHeader>
         <CCardBody>
-          <CChartLineExample/>
+          <CChartLineExample />
         </CCardBody>
       </CCard>
       <CCard>
         <CCardHeader>Bar Chart</CCardHeader>
-        <CCardBody><CChartBarExample/></CCardBody>
+        <CCardBody><CChartBarExample /></CCardBody>
       </CCard>
       <CCard>
         <CCardHeader>Doughnut Chart</CCardHeader>
-        <CCardBody><CChartDoughnutExample/></CCardBody>
+        <CCardBody><CChartDoughnutExample /></CCardBody>
       </CCard>
       <CCard>
         <CCardHeader>Radar Chart</CCardHeader>
-        <CCardBody><CChartRadarExample/></CCardBody>
+        <CCardBody><CChartRadarExample /></CCardBody>
       </CCard>
       <CCard>
-         <CCardHeader>Pie Chart</CCardHeader>
-        <CCardBody><CChartPieExample/></CCardBody>
+        <CCardHeader>Pie Chart</CCardHeader>
+        <CCardBody><CChartPieExample /></CCardBody>
       </CCard>
       <CCard>
         <CCardHeader>Polar Area Chart</CCardHeader>
-        <CCardBody><CChartPolarAreaExample/></CCardBody>
+        <CCardBody><CChartPolarAreaExample /></CCardBody>
       </CCard>
       <CCard>
         <CCardHeader>Simple line chart</CCardHeader>
         <CCardBody>
-          <CChartLineSimple border-color="success" labels="months"/>
+          <CChartLineSimple
+            border-color="success"
+            labels="months"
+          />
         </CCardBody>        
       </CCard>
       <CCard>
         <CCardHeader>Simple pointed chart</CCardHeader>
-        <CCardBody><CChartLineSimple pointed border-color="warning"/></CCardBody>
+        <CCardBody>
+          <CChartLineSimple
+            pointed
+            border-color="warning"
+          />
+        </CCardBody>
       </CCard>
       <CCard>
         <CCardHeader>Simple bar chart</CCardHeader>
-        <CCardBody><CChartBarSimple background-color="danger"/></CCardBody>        
+        <CCardBody><CChartBarSimple background-color="danger" /></CCardBody>        
       </CCard>
     </CCardGroup>
   </div>

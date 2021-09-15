@@ -1,6 +1,9 @@
 <template>
   <CRow>
-    <CCol col="6" lg="6">
+    <CCol
+      col="6"
+      lg="6"
+    >
       <CCard>
         <CCardBody>
           <h3>
@@ -11,78 +14,82 @@
             color="primary"
             fade
           >
-            ({{dismissCountDown}}) {{ message }}
+            ({{ dismissCountDown }}) {{ message }}
           </CAlert>
 
           <CInput 
+            v-model="form.name" 
             label="Form name" 
             type="text" 
-            placeholder="Form name" 
+            placeholder="Form name"
             required
-            v-model="form.name"
-          ></CInput>
+          />
           <CInput 
+            v-model="form.pagination" 
             label="Records on one page of table" 
             type="number" 
-            placeholder="Records on one page of table" 
+            placeholder="Records on one page of table"
             required
-            v-model="form.pagination"
-          ></CInput>
+          />
           <CInputCheckbox
+            v-model="form.read"
             label="Enable Show button in table"
             value="true"
             :checked="true"
-            v-model="form.read"
           />
           <CInputCheckbox
+            v-model="form.edit"
             label="Enable Edit button in table"
             value="true"
             :checked="true"
-            v-model="form.edit"
           />
           <CInputCheckbox
+            v-model="form.add"
             label="Enable Add button in table"
             value="true"
             :checked="true"
-            v-model="form.add"
           />
           <CInputCheckbox
+            v-model="form.delete"
             label="Enable Delete button in table"
             value="true"
             :checked="true"
-            v-model="form.delete"
             class="mb-2"
           />
         </CCardBody>
       </CCard>
     </CCol>
-    <CCol col="6" lg="6">
+    <CCol
+      col="6"
+      lg="6"
+    >
       <CCard>
         <CCardBody>
-            <h4>Assign to roles:</h4>
-              <CInputCheckbox
-                v-for="role in roles"
-                v-bind:key="role"
-                :label="role"
-                value="true"
-                :checked="rolesArray[role]"
-                @update:checked="checkRoleCheckbox(role)"
-              />
-
+          <h4>Assign to roles:</h4>
+          <CInputCheckbox
+            v-for="role in roles"
+            :key="role"
+            :label="role"
+            value="true"
+            :checked="rolesArray[role]"
+            @update:checked="checkRoleCheckbox(role)"
+          />
         </CCardBody>
       </CCard>
     </CCol>
-    <CCol col="6" lg="6">
+    <CCol
+      col="6"
+      lg="6"
+    >
       <CCard>
         <CCardBody>
-
           <EditBreadFieldCard 
             v-for="formField in formFields" 
-            v-bind:key="formField.id"
-            @sendData="receiveDataFormField"
-            :getData="getData"
+            :key="formField.id"
+            :get-data="getData"
             :options="options"
             :data="formField"
+            @sendData="receiveDataFormField"
           />
 
           <CAlert
@@ -90,11 +97,21 @@
             color="primary"
             fade
           >
-            ({{dismissCountDown}}) {{ message }}
+            ({{ dismissCountDown }}) {{ message }}
           </CAlert>
 
-          <CButton color="primary" @click="updateFirstStep()">Save</CButton>
-          <CButton color="primary" @click="goBack">Back</CButton>
+          <CButton
+            color="primary"
+            @click="updateFirstStep()"
+          >
+            Save
+          </CButton>
+          <CButton
+            color="primary"
+            @click="goBack"
+          >
+            Back
+          </CButton>
         </CCardBody>
       </CCard>
     </CCol>
@@ -124,6 +141,29 @@ export default {
         dismissSecs: 7,
         dismissCountDown: 0,
     }
+  },
+  mounted: function(){
+    let self = this
+    axios.get(   this.$apiAdress + '/api/bread/' + self.$route.params.id + '/edit?token=' + localStorage.getItem("api_token"))
+    .then(function (response) {
+        self.form       = response.data.form
+        self.formFields = response.data.formFields
+        self.options    = response.data.options
+        self.roles      = response.data.roles
+        self.formRoles  = response.data.formRoles
+        self.rolesArray = [];
+        for(let i=0; i<self.roles.length; i++){
+          if(self.formRoles.indexOf( self.roles[i] ) != -1){
+            self.rolesArray[self.roles[i]] = true
+          }else{
+            self.rolesArray[self.roles[i]] = false
+          }
+        }
+
+    }).catch(function (error) {
+        console.log(error)
+        self.$router.push({ path: '/login' })
+    });
   },
   methods: {
     goBack() {
@@ -211,29 +251,6 @@ export default {
     showAlert () {
       this.dismissCountDown = this.dismissSecs
     },
-  },
-  mounted: function(){
-    let self = this
-    axios.get(   this.$apiAdress + '/api/bread/' + self.$route.params.id + '/edit?token=' + localStorage.getItem("api_token"))
-    .then(function (response) {
-        self.form       = response.data.form
-        self.formFields = response.data.formFields
-        self.options    = response.data.options
-        self.roles      = response.data.roles
-        self.formRoles  = response.data.formRoles
-        self.rolesArray = [];
-        for(let i=0; i<self.roles.length; i++){
-          if(self.formRoles.indexOf( self.roles[i] ) != -1){
-            self.rolesArray[self.roles[i]] = true
-          }else{
-            self.rolesArray[self.roles[i]] = false
-          }
-        }
-
-    }).catch(function (error) {
-        console.log(error)
-        self.$router.push({ path: '/login' })
-    });
   }
 }
 

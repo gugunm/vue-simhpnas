@@ -3,7 +3,7 @@
     <CCol sm="12">
       <CCard>
         <CCardHeader>
-          <CIcon name="cil-grid"/> Advanced 
+          <CIcon name="cil-grid" /> Advanced 
           <CLink 
             href="https://coreui.io/vue/docs/components/table"
             target="blank"
@@ -11,19 +11,19 @@
             CDataTable
           </CLink> application
         </CCardHeader>
-        <DemoTable/>
+        <DemoTable />
       </CCard>
       <CCard>
         <CCardHeader>
           Backend integration example
         </CCardHeader>
-        <BackendTable/>
+        <BackendTable />
       </CCard>
       <CCard>
         <CCardHeader>
           Current table items download to xlsx/csv table
         </CCardHeader>
-        <DownloadTable/>
+        <DownloadTable />
       </CCard>
     </CCol>
   </CRow>

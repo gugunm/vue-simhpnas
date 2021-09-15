@@ -8,19 +8,31 @@
   >
     <template #toggler>
       <CHeaderNavLink>
-        <CIcon name="cil-envelope-closed"/>
-        <CBadge shape="pill" color="info">{{itemsCount}}</CBadge>
+        <CIcon name="cil-envelope-closed" />
+        <CBadge
+          shape="pill"
+          color="info"
+        >
+          {{ itemsCount }}
+        </CBadge>
       </CHeaderNavLink>
     </template>
-    <CDropdownHeader tag="div" class="text-center bg-light">
-      <strong>You have {{itemsCount}} messages</strong>
+    <CDropdownHeader
+      tag="div"
+      class="text-center bg-light"
+    >
+      <strong>You have {{ itemsCount }} messages</strong>
     </CDropdownHeader>
     <CDropdownItem>
       <div class="message">
         <div class="pt-3 mr-3 float-left">
           <div class="c-avatar">
-            <img src="img/avatars/7.jpg" class="c-avatar-img" alt="admin@bootstrapmaster.com">
-            <span class="avatar-status bg-success"></span>
+            <img
+              src="img/avatars/7.jpg"
+              class="c-avatar-img"
+              alt="admin@bootstrapmaster.com"
+            >
+            <span class="avatar-status bg-success" />
           </div>
         </div>
         <div>
@@ -28,58 +40,87 @@
           <small class="text-muted float-right mt-1">Just now</small>
         </div>
         <div class="text-truncate font-weight-bold">
-          <CIcon name="cil-warning" class="text-danger"/> 
+          <CIcon
+            name="cil-warning"
+            class="text-danger"
+          /> 
           Important message
         </div>
-        <div class="small text-muted text-truncate">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</div>
+        <div class="small text-muted text-truncate">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...
+        </div>
       </div>
     </CDropdownItem>
     <CDropdownItem href="#">
       <div class="message">
         <div class="pt-3 mr-3 float-left">
           <div class="c-avatar">
-            <img src="img/avatars/6.jpg" class="c-avatar-img" alt="admin@bootstrapmaster.com"/>
-            <span class="avatar-status bg-warning"></span>
+            <img
+              src="img/avatars/6.jpg"
+              class="c-avatar-img"
+              alt="admin@bootstrapmaster.com"
+            >
+            <span class="avatar-status bg-warning" />
           </div>
         </div>
         <div>
           <small class="text-muted">Jane Doe</small>
           <small class="text-muted float-right mt-1">5 minutes ago</small>
         </div>
-        <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-        <div class="small text-muted text-truncate">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</div>
+        <div class="text-truncate font-weight-bold">
+          Lorem ipsum dolor sit amet
+        </div>
+        <div class="small text-muted text-truncate">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...
+        </div>
       </div>
     </CDropdownItem>
     <CDropdownItem href="#">
       <div class="message">
         <div class="pt-3 mr-3 float-left">
           <div class="c-avatar">
-            <img src="img/avatars/5.jpg" class="c-avatar-img" alt="admin@bootstrapmaster.com"/>
-            <span class="avatar-status bg-danger"></span>
+            <img
+              src="img/avatars/5.jpg"
+              class="c-avatar-img"
+              alt="admin@bootstrapmaster.com"
+            >
+            <span class="avatar-status bg-danger" />
           </div>
         </div>
         <div>
           <small class="text-muted">Janet Doe</small>
           <small class="text-muted float-right mt-1">1:52 PM</small>
         </div>
-        <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-        <div class="small text-muted text-truncate">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</div>
+        <div class="text-truncate font-weight-bold">
+          Lorem ipsum dolor sit amet
+        </div>
+        <div class="small text-muted text-truncate">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...
+        </div>
       </div>
     </CDropdownItem>
     <CDropdownItem href="#">
       <div class="message">
         <div class="pt-3 mr-3 float-left">
           <div class="c-avatar">
-            <img src="img/avatars/4.jpg" class="c-avatar-img" alt="admin@bootstrapmaster.com"/>
-            <span class="avatar-status bg-info"></span>
+            <img
+              src="img/avatars/4.jpg"
+              class="c-avatar-img"
+              alt="admin@bootstrapmaster.com"
+            >
+            <span class="avatar-status bg-info" />
           </div>
         </div>
         <div>
           <small class="text-muted">Joe Doe</small>
           <small class="text-muted float-right mt-1">4:03 AM</small>
         </div>
-        <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-        <div class="small text-muted text-truncate">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</div>
+        <div class="text-truncate font-weight-bold">
+          Lorem ipsum dolor sit amet
+        </div>
+        <div class="small text-muted text-truncate">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...
+        </div>
       </div>
     </CDropdownItem>
     <CDropdownItem 

@@ -1,69 +1,67 @@
 <template>
-    <CCard v-if="columnName != 'id'">
-        <CCardHeader>
-            <h5>{{ columnName }}</h5>
-        </CCardHeader>
-        <CCardBody>
-            <CInput 
-              label="Visible name" 
-              type="text" 
-              placeholder="Visible name" 
-              required
-              v-model="visibleName"
-            ></CInput>
-            <CSelect
-              label="Field type"
-              :options="options"
-              :value.sync="type"
-            />
-            <CInput 
-              label="Optional relation table name" 
-              type="text" 
-              placeholder="Optional relation table name" 
-              v-model="relationTable"
-            ></CInput>
-            <CInput 
-              label="Optional column name in relation table - to print" 
-              type="text" 
-              placeholder="Optional column name in relation table - to print" 
-              v-model="relationColumn"
-            ></CInput>
-            <CInputCheckbox
-              label="Browse"
-              value="true"
-              :checked="false"
-              v-model="browse"
-              class="mb-2"
-              @update:checked="selectCheckbox('browse')"
-            />
-            <CInputCheckbox
-              label="Read"
-              value="true"
-              :checked="false"
-              v-model="read"
-              class="mb-2"
-              @update:checked="selectCheckbox('read')"
-            />
-            <CInputCheckbox
-              label="Edit"
-              value="true"
-              :checked="false"
-              v-model="edit"
-              class="mb-2"
-              @update:checked="selectCheckbox('edit')"
-            />
-            <CInputCheckbox
-              label="Add"
-              value="true"
-              :checked="false"
-              v-model="add"
-              class="mb-2"
-              @update:checked="selectCheckbox('add')"
-            />
-
-
-        </CCardBody>
-    </CCard>
+  <CCard v-if="columnName != 'id'">
+    <CCardHeader>
+      <h5>{{ columnName }}</h5>
+    </CCardHeader>
+    <CCardBody>
+      <CInput 
+        v-model="visibleName" 
+        label="Visible name" 
+        type="text" 
+        placeholder="Visible name"
+        required
+      />
+      <CSelect
+        label="Field type"
+        :options="options"
+        :value.sync="type"
+      />
+      <CInput 
+        v-model="relationTable" 
+        label="Optional relation table name" 
+        type="text" 
+        placeholder="Optional relation table name"
+      />
+      <CInput 
+        v-model="relationColumn" 
+        label="Optional column name in relation table - to print" 
+        type="text" 
+        placeholder="Optional column name in relation table - to print"
+      />
+      <CInputCheckbox
+        v-model="browse"
+        label="Browse"
+        value="true"
+        :checked="false"
+        class="mb-2"
+        @update:checked="selectCheckbox('browse')"
+      />
+      <CInputCheckbox
+        v-model="read"
+        label="Read"
+        value="true"
+        :checked="false"
+        class="mb-2"
+        @update:checked="selectCheckbox('read')"
+      />
+      <CInputCheckbox
+        v-model="edit"
+        label="Edit"
+        value="true"
+        :checked="false"
+        class="mb-2"
+        @update:checked="selectCheckbox('edit')"
+      />
+      <CInputCheckbox
+        v-model="add"
+        label="Add"
+        value="true"
+        :checked="false"
+        class="mb-2"
+        @update:checked="selectCheckbox('add')"
+      />
+    </CCardBody>
+  </CCard>
 </template>
 
 <script>
@@ -88,6 +86,13 @@ export default {
   },
   computed: {
 
+  },
+  watch:{
+      'getData': function(){
+          if(this.getData === true){
+            this.getDataFunction()
+          }
+      }
   },
   methods:{
     selectCheckbox(slug){
@@ -139,13 +144,6 @@ export default {
           this.$emit('sendData', data)
         //}
     }
-  },
-  watch:{
-      'getData': function(){
-          if(this.getData === true){
-            this.getDataFunction()
-          }
-      }
   }
 }
 </script>

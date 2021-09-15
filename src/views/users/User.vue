@@ -1,6 +1,9 @@
 <template>
   <CRow>
-    <CCol col="12" lg="6">
+    <CCol
+      col="12"
+      lg="6"
+    >
       <CCard>
         <CCardHeader>
           User id:  {{ $route.params.id }}
@@ -13,13 +16,21 @@
             :items="items" 
             :fields="fields"
           >
-            <template slot="value" slot-scope="data">
-              <strong>{{data.item.value}}</strong>
+            <template
+              slot="value"
+              slot-scope="data"
+            >
+              <strong>{{ data.item.value }}</strong>
             </template>
           </CDataTable>
         </CCardBody>
         <CCardFooter>
-          <CButton color="primary" @click="goBack">Back</CButton>
+          <CButton
+            color="primary"
+            @click="goBack"
+          >
+            Back
+          </CButton>
         </CCardFooter>
       </CCard>
     </CCol>
@@ -39,16 +50,6 @@ export default {
       ],
     }
   },
-  methods: {
-    getUserData (id) {
-      const user = usersData.find((user, index) => index + 1 == id)
-      const userDetails = user ? Object.entries(user) : [['id', 'Not found']]
-      return userDetails.map(([key, value]) => { return { key, value } })
-    },
-    goBack() {
-      this.$router.go(-1)
-    }
-  },
   mounted: function(){
     let self = this;
     axios.get( this.$apiAdress + '/api/users/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"))
@@ -60,6 +61,16 @@ export default {
       console.log(error);
       self.$router.push({ path: '/login' });
     });
+  },
+  methods: {
+    getUserData (id) {
+      const user = usersData.find((user, index) => index + 1 == id)
+      const userDetails = user ? Object.entries(user) : [['id', 'Not found']]
+      return userDetails.map(([key, value]) => { return { key, value } })
+    },
+    goBack() {
+      this.$router.go(-1)
+    }
   }
 }
 

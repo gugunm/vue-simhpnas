@@ -1,56 +1,93 @@
 <template>
   <CRow>
-    <CCol col="12" xl="12">
+    <CCol
+      col="12"
+      xl="12"
+    >
       <transition name="slide">
         <CCard>
           <CCardBody>
             <h4>
               Menus
             </h4>
-              <CButton color="primary" @click="addElementToMenu()" class="mb-3">Add Element to Menu</CButton>
-              <CDataTable
-                hover
-                :items="items"
-                :fields="fields"
-                :items-per-page="30"
-                pagination
-              >
-                <template #dropdown="{item}">
-                  <td>
-                    <CIcon v-if="item.dropdown" :content="$options.arrowIcon"/>
-                  </td>
-                </template>
-                <template #name="{item}">
-                  <td>
-                    <strong>{{item.name}}</strong>
-                  </td>
-                </template>
-                <template #up="{item}">
-                  <td>
-                    <CButton color="primary" @click="moveUp( item.id )">Move Up</CButton>
-                  </td>
-                </template>
-                <template #down="{item}">
-                  <td>
-                    <CButton color="primary" @click="moveDown( item.id )">Move Down</CButton>
-                  </td>
-                </template>
-                <template #show="{item}">
-                  <td>
-                    <CButton color="primary" @click="showMenu( item.id )">Show</CButton>
-                  </td>
-                </template>
-                <template #edit="{item}">
-                  <td>
-                    <CButton color="primary" @click="editMenu( item.id )">Edit</CButton>
-                  </td>
-                </template>
-                <template #delete="{item}">
-                  <td>
-                    <CButton color="danger" @click="deleteMenu( item.id )">Delete</CButton>
-                  </td>
-                </template>
-              </CDataTable>
+            <CButton
+              color="primary"
+              class="mb-3"
+              @click="addElementToMenu()"
+            >
+              Add Element to Menu
+            </CButton>
+            <CDataTable
+              hover
+              :items="items"
+              :fields="fields"
+              :items-per-page="30"
+              pagination
+            >
+              <template #dropdown="{item}">
+                <td>
+                  <CIcon
+                    v-if="item.dropdown"
+                    :content="$options.arrowIcon"
+                  />
+                </td>
+              </template>
+              <template #name="{item}">
+                <td>
+                  <strong>{{ item.name }}</strong>
+                </td>
+              </template>
+              <template #up="{item}">
+                <td>
+                  <CButton
+                    color="primary"
+                    @click="moveUp( item.id )"
+                  >
+                    Move Up
+                  </CButton>
+                </td>
+              </template>
+              <template #down="{item}">
+                <td>
+                  <CButton
+                    color="primary"
+                    @click="moveDown( item.id )"
+                  >
+                    Move Down
+                  </CButton>
+                </td>
+              </template>
+              <template #show="{item}">
+                <td>
+                  <CButton
+                    color="primary"
+                    @click="showMenu( item.id )"
+                  >
+                    Show
+                  </CButton>
+                </td>
+              </template>
+              <template #edit="{item}">
+                <td>
+                  <CButton
+                    color="primary"
+                    @click="editMenu( item.id )"
+                  >
+                    Edit
+                  </CButton>
+                </td>
+              </template>
+              <template #delete="{item}">
+                <td>
+                  <CButton
+                    color="danger"
+                    @click="deleteMenu( item.id )"
+                  >
+                    Delete
+                  </CButton>
+                </td>
+              </template>
+            </CDataTable>
           </CCardBody>
         </CCard>
       </transition>
@@ -70,6 +107,9 @@ export default {
       items: [],
       buffor: [],
     }
+  },
+  mounted(){
+    this.getElements();
   },
   methods: {
     addElementToBuffor(data, icon){
@@ -151,9 +191,6 @@ export default {
         self.$router.push({ path: '/login' });
       });
     }
-  },
-  mounted(){
-    this.getElements();
   }
 }
 </script>

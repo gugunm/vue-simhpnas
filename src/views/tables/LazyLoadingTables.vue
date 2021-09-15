@@ -25,44 +25,46 @@
             table-column
             items-per-page-select
             :sorter="{ external: true, resetable: true }"
-            :columnFilter="{ external: true, lazy: true }"
+            :column-filter="{ external: true, lazy: true }"
             :table-filter="{ external: true, lazy: true }"
-            @pagination-change="changeItemsLimit"
             :sorter-value.sync="sorter"
             :column-filter-value.sync="columnFilter"
             :table-filter-value.sync="tableFilter"
             :loading="loading"
+            @pagination-change="changeItemsLimit"
           >
-              <template #author="{item}">
-                <td>
-                  <strong>{{item.author}}</strong>
-                </td>
-              </template>
-              <template #title="{item}">
-                <td>
-                  <strong>{{item.title}}</strong>
-                </td>
-              </template>
-              <template #content="{item}">
-                <td>
-                  {{item.content}}
-                </td>  
-              </template>
-              <template #applies_to_date="{item}">
-                <td>
-                  {{item.applies_to_date}}
-                </td>
-              </template>
-              <template #status="{item}">
-                <td>
-                  <CBadge :color="item.status_class">{{item.status}}</CBadge>
-                </td>
-              </template>
-              <template #note_type="{item}">
-                <td>
-                  <strong>{{item.note_type}}</strong>
-                </td>
-              </template>
+            <template #author="{item}">
+              <td>
+                <strong>{{ item.author }}</strong>
+              </td>
+            </template>
+            <template #title="{item}">
+              <td>
+                <strong>{{ item.title }}</strong>
+              </td>
+            </template>
+            <template #content="{item}">
+              <td>
+                {{ item.content }}
+              </td>  
+            </template>
+            <template #applies_to_date="{item}">
+              <td>
+                {{ item.applies_to_date }}
+              </td>
+            </template>
+            <template #status="{item}">
+              <td>
+                <CBadge :color="item.status_class">
+                  {{ item.status }}
+                </CBadge>
+              </td>
+            </template>
+            <template #note_type="{item}">
+              <td>
+                <strong>{{ item.note_type }}</strong>
+              </td>
+            </template>
           </CDataTable>
           <CPagination
             :pages="maxPages"
@@ -120,6 +122,9 @@ export default {
     columnFilter(){
       this.getNotes();
     }
+  }, 
+  mounted: function(){
+    this.getNotes();
   },
   methods: {
     changeItemsLimit( val ){
@@ -150,9 +155,6 @@ export default {
     makeFilter(){
       this.getNotes();
     },
-  }, 
-  mounted: function(){
-    this.getNotes();
   },
 }
 </script>

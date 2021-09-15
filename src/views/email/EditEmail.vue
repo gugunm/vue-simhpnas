@@ -1,6 +1,9 @@
 <template>
   <CRow>
-    <CCol col="12" lg="6">
+    <CCol
+      col="12"
+      lg="6"
+    >
       <CCard>
         <CCardBody>
           <h3>
@@ -11,15 +14,41 @@
             color="primary"
             fade
           >
-            ({{dismissCountDown}}) {{ message }}
+            ({{ dismissCountDown }}) {{ message }}
           </CAlert>
 
-            <CInput label="Name" type="text" placeholder="Name" v-model="template.name"></CInput>
-            <CInput label="Subject" type="text" placeholder="Subject" v-model="template.subject"></CInput>
-            <CTextarea textarea="true" label="Content" :rows="15" placeholder="Content.." v-model="template.content"></CTextarea>
+          <CInput
+            v-model="template.name"
+            label="Name"
+            type="text"
+            placeholder="Name"
+          />
+          <CInput
+            v-model="template.subject"
+            label="Subject"
+            type="text"
+            placeholder="Subject"
+          />
+          <CTextarea
+            v-model="template.content"
+            textarea="true"
+            label="Content"
+            :rows="15"
+            placeholder="Content.."
+          />
 
-          <CButton color="primary" @click="update()">Save</CButton>
-          <CButton color="primary" @click="goBack">Back</CButton>
+          <CButton
+            color="primary"
+            @click="update()"
+          >
+            Save
+          </CButton>
+          <CButton
+            color="primary"
+            @click="goBack"
+          >
+            Back
+          </CButton>
         </CCardBody>
       </CCard>
     </CCol>
@@ -41,6 +70,16 @@ export default {
         dismissSecs: 7,
         dismissCountDown: 0,
     }
+  },
+  mounted: function(){
+    let self = this;
+    axios.get(   this.$apiAdress + '/api/mail/' + self.$route.params.id + '/edit?token=' + localStorage.getItem("api_token"))
+    .then(function (response) {
+        self.template = response.data.template;
+    }).catch(function (error) {
+        console.log(error);
+        self.$router.push({ path: '/login' });
+    });
   },
   methods: {
     goBack() {
@@ -77,16 +116,6 @@ export default {
     showAlert () {
       this.dismissCountDown = this.dismissSecs
     },
-  },
-  mounted: function(){
-    let self = this;
-    axios.get(   this.$apiAdress + '/api/mail/' + self.$route.params.id + '/edit?token=' + localStorage.getItem("api_token"))
-    .then(function (response) {
-        self.template = response.data.template;
-    }).catch(function (error) {
-        console.log(error);
-        self.$router.push({ path: '/login' });
-    });
   }
 }
 

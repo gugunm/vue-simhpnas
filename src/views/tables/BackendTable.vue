@@ -27,8 +27,8 @@
       :active-page.sync="activePage"
     />
     <CDataTable
-      class="d-none"
       ref="externalAgent"
+      class="d-none"
       :items="usersData.slice(0)"
       :fields="['username', 'registered', 'role', 'status']"
       :column-filter-value="columnFilterValue"
@@ -58,11 +58,6 @@ export default {
       pages: 5
     }
   },
-  watch: {
-    reloadParams () {
-      this.onTableChange()
-    }
-  },
   computed: {
     reloadParams () {
       return [
@@ -71,6 +66,11 @@ export default {
         this.tableFilterValue,
         this.activePage
       ]
+    }
+  },
+  watch: {
+    reloadParams () {
+      this.onTableChange()
     }
   },
   methods: {

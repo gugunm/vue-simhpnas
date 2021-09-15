@@ -1,16 +1,24 @@
 <template>
   <CRow>
-    <CCol col="12" xl="12">
+    <CCol
+      col="12"
+      xl="12"
+    >
       <transition name="slide">
-      <CCard>
-        <CCardBody>
-            <CButton color="primary" @click="createResource()">Create</CButton>
+        <CCard>
+          <CCardBody>
+            <CButton
+              color="primary"
+              @click="createResource()"
+            >
+              Create
+            </CButton>
             <CAlert
               :show.sync="dismissCountDown"
               color="primary"
               fade
             >
-              ({{dismissCountDown}}) {{ message }}
+              ({{ dismissCountDown }}) {{ message }}
             </CAlert>
             <CDataTable
               hover
@@ -19,26 +27,42 @@
             >
               <template #show="{item}">
                 <td>
-                  <CButton color="primary" @click="showResource( item.id )">Show</CButton>
+                  <CButton
+                    color="primary"
+                    @click="showResource( item.id )"
+                  >
+                    Show
+                  </CButton>
                 </td>
               </template>
               <template #edit="{item}">
                 <td>
-                  <CButton color="primary" @click="editResource( item.id )">Edit</CButton>
+                  <CButton
+                    color="primary"
+                    @click="editResource( item.id )"
+                  >
+                    Edit
+                  </CButton>
                 </td>
               </template>
               <template #delete="{item}">
                 <td>
-                  <CButton v-if="you!=item.id" color="danger" @click="deleteResource( item.id )">Delete</CButton>
+                  <CButton
+                    v-if="you!=item.id"
+                    color="danger"
+                    @click="deleteResource( item.id )"
+                  >
+                    Delete
+                  </CButton>
                 </td>
               </template>
             </CDataTable>
             <CPagination
-                :pages="maxPages"
-                :active-page.sync="activePage"
+              :pages="maxPages"
+              :active-page.sync="activePage"
             />
-        </CCardBody>  
-      </CCard>
+          </CCardBody>  
+        </CCard>
       </transition>
     </CCol>
   </CRow>
@@ -66,12 +90,15 @@ export default {
       maxPages: 1,
     }
   },
+  computed: {
+  },
   watch: {
     activePage(){
       this.getResources();
     },
   },
-  computed: {
+  mounted: function(){
+    this.getResources();
   },
   methods: {
     getRowCount (items) {
@@ -143,9 +170,6 @@ export default {
         self.$router.push({ path: '/login' })
       });
     }
-  },
-  mounted: function(){
-    this.getResources();
   }
 }
 </script>

@@ -1,20 +1,23 @@
 <template>
   <div class="c-email-app border mb-4">
     <div class="c-body flex-row">
-      <EmailNav/>
+      <EmailNav />
       <main class="flex-shrink-1">
-
-        <MailToolbar/>
+        <MailToolbar />
 
         <div class="c-message p-3">
           <div class="c-message-details">
             <div class="c-message-headers">
-              <div class="c-message-headers-subject">Lorem ipsum dolor sit amet</div>
+              <div class="c-message-headers-subject">
+                Lorem ipsum dolor sit amet
+              </div>
               <div class="c-message-headers-from">
                 Lukasz Holeczek
                 <span class="text-muted">email@email.com</span>
               </div>
-              <div class="c-message-headers-date">Today, <b>3:47 PM</b></div>
+              <div class="c-message-headers-date">
+                Today, <b>3:47 PM</b>
+              </div>
             </div>
             <hr>
             <div class="c-message-body">
@@ -27,63 +30,122 @@
             </div>
             <div class="c-message-attachments">
               <div class="c-message-attachment">
-                <CBadge color="danger" class="mr-1">zip</CBadge> 
+                <CBadge
+                  color="danger"
+                  class="mr-1"
+                >
+                  zip
+                </CBadge> 
                 <b>bootstrap.zip</b> <i>(2,5MB)</i>
                 <span class="ml-auto">
-                  <CButton small class="btn-link" href="#">
-                    <CIcon name="cil-magnifying-glass"/>
+                  <CButton
+                    small
+                    class="btn-link"
+                    href="#"
+                  >
+                    <CIcon name="cil-magnifying-glass" />
                   </CButton>
-                  <CButton small class="btn-link" href="#">
-                    <CIcon name="cil-share"/>
+                  <CButton
+                    small
+                    class="btn-link"
+                    href="#"
+                  >
+                    <CIcon name="cil-share" />
                   </CButton>
-                  <CButton small class="btn-link" href="#">
-                    <CIcon name="cil-cloud-download"/>
+                  <CButton
+                    small
+                    class="btn-link"
+                    href="#"
+                  >
+                    <CIcon name="cil-cloud-download" />
                   </CButton>
                 </span>
               </div>
               <div class="c-message-attachment">
-                <CBadge color="info" class="mr-1">txt</CBadge> 
+                <CBadge
+                  color="info"
+                  class="mr-1"
+                >
+                  txt
+                </CBadge> 
                 <b>readme.txt</b> <i>(7KB)</i>
                 <span class="ml-auto">
-                  <CButton small class="btn-link" href="#">
-                    <CIcon name="cil-magnifying-glass"/>
+                  <CButton
+                    small
+                    class="btn-link"
+                    href="#"
+                  >
+                    <CIcon name="cil-magnifying-glass" />
                   </CButton>
-                  <CButton small class="btn-link" href="#">
-                    <CIcon name="cil-share"/>
+                  <CButton
+                    small
+                    class="btn-link"
+                    href="#"
+                  >
+                    <CIcon name="cil-share" />
                   </CButton>
-                  <CButton small class="btn-link" href="#">
-                    <CIcon name="cil-cloud-download"/>
+                  <CButton
+                    small
+                    class="btn-link"
+                    href="#"
+                  >
+                    <CIcon name="cil-cloud-download" />
                   </CButton>
                 </span>
               </div>
               <div class="c-message-attachment">
-                <CBadge color="success" class="mr-1">xls</CBadge> 
+                <CBadge
+                  color="success"
+                  class="mr-1"
+                >
+                  xls
+                </CBadge> 
                 <b>spreadsheet.xls</b> <i> (984KB)</i>
                 <span class="ml-auto">
-                  <CButton small class="btn-link" href="#">
-                    <CIcon name="cil-magnifying-glass"/>
+                  <CButton
+                    small
+                    class="btn-link"
+                    href="#"
+                  >
+                    <CIcon name="cil-magnifying-glass" />
                   </CButton>
-                  <CButton small class="btn-link" href="#">
-                    <CIcon name="cil-share"/>
+                  <CButton
+                    small
+                    class="btn-link"
+                    href="#"
+                  >
+                    <CIcon name="cil-share" />
                   </CButton>
-                  <CButton small class="btn-link" href="#">
-                    <CIcon name="cil-cloud-download"/>
+                  <CButton
+                    small
+                    class="btn-link"
+                    href="#"
+                  >
+                    <CIcon name="cil-cloud-download" />
                   </CButton>
                 </span>
               </div>
             </div>
-            <form class="mt-3" method="post" action="">
+            <form
+              class="mt-3"
+              method="post"
+              action=""
+            >
               <div class="form-group">
                 <textarea 
-                  class="form-control" 
                   id="message" 
+                  class="form-control" 
                   name="body" 
                   rows="12" 
                   placeholder="Click here to reply"
-                ></textarea>
+                />
               </div>
               <div class="form-group">
-                <CButton color="success" tabindex="3" type="submit">
+                <CButton
+                  color="success"
+                  tabindex="3"
+                  type="submit"
+                >
                   Send message
                 </CButton>
               </div>

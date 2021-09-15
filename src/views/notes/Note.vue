@@ -1,6 +1,9 @@
 <template>
   <CRow>
-    <CCol col="12" lg="6">
+    <CCol
+      col="12"
+      lg="6"
+    >
       <CCard no-header>
         <CCardBody>
           <h3>Note id:  {{ $route.params.id }}</h3>
@@ -15,12 +18,19 @@
           <p>{{ note.applies_to_date }}</p>
           <h4>Status: </h4>
           <p>
-              <CBadge :color="note.status_class">{{note.status}}</CBadge>
+            <CBadge :color="note.status_class">
+              {{ note.status }}
+            </CBadge>
           </p>
           <h4>Note type:</h4>
           <p>{{ note.note_type }}</p>
 
-          <CButton color="primary" @click="goBack">Back</CButton>
+          <CButton
+            color="primary"
+            @click="goBack"
+          >
+            Back
+          </CButton>
         </CCardBody>
       </CCard>
     </CCol>
@@ -42,12 +52,6 @@ export default {
       note: [],
     }
   },
-  methods: {
-    goBack() {
-      this.$router.go(-1)
-      // this.$router.replace({path: '/users'})
-    }
-  },
   mounted: function(){
     let self = this;
     axios.get( this.$apiAdress + '/api/notes/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"))
@@ -57,6 +61,12 @@ export default {
       console.log(error);
       self.$router.push({ path: '/login' });
     });
+  },
+  methods: {
+    goBack() {
+      this.$router.go(-1)
+      // this.$router.replace({path: '/users'})
+    }
   }
 }
 

@@ -1,7 +1,14 @@
 <template>
   <CRow>
-    <CCol sm="6" lg="3">
-      <CWidgetDropdown color="gradient-primary" header="9.823" :text="$i18n.translate('dashboard.members_online')">
+    <CCol
+      sm="6"
+      lg="3"
+    >
+      <CWidgetDropdown
+        color="gradient-primary"
+        header="9.823"
+        :text="$i18n.translate('dashboard.members_online')"
+      >
         <template #default>
           <CDropdown
             class="float-right"
@@ -9,12 +16,14 @@
             placement="bottom-end"
           >
             <template #toggler-content>
-              <CIcon name="cil-settings"/>
+              <CIcon name="cil-settings" />
             </template>
             <CDropdownItem>{{ $t('dashboard.action') }}</CDropdownItem>
             <CDropdownItem>{{ $t('dashboard.another_action') }}</CDropdownItem>
             <CDropdownItem>{{ $t('dashboard.something_else_here') }}</CDropdownItem>
-            <CDropdownItem disabled>{{ $t('dashboard.disabled_action') }}</CDropdownItem>
+            <CDropdownItem disabled>
+              {{ $t('dashboard.disabled_action') }}
+            </CDropdownItem>
           </CDropdown>
         </template>
         <template #footer>
@@ -30,8 +39,15 @@
         </template>
       </CWidgetDropdown>
     </CCol>
-    <CCol sm="6" lg="3">
-      <CWidgetDropdown color="gradient-info" header="9.823" :text="$i18n.translate('dashboard.members_online')">
+    <CCol
+      sm="6"
+      lg="3"
+    >
+      <CWidgetDropdown
+        color="gradient-info"
+        header="9.823"
+        :text="$i18n.translate('dashboard.members_online')"
+      >
         <template #default>
           <CDropdown
             class="float-right"
@@ -40,12 +56,14 @@
             :caret="false"
           >
             <template #toggler-content>
-              <CIcon name="cil-location-pin"/>
+              <CIcon name="cil-location-pin" />
             </template>
             <CDropdownItem>{{ $t('dashboard.action') }}</CDropdownItem>
             <CDropdownItem>{{ $t('dashboard.another_action') }}</CDropdownItem>
             <CDropdownItem>{{ $t('dashboard.something_else_here') }}</CDropdownItem>
-            <CDropdownItem disabled>{{ $t('dashboard.disabled_action') }}</CDropdownItem>
+            <CDropdownItem disabled>
+              {{ $t('dashboard.disabled_action') }}
+            </CDropdownItem>
           </CDropdown>
         </template>
         <template #footer>
@@ -62,7 +80,10 @@
         </template>
       </CWidgetDropdown>
     </CCol>
-    <CCol sm="6" lg="3">
+    <CCol
+      sm="6"
+      lg="3"
+    >
       <CWidgetDropdown
         color="gradient-warning"
         header="9.823"
@@ -75,12 +96,14 @@
             placement="bottom-end"
           >
             <template #toggler-content>
-              <CIcon name="cil-settings"/>
+              <CIcon name="cil-settings" />
             </template>
             <CDropdownItem>{{ $t('dashboard.action') }}</CDropdownItem>
             <CDropdownItem>{{ $t('dashboard.another_action') }}</CDropdownItem>
             <CDropdownItem>{{ $t('dashboard.something_else_here') }}</CDropdownItem>
-            <CDropdownItem disabled>{{ $t('dashboard.disabled_action') }}</CDropdownItem>
+            <CDropdownItem disabled>
+              {{ $t('dashboard.disabled_action') }}
+            </CDropdownItem>
           </CDropdown>
         </template>
         <template #footer>
@@ -96,7 +119,10 @@
         </template>
       </CWidgetDropdown>
     </CCol>
-    <CCol sm="6" lg="3">
+    <CCol
+      sm="6"
+      lg="3"
+    >
       <CWidgetDropdown
         color="gradient-danger"
         header="9.823"
@@ -109,12 +135,14 @@
             placement="bottom-end"
           >
             <template #toggler-content>
-             <CIcon name="cil-settings"/>
+              <CIcon name="cil-settings" />
             </template>
             <CDropdownItem>{{ $t('dashboard.action') }}</CDropdownItem>
             <CDropdownItem>{{ $t('dashboard.another_action') }}</CDropdownItem>
             <CDropdownItem>{{ $t('dashboard.something_else_here') }}</CDropdownItem>
-            <CDropdownItem disabled>{{ $t('dashboard.disabled_action') }}</CDropdownItem>
+            <CDropdownItem disabled>
+              {{ $t('dashboard.disabled_action') }}
+            </CDropdownItem>
           </CDropdown>
         </template>
         <template #footer>

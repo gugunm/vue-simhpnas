@@ -1,17 +1,26 @@
 <template>
   <CRow>
-    <CCol col="12" xl="12">
+    <CCol
+      col="12"
+      xl="12"
+    >
       <transition name="slide">
-      <CCard>
-        <CCardBody>
+        <CCard>
+          <CCardBody>
             <h4>Email Templates</h4>
-            <CButton class="m-3" color="primary" @click="createTemplate()">Create Template</CButton>
+            <CButton
+              class="m-3"
+              color="primary"
+              @click="createTemplate()"
+            >
+              Create Template
+            </CButton>
             <CAlert
               :show.sync="dismissCountDown"
               color="primary"
               fade
             >
-              ({{dismissCountDown}}) {{ message }}
+              ({{ dismissCountDown }}) {{ message }}
             </CAlert>
             <CDataTable
               hover
@@ -22,37 +31,57 @@
             >
               <template #name="{item}">
                 <td>
-                  <strong>{{item.name}}</strong>
+                  <strong>{{ item.name }}</strong>
                 </td>
               </template>
               <template #subject="{item}">
                 <td>
-                  <strong>{{item.subject}}</strong>
+                  <strong>{{ item.subject }}</strong>
                 </td>
               </template>
               <template #send="{item}">
                 <td>
-                  <CButton color="warning" @click="sendEmail( item.id )">Send</CButton>
+                  <CButton
+                    color="warning"
+                    @click="sendEmail( item.id )"
+                  >
+                    Send
+                  </CButton>
                 </td>
               </template>
               <template #show="{item}">
                 <td>
-                  <CButton color="primary" @click="showEmail( item.id )">Show</CButton>
+                  <CButton
+                    color="primary"
+                    @click="showEmail( item.id )"
+                  >
+                    Show
+                  </CButton>
                 </td>
               </template>
               <template #edit="{item}">
                 <td>
-                  <CButton color="primary" @click="editEmail( item.id )">Edit</CButton>
+                  <CButton
+                    color="primary"
+                    @click="editEmail( item.id )"
+                  >
+                    Edit
+                  </CButton>
                 </td>
               </template>
               <template #delete="{item}">
                 <td>
-                  <CButton color="danger" @click="deleteEmail( item.id )">Delete</CButton>
+                  <CButton
+                    color="danger"
+                    @click="deleteEmail( item.id )"
+                  >
+                    Delete
+                  </CButton>
                 </td>
               </template>
             </CDataTable>
-        </CCardBody>  
-      </CCard>
+          </CCardBody>  
+        </CCard>
       </transition>
     </CCol>
   </CRow>
@@ -78,6 +107,9 @@ export default {
     }
   },
   computed: {
+  },
+  mounted: function(){
+    this.getTemplates();
   },
   methods: {
     getRowCount (items) {
@@ -134,9 +166,6 @@ export default {
         self.$router.push({ path: '/login' });
       });
     }
-  },
-  mounted: function(){
-    this.getTemplates();
   }
 }
 </script>

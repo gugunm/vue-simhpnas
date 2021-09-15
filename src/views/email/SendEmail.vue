@@ -1,6 +1,9 @@
 <template>
   <CRow>
-    <CCol col="12" lg="6">
+    <CCol
+      col="12"
+      lg="6"
+    >
       <CCard no-header>
         <CCardBody>
           <h4>
@@ -11,13 +14,28 @@
             color="primary"
             fade
           >
-            ({{dismissCountDown}}) {{ message }}
+            ({{ dismissCountDown }}) {{ message }}
           </CAlert>
 
-            <CInput label="Email" type="text" placeholder="Email" v-model="email"></CInput>
+          <CInput
+            v-model="email"
+            label="Email"
+            type="text"
+            placeholder="Email"
+          />
 
-          <CButton color="primary" @click="store()">Send</CButton>
-          <CButton color="primary" @click="goBack">Back</CButton>
+          <CButton
+            color="primary"
+            @click="store()"
+          >
+            Send
+          </CButton>
+          <CButton
+            color="primary"
+            @click="goBack"
+          >
+            Back
+          </CButton>
         </CCardBody>
       </CCard>
     </CCol>
@@ -41,6 +59,16 @@ export default {
         dismissCountDown: 0,
         showDismissibleAlert: false
     }
+  },
+  mounted: function(){
+    let self = this;
+    axios.get(   this.$apiAdress + '/api/prepareSend/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"))
+    .then(function (response) {
+      self.template = response.data.template;
+    }).catch(function (error) {
+      console.log(error);
+      self.$router.push({ path: '/login' });
+    });
   },
   methods: {
     goBack() {
@@ -77,16 +105,6 @@ export default {
     showAlert () {
       this.dismissCountDown = this.dismissSecs
     },
-  },
-  mounted: function(){
-    let self = this;
-    axios.get(   this.$apiAdress + '/api/prepareSend/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"))
-    .then(function (response) {
-      self.template = response.data.template;
-    }).catch(function (error) {
-      console.log(error);
-      self.$router.push({ path: '/login' });
-    });
   }
 }
 

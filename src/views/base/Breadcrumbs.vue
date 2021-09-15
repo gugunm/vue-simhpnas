@@ -3,7 +3,7 @@
     <CCol col>
       <CCard>
         <CCardHeader>
-          <CIcon name="cil-justify-center"/><strong> Bootstrap Breadcrumb</strong>
+          <CIcon name="cil-justify-center" /><strong> Bootstrap Breadcrumb</strong>
           <div class="card-header-actions">
             <a 
               href="https://coreui.io/vue/docs/components/breadcrumb" 
@@ -16,9 +16,9 @@
           </div>
         </CCardHeader>
         <CCardBody>
-          <CBreadcrumb :items="items"/>
-          <CBreadcrumb :items="items2"/>
-          <CBreadcrumb :items="items3"/>
+          <CBreadcrumb :items="items" />
+          <CBreadcrumb :items="items2" />
+          <CBreadcrumb :items="items3" />
         </CCardBody>
       </CCard>
     </CCol>

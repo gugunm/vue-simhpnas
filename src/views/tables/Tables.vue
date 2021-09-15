@@ -4,7 +4,7 @@
       <CCol lg="6">
         <CTableWrapper :items="getShuffledUsersData()">
           <template #header>
-            <CIcon name="cil-grid"/> Simple Table
+            <CIcon name="cil-grid" /> Simple Table
             <div class="card-header-actions">
               <a 
                 href="https://coreui.io/vue/docs/components/nav" 

@@ -1,7 +1,10 @@
 <template>
   <div>
     <CRow v-if="marker">
-      <CCol col="6" lg="6">
+      <CCol
+        col="6"
+        lg="6"
+      >
         <CCard no-header>
           <CCardBody>
             <h3>
@@ -12,107 +15,140 @@
               color="primary"
               fade
             >
-              ({{dismissCountDown}}) {{ message }}
+              ({{ dismissCountDown }}) {{ message }}
             </CAlert>
             <div>
-              <CInput label="Table name in database" type="text" placeholder="Table name in database" v-model="tableNameInDatabase"></CInput>
+              <CInput
+                v-model="tableNameInDatabase"
+                label="Table name in database"
+                type="text"
+                placeholder="Table name in database"
+              />
 
-              <CButton color="primary" @click="choiceTableInDatabase()">Select</CButton>
-              <CButton color="primary" @click="goBack">Back</CButton>
-
+              <CButton
+                color="primary"
+                @click="choiceTableInDatabase()"
+              >
+                Select
+              </CButton>
+              <CButton
+                color="primary"
+                @click="goBack"
+              >
+                Back
+              </CButton>
             </div>
           </CCardBody>
         </CCard>
       </CCol>
     </CRow>
     <CRow v-else>
-      <CCol col="6" lg="6">
+      <CCol
+        col="6"
+        lg="6"
+      >
         <CCard no-header>
           <CCardBody>
-              <h3>
-                Create Bread
-              </h3>
-              <CAlert
-                :show.sync="dismissCountDown"
-                color="primary"
-                fade
-              >
-                ({{dismissCountDown}}) {{ message }}
-              </CAlert>
-              <CInput 
-                label="Form name" 
-                type="text" 
-                placeholder="Form name" 
-                required
-                v-model="bread.name"
-              ></CInput>
-              <CInput 
-                label="Records on one page of table" 
-                type="number" 
-                placeholder="Records on one page of table" 
-                required
-                v-model="bread.pagination"
-              ></CInput>
-              <CInputCheckbox
-                label="Enable Show button in table"
-                value="true"
-                :checked="true"
-                v-model="bread.read"
-              />
-              <CInputCheckbox
-                label="Enable Edit button in table"
-                value="true"
-                :checked="true"
-                v-model="bread.edit"
-              />
-              <CInputCheckbox
-                label="Enable Add button in table"
-                value="true"
-                :checked="true"
-                v-model="bread.add"
-              />
-              <CInputCheckbox
-                label="Enable Delete button in table"
-                value="true"
-                :checked="true"
-                v-model="bread.delete"
-                class="mb-2"
-              />
-
+            <h3>
+              Create Bread
+            </h3>
+            <CAlert
+              :show.sync="dismissCountDown"
+              color="primary"
+              fade
+            >
+              ({{ dismissCountDown }}) {{ message }}
+            </CAlert>
+            <CInput 
+              v-model="bread.name" 
+              label="Form name" 
+              type="text" 
+              placeholder="Form name"
+              required
+            />
+            <CInput 
+              v-model="bread.pagination" 
+              label="Records on one page of table" 
+              type="number" 
+              placeholder="Records on one page of table"
+              required
+            />
+            <CInputCheckbox
+              v-model="bread.read"
+              label="Enable Show button in table"
+              value="true"
+              :checked="true"
+            />
+            <CInputCheckbox
+              v-model="bread.edit"
+              label="Enable Edit button in table"
+              value="true"
+              :checked="true"
+            />
+            <CInputCheckbox
+              v-model="bread.add"
+              label="Enable Add button in table"
+              value="true"
+              :checked="true"
+            />
+            <CInputCheckbox
+              v-model="bread.delete"
+              label="Enable Delete button in table"
+              value="true"
+              :checked="true"
+              class="mb-2"
+            />
           </CCardBody>
         </CCard>
       </CCol>
-      <CCol col="6" lg="6">
+      <CCol
+        col="6"
+        lg="6"
+      >
         <CCard no-header>
           <CCardBody>
             <h4>Assign to roles:</h4>
-              <CInputCheckbox
-                v-for="role in roles"
-                v-bind:key="role"
-                :label="role"
-                value="true"
-                :checked="true"
-                @update:checked="checkRoleCheckbox(role)"
-              />
+            <CInputCheckbox
+              v-for="role in roles"
+              :key="role"
+              :label="role"
+              value="true"
+              :checked="true"
+              @update:checked="checkRoleCheckbox(role)"
+            />
           </CCardBody>
         </CCard>
       </CCol>
-      <CCol col="6" lg="6">  
+      <CCol
+        col="6"
+        lg="6"
+      >  
         <CCard no-header>
           <CCardBody>
-              <CreateBreadFieldCard 
-                  v-for="formField in formFields" 
-                  v-bind:key="formField.id"
-                  @sendData="receiveDataFormField"
-                  :getData="getData"
-                  :options="options"
-                  :columnName="formField"
-                  :visibleName="formField"
-              />
+            <CreateBreadFieldCard 
+              v-for="formField in formFields" 
+              :key="formField.id"
+              :get-data="getData"
+              :options="options"
+              :column-name="formField"
+              :visible-name="formField"
+              @sendData="receiveDataFormField"
+            />
 
-              <CButton class="mt-2" color="primary" @click="storeFirstStep()">Create</CButton>
-              <CButton class="mt-2" color="primary" @click="marker=true">Back</CButton>
-            
+            <CButton
+              class="mt-2"
+              color="primary"
+              @click="storeFirstStep()"
+            >
+              Create
+            </CButton>
+            <CButton
+              class="mt-2"
+              color="primary"
+              @click="marker=true"
+            >
+              Back
+            </CButton>
           </CCardBody>
         </CCard>
       </CCol>

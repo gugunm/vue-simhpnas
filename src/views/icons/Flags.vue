@@ -2,11 +2,14 @@
   <div>
     <CCard>
       <CCardHeader>
-        <CIcon name="cil-globe-alt"/> Flags
+        <CIcon name="cil-globe-alt" /> Flags
       </CCardHeader>
       <CCardBody>
         <CRow class="text-center">
-          <CCol class="mb-5" col="12">
+          <CCol
+            class="mb-5"
+            col="12"
+          >
             <!-- For using the flags inline with text add the classes
             <code>.flag-icon</code> and <code>.flag-icon-xx</code>
             (where xx is the ISO 3166-1-alpha-2 code of a country) to an empty
@@ -15,13 +18,16 @@
           </CCol>
           <template v-for="(flag, flagName) in $options.flagSet">
             <CCol
+              :key="flagName"
               class="mb-5"
               col="3"
               sm="2"
-              :key="flagName"
             >
-              <CIcon :height="42" :content="flag"/>
-              <div>{{toKebabCase(flagName)}}</div>
+              <CIcon
+                :height="42"
+                :content="flag"
+              />
+              <div>{{ toKebabCase(flagName) }}</div>
             </CCol>
           </template>
         </CRow>

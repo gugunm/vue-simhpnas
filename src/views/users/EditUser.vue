@@ -1,6 +1,9 @@
 <template>
   <CRow>
-    <CCol col="12" lg="6">
+    <CCol
+      col="12"
+      lg="6"
+    >
       <CCard no-header>
         <CCardBody>
           <CForm>
@@ -12,12 +15,34 @@
               color="primary"
               fade
             >
-              ({{dismissCountDown}}) {{ message }}
+              ({{ dismissCountDown }}) {{ message }}
             </CAlert>
-            <CInput type="text" label="Name" id="company" placeholder="Name" v-model="name"></CInput>
-            <CInput type="text" label="Email" id="email" placeholder="Email" v-model="email"></CInput>
-            <CButton color="primary" @click="update()">Save</CButton>
-            <CButton color="primary" @click="goBack">Back</CButton>
+            <CInput
+              id="company"
+              v-model="name"
+              type="text"
+              label="Name"
+              placeholder="Name"
+            />
+            <CInput
+              id="email"
+              v-model="email"
+              type="text"
+              label="Email"
+              placeholder="Email"
+            />
+            <CButton
+              color="primary"
+              @click="update()"
+            >
+              Save
+            </CButton>
+            <CButton
+              color="primary"
+              @click="goBack"
+            >
+              Back
+            </CButton>
           </CForm>
         </CCardBody>
       </CCard>
@@ -46,6 +71,17 @@ export default {
         showDismissibleAlert: false
     }
   },
+  mounted: function(){
+    let self = this;
+    axios.get( this.$apiAdress + '/api/users/' + self.$route.params.id + '/edit?token=' + localStorage.getItem("api_token"))
+    .then(function (response) {
+        self.name = response.data.name;
+        self.email = response.data.email;
+    }).catch(function (error) {
+        console.log(error);
+        self.$router.push({ path: '/login' });
+    });
+  },
   methods: {
     goBack() {
       this.$router.go(-1)
@@ -73,17 +109,6 @@ export default {
     showAlert () {
       this.dismissCountDown = this.dismissSecs
     },
-  },
-  mounted: function(){
-    let self = this;
-    axios.get( this.$apiAdress + '/api/users/' + self.$route.params.id + '/edit?token=' + localStorage.getItem("api_token"))
-    .then(function (response) {
-        self.name = response.data.name;
-        self.email = response.data.email;
-    }).catch(function (error) {
-        console.log(error);
-        self.$router.push({ path: '/login' });
-    });
   }
 }
 

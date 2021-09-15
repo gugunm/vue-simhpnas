@@ -1,7 +1,7 @@
 <template>
   <CCard>
     <CCardHeader>
-      <CIcon name="cil-map"/>
+      <CIcon name="cil-map" />
       Vue Google Maps
       <a 
         href="https://coreui.io/pro/vue/" 
@@ -29,12 +29,22 @@
         :zoom="11"
         style="height: 400px"
       >
-        <GmapInfoWindow :options="infoOptions" :position="infoWindowPos" :opened="infoWinOpen" @closeclick="infoWinOpen=false">
-          <CLink :href="infoLink" target="_blank">{{infoContent}}</CLink>
+        <GmapInfoWindow
+          :options="infoOptions"
+          :position="infoWindowPos"
+          :opened="infoWinOpen"
+          @closeclick="infoWinOpen=false"
+        >
+          <CLink
+            :href="infoLink"
+            target="_blank"
+          >
+            {{ infoContent }}
+          </CLink>
         </GmapInfoWindow>
         <GmapMarker
-          :key="index"
           v-for="(m, index) in markers"
+          :key="index"
           :position="m.position"
           :label="m.label"
           :title="m.title"
@@ -62,7 +72,7 @@ Vue.use(VueGoogleMaps, {
 })
 
 export default {
-  name: 'google-maps',
+  name: 'GoogleMaps',
   data () {
     return {
       center: {lat: 37.431489, lng: -122.163719},

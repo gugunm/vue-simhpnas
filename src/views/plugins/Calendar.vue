@@ -1,7 +1,7 @@
 <template>
   <CCard>
     <CCardHeader>
-      <CIcon name="cil-calendar"/> Calendar
+      <CIcon name="cil-calendar" /> Calendar
       <a 
         href="https://coreui.io/pro/vue/" 
         rel="noreferrer noopener" 
@@ -24,24 +24,24 @@
     <CCardBody>
       <calendar-view
         id="calendar"
+        ref="calendarView"
         :events="events"
         enable-drag-drop
         :show-date="showDate"
-        :displayPeriodUom="displayPeriod"
-        currentPeriodLabel="icons"
+        :display-period-uom="displayPeriod"
+        current-period-label="icons"
         :class="themeClasses"
         @click-date="onClickDay"
         @click-event="onClickEvent"
         @drop-on-date="onDrop"
         @show-date-change="setShowDate"
-        ref="calendarView"
       >
         <calendar-view-header
-					slot="header"
-					slot-scope="{ headerProps }"
-					:header-props="headerProps"
-					@input="setShowDate"
-				/>
+          slot="header"
+          slot-scope="{ headerProps }"
+          :header-props="headerProps"
+          @input="setShowDate"
+        />
       </calendar-view>
     </CCardBody>
     <CCardFooter>
@@ -53,7 +53,12 @@
           add-wrapper-classes="ml-2"
         />
         <h4 class="ml-auto my-auto">
-          <CBadge v-if="message" color="primary">{{ message }}</CBadge>
+          <CBadge
+            v-if="message"
+            color="primary"
+          >
+            {{ message }}
+          </CBadge>
         </h4>
       </CForm>
     </CCardFooter>
@@ -169,6 +174,10 @@
 
   export default {
     name: 'Calendar',
+    components: {
+      CalendarView,
+      CalendarViewHeader
+    },
     mixins: [CalendarMathMixin],
     data: function () {
       return {
@@ -179,10 +188,6 @@
         useDefaultTheme: true,
         useHolidayTheme: true,
       }
-    },
-    components: {
-      CalendarView,
-      CalendarViewHeader
     },
     computed: {
       themeClasses() {

@@ -1,26 +1,46 @@
 <template>
   <CRow>
-    <CCol col="12" xl="12">
+    <CCol
+      col="12"
+      xl="12"
+    >
       <transition name="slide">
         <CCard>
           <CCardBody>
             <h4>Show {{ form.name }}</h4>
-            <CButton color="primary" @click="goBack">Back</CButton>
+            <CButton
+              color="primary"
+              @click="goBack"
+            >
+              Back
+            </CButton>
             <div 
               v-for="column in columns"
-              v-bind:key="column.id"
+              :key="column.id"
             >
               <div v-if="column.type == 'default'">
                 {{ column.name }}: <strong>{{ column.value }}</strong>
               </div>
               <div v-else-if="column.type == 'file'">
-                <a :href="column.value" class="btn btn-primary" target="_blank">Open file</a>
+                <a
+                  :href="column.value"
+                  class="btn btn-primary"
+                  target="_blank"
+                >Open file</a>
               </div>
               <div v-else>
-                <img :src="column.value" class="img-mini">
+                <img
+                  :src="column.value"
+                  class="img-mini"
+                >
               </div>
             </div>
-            <CButton color="primary" @click="goBack">Back</CButton>           
+            <CButton
+              color="primary"
+              @click="goBack"
+            >
+              Back
+            </CButton>           
           </CCardBody>  
         </CCard>
       </transition>
@@ -39,11 +59,14 @@ export default {
       columns: [],
     }
   },
+  computed: {
+
+  },
   watch: {
 
   },
-  computed: {
-
+  mounted: function(){
+    this.getResource();
   },
   methods: {
     goBack() {
@@ -66,9 +89,6 @@ export default {
         self.$router.push({ path: '/login' })
       });
     }
-  },
-  mounted: function(){
-    this.getResource();
   }
 }
 </script>

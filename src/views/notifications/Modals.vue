@@ -5,7 +5,7 @@
         <CCol col="12">
           <CCard>
             <CCardHeader>
-              <CIcon name="cil-justify-center"/> Bootstrap Modals
+              <CIcon name="cil-justify-center" /> Bootstrap Modals
               <div class="card-header-actions">
                 <a 
                   href="https://coreui.io/vue/docs/components/modal" 
@@ -18,32 +18,68 @@
               </div>
             </CCardHeader>
             <CCardBody>
-              <CButton color="secondary" @click="myModal = true" class="mr-1">
+              <CButton
+                color="secondary"
+                class="mr-1"
+                @click="myModal = true"
+              >
                 Launch demo modal
               </CButton>
-              <CButton color="secondary" @click="largeModal = true" class="mr-1">
+              <CButton
+                color="secondary"
+                class="mr-1"
+                @click="largeModal = true"
+              >
                 Launch large modal
               </CButton>
-              <CButton color="secondary" @click="smallModal = true" class="mr-1">
+              <CButton
+                color="secondary"
+                class="mr-1"
+                @click="smallModal = true"
+              >
                 Launch small modal
               </CButton>
               <hr>
-              <CButton color="primary" @click="primaryModal = true" class="mr-1">
+              <CButton
+                color="primary"
+                class="mr-1"
+                @click="primaryModal = true"
+              >
                 Launch primary modal
               </CButton>
-              <CButton color="success" @click="successModal = true" class="mr-1">
+              <CButton
+                color="success"
+                class="mr-1"
+                @click="successModal = true"
+              >
                 Launch success modal
               </CButton>
-              <CButton color="warning" @click="warningModal = true" class="mr-1">
+              <CButton
+                color="warning"
+                class="mr-1"
+                @click="warningModal = true"
+              >
                 Launch warning modal
               </CButton>
-              <CButton color="danger" @click="dangerModal = true" class="mr-1">
+              <CButton
+                color="danger"
+                class="mr-1"
+                @click="dangerModal = true"
+              >
                 Launch danger modal
               </CButton>
-              <CButton color="info" @click="infoModal = true" class="mr-1">
+              <CButton
+                color="info"
+                class="mr-1"
+                @click="infoModal = true"
+              >
                 Launch info modal
               </CButton>
-              <CButton color="dark" @click="darkModal = true" class="mr-1">
+              <CButton
+                color="dark"
+                class="mr-1"
+                @click="darkModal = true"
+              >
                 Launch dark modal
               </CButton>
             </CCardBody>
@@ -163,16 +199,30 @@
       cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
       proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
       <template #header>
-        <h6 class="modal-title">Custom smaller modal title</h6>
-        <CButtonClose @click="darkModal = false" class="text-white"/>
+        <h6 class="modal-title">
+          Custom smaller modal title
+        </h6>
+        <CButtonClose
+          class="text-white"
+          @click="darkModal = false"
+        />
       </template>
       <template #footer>
-        <CButton @click="darkModal = false" color="danger">Discard</CButton>
-        <CButton @click="darkModal = false" color="success">Accept</CButton>
+        <CButton
+          color="danger"
+          @click="darkModal = false"
+        >
+          Discard
+        </CButton>
+        <CButton
+          color="success"
+          @click="darkModal = false"
+        >
+          Accept
+        </CButton>
       </template>
     </CModal>
   </div>
-
 </template>
 
 <script>

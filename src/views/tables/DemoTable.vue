@@ -14,7 +14,7 @@
       <template #status="{item}">
         <td>
           <CBadge :color="getBadge(item.status)">
-            {{item.status}}
+            {{ item.status }}
           </CBadge>
         </td>
       </template>
@@ -27,7 +27,7 @@
             size="sm"
             @click="toggleDetails(index)"
           >
-            {{details.includes(index) ? 'Hide' : 'Show'}}
+            {{ details.includes(index) ? 'Hide' : 'Show' }}
           </CButton>
         </td>
       </template>
@@ -36,13 +36,23 @@
           <CCardBody>
             <CMedia :aside-image-props="{ height: 102 }">
               <h4>
-                {{item.username}}
+                {{ item.username }}
               </h4>
-              <p class="text-muted">User since: {{item.registered}}</p>
-              <CButton size="sm" color="info" class="">
+              <p class="text-muted">
+                User since: {{ item.registered }}
+              </p>
+              <CButton
+                size="sm"
+                color="info"
+                class=""
+              >
                 User Settings
               </CButton>
-              <CButton size="sm" color="danger" class="ml-1">
+              <CButton
+                size="sm"
+                color="danger"
+                class="ml-1"
+              >
                 Delete
               </CButton>
             </CMedia>

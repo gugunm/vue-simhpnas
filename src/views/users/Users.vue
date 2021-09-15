@@ -1,48 +1,69 @@
 <template>
   <CRow>
-    <CCol col="12" xl="12">
+    <CCol
+      col="12"
+      xl="12"
+    >
       <transition name="slide">
-      <CCard>
-        <CCardHeader>
-          Users
-        </CCardHeader>
-        <CCardBody>
-          <CAlert
-            :show.sync="dismissCountDown"
-            color="primary"
-            fade
-          >
-            ({{dismissCountDown}}) {{ message }}
-          </CAlert>
-          <CDataTable
-            :items="items"
-            :fields="fields"
-            :items-per-page="10"
-            pagination
-          >
-          <template #status="{item}">
-            <td>
-              <CBadge :color="getBadge(item.status)">{{ item.status }}</CBadge>
-            </td>
-          </template>
-          <template #show="{item}">
-            <td>
-              <CButton color="primary" @click="showUser( item.id )">Show</CButton>
-            </td>
-          </template>
-          <template #edit="{item}">
-            <td>
-              <CButton color="primary" @click="editUser( item.id )">Edit</CButton>
-            </td>
-          </template>
-          <template #delete="{item}">
-            <td>
-              <CButton v-if="you!=item.id" color="danger" @click="deleteUser( item.id )">Delete</CButton>
-            </td>
-          </template>
-        </CDataTable>
-        </CCardBody>
-      </CCard>
+        <CCard>
+          <CCardHeader>
+            Users
+          </CCardHeader>
+          <CCardBody>
+            <CAlert
+              :show.sync="dismissCountDown"
+              color="primary"
+              fade
+            >
+              ({{ dismissCountDown }}) {{ message }}
+            </CAlert>
+            <CDataTable
+              :items="items"
+              :fields="fields"
+              :items-per-page="10"
+              pagination
+            >
+              <template #status="{item}">
+                <td>
+                  <CBadge :color="getBadge(item.status)">
+                    {{ item.status }}
+                  </CBadge>
+                </td>
+              </template>
+              <template #show="{item}">
+                <td>
+                  <CButton
+                    color="primary"
+                    @click="showUser( item.id )"
+                  >
+                    Show
+                  </CButton>
+                </td>
+              </template>
+              <template #edit="{item}">
+                <td>
+                  <CButton
+                    color="primary"
+                    @click="editUser( item.id )"
+                  >
+                    Edit
+                  </CButton>
+                </td>
+              </template>
+              <template #delete="{item}">
+                <td>
+                  <CButton
+                    v-if="you!=item.id"
+                    color="danger"
+                    @click="deleteUser( item.id )"
+                  >
+                    Delete
+                  </CButton>
+                </td>
+              </template>
+            </CDataTable>
+          </CCardBody>
+        </CCard>
       </transition>
     </CCol>
   </CRow>
@@ -73,6 +94,9 @@ export default {
     doubleArrows: false,
     previousButtonHtml: 'prev',
     nextButtonHtml: 'next'
+  },
+  mounted: function(){
+    this.getUsers();
   },
   methods: {
     getBadge (status) {
@@ -127,9 +151,6 @@ export default {
         self.$router.push({ path: '/login' });
       });
     }
-  },
-  mounted: function(){
-    this.getUsers();
   }
 }
 </script>
