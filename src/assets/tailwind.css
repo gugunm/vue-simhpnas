@@ -3,3 +3,49 @@
 @tailwind components;
 
 @tailwind utilities;
+
+.bg-sidebar, .c-sidebar .c-sidebar-brand {
+  background-color: #0B2555 !important;
+}
+
+.bg-body-primary {
+  background-color: #F2F7FA;
+}
+
+.text-blue-1 {
+  color: #0B2555;
+}
+
+.text-blue-2 {
+  color: #A3AED0;
+}
+
+/* Header */
+.c-header .c-subheader {
+  border: none !important;
+}
+
+/* text side bar menu */
+.c-sidebar .c-sidebar-nav-link, .c-sidebar .c-sidebar-nav-dropdown-toggle, .c-sidebar .c-sidebar-nav-link .c-sidebar-nav-icon, .c-sidebar .c-sidebar-nav-dropdown-toggle .c-sidebar-nav-icon {
+  font-size: 14px;
+  color: #BCBFD2;
+}
+
+/* text sidebar title */
+.c-sidebar .c-sidebar-nav-title {
+  border-top: 1px solid #F4F7FE;
+  border-color: rgba(188, 191, 210, .2);
+  font-size: 14px;
+  color: #BCBFD2;
+  font-weight: bold;
+}
+
+
+.c-sidebar .c-sidebar-minimizer {
+  background-color: #fff;
+  border-top: 1px solid #F4F7FE;
+  /* border-color: rgba(244, 247, 254, 1); */
+}
+.c-sidebar .c-sidebar-minimizer:hover {
+  background-color: #F4F7FE;
+}
