@@ -3,7 +3,7 @@
     <Form
       v-if="item"
       :selected-item="item"
-      mode="view"
+      mode="edit"
     />
   </div>
 </template>

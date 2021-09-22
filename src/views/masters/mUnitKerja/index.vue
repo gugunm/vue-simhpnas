@@ -9,6 +9,7 @@
       :is-edit-button="true"
       @clicked-row="openDetail"
       @open-create-modal="openCreate"
+      @open-edit-modal="openEdit"
       @open-delete-modal="openDeleteModal"
     />
   </div>
@@ -70,6 +71,12 @@ export default {
     openDetail(item) {
       this.$router.push({
         name: 'master-unit-kerja-detail',
+        params: { idUnitKerja: item.id },
+      });
+    },
+    openEdit(item) {
+      this.$router.push({
+        name: 'master-unit-kerja-edit',
         params: { idUnitKerja: item.id },
       });
     },

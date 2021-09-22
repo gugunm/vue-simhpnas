@@ -1,39 +1,45 @@
 <template>
   <CRow>
     <CCol sm="12">
+      <div class="text-2xl mb-4 font-semibold">
+        <h3 v-if="mode == 'create'">
+          Create Unit Kerja
+        </h3>
+        <h3 v-else-if="mode == 'edit'">
+          Edit Unit Kerja
+        </h3>
+        <h3 v-else>
+          Detail Unit Kerja
+        </h3>
+      </div>
       <CCard class="p-2">
-        <CCardHeader>
-          <h3 v-if="mode == 'create'">
-            Create Unit Kerja
-          </h3>
-          <h3 v-else>
-            Detail Unit Kerja
-          </h3>
-        </CCardHeader>
         <CCardBody>
-          <CForm>
-            <!-- ROW 1 -->
+          <CForm
+            method="POST"
+            @submit.prevent="clickSubmitForm"
+          >
+            <!-- ROW 1 UNIT AUDIT -->
             <CRow class="mb-2 view-form">
               <CCol
                 sm="12"
                 md="6"
               >
                 <CInput
-                  v-if="mode == 'edit'"
+                  v-if="mode != 'create'"
                   v-model="id.val"
                   :readonly="mode != 'create'"
                   label="ID Unit Kerja"
                   class="mb-2"
                   placeholder="ID Unit Kerja"
-                  @option:selected="onSelected"
                 />
+                <!-- @option:selected="onSelected" -->
                 <template v-else>
                   <label>Kode</label>
                   <v-select
                     v-if="optionsUnitAudit"
                     v-model="selectedId"
                     :options="optionsUnitAudit"
-                    label="id"
+                    label="deskripsi"
                     placeholder="Pilih Unit Kerja"
                   >
                     <template v-slot:option="option">
@@ -66,6 +72,7 @@
                   label="Nama Pimpinan"
                   class="mb-2"
                   placeholder="Nama Pimpinan"
+                  :readonly="mode == 'view'"
                 />
               </CCol>
               <CCol
@@ -77,6 +84,7 @@
                   label="NIP Pimpinan"
                   class="mb-2"
                   placeholder="19750101 200001 1 001"
+                  :readonly="mode == 'view'"
                 />
               </CCol>
             </CRow>
@@ -91,24 +99,34 @@
                   label="Alamat"
                   class="mb-2"
                   placeholder="Jl. Jakarta..."
+                  :readonly="mode == 'view'"
                 />
               </CCol>
               <CCol
                 sm="12"
                 md="6"
               >
-                <label>Provinsi</label>
-                <v-select
-                  v-if="optionsWilayah.provinsi"
-                  v-model="selectedProvinsi"
-                  :options="optionsWilayah.provinsi"
-                  label="deskripsi"
-                  placeholder="Pilih Provinsi"
-                >
-                  <template v-slot:option="option">
-                    {{ `${option.id} ${option.deskripsi}` }}
-                  </template>
-                </v-select>
+                <CInput
+                  v-if="mode == 'view'"
+                  v-model="provinsi.val"
+                  :readonly="mode == 'view'"
+                  label="Provinsi"
+                  class="mb-2"
+                />
+                <div v-else>
+                  <label>Provinsi</label>
+                  <v-select
+                    v-if="optionsWilayah.provinsi"
+                    v-model="selectedProvinsi"
+                    :options="optionsWilayah.provinsi"
+                    label="deskripsi"
+                    placeholder="Pilih Provinsi"
+                  >
+                    <template v-slot:option="option">
+                      {{ `${option.id} ${option.deskripsi}` }}
+                    </template>
+                  </v-select>
+                </div>
               </CCol>
             </CRow>
             <!-- ROW 4 -->
@@ -117,33 +135,51 @@
                 sm="12"
                 md="6"
               >
-                <label>Kab. / Kota</label>
-                <v-select
-                  v-model="selectedKabkot"
-                  :options="optionsWilayah.kabkot"
-                  label="deskripsi"
-                  placeholder="Pilih Kab. / Kota"
-                >
-                  <template v-slot:option="option">
-                    {{ `${option.id} ${option.deskripsi}` }}
-                  </template>
-                </v-select>
+                <CInput
+                  v-if="mode == 'view'"
+                  v-model="kabkot.val"
+                  :readonly="mode == 'view'"
+                  label="Kab. / Kota"
+                  class="mb-2"
+                />
+                <div v-else>
+                  <label>Kab. / Kota</label>
+                  <v-select
+                    v-model="selectedKabkot"
+                    :options="optionsWilayah.kabkot"
+                    label="deskripsi"
+                    placeholder="Pilih Kab. / Kota"
+                  >
+                    <template v-slot:option="option">
+                      {{ `${option.id} ${option.deskripsi}` }}
+                    </template>
+                  </v-select>
+                </div>
               </CCol>
               <CCol
                 sm="12"
                 md="6"
               >
-                <label>Kecamatan</label>
-                <v-select
-                  v-model="selectedKecamatan"
-                  :options="optionsWilayah.kecamatan"
-                  label="deskripsi"
-                  placeholder="Pilih Kecamatan"
-                >
-                  <template v-slot:option="option">
-                    {{ `${option.id} ${option.deskripsi}` }}
-                  </template>
-                </v-select>
+                <CInput
+                  v-if="mode == 'view'"
+                  v-model="kecamatan.val"
+                  :readonly="mode == 'view'"
+                  label="Kecamatan"
+                  class="mb-2"
+                />
+                <div v-else>
+                  <label>Kecamatan</label>
+                  <v-select
+                    v-model="selectedKecamatan"
+                    :options="optionsWilayah.kecamatan"
+                    label="deskripsi"
+                    placeholder="Pilih Kecamatan"
+                  >
+                    <template v-slot:option="option">
+                      {{ `${option.id} ${option.deskripsi}` }}
+                    </template>
+                  </v-select>
+                </div>
               </CCol>
             </CRow>
             <!-- ROW 5 -->
@@ -152,17 +188,26 @@
                 sm="12"
                 md="6"
               >
-                <label>Kelurahan</label>
-                <v-select
-                  v-model="selectedKelurahan"
-                  :options="optionsWilayah.kelurahan"
-                  label="deskripsi"
-                  placeholder="Pilih Kelurahan"
-                >
-                  <template v-slot:option="option">
-                    {{ `${option.id} ${option.deskripsi}` }}
-                  </template>
-                </v-select>
+                <CInput
+                  v-if="mode == 'view'"
+                  v-model="kelurahan.val"
+                  :readonly="mode == 'view'"
+                  label="Kecamatan"
+                  class="mb-2"
+                />
+                <div v-else>
+                  <label>Kelurahan</label>
+                  <v-select
+                    v-model="selectedKelurahan"
+                    :options="optionsWilayah.kelurahan"
+                    label="deskripsi"
+                    placeholder="Pilih Kelurahan"
+                  >
+                    <template v-slot:option="option">
+                      {{ `${option.id} ${option.deskripsi}` }}
+                    </template>
+                  </v-select>
+                </div>
               </CCol>
               <CCol
                 sm="12"
@@ -173,6 +218,7 @@
                   label="Jumlah Obrik"
                   class="mb-2"
                   placeholder="5"
+                  :readonly="mode == 'view'"
                 />
               </CCol>
             </CRow>
@@ -187,6 +233,7 @@
                   label="Jumlah Obrik Bersih"
                   class="mb-2"
                   placeholder="3"
+                  :readonly="mode == 'view'"
                 />
               </CCol>
               <CCol
@@ -198,14 +245,37 @@
                   label="Telpon"
                   class="mb-2"
                   placeholder="6281234567890"
+                  :readonly="mode == 'view'"
                 />
               </CCol>
             </CRow>
+            <CRow class="mb-2 view-form">
+              <CCol
+                sm="12"
+                md="6"
+              >
+                <back-button
+                  title="Kembali"
+                  class="mt-4"
+                  to="/master-unit-kerja"
+                />
+              </CCol>
+              <CCol
+                v-if="mode == 'create'"
+                sm="12"
+                md="6"
+                class="content-center justify-end pr-3"
+              >
+                <CButton
+                  type="submit"
+                  color="primary"
+                  class="px-4"
+                >
+                  Submit Data
+                </CButton>
+              </CCol>
+            </CRow>
           </CForm>
-          <back-button
-            title="Kembali"
-            class="mt-3"
-          />
         </CCardbody>
       </CCard>
     </CCol>
@@ -216,13 +286,16 @@
 import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
 import BackButton from '@/views/components/BackButton';
+import mixin from './mixin';
 
 export default {
-  name: 'CreateEditForm',
+  name: 'FormUnitKerja',
   components: {
     vSelect,
     BackButton,
   },
+  emmits: ['click-submit-form'],
+  mixins: [mixin],
   props: ['mode', 'selectedItem'],
   data() {
     return {
@@ -337,29 +410,28 @@ export default {
     },
   },
   created() {
-    if (this.mode === 'edit') {
+    if (this.mode == 'edit' || this.mode == 'view') {
       this.createDataWithSelectedItem();
     }
     this.loadUnitAudit();
     this.loadProvinsi();
   },
   methods: {
-    onSelected(value) {
-      console.log(value);
-    },
-    createDataWithSelectedItem() {
-      this.id.val = this.selectedItem.id;
-      this.namaUnit.val = this.selectedItem.namaUnit;
-      this.namaPimpinan.val = this.selectedItem.namaPimpinan;
-      this.nipPimpinan.val = this.selectedItem.nipPimpinan;
-      this.alamat.val = this.selectedItem.alamat;
-      this.provinsi.val = this.selectedItem.provinsi;
-      this.kabkot.val = this.selectedItem.kabkot;
-      this.kecamatan.val = this.selectedItem.kecamatan;
-      this.kelurahan.val = this.selectedItem.kelurahan;
-      this.jumlahObrik.val = this.selectedItem.jumlahObrik;
-      this.jumlahObrikBersih.val = this.selectedItem.jumlahObrikBersih;
-      this.telpon.val = this.selectedItem.telpon;
+    clickSubmitForm() {
+      this.$emit('click-submit-form', {
+        Kode_Unit_Obrik: this.id.val,
+        Nama_Unit: this.namaUnit.val,
+        Nama_Pimpinan: this.namaPimpinan.val,
+        NIP_Pimpinan: this.nipPimpinan.val,
+        Alamat: this.alamat.val,
+        Provinsi: this.provinsi.val,
+        Kabupaten_kota: this.kabkot.val,
+        Kecamatan: this.kecamatan.val,
+        Kelurahan: this.kelurahan.val,
+        Jumlah_Obrik: this.jumlahObrik.val,
+        Jumlah_Obrik_Bersih: this.jumlahObrikBersih.val,
+        Telpon: this.telpon.val,
+      });
     },
     async loadUnitAudit(refresh = false) {
       this.loading = true;

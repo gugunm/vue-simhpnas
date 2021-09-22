@@ -44,6 +44,7 @@ export default {
     context.commit('setUnitKerja', unitKerja);
     context.commit('setFetchTimestamp');
   },
+
   async loadUnitKerjaById(context, payload) {
     const response = await axios({
       method: 'GET',
@@ -78,9 +79,34 @@ export default {
       telpon: responseData["telpon"],
     };
 
-    context.commit('setUnitKerjaById', unitKerjaById);
+    return unitKerjaById
   },
-  resetUnitKerjaById(context) {
-    context.commit('setUnitKerjaById', '');
+
+  async createUnitKerja(context, payload){
+    console.log(payload.data)
+    const response = await axios({
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      data: payload,
+      baseURL: API_URL,
+      url: '/api/unitkerja',
+      params: {
+        token: localStorage.getItem('api_token')
+      },
+    })
+
+    const responseData = await response.data;
+
+    console.log('RESPONSE')
+    console.log(response)
+
+    if (response.statusText != "OK") {
+      const error = new Error(
+        responseData.message || 'Failed to save data'
+      );
+      throw error;
+    }
+
+    return response
   }
 };

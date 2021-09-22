@@ -10,6 +10,7 @@ const MasterPenyebab = () => import('@/views/masters/mPenyebab')
 const MasterUnitKerja = () => import('@/views/masters/mUnitKerja/index.vue')
 const MasterCreateUnitKerja = () => import('@/views/masters/mUnitKerja/Create.vue')
 const MasterDetailUnitKerja = () => import('@/views/masters/mUnitKerja/Detail.vue')
+const MasterEditUnitKerja = () => import('@/views/masters/mUnitKerja/Edit.vue')
 
 const MasterUserUnitKerja = () => import('@/views/masters/mUserUnitKerja')
 const MasterUserUtama = () => import('@/views/masters/mUserUtama')
@@ -188,7 +189,7 @@ const Media = () => import('@/views/media/Media')
 Vue.use(Router)
 
 let router = new Router({
-  mode: 'history', // https://router.vuejs.org/api/#mode
+  mode: 'hash', // https://router.vuejs.org/api/#mode
   linkActiveClass: 'active',
   scrollBehavior: () => ({ y: 0 }),
   routes: configRoutes()
@@ -197,9 +198,6 @@ let router = new Router({
 
 router.beforeEach((to, from, next) => {
   let roles = localStorage.getItem("roles");
-  // if ((to.meta.requiresUser || to.meta.requiresAdmin)  && !store.getters['auth/isAuthenticated']) {
-  //   next('/login');
-  // }
   if (roles != null) {
     roles = roles.split(',')
   }
@@ -497,7 +495,7 @@ function configRoutes() {
         },
         {
           path: 'master-unit-kerja',
-          name: 'Master Unit Kerja',
+          name: 'master-unit-kerja',
           component: {
             render(c) { return c('router-view') }
           },
@@ -517,6 +515,15 @@ function configRoutes() {
               meta: {
                 requiresUser: true
               },
+            },
+            {
+              path: ':idUnitKerja/edit',
+              name: 'master-unit-kerja-edit',
+              component: MasterEditUnitKerja,
+              meta: {
+                requiresUser: true
+              },
+              props: true
             },
             {
               path: ':idUnitKerja',

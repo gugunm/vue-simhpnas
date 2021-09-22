@@ -74,9 +74,9 @@
       </CHeaderNavItem> -->
     </CHeaderNav>
 
-    <CSubheader class="px-3 bg-body-primary border-t-0">
+    <!-- <CSubheader class="px-3 bg-body-primary border-t-0">
       <CBreadcrumbRouter class="border-0 mb-0" />
-    </CSubheader>
+    </CSubheader> -->
   </CHeader>
 </template>
 

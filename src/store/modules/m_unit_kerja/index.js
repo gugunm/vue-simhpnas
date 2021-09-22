@@ -8,7 +8,6 @@ export default {
     return {
       lastFetch: null,
       unitKerja: [],
-      unitKerjaByid: {}
     };
   },
   mutations,

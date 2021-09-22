@@ -133,10 +133,10 @@ export default {
           password: self.password,
         })
         .then(function (response) {
-          self.email = '';
-          self.password = '';
           localStorage.setItem('api_token', response.data.access_token);
           localStorage.setItem('roles', response.data.roles);
+          self.email = '';
+          self.password = '';
           self.$router.push({ path: 'dashboard' });
         })
         .catch(function (error) {

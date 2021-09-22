@@ -45,14 +45,14 @@
       >
         <CButton
           color="info"
-          class="mb-3 px-4"
+          class="mb-4 px-4"
           @click="openCreateModal"
         >
           <CIcon
             name="cil-plus"
-            size="md"
             class="my-0 mb-1 mr-1"
           /> Tambah
+          <!-- size="md" -->
         </CButton>
       </CCol>
     </CRow>
