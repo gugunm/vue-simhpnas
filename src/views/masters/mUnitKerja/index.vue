@@ -6,7 +6,7 @@
       :items="items"
       :fields="fields"
       :clickable-rows="true"
-      :is-edit-button="false"
+      :is-edit-button="true"
       @clicked-row="openDetail"
       @open-create-modal="openCreate"
       @open-delete-modal="openDeleteModal"
@@ -45,7 +45,7 @@ const fields = [
   },
   {
     key: 'actions',
-    label: 'Delete',
+    label: 'Actions',
   },
 ];
 

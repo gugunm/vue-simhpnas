@@ -1,7 +1,7 @@
 <template>
   <CHeader
     with-subheader
-    class="shadow-none"
+    class="shadow-sm"
   >
     <CToggler
       in-header
@@ -127,14 +127,6 @@ export default {
         console.log(error);
         self.$router.push({ path: '/login' });
       });
-  },
-  methods: {
-    selectLocale: function (option) {
-      localStorage.setItem('locale', option);
-      this.$i18n.set(option);
-      //location.reload()
-      this.$emit('change-locale', option);
-    },
   },
 };
 </script>

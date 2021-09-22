@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+import store from '../store/index.js';
+
 // === SIMHPNAS ===
 /* Master */
 const MasterPenyebab = () => import('@/views/masters/mPenyebab')
@@ -195,6 +197,9 @@ let router = new Router({
 
 router.beforeEach((to, from, next) => {
   let roles = localStorage.getItem("roles");
+  // if ((to.meta.requiresUser || to.meta.requiresAdmin)  && !store.getters['auth/isAuthenticated']) {
+  //   next('/login');
+  // }
   if (roles != null) {
     roles = roles.split(',')
   }
@@ -204,7 +209,7 @@ router.beforeEach((to, from, next) => {
     } else {
       next({
         path: '/login',
-        params: { nextUrl: to.fullPath }
+        // params: { nextUrl: to.fullPath }
       })
     }
   } else if (to.matched.some(record => record.meta.requiresUser)) {
@@ -213,7 +218,7 @@ router.beforeEach((to, from, next) => {
     } else {
       next({
         path: '/login',
-        params: { nextUrl: to.fullPath }
+        // params: { nextUrl: to.fullPath }
       })
     }
   } else {

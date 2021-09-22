@@ -37,7 +37,7 @@ export default {
 
     // expire login dalam 1 jam
     const expiresIn = responseData.expires_in * 1000;
-    // const expiresIn = 10000;
+    // const expiresIn = 5000;
     const expirationDate = new Date().getTime() + expiresIn;
 
     localStorage.setItem('api_token', responseData.access_token);
@@ -53,6 +53,7 @@ export default {
       roles: responseData.roles
     });
   },
+
   tryLogin(context) {
     const token = localStorage.getItem('api_token');
     const roles = localStorage.getItem('roles');
@@ -61,7 +62,7 @@ export default {
     const expiresIn = +tokenExpiration - new Date().getTime();
 
     if (expiresIn < 0) {
-      return;
+      context.dispatch('logout');
     }
 
     timer = setTimeout(function() {
@@ -75,6 +76,7 @@ export default {
       });
     }
   },
+
   logout(context) {
     localStorage.removeItem('api_token');
     localStorage.removeItem('roles');
@@ -87,6 +89,7 @@ export default {
       roles: null
     });
   },
+
   autoLogout(context) {
     context.dispatch('logout');
     context.commit('setAutoLogout');

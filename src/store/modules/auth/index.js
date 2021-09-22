@@ -6,7 +6,7 @@ export default {
   namespaced: true,
   state: () => ({
     token: null,
-    roles: null
+    roles: null,
   }),
   mutations,
   actions,

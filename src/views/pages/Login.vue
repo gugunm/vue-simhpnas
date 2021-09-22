@@ -1,117 +1,112 @@
 <template>
-  <CContainer class="login-container d-flex align-items-center min-vh-100">
-    <CRow>
-      <CCol>
-        <CCardGroup>
-          <CCard class="p-4">
-            <CCardBody>
-              <CForm
-                method="POST"
-                @submit.prevent="submitForm"
+  <div class="flex lg:w-full h-screen justify-center">
+    <div class="flex-initial  hidden lg:block lg:w-1/2 bg-blue-700">
+      <!-- Won't grow, but will shrink if needed -->
+    </div>
+    <div class="flex-initial content-center w-full lg:w-1/2 bg-white p-10 lg:py-14 lg:px-20">
+      <div class="flex flex-col text-left w-full">
+        <div class="flex justify-start content-center mb-4">
+          <CImg
+            class="inline-block w-8 mr-2"
+            src="img/simhp/logo-login.svg"
+          />
+          <h3 class="text-2xl font-bold inline-block">
+            SIMHPNAS
+          </h3>
+        </div>
+        <h1 class="text-4xl font-bold mb-4">
+          Halo,<br>Selamat Datang!
+        </h1>
+        <form
+          method="POST"
+          class="flex flex-col pr-20"
+          @submit.prevent="submitForm"
+        >
+          <p class="mb-2">
+            Login to manage your account
+          </p>
+          <div class="flex flex-wrap mb-2">
+            <div class="w-full">
+              <div class="inline-block relative w-full mb-2">
+                <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-3 pr-8 leading-tight focus:outline-none focus:shadow-outline">
+                  <option>User Unit</option>
+                  <option>User Pusat</option>
+                  <option>User Admin</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                  <svg
+                    class="fill-current h-4 w-4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                  </svg>
+                </div>
+              </div>
+              <input
+                v-model="email"
+                class="appearance-none block w-full  text-gray-700 border border-gray-200 py-3 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                type="text"
+                placeholder="email"
               >
-                <h1>Login</h1>
-                <p class="text-muted">
-                  Sign In to your account
-                </p>
-                <CInput
-                  v-model="email"
-                  prepend-html="<i class='cui-user'></i>"
-                  placeholder="Email"
-                  autocomplete="email"
-                >
-                  <template #prepend-content>
-                    @
-                  </template>
-                  <!-- <template #prepend-content><CIcon name="cil-user"/></template> -->
-                </CInput>
-                <CInput
-                  v-model="password"
-                  prepend-html="<i class='cui-lock-locked'></i>"
-                  placeholder="Password"
-                  type="password"
-                  autocomplete="curent-password"
-                >
-                  <template #prepend-content>
-                    <CIcon name="cil-lock-locked" />
-                  </template>
-                </CInput>
-                <CRow>
-                  <CCol
-                    col="6"
-                    class="text-left"
-                  >
-                    <CButton
-                      type="submit"
-                      color="dark"
-                      class="px-4"
-                    >
-                      Login
-                    </CButton>
-                  </CCol>
-                  <CCol
-                    col="6"
-                    class="text-right"
-                  >
-                    <!-- <CButton color="link" class="px-0">Forgot password?</CButton> -->
-                    <!-- <CButton color="link" class="d-md-none" @click="goRegister()">Register now!</CButton> -->
-                  </CCol>
-                </CRow>
-                <CAlert
-                  v-if="showMessage"
-                  class="mt-3"
-                  color="danger"
-                  :show.sync="currentAlertCounter"
-                  close-button
-                >
-                  {{ message }}
-                  <CProgress
-                    :max="5"
-                    :value="currentAlertCounter"
-                    height="3px"
-                    color="danger"
-                    animate
-                  />
-                </CAlert>
-              </CForm>
-            </CCardBody>
-          </CCard>
-          <CCard
-            text-color="white"
-            class="login-logo text-center py-5 d-md-down-none"
-            body-wrapper
-          >
-            <CImg
-              class="g-logo-collapse mb-3"
-              name="logo-collapse"
-              size="custom-size"
-              src="img/simhp/logo.svg"
-            />
-            <p class="c-grey">
-              Sistem Informasi Manajemen Hasil Pengawasan Nasional
-            </p>
-            <!-- <p class="c-grey">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p> -->
-            <!-- <CButton
-              color="primary"
-              class="active mt-3"
-              @click="goRegister()"
+              <input
+                v-model="password"
+                class="appearance-none block w-full  text-gray-700 border border-gray-200 py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                type="password"
+                placeholder="password"
+              >
+            </div>
+          </div>
+          <div class="text-right">
+            <router-link
+              to="/"
+              class="text-right inline-block mt-1 mb-3 hover:no-underline hover:text-blue-700"
             >
-              Register Now!
-            </CButton> -->
-          </CCard>
-        </CCardGroup>
-      </CCol>
-    </CRow>
-  </CContainer>
+              Lupa password?
+            </router-link>
+          </div>
+          <button
+            class="appearance-none block w-full bg-blue-700 text-white py-3 px-4 leading-tight focus:border focus:bg-blue-800 hover:bg-blue-800 focus:border-gray-500"
+            type="submit"
+            placeholder="password"
+          >
+            Login
+          </button>
+          <CAlert
+            v-if="showMessage"
+            class="mt-3"
+            color="danger"
+            :show.sync="currentAlertCounter"
+            close-button
+          >
+            {{ message }}
+            <CProgress
+              :max="5"
+              :value="currentAlertCounter"
+              height="3px"
+              color="danger"
+              animate
+            />
+          </CAlert>
+        </form>
+        <p class="mt-3">
+          Belum punya akun? <router-link
+            to="/"
+            class="inline-block font-bold hover:no-underline text-blue-600 hover:text-blue-800"
+          >
+            Hubungi Tim Kami
+          </router-link>
+        </p>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-
-import axios from "axios";
-// import VueRecaptcha from 'vue-recaptcha';
+import axios from 'axios';
 
 export default {
   name: 'Login',
-  // components: { VueRecaptcha },
   data() {
     return {
       email: '',
@@ -120,43 +115,44 @@ export default {
       message: '',
       currentAlertCounter: 0,
       mode: 'login',
-      error: null
-    }
+      error: null,
+    };
   },
   methods: {
-    goRegister(){
+    goRegister() {
       this.$router.push({ path: 'register' });
     },
     login() {
       let self = this;
       self.showMessage = false;
-      self.currentAlertCounter= 5;
+      self.currentAlertCounter = 5;
 
-      axios.post( this.$apiAdress + '/api/login', {
-        email: self.email,
-        password: self.password,
-      }).then(function (response) {
-        self.email = '';
-        self.password = '';
-        localStorage.setItem('api_token', response.data.access_token);
-        localStorage.setItem('roles', response.data.roles);
-        self.$router.push({ path: 'dashboard' });
-      })
-      .catch(function (error) {
-        self.message = 'E-mail atau password anda salah!';
-        self.showMessage = true;
-        console.log(error);
-      });
-
+      axios
+        .post(this.$apiAdress + '/api/login', {
+          email: self.email,
+          password: self.password,
+        })
+        .then(function (response) {
+          self.email = '';
+          self.password = '';
+          localStorage.setItem('api_token', response.data.access_token);
+          localStorage.setItem('roles', response.data.roles);
+          self.$router.push({ path: 'dashboard' });
+        })
+        .catch(function (error) {
+          self.message = 'E-mail atau password anda salah!';
+          self.showMessage = true;
+          console.log(error);
+        });
     },
     async submitForm() {
       let self = this;
       self.showMessage = false;
-      self.currentAlertCounter= 5;
+      self.currentAlertCounter = 5;
 
       const actionPayload = {
         email: self.email,
-        password: self.password
+        password: self.password,
       };
 
       try {
@@ -171,14 +167,13 @@ export default {
         console.log(error);
       }
     },
-  }
-}
-
+  },
+};
 </script>
 
 
 <style scoped>
-.login-container{
+.login-container {
   justify-content: center;
 }
 
@@ -187,21 +182,20 @@ export default {
 }
 
 .login-logo {
-  background-color: #303C50;
+  background-color: #303c50;
   width: inherit;
 }
 
 .b-grey {
-  background-color: #303C50
+  background-color: #303c50;
 }
 
 .c-grey {
-  color: #EAF6FF;
+  color: #eaf6ff;
 }
 
 .login-subtitle {
   width: 400px;
   margin-bottom: 1rem;
 }
-
 </style>

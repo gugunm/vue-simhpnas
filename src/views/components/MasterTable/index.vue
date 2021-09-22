@@ -1,12 +1,12 @@
 <template>
   <div>
-    <CRow class="px-3">
+    <!-- <CRow class="px-3">
       <CCol
         class="px-0"
         lg="8"
         sm="12"
       >
-        <h4 class="my-0 mt-1 mb-3 text-2xl">
+        <h4 class="my-0 mt-1 mb-3 text-2xl font-semibold">
           {{ topTitle }} {{ title }} {{ descTitle }}
         </h4>
       </CCol>
@@ -17,14 +17,42 @@
       >
         <CButton
           color="info"
-          class="mb-3"
+          class="mb-3 px-4"
           @click="openCreateModal"
         >
           <CIcon
             name="cil-plus"
-            size="lg"
-            class="my-0 mb-1 mr-2"
-          />Tambah {{ title }}
+            size="md"
+            class="my-0 mb-1 mr-1"
+          /> Tambah
+        </CButton>
+      </CCol>
+    </CRow> -->
+    <CRow class="px-3">
+      <CCol
+        class="px-0"
+        lg="12"
+        sm="12"
+      >
+        <h4 class="my-0 mt-1 mb-3 text-2xl font-semibold">
+          {{ topTitle }} {{ title }} {{ descTitle }}
+        </h4>
+      </CCol>
+      <CCol
+        class="px-0"
+        lg="12"
+        sm="12"
+      >
+        <CButton
+          color="info"
+          class="mb-3 px-4"
+          @click="openCreateModal"
+        >
+          <CIcon
+            name="cil-plus"
+            size="md"
+            class="my-0 mb-1 mr-1"
+          /> Tambah
         </CButton>
       </CCol>
     </CRow>
@@ -46,7 +74,7 @@
           <template #id="{item}">
             <td
               v-if="clickableRows"
-              class="text-primary"
+              class="text-blue-500 uppercase hover:text-blue-700"
               style="cursor:pointer;"
               @click="clickedRow(item)"
             >
@@ -65,12 +93,12 @@
                 variant="outline"
                 square
                 size="sm"
-                class="mr-3"
+                class="mr-2"
                 @click="openEditModal(item)"
               >
-                <font-awesome-icon :icon="['fas', 'pen']" />
+                <!-- <font-awesome-icon :icon="['fas', 'pen']" /> -->
+                <p>Edit</p>
               </CButton>
-              <!-- <CIcon name="cil-pencil" /> -->
               <CButton
                 color="danger"
                 variant="outline"
@@ -78,8 +106,8 @@
                 size="sm"
                 @click="openDeleteModal(item.id)"
               >
-                <font-awesome-icon :icon="['fas', 'trash-alt']" />
-                <!-- <CIcon name="cil-trash" /> -->
+                <!-- <font-awesome-icon :icon="['fas', 'trash-alt']" /> -->
+                <p>Hapus</p>
               </CButton>
             </td>
           </template>
@@ -135,3 +163,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.btn-action-table {
+  border: 1px solid #fc8181;
+}
+</style>
