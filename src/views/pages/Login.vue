@@ -149,9 +149,10 @@ export default {
         await this.$store.dispatch('auth/login', actionPayload);
         self.email = '';
         self.password = '';
-        self.loading = true;
+        self.loading = false;
         this.$router.push({ path: 'dashboard' });
       } catch (err) {
+        self.loading = false;
         self.message = 'E-mail atau password anda salah!';
         self.showMessage = true;
         self.error = err.message || 'Failed to authenticate, try later.';
