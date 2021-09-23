@@ -21,9 +21,7 @@ export default {
   props: ['idUnitKerja'],
   data() {
     return {
-      loading: false,
       item: '',
-      error: '',
     };
   },
   mounted() {

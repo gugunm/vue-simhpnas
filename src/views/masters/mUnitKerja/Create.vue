@@ -32,8 +32,7 @@ export default {
             payload.data
           );
 
-          if (response.statusText == 'OK') {
-            // console.log(response);
+          if (response.status == 200 || response.status == 201) {
             setTimeout(() => {
               this.loading = false;
               this.$router.push('/master-unit-kerja');
@@ -42,6 +41,7 @@ export default {
           }
         } catch (error) {
           this.error = error.message || 'Something went wrong!';
+          this.toastError(this.error);
         }
       }
     },
@@ -51,6 +51,14 @@ export default {
         type: 'success',
         position: 'top-right',
         duration: 3000,
+      });
+    },
+    toastError(msg) {
+      this.$toast.open({
+        message: msg,
+        type: 'error',
+        position: 'top-right',
+        duration: 5000,
       });
     },
   },
