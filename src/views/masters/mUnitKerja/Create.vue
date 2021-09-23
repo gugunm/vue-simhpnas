@@ -5,6 +5,7 @@
       :selected-item="item"
       @click-submit-form="onSubmitForm"
     />
+    <!-- {{ $toast.open('Howdy!') }} -->
   </div>
 </template>
 
@@ -18,26 +19,43 @@ export default {
   data() {
     return {
       item: {},
+      loading: false,
     };
   },
   methods: {
     async onSubmitForm(payload) {
-      console.log('Form Data :');
-      console.log(payload);
-      try {
-        const response = await this.$store.dispatch(
-          'm_unit_kerja/createUnitKerja',
-          payload
-        );
+      this.loading = true;
+      if (payload.mode == 'create') {
+        try {
+          const response = await this.$store.dispatch(
+            'm_unit_kerja/createUnitKerja',
+            payload.data
+          );
 
-        if (response.statusText == 'OK') {
-          console.log(response);
-          this.$router.push('/master-unit-kerja');
+          if (response.statusText == 'OK') {
+            // console.log(response);
+            setTimeout(() => {
+              this.loading = false;
+              this.$router.push('/master-unit-kerja');
+              this.toastSuccess();
+            }, 1000);
+          }
+        } catch (error) {
+          this.error = error.message || 'Something went wrong!';
         }
-      } catch (error) {
-        this.error = error.message || 'Something went wrong!';
       }
+    },
+    toastSuccess() {
+      this.$toast.open({
+        message: 'Data berhasil disimpan',
+        type: 'success',
+        position: 'top-right',
+        duration: 3000,
+      });
     },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+</style>

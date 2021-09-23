@@ -261,7 +261,7 @@
                 />
               </CCol>
               <CCol
-                v-if="mode == 'create'"
+                v-if="mode == 'create' || mode == 'edit'"
                 sm="12"
                 md="6"
                 class="content-center justify-end pr-3"
@@ -271,7 +271,17 @@
                   color="primary"
                   class="px-4"
                 >
-                  Submit Data
+                  <template v-if="loading">
+                    <CSpinner
+                      color="white"
+                      size="sm"
+                      class="mr-2"
+                    />
+                    Processing
+                  </template>
+                  <template v-else>
+                    Submit Data
+                  </template>
                 </CButton>
               </CCol>
             </CRow>
@@ -360,6 +370,7 @@ export default {
       selectedKabkot: this.selectedItem.kabkot || '',
       selectedKecamatan: this.selectedItem.kecamatan || '',
       selectedKelurahan: this.selectedItem.kelurahan || '',
+      loading: false,
     };
   },
   watch: {
@@ -418,20 +429,28 @@ export default {
   },
   methods: {
     clickSubmitForm() {
+      this.loading = true;
       this.$emit('click-submit-form', {
-        Kode_Unit_Obrik: this.id.val,
-        Nama_Unit: this.namaUnit.val,
-        Nama_Pimpinan: this.namaPimpinan.val,
-        NIP_Pimpinan: this.nipPimpinan.val,
-        Alamat: this.alamat.val,
-        Provinsi: this.provinsi.val,
-        Kabupaten_kota: this.kabkot.val,
-        Kecamatan: this.kecamatan.val,
-        Kelurahan: this.kelurahan.val,
-        Jumlah_Obrik: this.jumlahObrik.val,
-        Jumlah_Obrik_Bersih: this.jumlahObrikBersih.val,
-        Telpon: this.telpon.val,
+        mode: this.mode,
+        data: {
+          Kode_Unit_Obrik: this.id.val,
+          Nama_Unit: this.namaUnit.val,
+          Nama_Pimpinan: this.namaPimpinan.val,
+          NIP_Pimpinan: this.nipPimpinan.val,
+          Alamat: this.alamat.val,
+          Provinsi: this.provinsi.val,
+          Kabupaten_kota: this.kabkot.val,
+          Kecamatan: this.kecamatan.val,
+          Kelurahan: this.kelurahan.val,
+          Jumlah_Obrik: this.jumlahObrik.val,
+          Jumlah_Obrik_Bersih: this.jumlahObrikBersih.val,
+          Telpon: this.telpon.val,
+        },
       });
+
+      setTimeout(() => {
+        this.loading = false;
+      }, 1000);
     },
     async loadUnitAudit(refresh = false) {
       this.loading = true;

@@ -41,10 +41,10 @@
       flat
       :content-to-render="nav"
     />
-    <!-- <CSidebarMinimizer
-      class="c-d-md-down-none"
+    <CSidebarMinimizer
+      class="c-d-md-down-none bg-transparent border-0"
       @click.native="$store.commit('ui/toggle', 'sidebarMinimize')"
-    /> -->
+    />
   </CSidebar>
 </template>
 

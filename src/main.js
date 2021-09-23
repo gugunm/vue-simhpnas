@@ -10,7 +10,10 @@ import Locales from './locale/vue-i18n-locales.generated.js';
 
 import { API_URL } from './utils/api.js';
 
-import './assets/tailwind.css'
+import './assets/tailwind.css';
+
+import VueToast from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
@@ -21,6 +24,9 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.prototype.$apiAdress = API_URL
 Vue.use(CoreuiVue)
+Vue.use(VueToast, {
+  position: 'top'
+})
 Vue.use(vuexI18n.plugin, store);
 Vue.i18n.add('en', Locales.en);
 Vue.i18n.add('pl', Locales.pl);
