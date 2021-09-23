@@ -14,12 +14,12 @@
             SIMHPNAS
           </h3>
         </div>
-        <h1 class="text-4xl font-bold mb-4">
+        <h1 class="text-4xl font-bold mb-4 xl:mt-8">
           Halo,<br>Selamat Datang!
         </h1>
         <form
           method="POST"
-          class="flex flex-col pr-20"
+          class="flex flex-col lg:pr-20"
           @submit.prevent="submitForm"
         >
           <p class="mb-2">

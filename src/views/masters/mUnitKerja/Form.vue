@@ -73,7 +73,15 @@
                   class="mb-2"
                   placeholder="Nama Pimpinan"
                   :readonly="mode == 'view'"
+                  :is-valid="namaPimpinan.isValid"
+                  @blur="validateString(namaPimpinan, {length:3})"
                 />
+                <p
+                  v-if="namaPimpinan.isValid == false"
+                  class="text-red-500 text-sm"
+                >
+                  *minimal 3 huruf
+                </p>
               </CCol>
               <CCol
                 sm="12"
@@ -81,11 +89,19 @@
               >
                 <CInput
                   v-model="nipPimpinan.val"
-                  label="NIP Pimpinan"
+                  label="NIP Pimpinan (tanpa spasi)"
                   class="mb-2"
-                  placeholder="19750101 200001 1 001"
+                  placeholder="197501012000011001"
                   :readonly="mode == 'view'"
+                  :is-valid="nipPimpinan.isValid"
+                  @blur="validateNip(nipPimpinan, {length:18})"
                 />
+                <p
+                  v-if="nipPimpinan.isValid == false"
+                  class="text-red-500 text-sm"
+                >
+                  *18 angka, ditulis tanpa spasi
+                </p>
               </CCol>
             </CRow>
             <!-- ROW 3 -->
@@ -100,7 +116,15 @@
                   class="mb-2"
                   placeholder="Jl. Jakarta..."
                   :readonly="mode == 'view'"
+                  :is-valid="alamat.isValid"
+                  @blur="validateString(alamat, {length:3})"
                 />
+                <p
+                  v-if="alamat.isValid == false"
+                  class="text-red-500 text-sm"
+                >
+                  *minimal 3 huruf
+                </p>
               </CCol>
               <CCol
                 sm="12"
@@ -218,8 +242,17 @@
                   label="Jumlah Obrik"
                   class="mb-2"
                   placeholder="5"
+                  type="number"
                   :readonly="mode == 'view'"
+                  :is-valid="jumlahObrik.isValid"
+                  @blur="validateNumber(jumlahObrik)"
                 />
+                <p
+                  v-if="jumlahObrik.isValid == false"
+                  class="text-red-500 text-sm"
+                >
+                  *tidak boleh kosong
+                </p>
               </CCol>
             </CRow>
             <!-- ROW 6 -->
@@ -233,8 +266,17 @@
                   label="Jumlah Obrik Bersih"
                   class="mb-2"
                   placeholder="3"
+                  type="number"
                   :readonly="mode == 'view'"
+                  :is-valid="jumlahObrikBersih.isValid"
+                  @blur="validateNumber(jumlahObrikBersih)"
                 />
+                <p
+                  v-if="jumlahObrikBersih.isValid == false"
+                  class="text-red-500 text-sm"
+                >
+                  *tidak boleh kosong
+                </p>
               </CCol>
               <CCol
                 sm="12"
@@ -244,9 +286,17 @@
                   v-model="telpon.val"
                   label="Telpon"
                   class="mb-2"
-                  placeholder="6281234567890"
+                  placeholder="62812345678"
                   :readonly="mode == 'view'"
+                  :is-valid="telpon.isValid"
+                  @blur="validateTelpon(telpon)"
                 />
+                <p
+                  v-if="telpon.isValid == false"
+                  class="text-red-500 text-sm"
+                >
+                  *nomor telpon tidak valid, minimal 11 angka dan diawali dengan '62'
+                </p>
               </CCol>
             </CRow>
             <CRow class="mb-2 view-form">
@@ -297,6 +347,8 @@ import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
 import BackButton from '@/views/components/BackButton';
 import mixin from './mixin';
+import mixinWilayah from './minxinWilayah';
+import mixinValidate from './mixinValidate';
 
 export default {
   name: 'FormUnitKerja',
@@ -305,7 +357,7 @@ export default {
     BackButton,
   },
   emmits: ['click-submit-form'],
-  mixins: [mixin],
+  mixins: [mixin, mixinWilayah, mixinValidate],
   props: ['mode', 'selectedItem'],
   data() {
     return {
@@ -319,45 +371,45 @@ export default {
       },
       namaPimpinan: {
         val: '',
-        isValid: true,
+        isValid: null,
       },
       nipPimpinan: {
         val: '',
-        isValid: true,
+        isValid: null,
       },
       alamat: {
         val: '',
-        isValid: true,
+        isValid: null,
       },
       provinsi: {
         val: '',
-        isValid: true,
+        isValid: null,
       },
       kabkot: {
         val: '',
-        isValid: true,
+        isValid: null,
       },
       kecamatan: {
         val: '',
-        isValid: true,
+        isValid: null,
       },
       kelurahan: {
         val: '',
-        isValid: true,
+        isValid: null,
       },
       jumlahObrik: {
         val: '',
-        isValid: true,
+        isValid: null,
       },
       jumlahObrikBersih: {
         val: '',
-        isValid: true,
+        isValid: null,
       },
       telpon: {
         val: '',
-        isValid: true,
+        isValid: null,
       },
-      formIsValid: true,
+      formIsValid: null,
       optionsUnitAudit: '',
       optionsWilayah: {
         provinsi: '',
@@ -377,9 +429,13 @@ export default {
     selectedId: function (newValue, oldValue) {
       this.id.val = newValue.id;
       this.namaUnit.val = newValue.deskripsi;
+      this.id.isValid = true;
     },
     selectedProvinsi: function (newValue, oldValue) {
       this.provinsi.val = newValue.id;
+
+      this.provinsi.isValid = true;
+
       this.kabkot.val = '';
       this.kecamatan.val = '';
       this.kelurahan.val = '';
@@ -388,6 +444,9 @@ export default {
     },
     selectedKabkot: function (newValue, oldValue) {
       this.kabkot.val = newValue.id;
+
+      this.kabkot.isValid = true;
+
       this.kecamatan.val = '';
       this.kelurahan.val = '';
       this.selectedKecamatan = '';
@@ -395,29 +454,17 @@ export default {
     },
     selectedKecamatan: function (newValue, oldValue) {
       this.kecamatan.val = newValue.id;
+
+      this.kecamatan.isValid = true;
+
       this.kelurahan.val = '';
       this.selectedKelurahan = '';
       this.loadKelurahan();
     },
     selectedKelurahan: function (newValue, oldValue) {
       this.kelurahan.val = newValue.id;
-    },
-    isShowModal: function (newValue, oldValue) {
-      if (newValue === false) {
-        this.id.val = '';
-        this.namaUnit.val = '';
-        this.namaPimpinan.val = '';
-        this.nipPimpinan.val = '';
-        this.alamat.val = '';
-        this.provinsi.val = '';
-        this.kabkot.val = '';
-        this.kecamatan.val = '';
-        this.kelurahan.val = '';
-        this.jumlahObrik.val = '';
-        this.jumlahObrikBersih.val = '';
-        this.telpon.val = '';
-        this.selectedProvinsi = '';
-      }
+
+      this.kelurahan.isValid = true;
     },
   },
   created() {
@@ -429,10 +476,24 @@ export default {
   },
   methods: {
     clickSubmitForm() {
+      this.checkForm();
       this.loading = true;
       this.$emit('click-submit-form', {
+        formIsValid: this.formIsValid,
         mode: this.mode,
         data: {
+          // Kode_Unit_Obrik: 'tes1234',
+          // Nama_Unit: 'Unit Test 212',
+          // Nama_Pimpinan: 'AZ Pimpinan',
+          // NIP_Pimpinan: '199201012020121004',
+          // Alamat: 'jakarta',
+          // Provinsi: '31',
+          // Kabupaten_kota: '3175',
+          // Kecamatan: '317510',
+          // Kelurahan: '3175101007',
+          // Jumlah_Obrik: 5,
+          // Jumlah_Obrik_Bersih: 3,
+          // Telpon: '085634215432',
           Kode_Unit_Obrik: this.id.val,
           Nama_Unit: this.namaUnit.val,
           Nama_Pimpinan: this.namaPimpinan.val,
@@ -465,56 +526,31 @@ export default {
       }
       this.loading = false;
     },
-    async loadProvinsi(refresh = false) {
-      try {
-        await this.$store.dispatch('m_ref_wilayah/loadRefProvinsi', {
-          forceRefresh: refresh,
-        });
-        this.optionsWilayah.provinsi =
-          this.$store.getters['m_ref_wilayah/refProvinsi'];
-      } catch (error) {
-        this.error = error.message || 'Something went wrong!';
+
+    checkForm() {
+      const listValidate = [
+        this.id.isValid,
+        this.namaUnit.isValid,
+        this.namaPimpinan.isValid,
+        this.nipPimpinan.isValid,
+        this.alamat.isValid,
+        this.provinsi.isValid,
+        this.kabkot.isValid,
+        this.kecamatan.isValid,
+        this.kelurahan.isValid,
+        this.jumlahObrik.isValid,
+        this.jumlahObrikBersih.isValid,
+        this.telpon.isValid,
+      ];
+
+      console.log('LIST VALIDATE');
+      console.log(listValidate);
+
+      if (listValidate.every((v) => v === true)) {
+        this.formIsValid = true;
+      } else {
+        this.formIsValid = false;
       }
-    },
-    async loadKabkot(refresh = false) {
-      try {
-        await this.$store.dispatch('m_ref_wilayah/loadRefKabkot', {
-          idProvinsi: this.provinsi.val,
-          forceRefresh: refresh,
-        });
-        this.optionsWilayah.kabkot =
-          this.$store.getters['m_ref_wilayah/refKabkot'];
-      } catch (error) {
-        this.error = error.message || 'Something went wrong!';
-      }
-    },
-    async loadKecamatan(refresh = false) {
-      this.loading = true;
-      try {
-        await this.$store.dispatch('m_ref_wilayah/loadRefKecamatan', {
-          idKabkot: this.kabkot.val,
-          forceRefresh: refresh,
-        });
-        this.optionsWilayah.kecamatan =
-          this.$store.getters['m_ref_wilayah/refKecamatan'];
-      } catch (error) {
-        this.error = error.message || 'Something went wrong!';
-      }
-      this.loading = false;
-    },
-    async loadKelurahan(refresh = false) {
-      this.loading = true;
-      try {
-        await this.$store.dispatch('m_ref_wilayah/loadRefKelurahan', {
-          idKecamatan: this.kecamatan.val,
-          forceRefresh: refresh,
-        });
-        this.optionsWilayah.kelurahan =
-          this.$store.getters['m_ref_wilayah/refKelurahan'];
-      } catch (error) {
-        this.error = error.message || 'Something went wrong!';
-      }
-      this.loading = false;
     },
   },
 };

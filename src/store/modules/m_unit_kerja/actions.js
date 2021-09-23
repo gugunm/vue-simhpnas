@@ -83,7 +83,7 @@ export default {
   },
 
   async createUnitKerja(context, payload){
-    console.log(payload.data)
+    console.log(payload)
     const response = await axios({
       method: 'POST',
       headers: { "Content-Type": "application/json" },
@@ -97,8 +97,30 @@ export default {
 
     const responseData = await response.data;
 
-    console.log('RESPONSE')
-    console.log(response)
+    if (response.statusText != "OK") {
+      const error = new Error(
+        responseData.message || 'Failed to save data'
+      );
+      throw error;
+    }
+
+    return response
+  },
+
+  async updateUnitKerja(context, payload){
+    // console.log(payload.data)
+    const response = await axios({
+      method: 'PUT',
+      headers: { "Content-Type": "application/json" },
+      data: payload,
+      baseURL: API_URL,
+      url: `/api/unitkerja/${payload.Kode_Unit_Obrik}`,
+      params: {
+        token: localStorage.getItem('api_token')
+      },
+    })
+
+    const responseData = await response.data;
 
     if (response.statusText != "OK") {
       const error = new Error(

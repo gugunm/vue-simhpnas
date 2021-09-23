@@ -24,8 +24,9 @@ export default {
   },
   methods: {
     async onSubmitForm(payload) {
+      // console.log('Create submit form');
       this.loading = true;
-      if (payload.mode == 'create') {
+      if (payload.mode == 'create' && payload.formIsValid) {
         try {
           const response = await this.$store.dispatch(
             'm_unit_kerja/createUnitKerja',
@@ -36,18 +37,20 @@ export default {
             setTimeout(() => {
               this.loading = false;
               this.$router.push('/master-unit-kerja');
-              this.toastSuccess();
+              this.toastSuccess('Berhasil menyimpan data');
             }, 1000);
           }
         } catch (error) {
           this.error = error.message || 'Something went wrong!';
           this.toastError(this.error);
         }
+      } else if (payload.formIsValid == false) {
+        this.toastError('Terdapat data belum valid');
       }
     },
-    toastSuccess() {
+    toastSuccess(msg) {
       this.$toast.open({
-        message: 'Data berhasil disimpan',
+        message: msg,
         type: 'success',
         position: 'top-right',
         duration: 3000,
@@ -64,6 +67,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-</style>
