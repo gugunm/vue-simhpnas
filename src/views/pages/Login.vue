@@ -70,7 +70,17 @@
             type="submit"
             placeholder="password"
           >
-            Login
+            <template v-if="loading">
+              <CSpinner
+                color="white"
+                size="sm"
+                class="mr-2"
+              />
+              Loading...
+            </template>
+            <template v-else>
+              Login
+            </template>
           </button>
           <CAlert
             v-if="showMessage"
@@ -116,37 +126,17 @@ export default {
       currentAlertCounter: 0,
       mode: 'login',
       error: null,
+      loading: false,
     };
   },
   methods: {
     goRegister() {
       this.$router.push({ path: 'register' });
     },
-    login() {
-      let self = this;
-      self.showMessage = false;
-      self.currentAlertCounter = 5;
-
-      axios
-        .post(this.$apiAdress + '/api/login', {
-          email: self.email,
-          password: self.password,
-        })
-        .then(function (response) {
-          localStorage.setItem('api_token', response.data.access_token);
-          localStorage.setItem('roles', response.data.roles);
-          self.email = '';
-          self.password = '';
-          self.$router.push({ path: 'dashboard' });
-        })
-        .catch(function (error) {
-          self.message = 'E-mail atau password anda salah!';
-          self.showMessage = true;
-          console.log(error);
-        });
-    },
     async submitForm() {
       let self = this;
+      self.loading = true;
+
       self.showMessage = false;
       self.currentAlertCounter = 5;
 
@@ -159,6 +149,7 @@ export default {
         await this.$store.dispatch('auth/login', actionPayload);
         self.email = '';
         self.password = '';
+        self.loading = true;
         this.$router.push({ path: 'dashboard' });
       } catch (err) {
         self.message = 'E-mail atau password anda salah!';
