@@ -169,6 +169,7 @@
                 <div v-else>
                   <label>Kab. / Kota</label>
                   <v-select
+                    v-if="optionsWilayah.kabkot"
                     v-model="selectedKabkot"
                     :options="optionsWilayah.kabkot"
                     label="deskripsi"
@@ -222,6 +223,7 @@
                 <div v-else>
                   <label>Kelurahan</label>
                   <v-select
+                    v-if="optionsWilayah.kelurahan"
                     v-model="selectedKelurahan"
                     :options="optionsWilayah.kelurahan"
                     label="deskripsi"
@@ -304,11 +306,19 @@
                 sm="12"
                 md="6"
               >
-                <back-button
+                <CButton
+                  variant="outline"
+                  color="dark"
+                  @click="isOpenConfirm = true"
+                >
+                  Kembali
+                </CButton>
+                <!-- <back-button
                   title="Kembali"
                   class="mt-4"
                   to="/master-unit-kerja"
-                />
+                  @click="isOpenConfirm = true"
+                /> -->
               </CCol>
               <CCol
                 v-if="mode == 'create' || mode == 'edit'"
@@ -339,28 +349,37 @@
         </CCardbody>
       </CCard>
     </CCol>
+    <confirm-modal
+      v-model="isOpenConfirm"
+      @close-modal="isOpenConfirm = false"
+      @confirm-ok="$router.go(-1)"
+    />
   </CRow>
 </template>
 
 <script>
 import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
-import BackButton from '@/views/components/BackButton';
+// import BackButton from '@/views/components/BackButton';
 import mixin from './mixin';
 import mixinWilayah from './minxinWilayah';
 import mixinValidate from './mixinValidate';
+
+import ConfirmModal from '../../components/ConfirmModal.vue';
 
 export default {
   name: 'FormUnitKerja',
   components: {
     vSelect,
-    BackButton,
+    // BackButton,
+    ConfirmModal,
   },
   emmits: ['click-submit-form'],
   mixins: [mixin, mixinWilayah, mixinValidate],
   props: ['mode', 'selectedItem'],
   data() {
     return {
+      isOpenConfirm: false,
       id: {
         val: '',
         isValid: true,
@@ -412,19 +431,20 @@ export default {
       formIsValid: null,
       optionsUnitAudit: '',
       optionsWilayah: {
-        provinsi: '',
-        kabkot: '',
-        kecamatan: '',
-        kelurahan: '',
+        provinsi: [],
+        kabkot: [],
+        kecamatan: [],
+        kelurahan: [],
       },
       selectedId: '',
-      selectedProvinsi: this.selectedItem.provinsi || '',
-      selectedKabkot: this.selectedItem.kabkot || '',
-      selectedKecamatan: this.selectedItem.kecamatan || '',
-      selectedKelurahan: this.selectedItem.kelurahan || '',
+      selectedProvinsi: null,
+      selectedKabkot: null,
+      selectedKecamatan: null,
+      selectedKelurahan: null,
       loading: false,
     };
   },
+
   watch: {
     selectedId: function (newValue, oldValue) {
       this.id.val = newValue.id;
@@ -432,47 +452,73 @@ export default {
       this.id.isValid = true;
     },
     selectedProvinsi: function (newValue, oldValue) {
-      this.provinsi.val = newValue.id;
+      if (this.mode == 'create' || oldValue != null) {
+        this.provinsi.isValid = true;
+        this.provinsi.val = newValue.id;
 
-      this.provinsi.isValid = true;
-
-      this.kabkot.val = '';
-      this.kecamatan.val = '';
-      this.kelurahan.val = '';
-      this.selectedKabkot = '';
-      this.loadKabkot();
+        this.kabkot.val = '';
+        this.kecamatan.val = '';
+        this.kelurahan.val = '';
+        this.selectedKabkot = '';
+        this.loadKabkot();
+      } else {
+        this.loadKabkot();
+      }
     },
     selectedKabkot: function (newValue, oldValue) {
-      this.kabkot.val = newValue.id;
+      if (this.mode == 'create' || oldValue != null) {
+        this.kabkot.val = newValue.id;
+        this.kabkot.isValid = true;
 
-      this.kabkot.isValid = true;
-
-      this.kecamatan.val = '';
-      this.kelurahan.val = '';
-      this.selectedKecamatan = '';
-      this.loadKecamatan();
+        this.kecamatan.val = '';
+        this.kelurahan.val = '';
+        this.selectedKecamatan = '';
+        this.loadKecamatan();
+      } else {
+        this.loadKecamatan();
+      }
     },
     selectedKecamatan: function (newValue, oldValue) {
-      this.kecamatan.val = newValue.id;
+      if (this.mode == 'create' || oldValue != null) {
+        this.kecamatan.val = newValue.id;
+        this.kecamatan.isValid = true;
 
-      this.kecamatan.isValid = true;
-
-      this.kelurahan.val = '';
-      this.selectedKelurahan = '';
-      this.loadKelurahan();
+        this.kelurahan.val = '';
+        this.selectedKelurahan = '';
+        this.loadKelurahan();
+      } else {
+        this.loadKelurahan();
+      }
     },
     selectedKelurahan: function (newValue, oldValue) {
       this.kelurahan.val = newValue.id;
-
       this.kelurahan.isValid = true;
     },
   },
-  created() {
+
+  async mounted() {
     if (this.mode == 'edit' || this.mode == 'view') {
       this.createDataWithSelectedItem();
     }
-    this.loadUnitAudit();
-    this.loadProvinsi();
+    await this.loadUnitAudit();
+    await this.loadProvinsi();
+    if (this.mode == 'edit') {
+      await this.loadKabkot();
+      await this.loadKecamatan();
+      await this.loadKelurahan();
+      this.selectedProvinsi = this.optionsWilayah.provinsi.filter((obj) => {
+        return obj.id == this.provinsi.val;
+      });
+      this.selectedKabkot = this.optionsWilayah.kabkot.filter((obj) => {
+        return obj.id == this.kabkot.val;
+      });
+      this.selectedKecamatan = this.optionsWilayah.kecamatan.filter((obj) => {
+        return obj.id == this.kecamatan.val;
+      });
+      this.selectedKelurahan = this.optionsWilayah.kelurahan.filter((obj) => {
+        return obj.id == this.kelurahan.val;
+      });
+    }
   },
   methods: {
     clickSubmitForm() {
