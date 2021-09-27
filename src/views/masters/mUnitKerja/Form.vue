@@ -390,43 +390,43 @@ export default {
       },
       namaPimpinan: {
         val: '',
-        isValid: null,
+        isValid: this.mode == 'edit' || null,
       },
       nipPimpinan: {
         val: '',
-        isValid: null,
+        isValid: this.mode == 'edit' || null,
       },
       alamat: {
         val: '',
-        isValid: null,
+        isValid: this.mode == 'edit' || null,
       },
       provinsi: {
         val: '',
-        isValid: null,
+        isValid: this.mode == 'edit' || null,
       },
       kabkot: {
         val: '',
-        isValid: null,
+        isValid: this.mode == 'edit' || null,
       },
       kecamatan: {
         val: '',
-        isValid: null,
+        isValid: this.mode == 'edit' || null,
       },
       kelurahan: {
         val: '',
-        isValid: null,
+        isValid: this.mode == 'edit' || null,
       },
       jumlahObrik: {
         val: '',
-        isValid: null,
+        isValid: this.mode == 'edit' || null,
       },
       jumlahObrikBersih: {
         val: '',
-        isValid: null,
+        isValid: this.mode == 'edit' || null,
       },
       telpon: {
         val: '',
-        isValid: null,
+        isValid: this.mode == 'edit' || null,
       },
       formIsValid: null,
       optionsUnitAudit: '',
@@ -464,6 +464,14 @@ export default {
       } else {
         this.loadKabkot();
       }
+
+      // if (oldValue == null) {
+      //   console.log('Pertama masuk');
+      //   console.log(newValue.id);
+      // } else {
+      //   console.log('Setelahnya');
+      //   console.log(newValue);
+      // }
     },
     selectedKabkot: function (newValue, oldValue) {
       if (this.mode == 'create' || oldValue != null) {
@@ -508,52 +516,62 @@ export default {
       await this.loadKelurahan();
       this.selectedProvinsi = this.optionsWilayah.provinsi.filter((obj) => {
         return obj.id == this.provinsi.val;
-      });
+      })[0];
       this.selectedKabkot = this.optionsWilayah.kabkot.filter((obj) => {
         return obj.id == this.kabkot.val;
-      });
+      })[0];
       this.selectedKecamatan = this.optionsWilayah.kecamatan.filter((obj) => {
         return obj.id == this.kecamatan.val;
-      });
+      })[0];
       this.selectedKelurahan = this.optionsWilayah.kelurahan.filter((obj) => {
         return obj.id == this.kelurahan.val;
-      });
+      })[0];
     }
   },
   methods: {
     clickSubmitForm() {
       this.checkForm();
       this.loading = true;
-      this.$emit('click-submit-form', {
-        formIsValid: this.formIsValid,
-        mode: this.mode,
-        data: {
-          // Kode_Unit_Obrik: 'tes1234',
-          // Nama_Unit: 'Unit Test 212',
-          // Nama_Pimpinan: 'AZ Pimpinan',
-          // NIP_Pimpinan: '199201012020121004',
-          // Alamat: 'jakarta',
-          // Provinsi: '31',
-          // Kabupaten_kota: '3175',
-          // Kecamatan: '317510',
-          // Kelurahan: '3175101007',
-          // Jumlah_Obrik: 5,
-          // Jumlah_Obrik_Bersih: 3,
-          // Telpon: '085634215432',
-          Kode_Unit_Obrik: this.id.val,
-          Nama_Unit: this.namaUnit.val,
-          Nama_Pimpinan: this.namaPimpinan.val,
-          NIP_Pimpinan: this.nipPimpinan.val,
-          Alamat: this.alamat.val,
-          Provinsi: this.provinsi.val,
-          Kabupaten_kota: this.kabkot.val,
-          Kecamatan: this.kecamatan.val,
-          Kelurahan: this.kelurahan.val,
-          Jumlah_Obrik: this.jumlahObrik.val,
-          Jumlah_Obrik_Bersih: this.jumlahObrikBersih.val,
-          Telpon: this.telpon.val,
-        },
-      });
+      // console.log(this.formIsValid);
+      if (this.formIsValid) {
+        this.$emit('click-submit-form', {
+          formIsValid: this.formIsValid,
+          mode: this.mode,
+          data: {
+            // Kode_Unit_Obrik: 'tes1234',
+            // Nama_Unit: 'Unit Test 212',
+            // Nama_Pimpinan: 'AZ Pimpinan',
+            // NIP_Pimpinan: '199201012020121004',
+            // Alamat: 'jakarta',
+            // Provinsi: '31',
+            // Kabupaten_kota: '3175',
+            // Kecamatan: '317510',
+            // Kelurahan: '3175101007',
+            // Jumlah_Obrik: 5,
+            // Jumlah_Obrik_Bersih: 3,
+            // Telpon: '085634215432',
+            Kode_Unit_Obrik: this.id.val,
+            Nama_Unit: this.namaUnit.val,
+            Nama_Pimpinan: this.namaPimpinan.val,
+            NIP_Pimpinan: this.nipPimpinan.val,
+            Alamat: this.alamat.val,
+            Provinsi: this.provinsi.val,
+            Kabupaten_kota: this.kabkot.val,
+            Kecamatan: this.kecamatan.val,
+            Kelurahan: this.kelurahan.val,
+            Jumlah_Obrik: this.jumlahObrik.val,
+            Jumlah_Obrik_Bersih: this.jumlahObrikBersih.val,
+            Telpon: this.telpon.val,
+          },
+        });
+      } else {
+        this.$toast.open({
+          message: 'Terdapat data yang belum valid',
+          type: 'error',
+          position: 'top-right',
+          duration: 5000,
+        });
+      }
 
       setTimeout(() => {
         this.loading = false;
@@ -589,14 +607,16 @@ export default {
         this.telpon.isValid,
       ];
 
-      console.log('LIST VALIDATE');
-      console.log(listValidate);
-
       if (listValidate.every((v) => v === true)) {
+        // return true
         this.formIsValid = true;
       } else {
         this.formIsValid = false;
       }
+
+      // console.log('LIST VALIDATE');
+      // console.log(listValidate);
+      // console.log(this.formIsValid);
     },
   },
 };

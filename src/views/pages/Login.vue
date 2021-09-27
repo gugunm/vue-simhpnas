@@ -76,7 +76,7 @@
                 size="sm"
                 class="mr-2"
               />
-              Loading...
+              <!-- Loading... -->
             </template>
             <template v-else>
               Login

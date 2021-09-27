@@ -108,7 +108,6 @@ export default {
   },
 
   async updateUnitKerja(context, payload){
-    // console.log(payload.data)
     const response = await axios({
       method: 'PUT',
       headers: { "Content-Type": "application/json" },
@@ -129,6 +128,30 @@ export default {
       throw error;
     }
 
+    return response
+  },
+
+  async deleteUnitKerjaById(context, payload){
+    const response = await axios({
+      method: 'DELETE',
+      headers: { "Content-Type": "application/json" },
+      baseURL: API_URL,
+      url: `/api/unitkerja/${payload.idUnitKerja}`,
+      params: {
+        token: localStorage.getItem('api_token')
+      },
+    })
+
+    const responseData = await response.data;
+
+    if (response.statusText != "OK") {
+      const error = new Error(
+        responseData.message || 'Failed to delete data'
+      );
+      throw error;
+    }
+
+    // context.commit('setDeleteUnitKerjaById', payload.idUnitKerja);
     return response
   }
 };

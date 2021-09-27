@@ -18,9 +18,9 @@
             <!-- <span>ICON WARNING</span> -->
             <div>
               <p class="text-lg font-semibold mb-2">
-                Meninggalkan halaman
+                {{ title || 'Meninggalkan halaman' }}
               </p>
-              <p>Meniggalkan halaman tanpa melakukan submit data akan menghilangkan data yang telah diinput.</p>
+              <p>{{ msg || 'Meniggalkan halaman tanpa melakukan submit data akan menghilangkan data yang telah diinput.' }} </p>
             </div>
           </div>
           <div
@@ -55,7 +55,7 @@
 
 <script>
 export default {
-  props: ['value'],
+  props: ['value', 'title', 'msg'],
   emits: ['close-modal', 'confirm-ok'],
   data() {
     return {};

@@ -12,12 +12,21 @@
       @open-edit-modal="openEdit"
       @open-delete-modal="openDeleteModal"
     />
+    <confirm-modal
+      v-model="isDeleteConfirm"
+      title="Hapus data"
+      msg="Apakah anda yakin akan menghapus data ini?"
+      @close-modal="isDeleteConfirm = false"
+      @confirm-ok="actionDelete"
+    />
   </div>
 </template>
 
 <script>
 import MasterTable from '@/views/components/MasterTable';
 import { loadItemsComponent } from './fetchApiFunctions';
+
+import ConfirmModal from '../../components/ConfirmModal.vue';
 
 const fields = [
   {
@@ -54,11 +63,14 @@ export default {
   name: 'MasterUnitKerja',
   components: {
     MasterTable,
+    ConfirmModal,
   },
   data() {
     return {
       items: '',
       fields,
+      isDeleteConfirm: false,
+      idToDelete: null,
     };
   },
   created() {
@@ -66,7 +78,30 @@ export default {
   },
   methods: {
     openDeleteModal(id) {
-      this.isOpenModal = true;
+      this.isDeleteConfirm = true;
+      this.idToDelete = id;
+    },
+    async actionDelete() {
+      try {
+        await this.$store.dispatch('m_unit_kerja/deleteUnitKerjaById', {
+          idUnitKerja: this.idToDelete,
+        });
+        this.isDeleteConfirm = false;
+        this.loadUnitKerja();
+        this.$toast.open({
+          message: `Berhasil menghapus data dengan ID ${this.idToDelete}`,
+          type: 'success',
+          position: 'top-right',
+          duration: 3000,
+        });
+      } catch (error) {
+        this.$toast.open({
+          message: error.message,
+          type: 'error',
+          position: 'top-right',
+          duration: 3000,
+        });
+      }
     },
     openDetail(item) {
       this.$router.push({

@@ -7,5 +7,10 @@ export default {
   },
   setFetchTimestamp(state) {
     state.lastFetch = new Date().getTime();
+  }, 
+  setDeleteUnitKerjaById(state, payload) {
+    state.unitKerja = state.unitKerja.filter((uk) => {
+      return uk.id != payload
+    })
   }
 };

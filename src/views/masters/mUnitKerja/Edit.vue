@@ -28,8 +28,6 @@ export default {
   },
   mounted() {
     this.loadUnitKerjaById();
-    // console.log('Data EDIT : ');
-    // console.log(this.item);
   },
   methods: {
     async onSubmitForm(payload) {
