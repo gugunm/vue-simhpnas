@@ -307,18 +307,19 @@
                 md="6"
               >
                 <CButton
+                  v-if="mode != 'view'"
                   variant="outline"
                   color="dark"
                   @click="isOpenConfirm = true"
                 >
                   Kembali
                 </CButton>
-                <!-- <back-button
+                <back-button
+                  v-if="mode == 'view'"
                   title="Kembali"
                   class="mt-4"
                   to="/master-unit-kerja"
-                  @click="isOpenConfirm = true"
-                /> -->
+                />
               </CCol>
               <CCol
                 v-if="mode == 'create' || mode == 'edit'"
@@ -360,7 +361,7 @@
 <script>
 import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
-// import BackButton from '@/views/components/BackButton';
+import BackButton from '@/views/components/BackButton';
 import mixin from './mixin';
 import mixinWilayah from './minxinWilayah';
 import mixinValidate from './mixinValidate';
@@ -371,7 +372,7 @@ export default {
   name: 'FormUnitKerja',
   components: {
     vSelect,
-    // BackButton,
+    BackButton,
     ConfirmModal,
   },
   emmits: ['click-submit-form'],

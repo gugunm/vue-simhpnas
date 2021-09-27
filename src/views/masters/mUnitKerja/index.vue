@@ -24,7 +24,8 @@
 
 <script>
 import MasterTable from '@/views/components/MasterTable';
-import { loadItemsComponent } from './fetchApiFunctions';
+
+import mixin from './mixin';
 
 import ConfirmModal from '../../components/ConfirmModal.vue';
 
@@ -65,6 +66,7 @@ export default {
     MasterTable,
     ConfirmModal,
   },
+  mixins: [mixin],
   data() {
     return {
       items: '',
@@ -120,13 +122,17 @@ export default {
         name: 'master-unit-kerja-create',
       });
     },
-    loadUnitKerja(refresh = false) {
-      loadItemsComponent({
-        refresh: refresh,
-        self: this,
-        storeAction: 'm_unit_kerja/loadUnitKerja',
-        storeGetter: 'm_unit_kerja/unitKerja',
-      });
+    async loadUnitKerja(refresh = false) {
+      // this.loading = true;
+      try {
+        await this.$store.dispatch('m_unit_kerja/loadUnitKerja', {
+          forceRefresh: refresh,
+        });
+        this.items = this.$store.getters['m_unit_kerja/unitKerja'];
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
+      // this.loading = false;
     },
   },
 };
