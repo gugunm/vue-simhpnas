@@ -17,7 +17,7 @@ export default {
 
     if (response.status != 200) {
       const error = new Error(
-        responseData.message || 'Failed to fetch data jenis temuan'
+        responseData.message || 'Failed to fetch data'
       );
       throw error;
     }
@@ -34,6 +34,33 @@ export default {
 
     context.commit('setRefProvinsi', refProvinsi);
     context.commit('setFetchTimestamp');
+  },
+
+  async loadProvinsiById(context, payload) {
+    const response = await axios({
+      method: 'GET',
+      baseURL: API_URL,
+      url: `/api/provinsi/${payload.idProvinsi}`,
+      params: {
+        token: localStorage.getItem('api_token')
+      },
+    })
+
+    const responseData = await response.data;
+
+    if (response.status != 200) {
+      const error = new Error(
+        responseData.message || 'Failed to fetch data'
+      );
+      throw error;
+    }
+
+    const provinsiById = {
+      id: responseData["Kode_Provinsi"],
+      deskripsi: responseData["diskripsi"],
+    };
+
+    return provinsiById
   },
 
   /** Load Kabupaten dan Kota */
@@ -70,6 +97,34 @@ export default {
 
     context.commit('setRefKabkot', refKabkot);
     context.commit('setFetchTimestamp');
+  },
+
+  async loadKabkotById(context, payload) {
+    const response = await axios({
+      method: 'GET',
+      baseURL: API_URL,
+      url: `/api/kabkota/${payload.idKabkot}`,
+      params: {
+        token: localStorage.getItem('api_token')
+      },
+    })
+
+    const responseData = await response.data;
+
+    if (response.status != 200) {
+      const error = new Error(
+        responseData.message || 'Failed to fetch data'
+      );
+      throw error;
+    }
+
+    const kabkotById = {
+      id: responseData["Kode_KabupatenKota"],
+      idProvinsi: responseData["Kode_Provinsi"],
+      deskripsi: responseData["diskripsi"],
+    };
+
+    return kabkotById
   },
 
   /** Load Kecamatan */
@@ -109,6 +164,35 @@ export default {
     context.commit('setFetchTimestamp');
   },
 
+  async loadKecamatanById(context, payload) {
+    const response = await axios({
+      method: 'GET',
+      baseURL: API_URL,
+      url: `/api/kecamatan/${payload.idKecamatan}`,
+      params: {
+        token: localStorage.getItem('api_token')
+      },
+    })
+
+    const responseData = await response.data;
+
+    if (response.status != 200) {
+      const error = new Error(
+        responseData.message || 'Failed to fetch data'
+      );
+      throw error;
+    }
+
+    const kecamatanById = {
+      id: responseData["Kode_Kecamatan"],
+      idKabkot: responseData["Kode_KabupatenKota"],
+      idProvinsi: responseData["Kode_Provinsi"],
+      deskripsi: responseData["diskripsi"],
+    };
+
+    return kecamatanById
+  },
+
   /** Load Kelurahan */
   async loadRefKelurahan(context, payload) {
     const response = await axios({
@@ -145,5 +229,35 @@ export default {
 
     context.commit('setRefKelurahan', refKelurahan);
     context.commit('setFetchTimestamp');
+  },
+
+  async loadKelurahanById(context, payload) {
+    const response = await axios({
+      method: 'GET',
+      baseURL: API_URL,
+      url: `/api/kelurahan/${payload.idKelurahan}`,
+      params: {
+        token: localStorage.getItem('api_token')
+      },
+    })
+
+    const responseData = await response.data;
+
+    if (response.status != 200) {
+      const error = new Error(
+        responseData.message || 'Failed to fetch data'
+      );
+      throw error;
+    }
+
+    const kelurahanById = {
+      id: responseData["Kode_Kelurahan"],
+      idKecamatan: responseData["Kode_Kecamatan"],
+      idKabkot: responseData["Kode_KabupatenKota"],
+      idProvinsi: responseData["Kode_Provinsi"],
+      deskripsi: responseData["diskripsi"],
+    };
+
+    return kelurahanById
   },
 };

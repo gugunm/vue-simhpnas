@@ -132,7 +132,7 @@
               >
                 <CInput
                   v-if="mode == 'view'"
-                  v-model="provinsi.val"
+                  :value="provinsi.val"
                   :readonly="mode == 'view'"
                   label="Provinsi"
                   class="mb-2"
@@ -161,7 +161,7 @@
               >
                 <CInput
                   v-if="mode == 'view'"
-                  v-model="kabkot.val"
+                  :value="kabkot.val"
                   :readonly="mode == 'view'"
                   label="Kab. / Kota"
                   class="mb-2"
@@ -187,7 +187,7 @@
               >
                 <CInput
                   v-if="mode == 'view'"
-                  v-model="kecamatan.val"
+                  :value="kecamatan.val"
                   :readonly="mode == 'view'"
                   label="Kecamatan"
                   class="mb-2"
@@ -215,7 +215,7 @@
               >
                 <CInput
                   v-if="mode == 'view'"
-                  v-model="kelurahan.val"
+                  :value="kelurahan.val"
                   :readonly="mode == 'view'"
                   label="Kecamatan"
                   class="mb-2"
@@ -508,7 +508,19 @@ export default {
   async mounted() {
     if (this.mode == 'edit' || this.mode == 'view') {
       this.createDataWithSelectedItem();
+
+      if (this.mode == 'view') {
+        const provinsiById = await this.loadProvinsiById(this.provinsi.val);
+        this.provinsi.val = provinsiById.deskripsi;
+        const kabkotById = await this.loadKabkotById(this.kabkot.val);
+        this.kabkot.val = kabkotById.deskripsi;
+        const kecamatanById = await this.loadKecamatanById(this.kecamatan.val);
+        this.kecamatan.val = kecamatanById.deskripsi;
+        const kelurahanById = await this.loadKelurahanById(this.kelurahan.val);
+        this.kelurahan.val = kelurahanById.deskripsi;
+      }
     }
+
     await this.loadUnitAudit();
     await this.loadProvinsi();
     if (this.mode == 'edit') {

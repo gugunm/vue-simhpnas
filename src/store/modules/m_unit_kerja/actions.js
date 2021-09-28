@@ -25,7 +25,7 @@ export default {
 
     for (const key in responseData) {
       const uk = {
-        id: responseData[key]["Kode_Unit_Obrik"],
+        id: responseData[key]["Kode_Unit_Audit"],
         namaUnit: responseData[key]["Nama_Unit"],
         namaPimpinan: responseData[key]["Nama_Pimpinan"],
         nipPimpinan: responseData[key]["NIP_Pimpinan"],
@@ -65,7 +65,7 @@ export default {
     }
 
     const unitKerjaById = {
-      id: responseData["Kode_Unit_Obrik"],
+      id: responseData["Kode_Unit_Audit"],
       namaUnit: responseData["Nama_Unit"],
       namaPimpinan: responseData["Nama_Pimpinan"],
       nipPimpinan: responseData["NIP_Pimpinan"],
@@ -113,7 +113,7 @@ export default {
       headers: { "Content-Type": "application/json" },
       data: payload,
       baseURL: API_URL,
-      url: `/api/unitkerja/${payload.Kode_Unit_Obrik}`,
+      url: `/api/unitkerja/${payload.Kode_Unit_Audit}`,
       params: {
         token: localStorage.getItem('api_token')
       },
