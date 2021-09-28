@@ -129,12 +129,12 @@ export default {
   },
   async mounted() {
     if (this.mode == 'create') {
-      this.unitObrik = this.$store.getters['m_ref_unit_obrik/refUnitObrik'];
-      if (this.unitObrik) {
-        this.generateNewId();
-      } else {
-        this.form.idUnitObrik.val = localStorage.getItem('idUnitKerja') + '01';
-      }
+      // this.unitObrik = this.$store.getters['m_ref_unit_obrik/refUnitObrik'];
+      // this.generateNewId();
+      // if (this.unitObrik) {
+      // } else {
+      this.form.idUnitObrik.val = '01';
+      // }
     }
   },
   methods: {
@@ -142,8 +142,8 @@ export default {
       const listUnitObrik = this.unitObrik.map((v) => {
         return parseInt(v.id);
       });
-      this.form.idUnitObrik.val = Math.max(...listUnitObrik) + 1;
-      // console.log(Math.max(...listUnitObrik));
+      this.form.idUnitObrik.val = Math.max(...listUnitObrik);
+      console.log(this.unitObrik);
     },
     clickSubmitForm() {
       this.checkForm();
