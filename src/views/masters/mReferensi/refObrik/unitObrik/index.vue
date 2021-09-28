@@ -7,6 +7,9 @@
       :fields="fields"
       :clickable-rows="true"
       @clicked-row="showDetailUnitObrik"
+      @open-create-modal="openCreate"
+      @open-edit-modal="openEdit"
+      @open-delete-modal="openDeleteModal"
     />
   </div>
 </template>
@@ -56,6 +59,17 @@ export default {
     this.loadRefUnitObrik();
   },
   methods: {
+    openEdit(item) {
+      this.$router.push({
+        name: 'master-edit-ref-obrik',
+        params: { idUnitObrik: item.id },
+      });
+    },
+    openCreate() {
+      this.$router.push({
+        name: 'master-create-ref-obrik',
+      });
+    },
     async loadRefUnitObrik(refresh = false) {
       this.loading = true;
       try {

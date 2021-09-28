@@ -7,6 +7,9 @@
       :fields="fields"
       :clickable-rows="true"
       @clicked-row="showDetailTemuan"
+      @open-create-modal="openCreate"
+      @open-edit-modal="openEdit"
+      @open-delete-modal="openDeleteModal"
     />
   </div>
 </template>
@@ -53,6 +56,17 @@ export default {
     this.loadJenisTemuan();
   },
   methods: {
+    openEdit(item) {
+      this.$router.push({
+        name: 'master-edit-temuan',
+        params: { idJenisTemuan: item.id },
+      });
+    },
+    openCreate() {
+      this.$router.push({
+        name: 'master-create-temuan',
+      });
+    },
     async loadJenisTemuan(refresh = false) {
       this.loading = true;
       try {

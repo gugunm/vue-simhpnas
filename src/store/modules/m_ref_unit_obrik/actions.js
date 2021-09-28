@@ -2,6 +2,7 @@ import axios from 'axios';
 import { API_URL } from '../../../utils/api.js'
 
 export default {
+  // UNIT OBRIK
   async loadRefUnitObrik(context) {
     const response = await axios({
       method: 'GET',
@@ -34,7 +35,31 @@ export default {
     context.commit('setRefUnitObrik', refUnitObrik);
     context.commit('setFetchTimestamp');
   },
+  async createUnitObrik(context, payload) {
+    const response = await axios({
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      data: payload,
+      baseURL: API_URL,
+      url: '/api/unitobrik',
+      params: {
+        token: localStorage.getItem('api_token')
+      },
+    })
 
+    const responseData = await response.data;
+
+    if (response.statusText != "OK") {
+      const error = new Error(
+        responseData.message || 'Failed to save data'
+      );
+      throw error;
+    }
+
+    return response
+  },
+
+  // BIDANG OBRIK
   async loadRefBidangObrik(context, payload) {
     const response = await axios({
       method: 'GET',
@@ -70,6 +95,7 @@ export default {
     context.commit('setFetchTimestamp');
   },
 
+  // SUB BIDANG OBRIK
   async loadRefSubBidangObrik(context, payload) {
     const response = await axios({
       method: 'GET',

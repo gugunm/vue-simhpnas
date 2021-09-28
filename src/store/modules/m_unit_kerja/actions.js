@@ -83,7 +83,6 @@ export default {
   },
 
   async createUnitKerja(context, payload){
-    console.log(payload)
     const response = await axios({
       method: 'POST',
       headers: { "Content-Type": "application/json" },

@@ -563,7 +563,7 @@ export default {
             // Jumlah_Obrik: 5,
             // Jumlah_Obrik_Bersih: 3,
             // Telpon: '085634215432',
-            Kode_Unit_Obrik: this.id.val,
+            Kode_Unit_Audit: this.id.val,
             Nama_Unit: this.namaUnit.val,
             Nama_Pimpinan: this.namaPimpinan.val,
             NIP_Pimpinan: this.nipPimpinan.val,

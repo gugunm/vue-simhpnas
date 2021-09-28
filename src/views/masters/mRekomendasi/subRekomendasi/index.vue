@@ -5,6 +5,9 @@
       :desc-title="descRekomendasi"
       :items="items"
       :fields="fields"
+      @open-create-modal="openCreate"
+      @open-edit-modal="openEdit"
+      @open-delete-modal="openDeleteModal"
     />
     <back-button title="Kembali" />
   </div>
@@ -66,6 +69,17 @@ export default {
     this.loadDescRekomendasi();
   },
   methods: {
+    openEdit(item) {
+      this.$router.push({
+        name: 'master-edit-sub-klp-rekomendasi',
+        params: { idSubKlpRekomendasi: item.id },
+      });
+    },
+    openCreate() {
+      this.$router.push({
+        name: 'master-create-sub-klp-rekomendasi',
+      });
+    },
     async loadRefLingkupAudit(refresh = false) {
       this.loading = true;
       try {

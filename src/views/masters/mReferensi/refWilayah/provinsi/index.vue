@@ -6,6 +6,7 @@
       :items="items"
       :fields="fields"
       :clickable-rows="true"
+      :is-add-button="false"
       @clicked-row="showDetailProvinsi"
     />
   </div>
@@ -25,10 +26,10 @@ const fields = [
     label: 'Nama Provinsi',
     _style: 'width: 70%',
   },
-  {
-    key: 'actions',
-    _style: 'width: 15%',
-  },
+  // {
+  //   key: 'actions',
+  //   _style: 'width: 15%',
+  // },
 ];
 
 export default {

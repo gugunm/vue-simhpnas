@@ -6,6 +6,9 @@
       :desc-title="'pada ' + descUnitAudit"
       :items="items"
       :fields="fields"
+      @open-create-modal="openCreate"
+      @open-edit-modal="openEdit"
+      @open-delete-modal="openDeleteModal"
     />
     <back-button title="Kembali" />
   </div>
@@ -67,6 +70,17 @@ export default {
     this.loadDescBidangObrik();
   },
   methods: {
+    openEdit(item) {
+      this.$router.push({
+        name: 'master-edit-ref-sub-unit-audit',
+        params: { idSubUnitAudit: item.id },
+      });
+    },
+    openCreate() {
+      this.$router.push({
+        name: 'master-create-ref-sub-unit-audit',
+      });
+    },
     async loadRefSubUnitAudit(refresh = false) {
       this.loading = true;
       try {

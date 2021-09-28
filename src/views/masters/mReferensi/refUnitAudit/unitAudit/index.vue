@@ -7,6 +7,9 @@
       :fields="fields"
       :clickable-rows="true"
       @clicked-row="showDetailUnitAudit"
+      @open-create-modal="openCreate"
+      @open-edit-modal="openEdit"
+      @open-delete-modal="openDeleteModal"
     />
   </div>
 </template>
@@ -55,6 +58,17 @@ export default {
     this.loadRefUnitAudit();
   },
   methods: {
+    openEdit(item) {
+      this.$router.push({
+        name: 'master-edit-ref-unit-audit',
+        params: { idUnitAudit: item.id },
+      });
+    },
+    openCreate() {
+      this.$router.push({
+        name: 'master-create-ref-unit-audit',
+      });
+    },
     async loadRefUnitAudit(refresh = false) {
       this.loading = true;
       try {

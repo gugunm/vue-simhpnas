@@ -5,6 +5,9 @@
       title="Jabatan"
       :items="items"
       :fields="fields"
+      @open-create-modal="openCreate"
+      @open-edit-modal="openEdit"
+      @open-delete-modal="openDeleteModal"
     />
   </div>
 </template>
@@ -53,6 +56,17 @@ export default {
     this.loadRefJabatan();
   },
   methods: {
+    openEdit(item) {
+      this.$router.push({
+        name: 'master-edit-ref-jabatan',
+        params: { idJabatan: item.id },
+      });
+    },
+    openCreate() {
+      this.$router.push({
+        name: 'master-create-ref-jabatan',
+      });
+    },
     async loadRefJabatan(refresh = false) {
       this.loading = true;
       try {

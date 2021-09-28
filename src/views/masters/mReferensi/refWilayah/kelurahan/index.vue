@@ -6,6 +6,7 @@
       :desc-title="'di Kec. ' + descKecamatan"
       :items="items"
       :fields="fields"
+      :is-add-button="false"
     />
     <back-button title="Kembali" />
   </div>
@@ -28,10 +29,10 @@ const fields = [
     label: 'Nama Kelurahan',
     _style: 'width: 70%',
   },
-  {
-    key: 'actions',
-    _style: 'width: 15%',
-  },
+  // {
+  //   key: 'actions',
+  //   _style: 'width: 15%',
+  // },
 ];
 
 export default {

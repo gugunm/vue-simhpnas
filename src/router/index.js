@@ -1,50 +1,113 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import store from '../store/index.js';
-
 // === SIMHPNAS ===
 /* Master */
-const MasterPenyebab = () => import('@/views/masters/mPenyebab')
 
+// PENYEBAB
+const MasterPenyebab = () => import('@/views/masters/mPenyebab/index.vue')
+const MasterCreatePenyebab = () => import('@/views/masters/mPenyebab/Create.vue')
+const MasterEditPenyebab = () => import('@/views/masters/mPenyebab/Edit.vue')
+
+// UNIT KERJA
 const MasterUnitKerja = () => import('@/views/masters/mUnitKerja/index.vue')
 const MasterCreateUnitKerja = () => import('@/views/masters/mUnitKerja/Create.vue')
 const MasterDetailUnitKerja = () => import('@/views/masters/mUnitKerja/Detail.vue')
 const MasterEditUnitKerja = () => import('@/views/masters/mUnitKerja/Edit.vue')
 
-const MasterUserUnitKerja = () => import('@/views/masters/mUserUnitKerja')
-const MasterUserUtama = () => import('@/views/masters/mUserUtama')
-
+// TINDAK LANJUT
 const MasterTindakLanjut = () => import('@/views/masters/mTindakLanjut/tindakLanjut')
+const MasterCreateTindakLanjut = () => import('@/views/masters/mTindakLanjut/tindakLanjut/Create.vue')
+const MasterEditTindakLanjut = () => import('@/views/masters/mTindakLanjut/tindakLanjut/Edit.vue')
+
+// SUB TINDAK LANJUT
 const MasterSubTindakLanjut = () => import('@/views/masters/mTindakLanjut/subTindakLanjut')
+const MasterCreateSubTindakLanjut = () => import('@/views/masters/mTindakLanjut/subTindakLanjut/Create.vue')
+const MasterEditSubTindakLanjut = () => import('@/views/masters/mTindakLanjut/subTindakLanjut/Edit.vue')
 
-const MasterRekomendasi = () => import('@/views/masters/mRekomendasi/rekomendasi')
-const MasterSubRekomendasi = () => import('@/views/masters/mRekomendasi/subRekomendasi')
+// REKOMENDASI
+const MasterRekomendasi = () => import('@/views/masters/mRekomendasi/rekomendasi/index.vue')
+const MasterCreateRekomendasi = () => import('@/views/masters/mRekomendasi/rekomendasi/Create.vue')
+const MasterEditRekomendasi = () => import('@/views/masters/mRekomendasi/rekomendasi/Edit.vue')
 
-// master referensi
+// SUB REKOMENDASI
+const MasterSubRekomendasi = () => import('@/views/masters/mRekomendasi/subRekomendasi/index.vue')
+const MasterCreateSubRekomendasi = () => import('@/views/masters/mRekomendasi/subRekomendasi/Create.vue')
+const MasterEditSubRekomendasi = () => import('@/views/masters/mRekomendasi/subRekomendasi/Edit.vue')
+
+// WILAYAH
 const MasterRefWilayah = () => import('@/views/masters/mReferensi/refWilayah/provinsi')
 const MasterRefWilayahKabkot = () => import('@/views/masters/mReferensi/refWilayah/kabkot')
 const MasterRefWilayahKecamatan = () => import('@/views/masters/mReferensi/refWilayah/kecamatan')
 const MasterRefWilayahKelurahan = () => import('@/views/masters/mReferensi/refWilayah/kelurahan')
 
-const MasterRefUnitObrik = () => import('@/views/masters/mReferensi/refObrik/unitObrik')
-const MasterRefBidangObrik = () => import('@/views/masters/mReferensi/refObrik/bidangObrik')
-const MasterRefSubBidangObrik = () => import('@/views/masters/mReferensi/refObrik/subBidangObrik')
+// UNIT OBRIK
+const MasterRefUnitObrik = () => import('@/views/masters/mReferensi/refObrik/unitObrik/index.vue')
+const MasterCreateRefUnitObrik = () => import('@/views/masters/mReferensi/refObrik/unitObrik/Create.vue')
+const MasterEditRefUnitObrik = () => import('@/views/masters/mReferensi/refObrik/unitObrik/Edit.vue')
 
-const MasterRefGroupLingkupAudit = () => import('@/views/masters/mReferensi/refLingkupAudit/groupLingkupAudit')
-const MasterRefLingkupAudit = () => import('@/views/masters/mReferensi/refLingkupAudit/lingkupAudit')
+// UNIT BIDANG OBRIK
+const MasterRefBidangObrik = () => import('@/views/masters/mReferensi/refObrik/bidangObrik/index.vue')
+const MasterCreateRefBidangObrik = () => import('@/views/masters/mReferensi/refObrik/bidangObrik/Create.vue')
+const MasterEditRefBidangObrik = () => import('@/views/masters/mReferensi/refObrik/bidangObrik/Edit.vue')
 
-const MasterRefJabatan = () => import('@/views/masters/mReferensi/refJabatan')
-const MasterRefJenisAnggaran = () => import('@/views/masters/mReferensi/refJenisAnggaran')
-const MasterRefJenisObrik = () => import('@/views/masters/mReferensi/refJenisObrik')
+// UNIT SUB BIDANG OBRIK
+const MasterRefSubBidangObrik = () => import('@/views/masters/mReferensi/refObrik/subBidangObrik/index.vue')
+const MasterCreateRefSubBidangObrik = () => import('@/views/masters/mReferensi/refObrik/subBidangObrik/Create.vue')
+const MasterEditRefSubBidangObrik = () => import('@/views/masters/mReferensi/refObrik/subBidangObrik/Edit.vue')
 
-const MasterRefUnitAudit = () => import('@/views/masters/mReferensi/refUnitAudit/unitAudit')
-const MasterRefSubUnitAudit = () => import('@/views/masters/mReferensi/refUnitAudit/subUnitAudit')
+// GROUP LINGKUP AUDIT
+const MasterRefGroupLingkupAudit = () => import('@/views/masters/mReferensi/refLingkupAudit/groupLingkupAudit/index.vue')
+const MasterCreateRefGroupLingkupAudit = () => import('@/views/masters/mReferensi/refLingkupAudit/groupLingkupAudit/Create')
+const MasterEditRefGroupLingkupAudit = () => import('@/views/masters/mReferensi/refLingkupAudit/groupLingkupAudit/Edit.vue')
 
-// master temuan
-const MasterTemuan = () => import('@/views/masters/mTemuan/jenisTemuan')
-const MasterKlpTemuan = () => import('@/views/masters/mTemuan/klpTemuan')
-const MasterSubKlpTemuan = () => import('@/views/masters/mTemuan/subKlpTemuan')
+// LINGKUP AUDIT
+const MasterRefLingkupAudit = () => import('@/views/masters/mReferensi/refLingkupAudit/lingkupAudit/index.vue')
+const MasterCreateRefLingkupAudit = () => import('@/views/masters/mReferensi/refLingkupAudit/lingkupAudit/Create.vue')
+const MasterEditRefLingkupAudit = () => import('@/views/masters/mReferensi/refLingkupAudit/lingkupAudit/Edit.vue')
+
+// JABATAN
+const MasterRefJabatan = () => import('@/views/masters/mReferensi/refJabatan/index.vue')
+const MasterCreateRefJabatan = () => import('@/views/masters/mReferensi/refJabatan/Create.vue')
+const MasterEditRefJabatan = () => import('@/views/masters/mReferensi/refJabatan/Edit.vue')
+
+// JENIS ANGGARAN
+const MasterRefJenisAnggaran = () => import('@/views/masters/mReferensi/refJenisAnggaran/index.vue')
+const MasterCreateRefJenisAnggaran = () => import('@/views/masters/mReferensi/refJenisAnggaran/Create.vue')
+const MasterEditRefJenisAnggaran = () => import('@/views/masters/mReferensi/refJenisAnggaran/Edit.vue')
+
+// JENIS OBRIK
+const MasterRefJenisObrik = () => import('@/views/masters/mReferensi/refJenisObrik/index.vue')
+const MasterCreateRefJenisObrik = () => import('@/views/masters/mReferensi/refJenisObrik/Create.vue')
+const MasterEditRefJenisObrik = () => import('@/views/masters/mReferensi/refJenisObrik/Edit.vue')
+
+// UNIT AUDIT
+const MasterRefUnitAudit = () => import('@/views/masters/mReferensi/refUnitAudit/unitAudit/index.vue')
+const MasterCreateRefUnitAudit = () => import('@/views/masters/mReferensi/refUnitAudit/unitAudit/Create.vue')
+const MasterEditRefUnitAudit = () => import('@/views/masters/mReferensi/refUnitAudit/unitAudit/Edit.vue')
+
+// SUB UNIT AUDIT
+const MasterRefSubUnitAudit = () => import('@/views/masters/mReferensi/refUnitAudit/subUnitAudit/index.vue')
+const MasterCreateRefSubUnitAudit = () => import('@/views/masters/mReferensi/refUnitAudit/subUnitAudit/Create.vue')
+const MasterEditRefSubUnitAudit = () => import('@/views/masters/mReferensi/refUnitAudit/subUnitAudit/Edit.vue')
+
+// TEMUAN
+const MasterTemuan = () => import('@/views/masters/mTemuan/jenisTemuan/index.vue')
+const MasterCreateTemuan = () => import('@/views/masters/mTemuan/jenisTemuan/Create.vue')
+const MasterEditTemuan = () => import('@/views/masters/mTemuan/jenisTemuan/Edit.vue')
+
+// KLP TEMUAN
+const MasterKlpTemuan = () => import('@/views/masters/mTemuan/klpTemuan/index.vue')
+const MasterCreateKlpTemuan = () => import('@/views/masters/mTemuan/klpTemuan/Create.vue')
+const MasterEditKlpTemuan = () => import('@/views/masters/mTemuan/klpTemuan/Edit.vue')
+
+// SUB KLP TEMUAN
+const MasterSubKlpTemuan = () => import('@/views/masters/mTemuan/subKlpTemuan/index.vue')
+const MasterCreateSubKlpTemuan = () => import('@/views/masters/mTemuan/subKlpTemuan/Create.vue')
+const MasterEditSubKlpTemuan = () => import('@/views/masters/mTemuan/subKlpTemuan/Edit.vue')
+
+const MasterUserUnitKerja = () => import('@/views/masters/mUserUnitKerja')
+const MasterUserUtama = () => import('@/views/masters/mUserUtama')
 
 /* Modules */
 const FormLha = () => import('@/views/modules/formLha')
@@ -239,13 +302,40 @@ function configRoutes() {
       children: [
         // SIMHPNAS
         /* Master */
+        // MasterCreatePenyebab
+        // MasterEditPenyebab
         {
           path: 'master-penyebab',
-          name: 'Master Penyebab',
-          component: MasterPenyebab,
-          meta: {
-            requiresUser: true
-          }
+          component: {
+            render(c) { return c('router-view') }
+          },
+          children: [
+            {
+              path: '',
+              name: 'master-penyebab',
+              component: MasterPenyebab,
+              meta: {
+                requiresUser: true
+              },
+            },
+            {
+              path: 'create',
+              name: 'master-create-penyebab',
+              component: MasterCreatePenyebab,
+              meta: {
+                requiresUser: true
+              },
+            },
+            {
+              path: ':idPenyebab/edit',
+              name: 'master-edit-penyebab',
+              component: MasterEditPenyebab,
+              meta: {
+                requiresUser: true
+              },
+              props: true
+            }
+          ]
         },
         {
           path: 'master-referensi',
@@ -312,32 +402,109 @@ function configRoutes() {
               children: [
                 // Master Ref Obrik
                 {
-                  path: '/',
-                  name: 'master-ref-obrik',
-                  component: MasterRefUnitObrik,
-                  meta: {
-                    requiresUser: true
+                  path: '',
+                  component: {
+                    render(c) { return c('router-view') }
                   },
+                  children: [
+                    {
+                      path: '',
+                      name: 'master-ref-obrik',
+                      component: MasterRefUnitObrik,
+                      meta: {
+                        requiresUser: true
+                      },
+                    },
+                    {
+                      path: 'create',
+                      name: 'master-create-ref-obrik',
+                      component: MasterCreateRefUnitObrik,
+                      meta: {
+                        requiresUser: true
+                      },
+                    },
+                    {
+                      path: ':idUnitObrik/edit',
+                      name: 'master-edit-ref-obrik',
+                      component: MasterEditRefUnitObrik,
+                      meta: {
+                        requiresUser: true
+                      },
+                      props: true
+                    }
+                  ]
                 },
                 // Master Ref Bidang Obrik
                 {
                   path: 'bidang-obrik/:idUnitObrik',
-                  name: 'master-ref-bidang-obrik',
-                  component: MasterRefBidangObrik,
-                  meta: {
-                    requiresUser: true
+                  component: {
+                    render(c) { return c('router-view') }
                   },
-                  props: true
+                  children: [
+                    {
+                      path: '',
+                      name: 'master-ref-bidang-obrik',
+                      component: MasterRefBidangObrik,
+                      meta: {
+                        requiresUser: true
+                      },
+                      props: true
+                    },
+                    {
+                      path: 'create',
+                      name: 'master-create-ref-bidang-obrik',
+                      component: MasterCreateRefBidangObrik,
+                      meta: {
+                        requiresUser: true
+                      },
+                      props: true,
+                    },
+                    {
+                      path: ':idBidangObrik/edit',
+                      name: 'master-edit-ref-bidang-obrik',
+                      component: MasterEditRefBidangObrik,
+                      meta: {
+                        requiresUser: true
+                      },
+                      props: true
+                    }
+                  ]
                 },
                 // Master Ref Sub Bidang Obrik
                 {
                   path: 'sub-bidang-obrik/:idBidangObrik',
-                  name: 'master-ref-sub-bidang-obrik',
-                  component: MasterRefSubBidangObrik,
-                  meta: {
-                    requiresUser: true
+                  component: {
+                    render(c) { return c('router-view') }
                   },
-                  props: true
+                  children: [
+                    {
+                      path: '',
+                      name: 'master-ref-sub-bidang-obrik',
+                      component: MasterRefSubBidangObrik,
+                      meta: {
+                        requiresUser: true
+                      },
+                      props: true,
+                    },
+                    {
+                      path: 'create',
+                      name: 'master-create-ref-sub-bidang-obrik',
+                      component: MasterCreateRefSubBidangObrik,
+                      meta: {
+                        requiresUser: true
+                      },
+                      props: true,
+                    },
+                    {
+                      path: ':idSubBidangObrik/edit',
+                      name: 'master-edit-ref-sub-bidang-obrik',
+                      component: MasterEditRefSubBidangObrik,
+                      meta: {
+                        requiresUser: true
+                      },
+                      props: true,
+                    }
+                  ]
                 },
               ]
             },
@@ -348,17 +515,177 @@ function configRoutes() {
               },
               children: [
                 {
-                  path: '/',
-                  name: 'master-ref-group-lingkup-audit',
-                  component: MasterRefGroupLingkupAudit,
+                  path: '',
+                  component: {
+                    render(c) { return c('router-view') }
+                  },
+                  // MasterCreateRefGroupLingkupAudit
+                  // MasterEditRefGroupLingkupAudit
+                  children: [
+                    {
+                      path: '',
+                      name: 'master-ref-group-lingkup-audit',
+                      component: MasterRefGroupLingkupAudit,
+                      meta: {
+                        requiresUser: true
+                      },
+                    },
+                    {
+                      path: 'create',
+                      name: 'master-create-ref-group-lingkup-audit',
+                      component: MasterCreateRefGroupLingkupAudit,
+                      meta: {
+                        requiresUser: true
+                      },
+                    },
+                    {
+                      path: ':idGroupLingkupAudit/edit',
+                      name: 'master-edit-ref-group-lingkup-audit',
+                      component: MasterEditRefGroupLingkupAudit,
+                      meta: {
+                        requiresUser: true
+                      },
+                      props: true
+                    }
+                  ]
+                },
+                {
+                  path: ':idGroupLingkupAudit',
+                  component: {
+                    render(c) { return c('router-view') }
+                  },
+                  // MasterCreateRefLingkupAudit
+                  // MasterEditRefLingkupAudit
+                  children: [
+                    {
+                      path: '',
+                      name: 'master-ref-lingkup-audit',
+                      component: MasterRefLingkupAudit,
+                      meta: {
+                        requiresUser: true
+                      },
+                      props: true,
+                    },
+                    {
+                      path: 'create',
+                      name: 'master-create-ref-lingkup-audit',
+                      component: MasterCreateRefLingkupAudit,
+                      meta: {
+                        requiresUser: true
+                      },
+                      props: true,
+                    },
+                    {
+                      path: ':idLingkupAudit/edit',
+                      name: 'master-edit-ref-lingkup-audit',
+                      component: MasterEditRefLingkupAudit,
+                      meta: {
+                        requiresUser: true
+                      },
+                      props: true,
+                    },
+                  ]
+                }
+              ]
+            },
+            // MasterCreateRefJabatan
+            // MasterEditRefJabatan
+            {
+              path: 'jabatan',
+              component: {
+                render(c) { return c('router-view') }
+              },
+              children: [
+                {
+                  path: '',
+                  name: 'master-ref-jabatan',
+                  component: MasterRefJabatan,
                   meta: {
                     requiresUser: true
                   },
                 },
                 {
-                  path: ':idGroupLingkupAudit',
-                  name: 'master-ref-lingkup-audit',
-                  component: MasterRefLingkupAudit,
+                  path: 'create',
+                  name: 'master-create-ref-jabatan',
+                  component: MasterCreateRefJabatan,
+                  meta: {
+                    requiresUser: true
+                  },
+                },
+                {
+                  path: ':idJabatan/edit',
+                  name: 'master-edit-ref-jabatan',
+                  component: MasterEditRefJabatan,
+                  meta: {
+                    requiresUser: true
+                  },
+                  props: true
+                }
+              ]
+            },
+            // MasterCreateRefJenisAnggaran
+            // MasterEditRefJenisAnggaran
+            {
+              path: 'jenis-anggaran',
+              component: {
+                render(c) { return c('router-view') }
+              },
+              children: [
+                {
+                  path: '',
+                  name: 'master-ref-jenis-anggaran',
+                  component: MasterRefJenisAnggaran,
+                  meta: {
+                    requiresUser: true
+                  }
+                },
+                {
+                  path: 'create',
+                  name: 'master-create-ref-jenis-anggaran',
+                  component: MasterCreateRefJenisAnggaran,
+                  meta: {
+                    requiresUser: true
+                  }
+                },
+                {
+                  path: ':idJenisAnggaran/edit',
+                  name: 'master-edit-ref-jenis-anggaran',
+                  component: MasterEditRefJenisAnggaran,
+                  meta: {
+                    requiresUser: true
+                  },
+                  props: true
+                }
+              ]
+            },
+            // MasterCreateRefJenisObrik
+            // MasterEditRefJenisObrik
+            {
+              path: 'jenis-obrik',
+              component: {
+                render(c) { return c('router-view') }
+              },
+              children: [
+                {
+                  path:'',
+                  name: 'master-ref-jenis-obrik',
+                  component: MasterRefJenisObrik,
+                  meta: {
+                    requiresUser: true
+                  }
+                },
+                {
+                  path:'create',
+                  name: 'master-create-ref-jenis-obrik',
+                  component: MasterCreateRefJenisObrik,
+                  meta: {
+                    requiresUser: true
+                  }
+                },
+                {
+                  path:':idJenisObrik/edit',
+                  name: 'master-edit-ref-jenis-obrik',
+                  component: MasterEditRefJenisObrik,
                   meta: {
                     requiresUser: true
                   },
@@ -367,51 +694,82 @@ function configRoutes() {
               ]
             },
             {
-              path: 'jabatan',
-              name: 'master-ref-jabatan',
-              component: MasterRefJabatan,
-              meta: {
-                requiresUser: true
-              }
-            },
-            {
-              path: 'jenis-anggaran',
-              name: 'master-ref-jenis-anggaran',
-              component: MasterRefJenisAnggaran,
-              meta: {
-                requiresUser: true
-              }
-            },
-            {
-              path: 'jenis-obrik',
-              name: 'master-ref-jenis-obrik',
-              component: MasterRefJenisObrik,
-              meta: {
-                requiresUser: true
-              }
-            },
-            {
               path: 'unit-audit',
               component: {
                 render(c) { return c('router-view') }
               },
               children: [
+                // MasterCreateRefUnitAudit
+                // MasterEditRefUnitAudit
                 {
-                  path: '/',
-                  name: 'master-ref-unit-audit',
-                  component: MasterRefUnitAudit,
-                  meta: {
-                    requiresUser: true
+                  path: '',
+                  component: {
+                    render(c) { return c('router-view') }
                   },
+                  children: [
+                    {
+                      path: '',
+                      name: 'master-ref-unit-audit',
+                      component: MasterRefUnitAudit,
+                      meta: {
+                        requiresUser: true
+                      },
+                    },
+                    {
+                      path: 'create',
+                      name: 'master-create-ref-unit-audit',
+                      component: MasterCreateRefUnitAudit,
+                      meta: {
+                        requiresUser: true
+                      },
+                    },
+                    {
+                      path: ':idUnitAudit/edit',
+                      name: 'master-edit-ref-unit-audit',
+                      component: MasterEditRefUnitAudit,
+                      meta: {
+                        requiresUser: true
+                      },
+                      props: true
+                    }
+                  ]
                 },
+                // MasterCreateRefSubUnitAudit
+                // MasterEditRefSubUnitAudit
                 {
                   path: ':idUnitAudit',
-                  name: 'master-ref-sub-unit-audit',
-                  component: MasterRefSubUnitAudit,
-                  meta: {
-                    requiresUser: true
+                  component: {
+                    render(c) { return c('router-view') }
                   },
-                  props: true
+                  children: [
+                    {
+                      path: '',
+                      name: 'master-ref-sub-unit-audit',
+                      component: MasterRefSubUnitAudit,
+                      meta: {
+                        requiresUser: true
+                      },
+                      props: true
+                    },
+                    {
+                      path: 'create',
+                      name: 'master-create-ref-sub-unit-audit',
+                      component: MasterCreateRefSubUnitAudit,
+                      meta: {
+                        requiresUser: true
+                      },
+                      props: true,
+                    },
+                    {
+                      path: ':idSubUnitAudit/edit',
+                      name: 'master-edit-ref-sub-unit-audit',
+                      component: MasterEditRefSubUnitAudit,
+                      meta: {
+                        requiresUser: true
+                      },
+                      props: true
+                    },
+                  ]
                 }
               ]
             },
@@ -423,22 +781,77 @@ function configRoutes() {
             render(c) { return c('router-view') }
           },
           children: [
+            // MasterCreateRekomendasi
+            // MasterEditRekomendasi
             {
-              path: '/',
-              name: 'master-klp-rekomendasi',
-              component: MasterRekomendasi,
-              meta: {
-                requiresUser: true
+              path: '',
+              component: {
+                render(c) { return c('router-view') }
               },
+              children: [
+                {
+                  path: '',
+                  name: 'master-klp-rekomendasi',
+                  component: MasterRekomendasi,
+                  meta: {
+                    requiresUser: true
+                  },
+                },
+                {
+                  path: 'create',
+                  name: 'master-create-klp-rekomendasi',
+                  component: MasterCreateRekomendasi,
+                  meta: {
+                    requiresUser: true
+                  },
+                },
+                {
+                  path: ':idKlpRekomendasi/edit',
+                  name: 'master-edit-klp-rekomendasi',
+                  component: MasterEditRekomendasi,
+                  meta: {
+                    requiresUser: true
+                  },
+                  props: true
+                }
+              ]
             },
+            // MasterCreateSubRekomendasi
+            // MasterEditSubRekomendasi
             {
               path: ':idKlpRekomendasi',
-              name: 'master-sub-klp-rekomendasi',
-              component: MasterSubRekomendasi,
-              meta: {
-                requiresUser: true
+              component: {
+                render(c) { return c('router-view') }
               },
-              props: true
+              children: [
+                {
+                  path:'',
+                  name: 'master-sub-klp-rekomendasi',
+                  component: MasterSubRekomendasi,
+                  meta: {
+                    requiresUser: true
+                  },
+                  props: true,
+                },
+                {
+                  path:'create',
+                  name: 'master-create-sub-klp-rekomendasi',
+                  component: MasterCreateSubRekomendasi,
+                  meta: {
+                    requiresUser: true
+                  },
+                  props: true,
+                },
+                {
+                  path:':idSubKlpRekomendasi/edit',
+                  name: 'master-edit-sub-klp-rekomendasi',
+                  component: MasterEditSubRekomendasi,
+                  meta: {
+                    requiresUser: true
+                  },
+                  props: true,
+                }
+              ]
             }
           ]
         },
@@ -448,50 +861,188 @@ function configRoutes() {
             render(c) { return c('router-view') }
           },
           children: [
+            // MasterCreateTindakLanjut
+            // MasterEditTindakLanjut
             {
-              path: '/',
-              name: 'master-tl',
-              component: MasterTindakLanjut,
-              meta: {
-                requiresUser: true
+              path: '',
+              component: {
+                render(c) { return c('router-view') }
               },
+              children: [
+                {
+                  path:'',
+                  name: 'master-tl',
+                  component: MasterTindakLanjut,
+                  meta: {
+                    requiresUser: true
+                  }
+                },
+                {
+                  path:'create',
+                  name: 'master-create-tl',
+                  component: MasterCreateTindakLanjut,
+                  meta: {
+                    requiresUser: true
+                  }
+                },
+                {
+                  path:':idKlpTindakLanjut/edit',
+                  name: 'master-edit-tl',
+                  component: MasterEditTindakLanjut,
+                  meta: {
+                    requiresUser: true
+                  },
+                  props: true
+                }
+              ]
             },
+            // MasterCreateSubTindakLanjut
+            // MasterEditSubTindakLanjut
             {
               path: ':idKlpTindakLanjut',
-              name: 'master-sub-tl',
-              component: MasterSubTindakLanjut,
+              component: {
+                render(c) { return c('router-view') }
+              },
+              children: [
+                {
+                  path: '',
+                  name: 'master-sub-tl',
+                  component: MasterSubTindakLanjut,
+                  meta: {
+                    requiresUser: true
+                  },
+                  props: true,
+                },
+                {
+                  path: 'create',
+                  name: 'master-create-sub-tl',
+                  component: MasterCreateSubTindakLanjut,
+                  meta: {
+                    requiresUser: true
+                  },
+                  props: true,
+                },
+                {
+                  path: ':idSubKlpTindakLanjut/edit',
+                  name: 'master-edit-sub-tl',
+                  component: MasterEditSubTindakLanjut,
+                  meta: {
+                    requiresUser: true
+                  },
+                  props: true,
+                }
+              ]
+            },
+          ]
+        },
+        // MasterCreateTemuan
+        // MasterEditTemuan
+        {
+          path: 'master-temuan',
+          component: {
+            render(c) { return c('router-view') }
+          },
+          children: [
+            {
+              path: '',
+              name: 'master-temuan',
+              component: MasterTemuan,
+              meta: {
+                requiresUser: true
+              }
+            },
+            {
+              path: 'create',
+              name: 'master-create-temuan',
+              component: MasterCreateTemuan,
+              meta: {
+                requiresUser: true
+              }
+            },
+            {
+              path: ':idJenisTemuan/edit',
+              name: 'master-edit-temuan',
+              component: MasterEditTemuan,
               meta: {
                 requiresUser: true
               },
               props: true
-            },
+            }
           ]
         },
-        {
-          path: 'master-temuan',
-          name: 'Master Temuan',
-          component: MasterTemuan,
-          meta: {
-            requiresUser: true
-          }
-        },
+        // MasterCreateKlpTemuan
+        // MasterEditKlpTemuan
         {
           path: 'master-kelompok-temuan/:idJenisTemuan',
-          name: 'mkelompoktemuan',
-          component: MasterKlpTemuan,
-          meta: {
-            requiresUser: true
+          component: {
+            render(c) { return c('router-view') }
           },
-          props: true
+          children: [
+            {
+              path: '',
+              name: 'mkelompoktemuan',
+              component: MasterKlpTemuan,
+              meta: {
+                requiresUser: true
+              },
+              props: true,
+            },
+            {
+              path: 'create',
+              name: 'master-create-klp-temuan',
+              component: MasterCreateKlpTemuan,
+              meta: {
+                requiresUser: true
+              },
+              props: true,
+            },
+            {
+              path: ':idKlpTemuan/edit',
+              name: 'master-edit-klp-temuan',
+              component: MasterEditKlpTemuan,
+              meta: {
+                requiresUser: true
+              },
+              props: true,
+            }
+          ]
         },
+        // MasterCreateSubKlpTemuan
+        // MasterEditSubKlpTemuan
         {
           path: 'master-sub-kelompok-temuan/:idKlpTemuan',
-          name: 'msubkelompoktemuan',
-          component: MasterSubKlpTemuan,
-          meta: {
-            requiresUser: true
+          component: {
+            render(c) { return c('router-view') }
           },
-          props: true
+          children: [
+            {
+              path: '',
+              name: 'msubkelompoktemuan',
+              component: MasterSubKlpTemuan,
+              meta: {
+                requiresUser: true
+              },
+              props: true,
+            },
+            {
+              path: 'create',
+              name: 'master-create-sub-klp-temuan',
+              component: MasterCreateSubKlpTemuan,
+              meta: {
+                requiresUser: true
+              },
+              props: true,
+            },
+            {
+              path: ':idSubKlpTemuan/edit',
+              name: 'master-edit-sub-klp-temuan',
+              component: MasterEditSubKlpTemuan,
+              meta: {
+                requiresUser: true
+              },
+              props: true,
+            }
+          ]
         },
         {
           path: 'master-unit-kerja',

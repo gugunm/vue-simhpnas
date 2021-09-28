@@ -6,6 +6,9 @@
       :desc-title="'- ' + descTindakLanjut"
       :items="items"
       :fields="fields"
+      @open-create-modal="openCreate"
+      @open-edit-modal="openEdit"
+      @open-delete-modal="openDeleteModal"
     />
     <back-button title="Kembali" />
   </div>
@@ -67,6 +70,17 @@ export default {
     this.loadDescTindakLanjut();
   },
   methods: {
+    openEdit(item) {
+      this.$router.push({
+        name: 'master-edit-sub-tl',
+        params: { idSubKlpTindakLanjut: item.id },
+      });
+    },
+    openCreate() {
+      this.$router.push({
+        name: 'master-create-sub-tl',
+      });
+    },
     async loadSubKlpTindakLanjut(refresh = false) {
       this.loading = true;
       try {

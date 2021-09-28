@@ -5,6 +5,9 @@
       title="Jenis Obrik"
       :items="items"
       :fields="fields"
+      @open-create-modal="openCreate"
+      @open-edit-modal="openEdit"
+      @open-delete-modal="openDeleteModal"
     />
   </div>
 </template>
@@ -51,6 +54,17 @@ export default {
     this.loadRefJenisObrik();
   },
   methods: {
+    openEdit(item) {
+      this.$router.push({
+        name: 'master-edit-ref-jenis-obrik',
+        params: { idJenisObrik: item.id },
+      });
+    },
+    openCreate() {
+      this.$router.push({
+        name: 'master-create-ref-jenis-obrik',
+      });
+    },
     async loadRefJenisObrik(refresh = false) {
       this.loading = true;
       try {

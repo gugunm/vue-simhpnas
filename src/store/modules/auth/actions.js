@@ -43,6 +43,7 @@ export default {
     localStorage.setItem('api_token', responseData.access_token);
     localStorage.setItem('roles', responseData.roles);
     localStorage.setItem('tokenExpiration', expirationDate);
+    localStorage.setItem('idUnitKerja', responseData.unitkerja);
 
     timer = setTimeout(function() {
       context.dispatch('autoLogout');
@@ -81,6 +82,7 @@ export default {
     localStorage.removeItem('api_token');
     localStorage.removeItem('roles');
     localStorage.removeItem('tokenExpiration');
+    localStorage.removeItem('idUnitKerja');
 
     clearTimeout(timer);
 

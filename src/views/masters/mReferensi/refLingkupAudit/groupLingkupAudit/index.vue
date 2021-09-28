@@ -7,6 +7,9 @@
       :fields="fields"
       :clickable-rows="true"
       @clicked-row="showDetailGroupLingkupAudit"
+      @open-create-modal="openCreate"
+      @open-edit-modal="openEdit"
+      @open-delete-modal="openDeleteModal"
     />
   </div>
 </template>
@@ -54,6 +57,17 @@ export default {
     this.loadRefGroupLingkupAudit();
   },
   methods: {
+    openEdit(item) {
+      this.$router.push({
+        name: 'master-edit-ref-group-lingkup-audit',
+        params: { idGroupLingkupAudit: item.id },
+      });
+    },
+    openCreate() {
+      this.$router.push({
+        name: 'master-create-ref-group-lingkup-audit',
+      });
+    },
     async loadRefGroupLingkupAudit(refresh = false) {
       this.loading = true;
       try {

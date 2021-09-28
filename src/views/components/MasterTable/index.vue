@@ -35,10 +35,11 @@
         sm="12"
       >
         <h4 class="my-0 mt-1 mb-3 text-2xl font-semibold">
-          {{ topTitle }} {{ title }} {{ descTitle }}
+          {{ topTitle }} {{ title }} {{ descTitle | descCamelCase }}
         </h4>
       </CCol>
       <CCol
+        v-if="isAddButton"
         class="px-0"
         lg="12"
         sm="12"
@@ -120,6 +121,15 @@
 <script>
 export default {
   name: 'MasterTable',
+  filters: {
+    descCamelCase(val) {
+      if (!val) return '';
+      return val
+        .split(' ')
+        .map((w) => w[0].toUpperCase() + w.substr(1).toLowerCase())
+        .join(' ');
+    },
+  },
   props: {
     topTitle: {
       type: String,
@@ -137,6 +147,10 @@ export default {
     fields: Object,
     clickableRows: Boolean,
     isEditButton: {
+      type: Boolean,
+      default: true,
+    },
+    isAddButton: {
       type: Boolean,
       default: true,
     },

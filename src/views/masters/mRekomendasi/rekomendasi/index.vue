@@ -7,6 +7,9 @@
       :fields="fields"
       :clickable-rows="true"
       @clicked-row="showDetailRekomendasi"
+      @open-create-modal="openCreate"
+      @open-edit-modal="openEdit"
+      @open-delete-modal="openDeleteModal"
     />
   </div>
 </template>
@@ -55,6 +58,17 @@ export default {
     this.loadKlpRekomendasi();
   },
   methods: {
+    openEdit(item) {
+      this.$router.push({
+        name: 'master-edit-klp-rekomendasi',
+        params: { idKlpRekomendasi: item.id },
+      });
+    },
+    openCreate() {
+      this.$router.push({
+        name: 'master-create-klp-rekomendasi',
+      });
+    },
     async loadKlpRekomendasi(refresh = false) {
       this.loading = true;
       try {

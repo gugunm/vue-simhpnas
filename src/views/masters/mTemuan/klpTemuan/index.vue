@@ -8,6 +8,9 @@
       :fields="fields"
       :clickable-rows="true"
       @clicked-row="showDetailKlpTemuan"
+      @open-create-modal="openCreate"
+      @open-edit-modal="openEdit"
+      @open-delete-modal="openDeleteModal"
     />
     <back-button title="Kembali" />
   </div>
@@ -69,6 +72,17 @@ export default {
     this.loadDescJenisTemuan();
   },
   methods: {
+    openEdit(item) {
+      this.$router.push({
+        name: 'master-edit-klp-temuan',
+        params: { idKlpTemuan: item.id },
+      });
+    },
+    openCreate() {
+      this.$router.push({
+        name: 'master-create-klp-temuan',
+      });
+    },
     async loadKelompokTemuan(refresh = false) {
       this.loading = true;
       try {

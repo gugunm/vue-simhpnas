@@ -2,9 +2,9 @@
   <div>
     <Form
       mode="create"
-      :selected-item="item"
       @click-submit-form="onSubmitForm"
     />
+    <!-- :selected-item="item" -->
     <!-- {{ $toast.open('Howdy!') }} -->
   </div>
 </template>
@@ -18,13 +18,12 @@ export default {
   },
   data() {
     return {
-      item: {},
+      // item: {},
       loading: false,
     };
   },
   methods: {
     async onSubmitForm(payload) {
-      // console.log('Create submit form');
       this.loading = true;
       if (payload.mode == 'create' && payload.formIsValid) {
         try {

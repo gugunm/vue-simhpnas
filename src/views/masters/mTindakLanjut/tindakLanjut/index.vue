@@ -7,6 +7,9 @@
       :fields="fields"
       :clickable-rows="true"
       @clicked-row="showDetailTindakLanjut"
+      @open-create-modal="openCreate"
+      @open-edit-modal="openEdit"
+      @open-delete-modal="openDeleteModal"
     />
   </div>
 </template>
@@ -53,6 +56,17 @@ export default {
     this.loadKlpTindakLanjut();
   },
   methods: {
+    openEdit(item) {
+      this.$router.push({
+        name: 'master-edit-tl',
+        params: { idKlpTindakLanjut: item.id },
+      });
+    },
+    openCreate() {
+      this.$router.push({
+        name: 'master-create-tl',
+      });
+    },
     async loadKlpTindakLanjut(refresh = false) {
       this.loading = true;
       try {

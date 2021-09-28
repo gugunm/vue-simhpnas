@@ -6,6 +6,9 @@
       :desc-title="descBidangObrik"
       :items="items"
       :fields="fields"
+      @open-create-modal="openCreate"
+      @open-edit-modal="openEdit"
+      @open-delete-modal="openDeleteModal"
     />
     <back-button title="Kembali" />
   </div>
@@ -67,6 +70,17 @@ export default {
     this.loadDescBidangObrik();
   },
   methods: {
+    openEdit(item) {
+      this.$router.push({
+        name: 'master-edit-ref-sub-bidang-obrik',
+        params: { idSubBidangObrik: item.id },
+      });
+    },
+    openCreate() {
+      this.$router.push({
+        name: 'master-create-ref-sub-bidang-obrik',
+      });
+    },
     async loadRefSubBidangObrik(refresh = false) {
       this.loading = true;
       try {

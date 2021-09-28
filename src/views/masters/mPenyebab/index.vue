@@ -5,6 +5,9 @@
       title="Penyebab"
       :items="items"
       :fields="fields"
+      @open-create-modal="openCreate"
+      @open-edit-modal="openEdit"
+      @open-delete-modal="openDeleteModal"
     />
   </div>
 </template>
@@ -54,6 +57,17 @@ export default {
     this.loadPenyebab();
   },
   methods: {
+    openEdit(item) {
+      this.$router.push({
+        name: 'master-edit-penyebab',
+        params: { idPenyebab: item.id },
+      });
+    },
+    openCreate() {
+      this.$router.push({
+        name: 'master-create-penyebab',
+      });
+    },
     async loadPenyebab(refresh = false) {
       this.loading = true;
       try {
