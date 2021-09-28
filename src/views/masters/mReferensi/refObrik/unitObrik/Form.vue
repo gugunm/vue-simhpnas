@@ -21,10 +21,10 @@
                 md="6"
               >
                 <CInput
-                  v-model="form.idUnitObrik.val"
+                  :value="form.idUnitObrik.val"
                   label="Kode Unit Obrik"
                   class="mb-2"
-                  placeholder="Kode unit obrik"
+                  :readonly="true"
                 />
               </CCol>
               <CCol
@@ -36,7 +36,7 @@
                   label="Deskripsi Unit Obrik"
                   class="mb-2"
                   type="text"
-                  placeholder="desc unit obrik"
+                  placeholder="deskripsi unit obrik"
                   :is-valid="form.descUnitObrik.isValid"
                   @blur="validateString(form.descUnitObrik, {length:3})"
                 />
@@ -114,7 +114,7 @@ export default {
       form: {
         idUnitObrik: {
           val: '',
-          isValid: this.mode == 'edit' || null,
+          isValid: this.mode == 'edit' || true,
         },
         descUnitObrik: {
           val: '',
@@ -129,35 +129,38 @@ export default {
   },
   async mounted() {
     if (this.mode == 'create') {
-      // this.unitObrik = this.$store.getters['m_ref_unit_obrik/refUnitObrik'];
-      // this.generateNewId();
-      // if (this.unitObrik) {
-      // } else {
-      this.form.idUnitObrik.val = '01';
-      // }
+      this.loading = true;
+      try {
+        await this.$store.dispatch('m_ref_unit_obrik/loadRefUnitObrik');
+        this.unitObrik = this.$store.getters['m_ref_unit_obrik/refUnitObrik'];
+        if (this.unitObrik) {
+          const newId = await this.generateNewId();
+          this.form.idUnitObrik.val = newId;
+        } else {
+          this.form.idUnitObrik.val = '01';
+        }
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
+      this.loading = false;
     }
   },
   methods: {
-    generateNewId() {
+    async generateNewId() {
       const listUnitObrik = this.unitObrik.map((v) => {
         return parseInt(v.id);
       });
-      this.form.idUnitObrik.val = Math.max(...listUnitObrik);
-      console.log(this.unitObrik);
+      return (Math.max(...listUnitObrik) + 1).toString().slice(-2);
     },
     clickSubmitForm() {
       this.checkForm();
       this.loading = true;
-
-      this.formIsValid = true;
 
       if (this.formIsValid) {
         this.$emit('click-submit-form', {
           formIsValid: this.formIsValid,
           mode: this.mode,
           data: {
-            // Kode_Unit_Obrik: '500000',
-            // diskripsi: 'UNIT OBRIK TEST',
             Kode_Unit_Obrik: this.form.idUnitObrik.val,
             diskripsi: this.form.descUnitObrik.val,
           },

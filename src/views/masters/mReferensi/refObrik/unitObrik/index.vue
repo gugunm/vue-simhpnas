@@ -41,22 +41,23 @@ export default {
   },
   data() {
     return {
-      refUnitObrik: null,
+      // refUnitObrik: null,
       fields,
       selectedItem: null,
+      items: null,
     };
   },
-  computed: {
-    items() {
-      return this.refUnitObrik
-        ? this.refUnitObrik.map((item, idx) => {
-            return { ...item, idx };
-          })
-        : [];
-    },
-  },
-  created() {
-    this.loadRefUnitObrik();
+  // computed: {
+  //   items() {
+  //     return this.refUnitObrik
+  //       ? this.refUnitObrik.map((item, idx) => {
+  //           return { ...item, idx };
+  //         })
+  //       : [];
+  //   },
+  // },
+  async mounted() {
+    await this.loadRefUnitObrik();
   },
   methods: {
     openEdit(item) {
@@ -70,14 +71,14 @@ export default {
         name: 'master-create-ref-obrik',
       });
     },
+    openDeleteModal() {},
     async loadRefUnitObrik(refresh = false) {
       this.loading = true;
       try {
         await this.$store.dispatch('m_ref_unit_obrik/loadRefUnitObrik', {
           forceRefresh: refresh,
         });
-        this.refUnitObrik =
-          this.$store.getters['m_ref_unit_obrik/refUnitObrik'];
+        this.items = this.$store.getters['m_ref_unit_obrik/refUnitObrik'];
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
