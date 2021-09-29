@@ -1,21 +1,21 @@
 export default {
   methods: {
     createDataWithSelectedItem() {
-      this.form.idUnitObrik.val = this.selectedItem.id;
-      this.form.descUnitObrik.val = this.selectedItem.deskripsi;
+      this.form.idBidangObrik.val = this.selectedItem.id;
+      this.form.descBidangObrik.val = this.selectedItem.deskripsi;
     },
 
 
-    async loadUnitObrikById(refresh = false) {
+    async loadBidangObrikById(refresh = false) {
       this.loading = true;
       try {
-        const uo = await this.$store.dispatch('m_ref_unit_obrik/loadRefUnitObrikById', {
+        const bidangObrik = await this.$store.dispatch('m_ref_unit_obrik/loadRefBidangObrikById', {
           forceRefresh: refresh,
-          idUnitObrik: this.idUnitObrik
+          idBidangObrik: this.idBidangObrik
         });
-
-        if(uo){
-          this.item = uo
+        
+        if(bidangObrik){
+          this.item = bidangObrik
         }
 
       } catch (error) {
@@ -30,14 +30,14 @@ export default {
       if (payload.mode == 'create' && payload.formIsValid) {
         try {
           const response = await this.$store.dispatch(
-            'm_ref_unit_obrik/createUnitObrik',
+            'm_ref_unit_obrik/createBidangObrik',
             payload.data
           );
 
           if (response.status == 200 || response.status == 201) {
             setTimeout(() => {
               this.loading = false;
-              this.$router.push('/master-referensi/obrik');
+              this.$router.push(`/master-referensi/obrik/bidang-obrik/${this.idUnitObrik}`);
               this.toastSuccess('Berhasil menyimpan data');
             }, 500);
           }
@@ -49,14 +49,14 @@ export default {
       } else if (payload.mode == 'edit' && payload.formIsValid) {
         try {
           const response = await this.$store.dispatch(
-            'm_ref_unit_obrik/updateUnitObrik',
+            'm_ref_unit_obrik/updateBidangObrik',
             payload.data
           );
 
           if (response.status == 200) {
             setTimeout(() => {
               this.loading = false;
-              this.$router.push('/master-referensi/obrik');
+              this.$router.push(`/master-referensi/obrik/bidang-obrik/${this.idUnitObrik}`);
               this.toastSuccess('Berhasil merubah data');
             }, 500);
           }
@@ -68,7 +68,6 @@ export default {
         this.toastError('Terdapat data belum valid');
       }
     },
-
 
     toastSuccess(msg) {
       this.$toast.open({

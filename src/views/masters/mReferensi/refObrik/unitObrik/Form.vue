@@ -21,11 +21,21 @@
                 md="6"
               >
                 <CInput
-                  :value="form.idUnitObrik.val"
+                  v-model="form.idUnitObrik.val"
                   label="Kode Unit Obrik"
                   class="mb-2"
-                  :readonly="true"
+                  type="text"
+                  placeholder="kode"
+                  :readonly="mode == 'edit'"
+                  :is-valid="form.idUnitObrik.isValid"
+                  @input="validateString(form.idUnitObrik, {length:2})"
                 />
+                <p
+                  v-if="form.idUnitObrik.isValid == false"
+                  class="text-red-500 text-sm"
+                >
+                  *hanya 2 angka
+                </p>
               </CCol>
               <CCol
                 sm="12"
@@ -38,7 +48,7 @@
                   type="text"
                   placeholder="deskripsi unit obrik"
                   :is-valid="form.descUnitObrik.isValid"
-                  @blur="validateString(form.descUnitObrik, {length:3})"
+                  @input="validateString(form.descUnitObrik, {length:3})"
                 />
                 <p
                   v-if="form.descUnitObrik.isValid == false"
@@ -135,7 +145,7 @@ export default {
       try {
         await this.$store.dispatch('m_ref_unit_obrik/loadRefUnitObrik');
         this.unitObrik = this.$store.getters['m_ref_unit_obrik/refUnitObrik'];
-        if (this.unitObrik) {
+        if (this.unitObrik.length > 0) {
           const newId = await this.generateNewId();
           this.form.idUnitObrik.val = newId;
         } else {
@@ -170,12 +180,7 @@ export default {
           },
         });
       } else {
-        this.$toast.open({
-          message: 'Terdapat data yang belum valid',
-          type: 'error',
-          position: 'top-right',
-          duration: 5000,
-        });
+        this.toastError('Terdapat data yang belum valid');
       }
 
       setTimeout(() => {

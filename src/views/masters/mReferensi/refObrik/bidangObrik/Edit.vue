@@ -1,14 +1,33 @@
 <template>
   <div>
-    <p>Edit ID {{ idBidangObrik }}</p>
+    <Form
+      v-if="item"
+      mode="edit"
+      :idunitobrik="idUnitObrik"
+      :selected-item="item"
+      @click-submit-form="onSubmitForm"
+    />
   </div>
 </template>
 
 <script>
+import Form from './Form.vue';
+import mixin from './mixin';
+
 export default {
-  props: ['idBidangObrik'],
+  components: {
+    Form,
+  },
+  mixins: [mixin],
+  props: ['idBidangObrik', 'idUnitObrik'],
+  data() {
+    return {
+      item: '',
+      loading: false,
+    };
+  },
+  async mounted() {
+    await this.loadBidangObrikById();
+  },
 };
 </script>
-
-<style>
-</style>

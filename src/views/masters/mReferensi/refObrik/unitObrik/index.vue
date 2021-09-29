@@ -52,22 +52,12 @@ export default {
   mixins: [mixin],
   data() {
     return {
-      isDeleteConfirm: false,
       fields,
-      selectedItem: null,
       items: null,
       idToDelete: null,
+      isDeleteConfirm: false,
     };
   },
-  // computed: {
-  //   items() {
-  //     return this.refUnitObrik
-  //       ? this.refUnitObrik.map((item, idx) => {
-  //           return { ...item, idx };
-  //         })
-  //       : [];
-  //   },
-  // },
   async mounted() {
     await this.loadRefUnitObrik();
   },
@@ -86,6 +76,20 @@ export default {
     openDeleteModal(id) {
       this.isDeleteConfirm = true;
       this.idToDelete = id;
+    },
+    async actionDelete() {
+      try {
+        await this.$store.dispatch('m_ref_unit_obrik/deleteUnitObrikById', {
+          idUnitObrik: this.idToDelete,
+        });
+        this.isDeleteConfirm = false;
+        this.loadRefUnitObrik();
+        this.toastSuccess(
+          `Berhasil menghapus data dengan ID ${this.idToDelete}`
+        );
+      } catch (error) {
+        this.toastError(error.message);
+      }
     },
     async loadRefUnitObrik(refresh = false) {
       this.loading = true;
@@ -108,9 +112,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.modal-master-detail .form-control[readonly] {
-  background-color: rgba(0, 0, 0, 0.04);
-}
-</style>

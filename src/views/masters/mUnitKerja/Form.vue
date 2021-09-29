@@ -74,7 +74,7 @@
                   placeholder="Nama Pimpinan"
                   :readonly="mode == 'view'"
                   :is-valid="namaPimpinan.isValid"
-                  @blur="validateString(namaPimpinan, {length:3})"
+                  @input="validateString(namaPimpinan, {length:3})"
                 />
                 <p
                   v-if="namaPimpinan.isValid == false"
@@ -94,7 +94,7 @@
                   placeholder="197501012000011001"
                   :readonly="mode == 'view'"
                   :is-valid="nipPimpinan.isValid"
-                  @blur="validateNip(nipPimpinan, {length:18})"
+                  @input="validateNip(nipPimpinan, {length:18})"
                 />
                 <p
                   v-if="nipPimpinan.isValid == false"
@@ -117,7 +117,7 @@
                   placeholder="Jl. Jakarta..."
                   :readonly="mode == 'view'"
                   :is-valid="alamat.isValid"
-                  @blur="validateString(alamat, {length:3})"
+                  @input="validateString(alamat, {length:3})"
                 />
                 <p
                   v-if="alamat.isValid == false"
@@ -247,7 +247,7 @@
                   type="number"
                   :readonly="mode == 'view'"
                   :is-valid="jumlahObrik.isValid"
-                  @blur="validateNumber(jumlahObrik)"
+                  @input="validateNumber(jumlahObrik)"
                 />
                 <p
                   v-if="jumlahObrik.isValid == false"
@@ -271,7 +271,7 @@
                   type="number"
                   :readonly="mode == 'view'"
                   :is-valid="jumlahObrikBersih.isValid"
-                  @blur="validateNumber(jumlahObrikBersih)"
+                  @input="validateNumber(jumlahObrikBersih)"
                 />
                 <p
                   v-if="jumlahObrikBersih.isValid == false"
@@ -291,7 +291,7 @@
                   placeholder="62812345678"
                   :readonly="mode == 'view'"
                   :is-valid="telpon.isValid"
-                  @blur="validateTelpon(telpon)"
+                  @input="validateTelpon(telpon)"
                 />
                 <p
                   v-if="telpon.isValid == false"

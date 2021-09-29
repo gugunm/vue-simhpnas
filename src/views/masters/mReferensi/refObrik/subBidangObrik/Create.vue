@@ -1,10 +1,27 @@
 <template>
-  <p>Add Sub Bidang Obrik</p>
+  <div>
+    <Form
+      mode="create"
+      :idbidangobrik="idBidangObrik"
+      @click-submit-form="onSubmitForm"
+    />
+  </div>
 </template>
 
 <script>
-export default {};
-</script>
+import Form from './Form.vue';
+import mixin from './mixin';
 
-<style>
-</style>
+export default {
+  components: {
+    Form,
+  },
+  mixins: [mixin],
+  props: ['idBidangObrik'],
+  data() {
+    return {
+      loading: false,
+    };
+  },
+};
+</script>

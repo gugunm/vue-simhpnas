@@ -10,7 +10,17 @@
       @open-edit-modal="openEdit"
       @open-delete-modal="openDeleteModal"
     />
-    <back-button title="Kembali" />
+    <confirm-modal
+      v-model="isDeleteConfirm"
+      title="Hapus data"
+      msg="Apakah anda yakin akan menghapus data ini?"
+      @close-modal="isDeleteConfirm = false"
+      @confirm-ok="actionDelete"
+    />
+    <back-button
+      title="Kembali"
+      :to="`/master-referensi/obrik/bidang-obrik/${idBidangObrik.slice(0,6)}`"
+    />
   </div>
 </template>
 
@@ -19,6 +29,8 @@ import axios from 'axios';
 import { API_URL } from '@/utils/api.js';
 import MasterTable from '@/views/components/MasterTable';
 import BackButton from '@/views/components/BackButton';
+import ConfirmModal from '@/views/components/ConfirmModal.vue';
+import mixin from './mixin';
 
 const fields = [
   {
@@ -42,7 +54,9 @@ export default {
   components: {
     MasterTable,
     BackButton,
+    ConfirmModal,
   },
+  mixins: [mixin],
   props: {
     idBidangObrik: {
       type: String,
@@ -51,36 +65,62 @@ export default {
   },
   data() {
     return {
-      refSubBidangObrik: null,
       fields,
+      items: null,
       descBidangObrik: null,
+      idToDelete: null,
+      isDeleteConfirm: false,
     };
   },
-  computed: {
-    items() {
-      return this.refSubBidangObrik
-        ? this.refSubBidangObrik.map((item, idx) => {
-            return { ...item, idx };
-          })
-        : [];
-    },
-  },
-  created() {
-    this.loadRefSubBidangObrik();
-    this.loadDescBidangObrik();
+  async mounted() {
+    // load data sub bidang obrik
+    await this.loadRefSubBidangObrik();
+    // load desc bidang obrik - data diatasnya
+    await this.loadDescBidangObrik();
   },
   methods: {
     openEdit(item) {
       this.$router.push({
         name: 'master-edit-ref-sub-bidang-obrik',
-        params: { idSubBidangObrik: item.id },
+        params: {
+          idSubBidangObrik: item.id,
+          idBidangObrik: this.idBidangObrik,
+        },
       });
     },
+
     openCreate() {
       this.$router.push({
         name: 'master-create-ref-sub-bidang-obrik',
+        params: {
+          idBidangObrik: this.idBidangObrik,
+        },
       });
     },
+
+    openDeleteModal(id) {
+      this.isDeleteConfirm = true;
+      this.idToDelete = id;
+    },
+
+    async actionDelete() {
+      try {
+        await this.$store.dispatch(
+          'm_ref_unit_obrik/deleteSubBidangObrikById',
+          {
+            idSubBidangObrik: this.idToDelete,
+          }
+        );
+        this.isDeleteConfirm = false;
+        this.toastSuccess(
+          `Berhasil menghapus data dengan ID ${this.idToDelete}`
+        );
+        this.loadRefSubBidangObrik();
+      } catch (error) {
+        this.toastError(error.message);
+      }
+    },
+
     async loadRefSubBidangObrik(refresh = false) {
       this.loading = true;
       try {
@@ -88,13 +128,13 @@ export default {
           idBidangObrik: this.idBidangObrik,
           forceRefresh: refresh,
         });
-        this.refSubBidangObrik =
-          this.$store.getters['m_ref_unit_obrik/refSubBidangObrik'];
+        this.items = this.$store.getters['m_ref_unit_obrik/refSubBidangObrik'];
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
       this.loading = false;
     },
+
     async loadDescBidangObrik() {
       const response = await axios({
         method: 'GET',
@@ -118,8 +158,3 @@ export default {
 };
 </script>
 
-<style>
-.modal-master-detail .form-control[readonly] {
-  background-color: rgba(0, 0, 0, 0.04);
-}
-</style>
