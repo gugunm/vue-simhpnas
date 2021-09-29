@@ -122,7 +122,7 @@ export default {
 
     if (response.statusText != "OK") {
       const error = new Error(
-        responseData.message || 'Failed to save data'
+        responseData.message || 'Failed to update data'
       );
       throw error;
     }

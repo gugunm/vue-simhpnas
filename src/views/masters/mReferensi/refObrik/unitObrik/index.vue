@@ -11,11 +11,20 @@
       @open-edit-modal="openEdit"
       @open-delete-modal="openDeleteModal"
     />
+    <confirm-modal
+      v-model="isDeleteConfirm"
+      title="Hapus data"
+      msg="Apakah anda yakin akan menghapus data ini?"
+      @close-modal="isDeleteConfirm = false"
+      @confirm-ok="actionDelete"
+    />
   </div>
 </template>
 
 <script>
 import MasterTable from '@/views/components/MasterTable';
+import ConfirmModal from '@/views/components/ConfirmModal.vue';
+import mixin from './mixin';
 
 const fields = [
   {
@@ -38,13 +47,16 @@ export default {
   name: 'AdvancedTables',
   components: {
     MasterTable,
+    ConfirmModal,
   },
+  mixins: [mixin],
   data() {
     return {
-      // refUnitObrik: null,
+      isDeleteConfirm: false,
       fields,
       selectedItem: null,
       items: null,
+      idToDelete: null,
     };
   },
   // computed: {
@@ -60,18 +72,21 @@ export default {
     await this.loadRefUnitObrik();
   },
   methods: {
+    openCreate() {
+      this.$router.push({
+        name: 'master-create-ref-obrik',
+      });
+    },
     openEdit(item) {
       this.$router.push({
         name: 'master-edit-ref-obrik',
         params: { idUnitObrik: item.id },
       });
     },
-    openCreate() {
-      this.$router.push({
-        name: 'master-create-ref-obrik',
-      });
+    openDeleteModal(id) {
+      this.isDeleteConfirm = true;
+      this.idToDelete = id;
     },
-    openDeleteModal() {},
     async loadRefUnitObrik(refresh = false) {
       this.loading = true;
       try {

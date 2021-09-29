@@ -4,6 +4,23 @@ export default {
       this.form.idUnitObrik.val = this.selectedItem.id;
       this.form.descUnitObrik.val = this.selectedItem.deskripsi;
     },
+    async loadUnitObrikById(refresh = false) {
+      this.loading = true;
+      try {
+        const uo = await this.$store.dispatch('m_ref_unit_obrik/loadRefUnitObrikById', {
+          forceRefresh: refresh,
+          idUnitObrik: this.idUnitObrik
+        });
+
+        if(uo){
+          this.item = uo
+        }
+
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
+      this.loading = false;
+    },
     async onSubmitForm(payload) {
       this.loading = true;
       if (payload.mode == 'create' && payload.formIsValid) {
@@ -46,7 +63,18 @@ export default {
       } else {
         this.toastError('Terdapat data belum valid');
       }
-
+    },
+    async actionDelete() {
+      try {
+        await this.$store.dispatch('m_ref_unit_obrik/deleteUnitObrikById', {
+          idUnitObrik: this.idToDelete,
+        });
+        this.isDeleteConfirm = false;
+        this.loadRefUnitObrik();
+        this.toastSuccess(`Berhasil menghapus data dengan ID ${this.idToDelete}`)
+      } catch (error) {
+        this.toastError(error.message)
+      }
     },
     toastSuccess(msg) {
       this.$toast.open({

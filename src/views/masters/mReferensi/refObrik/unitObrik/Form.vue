@@ -5,7 +5,7 @@
         <h3 v-if="mode == 'create'">
           Create Unit Obrik
         </h3>
-        <h3 v-else-if="mode == 'edit'">
+        <h3 v-else>
           Edit Unit Obrik
         </h3>
       </div>
@@ -103,12 +103,14 @@
 
 <script>
 import ConfirmModal from '@/views/components/ConfirmModal.vue';
+import mixin from './mixin';
 
 export default {
   components: {
     ConfirmModal,
   },
-  props: ['mode'],
+  mixins: [mixin],
+  props: ['mode', 'selectedItem'],
   data() {
     return {
       form: {
@@ -143,6 +145,8 @@ export default {
         this.error = error.message || 'Something went wrong!';
       }
       this.loading = false;
+    } else if (this.mode == 'edit') {
+      this.createDataWithSelectedItem();
     }
   },
   methods: {
