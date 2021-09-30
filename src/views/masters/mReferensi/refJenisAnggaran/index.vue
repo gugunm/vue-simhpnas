@@ -9,11 +9,21 @@
       @open-edit-modal="openEdit"
       @open-delete-modal="openDeleteModal"
     />
+    <confirm-modal
+      v-model="isDeleteConfirm"
+      title="Hapus data"
+      msg="Apakah anda yakin akan menghapus data ini?"
+      @close-modal="isDeleteConfirm = false"
+      @confirm-ok="actionDelete"
+    />
   </div>
 </template>
 
 <script>
 import MasterTable from '@/views/components/MasterTable';
+import ConfirmModal from '@/views/components/ConfirmModal.vue';
+import mixin from './mixin';
+
 const fields = [
   {
     key: 'id',
@@ -33,36 +43,54 @@ const fields = [
 
 export default {
   name: 'AdvancedTables',
-  components: { MasterTable },
+  components: { MasterTable, ConfirmModal },
+  mixins: [mixin],
   data() {
     return {
-      refJenisAnggaran: null,
       fields,
+      items: null,
+      idToDelete: null,
+      isDeleteConfirm: false,
     };
   },
-  computed: {
-    items() {
-      return this.refJenisAnggaran
-        ? this.refJenisAnggaran.map((item, idx) => {
-            return { ...item, idx };
-          })
-        : [];
-    },
-  },
-  created() {
-    this.loadRefJenisAnggaran();
+  async mounted() {
+    await this.loadRefJenisAnggaran();
   },
   methods: {
+    openCreate() {
+      this.$router.push({
+        name: 'master-create-ref-jenis-anggaran',
+      });
+    },
     openEdit(item) {
       this.$router.push({
         name: 'master-edit-ref-jenis-anggaran',
         params: { idJenisAnggaran: item.id },
       });
     },
-    openCreate() {
-      this.$router.push({
-        name: 'master-create-ref-jenis-anggaran',
-      });
+    openDeleteModal(id) {
+      this.isDeleteConfirm = true;
+      this.idToDelete = id;
+    },
+    async actionDelete() {
+      try {
+        await this.$store.dispatch(
+          'm_ref_jenis_anggaran/deleteRefJenisAnggaran',
+          {
+            idJenisAnggaran: this.idToDelete,
+          }
+        );
+
+        this.isDeleteConfirm = false;
+
+        await this.loadRefJenisAnggaran();
+
+        this.toastSuccess(
+          `Berhasil menghapus data dengan ID ${this.idToDelete}`
+        );
+      } catch (error) {
+        this.toastError(error.message);
+      }
     },
     async loadRefJenisAnggaran(refresh = false) {
       this.loading = true;
@@ -73,7 +101,7 @@ export default {
             forceRefresh: refresh,
           }
         );
-        this.refJenisAnggaran =
+        this.items =
           this.$store.getters['m_ref_jenis_anggaran/refJenisAnggaran'];
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
@@ -83,9 +111,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.modal-master-detail .form-control[readonly] {
-  background-color: rgba(0, 0, 0, 0.04);
-}
-</style>
