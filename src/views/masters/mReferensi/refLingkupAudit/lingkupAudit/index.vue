@@ -17,7 +17,7 @@
       @close-modal="isDeleteConfirm = false"
       @confirm-ok="actionDelete"
     />
-    <back-button title="Kembali" />
+    <back-button title="Kembali" to="/master-referensi/lingkup-audit" />
   </div>
 </template>
 
@@ -27,6 +27,7 @@ import { API_URL } from '@/utils/api.js';
 import MasterTable from '@/views/components/MasterTable';
 import BackButton from '@/views/components/BackButton';
 import ConfirmModal from '@/views/components/ConfirmModal.vue';
+import mixin from './mixin';
 
 const fields = [
   {
@@ -52,6 +53,7 @@ export default {
     BackButton,
     ConfirmModal,
   },
+  mixins: [mixin],
   props: {
     idGroupLingkupAudit: {
       type: String,

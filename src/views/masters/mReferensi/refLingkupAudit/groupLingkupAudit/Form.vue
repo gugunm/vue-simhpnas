@@ -12,7 +12,7 @@
               <CCol sm="12" md="6">
                 <CInput
                   v-model="form.idGroupLingkupAudit.val"
-                  label="Kode Unit Obrik"
+                  label="Kode Group Lingkup Audit"
                   class="mb-2"
                   type="text"
                   placeholder="kode"
@@ -32,10 +32,10 @@
               <CCol sm="12" md="6">
                 <CInput
                   v-model="form.descGroupLingkupAudit.val"
-                  label="Deskripsi Unit Obrik"
+                  label="Deskripsi Group Lingkup Audit"
                   class="mb-2"
                   type="text"
-                  placeholder="deskripsi unit obrik"
+                  placeholder="deskripsi group lingkup audit"
                   :is-valid="form.descGroupLingkupAudit.isValid"
                   @input="
                     validateString(form.descGroupLingkupAudit, { length: 3 })
@@ -125,7 +125,6 @@ export default {
         );
         this.groupLingkupAudit =
           this.$store.getters['m_ref_lingkup_audit/refGroupLingkupAudit'];
-        console.log('SASASASA');
         if (this.groupLingkupAudit.length > 0) {
           const newId = await this.generateNewId();
           this.form.idGroupLingkupAudit.val = newId;
@@ -137,7 +136,6 @@ export default {
       }
       this.loading = false;
     } else {
-      console.log('SELECTED ITEM');
       this.createDataWithSelectedItem();
     }
   },

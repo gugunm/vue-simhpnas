@@ -1,16 +1,9 @@
 <template>
   <div>
-    {{ idGroupLingkupAudit }}
-    <!-- <Form
-      v-if="item"
-      mode="edit"
-      :idgrplingkupaudit="idGroupLingkupAudit"
-      :selected-item="item"
-      @click-submit-form="onSubmitForm"
-    /> -->
     <Form
       v-if="item"
       mode="edit"
+      :idgrplingkupaudit="idGroupLingkupAudit"
       :selected-item="item"
       @click-submit-form="onSubmitForm"
     />

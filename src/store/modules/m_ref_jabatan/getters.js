@@ -2,9 +2,15 @@ export default {
   refJabatan(state) {
     return state.refJabatan;
   },
+
+  refJabatanById(state) {
+    return state.refJabatanById
+  },
+
   hasRefJabatan(state) {
     return state.refJabatan && state.refJabatan.length > 0;
   },
+
   shouldUpdate(state) {
     const lastFetch = state.lastFetch;
     if (!lastFetch) {

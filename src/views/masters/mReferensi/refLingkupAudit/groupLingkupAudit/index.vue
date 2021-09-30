@@ -120,8 +120,3 @@ export default {
 };
 </script>
 
-<style>
-.modal-master-detail .form-control[readonly] {
-  background-color: rgba(0, 0, 0, 0.04);
-}
-</style>

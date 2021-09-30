@@ -9,11 +9,20 @@
       @open-edit-modal="openEdit"
       @open-delete-modal="openDeleteModal"
     />
+    <confirm-modal
+      v-model="isDeleteConfirm"
+      title="Hapus data"
+      msg="Apakah anda yakin akan menghapus data ini?"
+      @close-modal="isDeleteConfirm = false"
+      @confirm-ok="actionDelete"
+    />
   </div>
 </template>
 
 <script>
 import MasterTable from '@/views/components/MasterTable';
+import ConfirmModal from '@/views/components/ConfirmModal.vue';
+import mixin from './mixin';
 
 const fields = [
   {
@@ -36,36 +45,52 @@ export default {
   name: 'AdvancedTables',
   components: {
     MasterTable,
+    ConfirmModal,
   },
+  mixins: [mixin],
   data() {
     return {
-      refJabatan: null,
       fields,
+      items: null,
+      idToDelete: null,
+      isDeleteConfirm: false,
     };
   },
-  computed: {
-    items() {
-      return this.refJabatan
-        ? this.refJabatan.map((item, idx) => {
-            return { ...item, idx };
-          })
-        : [];
-    },
-  },
-  created() {
-    this.loadRefJabatan();
+  async mounted() {
+    await this.loadRefJabatan();
   },
   methods: {
+    openCreate() {
+      this.$router.push({
+        name: 'master-create-ref-jabatan',
+      });
+    },
     openEdit(item) {
       this.$router.push({
         name: 'master-edit-ref-jabatan',
         params: { idJabatan: item.id },
       });
     },
-    openCreate() {
-      this.$router.push({
-        name: 'master-create-ref-jabatan',
-      });
+    openDeleteModal(id) {
+      this.isDeleteConfirm = true;
+      this.idToDelete = id;
+    },
+    async actionDelete() {
+      try {
+        await this.$store.dispatch('m_ref_jabatan/deleteRefJabatan', {
+          idJabatan: this.idToDelete,
+        });
+
+        this.isDeleteConfirm = false;
+
+        await this.loadRefJabatan();
+
+        this.toastSuccess(
+          `Berhasil menghapus data dengan ID ${this.idToDelete}`
+        );
+      } catch (error) {
+        this.toastError(error.message);
+      }
     },
     async loadRefJabatan(refresh = false) {
       this.loading = true;
@@ -73,7 +98,7 @@ export default {
         await this.$store.dispatch('m_ref_jabatan/loadRefJabatan', {
           forceRefresh: refresh,
         });
-        this.refJabatan = this.$store.getters['m_ref_jabatan/refJabatan'];
+        this.items = this.$store.getters['m_ref_jabatan/refJabatan'];
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
@@ -82,9 +107,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.modal-master-detail .form-control[readonly] {
-  background-color: rgba(0, 0, 0, 0.04);
-}
-</style>
