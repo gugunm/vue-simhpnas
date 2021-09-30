@@ -73,9 +73,6 @@ export default {
         token: localStorage.getItem('api_token')
       },
     })
-
-    console.log("CREATE ANGGARAN")
-
     
     const responseData = await response.data;
     

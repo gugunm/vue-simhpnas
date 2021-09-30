@@ -9,11 +9,21 @@
       @open-edit-modal="openEdit"
       @open-delete-modal="openDeleteModal"
     />
+    <confirm-modal
+      v-model="isDeleteConfirm"
+      title="Hapus data"
+      msg="Apakah anda yakin akan menghapus data ini?"
+      @close-modal="isDeleteConfirm = false"
+      @confirm-ok="actionDelete"
+    />
   </div>
 </template>
 
 <script>
 import MasterTable from '@/views/components/MasterTable';
+import ConfirmModal from '@/views/components/ConfirmModal.vue';
+import mixin from './mixin';
+
 const fields = [
   {
     key: 'id',
@@ -33,37 +43,54 @@ const fields = [
 
 export default {
   name: 'AdvancedTables',
-  components: { MasterTable },
+  components: {
+    MasterTable,
+    ConfirmModal,
+  },
+  mixins: [mixin],
   data() {
     return {
-      refJenisObrik: null,
       fields,
-      selectedItem: null,
+      items: null,
+      idToDelete: null,
+      isDeleteConfirm: false,
     };
   },
-  computed: {
-    items() {
-      return this.refJenisObrik
-        ? this.refJenisObrik.map((item, idx) => {
-            return { ...item, idx };
-          })
-        : [];
-    },
-  },
-  created() {
-    this.loadRefJenisObrik();
+  async mounted() {
+    await this.loadRefJenisObrik();
   },
   methods: {
+    openCreate() {
+      this.$router.push({
+        name: 'master-create-ref-jenis-obrik',
+      });
+    },
     openEdit(item) {
       this.$router.push({
         name: 'master-edit-ref-jenis-obrik',
         params: { idJenisObrik: item.id },
       });
     },
-    openCreate() {
-      this.$router.push({
-        name: 'master-create-ref-jenis-obrik',
-      });
+    openDeleteModal(id) {
+      this.isDeleteConfirm = true;
+      this.idToDelete = id;
+    },
+    async actionDelete() {
+      try {
+        await this.$store.dispatch('m_ref_jenis_obrik/deleteRefJenisObrik', {
+          idJenisObrik: this.idToDelete,
+        });
+
+        this.isDeleteConfirm = false;
+
+        await this.loadRefJenisObrik();
+
+        this.toastSuccess(
+          `Berhasil menghapus data dengan ID ${this.idToDelete}`
+        );
+      } catch (error) {
+        this.toastError(error.message);
+      }
     },
     async loadRefJenisObrik(refresh = false) {
       this.loading = true;
@@ -71,8 +98,7 @@ export default {
         await this.$store.dispatch('m_ref_jenis_obrik/loadRefJenisObrik', {
           forceRefresh: refresh,
         });
-        this.refJenisObrik =
-          this.$store.getters['m_ref_jenis_obrik/refJenisObrik'];
+        this.items = this.$store.getters['m_ref_jenis_obrik/refJenisObrik'];
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
