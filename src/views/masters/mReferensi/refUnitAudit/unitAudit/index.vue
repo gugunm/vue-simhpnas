@@ -6,16 +6,17 @@
       :items="items"
       :fields="fields"
       :clickable-rows="true"
+      :is-delete-button="false"
       @clicked-row="showDetailUnitAudit"
       @open-create-modal="openCreate"
       @open-edit-modal="openEdit"
-      @open-delete-modal="openDeleteModal"
     />
   </div>
 </template>
 
 <script>
 import MasterTable from '@/views/components/MasterTable';
+import mixin from './mixin';
 
 const fields = [
   {
@@ -41,32 +42,23 @@ export default {
   },
   data() {
     return {
-      refUnitAudit: null,
       fields,
+      items: null,
     };
   },
-  computed: {
-    items() {
-      return this.refUnitAudit
-        ? this.refUnitAudit.map((item, idx) => {
-            return { ...item, idx };
-          })
-        : [];
-    },
-  },
-  created() {
-    this.loadRefUnitAudit();
+  async mounted() {
+    await this.loadRefUnitAudit();
   },
   methods: {
+    openCreate() {
+      this.$router.push({
+        name: 'master-create-ref-unit-audit',
+      });
+    },
     openEdit(item) {
       this.$router.push({
         name: 'master-edit-ref-unit-audit',
         params: { idUnitAudit: item.id },
-      });
-    },
-    openCreate() {
-      this.$router.push({
-        name: 'master-create-ref-unit-audit',
       });
     },
     async loadRefUnitAudit(refresh = false) {
@@ -75,8 +67,7 @@ export default {
         await this.$store.dispatch('m_ref_unit_audit/loadRefUnitAudit', {
           forceRefresh: refresh,
         });
-        this.refUnitAudit =
-          this.$store.getters['m_ref_unit_audit/refUnitAudit'];
+        this.items = this.$store.getters['m_ref_unit_audit/refUnitAudit'];
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
@@ -91,9 +82,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.modal-master-detail .form-control[readonly] {
-  background-color: rgba(0, 0, 0, 0.04);
-}
-</style>

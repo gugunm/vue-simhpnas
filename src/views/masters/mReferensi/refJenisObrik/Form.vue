@@ -124,7 +124,7 @@ export default {
           const newId = await this.generateNewId();
           this.form.idJenisObrik.val = newId;
         } else {
-          this.form.idJenisObrik.val = '1';
+          this.form.idJenisObrik.val = '01';
         }
       } catch (error) {
         this.error = error.message || 'Something went wrong!';

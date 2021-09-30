@@ -8,7 +8,9 @@ export default {
     return {
       lastFetch: null,
       refUnitAudit: [],
+      refUnitAuditById: {},
       refSubUnitAudit: [],
+      refSubUnitAuditById: {}
     };
   },
   mutations,

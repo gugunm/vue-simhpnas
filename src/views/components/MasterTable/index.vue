@@ -29,30 +29,14 @@
       </CCol>
     </CRow> -->
     <CRow class="px-3">
-      <CCol
-        class="px-0"
-        lg="12"
-        sm="12"
-      >
+      <CCol class="px-0" lg="12" sm="12">
         <h4 class="my-0 mt-1 mb-3 text-2xl font-semibold">
           {{ topTitle }} {{ title }} {{ descTitle | descCamelCase }}
         </h4>
       </CCol>
-      <CCol
-        v-if="isAddButton"
-        class="px-0"
-        lg="12"
-        sm="12"
-      >
-        <CButton
-          color="info"
-          class="mb-4 px-4"
-          @click="openCreateModal"
-        >
-          <CIcon
-            name="cil-plus"
-            class="my-0 mb-1 mr-1"
-          /> Tambah
+      <CCol v-if="isAddButton" class="px-0" lg="12" sm="12">
+        <CButton color="info" class="mb-4 px-4" @click="openCreateModal">
+          <CIcon name="cil-plus" class="my-0 mb-1 mr-1" /> Tambah
           <!-- size="md" -->
         </CButton>
       </CCol>
@@ -72,11 +56,11 @@
         >
           <!-- :clickable-rows="clickableRows"
           @row-clicked="clickedRow" -->
-          <template #id="{item}">
+          <template #id="{ item }">
             <td
               v-if="clickableRows"
               class="text-blue-500 uppercase hover:text-blue-700"
-              style="cursor:pointer;"
+              style="cursor: pointer"
               @click="clickedRow(item)"
             >
               {{ item.id }}
@@ -86,7 +70,7 @@
             </td>
           </template>
           <!-- <template #actions> -->
-          <template #actions="{item}">
+          <template #actions="{ item }">
             <td class="py-2 d-flex justify-content-center">
               <CButton
                 v-if="isEditButton"
@@ -101,6 +85,7 @@
                 <p>Edit</p>
               </CButton>
               <CButton
+                v-if="isDeleteButton"
                 color="danger"
                 variant="outline"
                 square
@@ -147,6 +132,10 @@ export default {
     fields: Object,
     clickableRows: Boolean,
     isEditButton: {
+      type: Boolean,
+      default: true,
+    },
+    isDeleteButton: {
       type: Boolean,
       default: true,
     },
