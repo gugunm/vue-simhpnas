@@ -7,7 +7,10 @@
       :items="items"
       :fields="fields"
     />
-    <back-button title="Kembali" />
+    <back-button
+      title="Kembali"
+      :to="/master-kelompok-temuan/ + idJenisTemuan"
+    />
   </div>
 </template>
 
@@ -50,26 +53,21 @@ export default {
       type: String,
       default: '0',
     },
+    idJenisTemuan: {
+      type: String,
+      default: '0',
+    },
   },
   data() {
     return {
-      subKelompokTemuan: null,
+      items: null,
       fields,
       descKlpTemuan: null,
     };
   },
-  computed: {
-    items() {
-      return this.subKelompokTemuan
-        ? this.subKelompokTemuan.map((item, idx) => {
-            return { ...item, idx };
-          })
-        : [];
-    },
-  },
-  created() {
-    this.loadSubKelompokTemuan();
-    this.loadDescKlpTemuan();
+  async mounted() {
+    await this.loadSubKelompokTemuan();
+    await this.loadDescKlpTemuan();
   },
   methods: {
     async loadSubKelompokTemuan(refresh = false) {
@@ -79,8 +77,7 @@ export default {
           idKlpTemuan: this.idKlpTemuan,
           forceRefresh: refresh,
         });
-        this.subKelompokTemuan =
-          this.$store.getters['m_temuan/subKelompokTemuan'];
+        this.items = this.$store.getters['m_temuan/subKelompokTemuan'];
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }

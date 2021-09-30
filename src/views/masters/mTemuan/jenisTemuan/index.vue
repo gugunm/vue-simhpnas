@@ -11,11 +11,20 @@
       @open-edit-modal="openEdit"
       @open-delete-modal="openDeleteModal"
     />
+    <confirm-modal
+      v-model="isDeleteConfirm"
+      title="Hapus data"
+      msg="Apakah anda yakin akan menghapus data ini?"
+      @close-modal="isDeleteConfirm = false"
+      @confirm-ok="actionDelete"
+    />
   </div>
 </template>
 
 <script>
 import MasterTable from '@/views/components/MasterTable';
+import ConfirmModal from '@/views/components/ConfirmModal.vue';
+import mixin from './mixin';
 
 const fields = [
   {
@@ -36,36 +45,48 @@ const fields = [
 
 export default {
   name: 'MasterJenisTemuan',
-  components: { MasterTable },
+  components: { MasterTable, ConfirmModal },
+  mixins: [mixin],
   data() {
     return {
-      jenisTemuan: null,
       fields,
+      items: null,
+      idToDelete: null,
+      isDeleteConfirm: false,
     };
   },
-  computed: {
-    items() {
-      return this.jenisTemuan
-        ? this.jenisTemuan.map((item, idx) => {
-            return { ...item, idx };
-          })
-        : [];
-    },
-  },
-  created() {
-    this.loadJenisTemuan();
+  async mounted() {
+    await this.loadJenisTemuan();
   },
   methods: {
+    openCreate() {
+      this.$router.push({
+        name: 'master-create-temuan',
+      });
+    },
     openEdit(item) {
       this.$router.push({
         name: 'master-edit-temuan',
         params: { idJenisTemuan: item.id },
       });
     },
-    openCreate() {
-      this.$router.push({
-        name: 'master-create-temuan',
-      });
+    openDeleteModal(id) {
+      this.isDeleteConfirm = true;
+      this.idToDelete = id;
+    },
+    async actionDelete() {
+      try {
+        await this.$store.dispatch('m_temuan/deleteJenisTemuan', {
+          idJenisTemuan: this.idToDelete,
+        });
+        this.isDeleteConfirm = false;
+        await this.loadJenisTemuan();
+        this.toastSuccess(
+          `Berhasil menghapus data dengan ID ${this.idToDelete}`
+        );
+      } catch (error) {
+        this.toastError(error.message);
+      }
     },
     async loadJenisTemuan(refresh = false) {
       this.loading = true;
@@ -73,7 +94,7 @@ export default {
         await this.$store.dispatch('m_temuan/loadJenisTemuan', {
           forceRefresh: refresh,
         });
-        this.jenisTemuan = this.$store.getters['m_temuan/jenisTemuan'];
+        this.items = this.$store.getters['m_temuan/jenisTemuan'];
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }

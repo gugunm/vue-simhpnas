@@ -96,7 +96,7 @@ export default {
     ConfirmModal,
   },
   mixins: [mixin],
-  props: ['mode', 'selectedItem', 'idgrplingkupaudit'],
+  props: ['mode', 'selectedItem'],
   data() {
     return {
       form: {

@@ -12,7 +12,14 @@
       @open-edit-modal="openEdit"
       @open-delete-modal="openDeleteModal"
     />
-    <back-button title="Kembali" />
+    <confirm-modal
+      v-model="isDeleteConfirm"
+      title="Hapus data"
+      msg="Apakah anda yakin akan menghapus data ini?"
+      @close-modal="isDeleteConfirm = false"
+      @confirm-ok="actionDelete"
+    />
+    <back-button title="Kembali" to="/master-temuan/" />
   </div>
 </template>
 
@@ -21,6 +28,8 @@ import axios from 'axios';
 import { API_URL } from '@/utils/api.js';
 import MasterTable from '@/views/components/MasterTable';
 import BackButton from '@/views/components/BackButton';
+import ConfirmModal from '@/views/components/ConfirmModal.vue';
+import mixin from './mixin';
 
 const fields = [
   {
@@ -44,7 +53,9 @@ export default {
   components: {
     MasterTable,
     BackButton,
+    ConfirmModal,
   },
+  mixins: [mixin],
   props: {
     idJenisTemuan: {
       type: String,
@@ -53,36 +64,53 @@ export default {
   },
   data() {
     return {
-      kelompokTemuan: null,
       fields,
+      items: null,
       descJenisTemuan: null,
+      idToDelete: null,
+      isDeleteConfirm: false,
     };
   },
-  computed: {
-    items() {
-      return this.kelompokTemuan
-        ? this.kelompokTemuan.map((item, idx) => {
-            return { ...item, idx };
-          })
-        : [];
-    },
-  },
-  created() {
-    this.loadKelompokTemuan();
-    this.loadDescJenisTemuan();
+  async mounted() {
+    await this.loadKelompokTemuan();
+    await this.loadDescJenisTemuan();
   },
   methods: {
-    openEdit(item) {
-      this.$router.push({
-        name: 'master-edit-klp-temuan',
-        params: { idKlpTemuan: item.id },
-      });
-    },
     openCreate() {
       this.$router.push({
         name: 'master-create-klp-temuan',
+        params: {
+          idJenisTemuan: this.idJenisTemuan,
+        },
       });
     },
+    openEdit(item) {
+      this.$router.push({
+        name: 'master-edit-klp-temuan',
+        params: { idKlpTemuan: item.id, idJenisTemuan: this.idJenisTemuan },
+      });
+    },
+    openDeleteModal(id) {
+      this.isDeleteConfirm = true;
+      this.idToDelete = id;
+    },
+    async actionDelete() {
+      try {
+        await this.$store.dispatch('m_temuan/deleteKelompokTemuan', {
+          idKlpTemuan: this.idToDelete,
+        });
+        this.isDeleteConfirm = false;
+
+        await this.loadKelompokTemuan();
+
+        this.toastSuccess(
+          `Berhasil menghapus data dengan ID ${this.idToDelete}`
+        );
+      } catch (error) {
+        this.toastError(error.message);
+      }
+    },
+
     async loadKelompokTemuan(refresh = false) {
       this.loading = true;
       try {
@@ -90,7 +118,7 @@ export default {
           idJenisTemuan: this.idJenisTemuan,
           forceRefresh: refresh,
         });
-        this.kelompokTemuan = this.$store.getters['m_temuan/kelompokTemuan'];
+        this.items = this.$store.getters['m_temuan/kelompokTemuan'];
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
@@ -100,7 +128,7 @@ export default {
       console.log(item);
       this.$router.push({
         name: 'msubkelompoktemuan',
-        params: { idKlpTemuan: item.id },
+        params: { idKlpTemuan: item.id, idJenisTemuan: this.idJenisTemuan },
       });
     },
     async loadDescJenisTemuan() {
