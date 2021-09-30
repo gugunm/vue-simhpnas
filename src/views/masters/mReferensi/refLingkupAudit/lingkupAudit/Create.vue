@@ -3,7 +3,6 @@
     <Form
       mode="create"
       :id-group-lingkup-audit="idGroupLingkupAudit"
-      :idunitobrik="idLingkupAudit"
       @click-submit-form="onSubmitForm"
     />
   </div>

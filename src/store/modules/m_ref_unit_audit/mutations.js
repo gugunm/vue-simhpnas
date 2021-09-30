@@ -8,7 +8,7 @@ export default {
   setRefUnitAuditById(state, payload) {
     state.refUnitAuditById = payload;
   },
-  refSubUnitAuditById(state, payload) {
+  setRefSubUnitAuditById(state, payload) {
     state.refSubUnitAuditById = payload;
   },
   setFetchTimestamp(state) {

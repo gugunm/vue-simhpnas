@@ -16,7 +16,6 @@
 
 <script>
 import MasterTable from '@/views/components/MasterTable';
-import mixin from './mixin';
 
 const fields = [
   {
@@ -27,11 +26,11 @@ const fields = [
   {
     key: 'deskripsi',
     label: 'Deskripsi Unit Audit',
-    _style: 'width: 70%',
+    _style: 'width: 75%',
   },
   {
     key: 'actions',
-    _style: 'width: 15%',
+    _style: 'width: 10%',
   },
 ];
 

@@ -1,20 +1,20 @@
 export default {
   methods: {
     createDataWithSelectedItem() {
-      this.form.idLingkupAudit.val = this.selectedItem.id;
-      this.form.descLingkupAudit.val = this.selectedItem.deskripsi;
+      this.form.idSubUnitAudit.val = this.selectedItem.id;
+      this.form.descSubUnitAudit.val = this.selectedItem.deskripsi;
     },
 
     // dipanggil di file edit.vue
-    async loadRefLingkupAuditById(refresh = false) {
+    async loadRefSubUnitAuditById(refresh = false) {
       this.loading = true;
       try {
-        await this.$store.dispatch('m_ref_lingkup_audit/loadRefLingkupAuditById', {
+        await this.$store.dispatch('m_ref_unit_audit/loadRefSubUnitAuditById', {
           forceRefresh: refresh,
-          idLingkupAudit: this.idLingkupAudit
+          idSubUnitAudit: this.idSubUnitAudit
         });
 
-        this.item = this.$store.getters['m_ref_lingkup_audit/refLingkupAuditById'];
+        this.item = this.$store.getters['m_ref_unit_audit/refSubUnitAuditById'];
 
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
@@ -28,14 +28,14 @@ export default {
       if (payload.mode == 'create' && payload.formIsValid) {
         try {
           const result = await this.$store.dispatch(
-            'm_ref_lingkup_audit/createRefLingkupAudit',
+            'm_ref_unit_audit/createRefSubUnitAudit',
             payload.data
           );
 
           if (result) {
             setTimeout(() => {
               this.loading = false;
-              this.$router.push(`/master-referensi/lingkup-audit/${this.idGroupLingkupAudit}`);
+              this.$router.push(`/master-referensi/unit-audit/${this.idUnitAudit}`);
               this.toastSuccess('Berhasil menyimpan data');
             }, 500);
           }
@@ -47,14 +47,14 @@ export default {
       } else if (payload.mode == 'edit' && payload.formIsValid) {
         try {
           const result = await this.$store.dispatch(
-            'm_ref_lingkup_audit/updateRefLingkupAudit',
+            'm_ref_unit_audit/updateRefSubUnitAudit',
             payload.data
           );
 
           if (result) {
             setTimeout(() => {
               this.loading = false;
-              this.$router.push(`/master-referensi/lingkup-audit/${this.idGroupLingkupAudit}`);
+              this.$router.push(`/master-referensi/unit-audit/${this.idUnitAudit}`);
               this.toastSuccess('Berhasil merubah data');
             }, 500);
           }

@@ -1,10 +1,27 @@
 <template>
-  <p>create sub unit audit</p>
+  <div>
+    <Form
+      mode="create"
+      :id-unit-audit="idUnitAudit"
+      @click-submit-form="onSubmitForm"
+    />
+  </div>
 </template>
 
 <script>
-export default {};
-</script>
+import Form from './Form.vue';
+import mixin from './mixin';
 
-<style>
-</style>
+export default {
+  components: {
+    Form,
+  },
+  mixins: [mixin],
+  props: ['idSubUnitAudit', 'idUnitAudit'],
+  data() {
+    return {
+      loading: false,
+    };
+  },
+};
+</script>
