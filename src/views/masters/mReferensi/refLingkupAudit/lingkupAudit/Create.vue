@@ -1,10 +1,28 @@
 <template>
-  <p>Create Lingkup Audit</p>
+  <div>
+    <Form
+      mode="create"
+      :id-group-lingkup-audit="idGroupLingkupAudit"
+      :idunitobrik="idLingkupAudit"
+      @click-submit-form="onSubmitForm"
+    />
+  </div>
 </template>
 
 <script>
-export default {};
-</script>
+import Form from './Form.vue';
+import mixin from './mixin';
 
-<style>
-</style>
+export default {
+  components: {
+    Form,
+  },
+  mixins: [mixin],
+  props: ['idLingkupAudit', 'idGroupLingkupAudit'],
+  data() {
+    return {
+      loading: false,
+    };
+  },
+};
+</script>

@@ -8,7 +8,9 @@ export default {
     return {
       lastFetch: null,
       refGroupLingkupAudit: [],
+      refGroupLingkupAuditById: {},
       refLingkupAudit: [],
+      refLingkupAuditById: {}
     };
   },
   mutations,

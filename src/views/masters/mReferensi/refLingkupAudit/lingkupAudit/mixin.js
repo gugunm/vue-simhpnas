@@ -1,19 +1,21 @@
 export default {
   methods: {
     createDataWithSelectedItem() {
-      this.form.idUnitObrik.val = this.selectedItem.id;
-      this.form.descUnitObrik.val = this.selectedItem.deskripsi;
+      this.form.idLingkupAudit.val = this.selectedItem.id;
+      this.form.descLingkupAudit.val = this.selectedItem.deskripsi;
     },
 
     // dipanggil di file edit.vue
-    async loadUnitObrikById(refresh = false) {
+    async loadRefLingkupAuditById(refresh = false) {
       this.loading = true;
       try {
-        this.item = await this.$store.dispatch('m_ref_unit_obrik/loadRefUnitObrikById', {
+        await this.$store.dispatch('m_ref_lingkup_audit/loadRefLingkupAuditById', {
           forceRefresh: refresh,
-          idUnitObrik: this.idUnitObrik
+          idLingkupAudit: this.idLingkupAudit
         });
-        
+
+        this.item = this.$store.getters['m_ref_lingkup_audit/refLingkupAuditById'];
+
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
@@ -25,34 +27,35 @@ export default {
       this.loading = true;
       if (payload.mode == 'create' && payload.formIsValid) {
         try {
-          const response = await this.$store.dispatch(
-            'm_ref_unit_obrik/createUnitObrik',
+          const result = await this.$store.dispatch(
+            'm_ref_lingkup_audit/createRefLingkupAudit',
             payload.data
           );
 
-          if (response.status == 200 || response.status == 201) {
+          if (result) {
             setTimeout(() => {
               this.loading = false;
-              this.$router.push('/master-referensi/obrik');
+              this.$router.push(`/master-referensi/lingkup-audit/${this.idGroupLingkupAudit}`);
               this.toastSuccess('Berhasil menyimpan data');
             }, 500);
           }
 
         } catch (error) {
+          console.log('GAGAL SIMMPAN DATA')
           this.error = error.message || 'Something went wrong!';
           this.toastError(this.error);
         }
       } else if (payload.mode == 'edit' && payload.formIsValid) {
         try {
-          const response = await this.$store.dispatch(
-            'm_ref_unit_obrik/updateUnitObrik',
+          const result = await this.$store.dispatch(
+            'm_ref_lingkup_audit/updateRefLingkupAudit',
             payload.data
           );
 
-          if (response.status == 200) {
+          if (result) {
             setTimeout(() => {
               this.loading = false;
-              this.$router.push('/master-referensi/obrik');
+              this.$router.push(`/master-referensi/lingkup-audit/${this.idGroupLingkupAudit}`);
               this.toastSuccess('Berhasil merubah data');
             }, 500);
           }
@@ -84,5 +87,6 @@ export default {
         duration: 5000,
       });
     },
+
   }
 }

@@ -11,11 +11,21 @@
       @open-edit-modal="openEdit"
       @open-delete-modal="openDeleteModal"
     />
+    <confirm-modal
+      v-model="isDeleteConfirm"
+      title="Hapus data"
+      msg="Apakah anda yakin akan menghapus data ini?"
+      @close-modal="isDeleteConfirm = false"
+      @confirm-ok="actionDelete"
+    />
   </div>
 </template>
 
 <script>
 import MasterTable from '@/views/components/MasterTable';
+import ConfirmModal from '@/views/components/ConfirmModal.vue';
+import mixin from './mixin';
+
 const fields = [
   {
     key: 'id',
@@ -37,36 +47,52 @@ export default {
   name: 'MasterGroupLingkupAudit',
   components: {
     MasterTable,
+    ConfirmModal,
   },
+  mixins: [mixin],
   data() {
     return {
-      refGroupLingkupAudit: null,
       fields,
+      items: null,
+      idToDelete: null,
+      isDeleteConfirm: false,
     };
   },
-  computed: {
-    items() {
-      return this.refGroupLingkupAudit
-        ? this.refGroupLingkupAudit.map((item, idx) => {
-            return { ...item, idx };
-          })
-        : [];
-    },
-  },
-  created() {
-    this.loadRefGroupLingkupAudit();
+  async mounted() {
+    await this.loadRefGroupLingkupAudit();
   },
   methods: {
+    openCreate() {
+      this.$router.push({
+        name: 'master-create-ref-group-lingkup-audit',
+      });
+    },
     openEdit(item) {
       this.$router.push({
         name: 'master-edit-ref-group-lingkup-audit',
         params: { idGroupLingkupAudit: item.id },
       });
     },
-    openCreate() {
-      this.$router.push({
-        name: 'master-create-ref-group-lingkup-audit',
-      });
+    openDeleteModal(id) {
+      this.isDeleteConfirm = true;
+      this.idToDelete = id;
+    },
+    async actionDelete() {
+      try {
+        await this.$store.dispatch(
+          'm_ref_lingkup_audit/deleteRefGroupLingkupAudit',
+          {
+            idGroupLingkupAudit: this.idToDelete,
+          }
+        );
+        this.isDeleteConfirm = false;
+        await this.loadRefGroupLingkupAudit();
+        this.toastSuccess(
+          `Berhasil menghapus data dengan ID ${this.idToDelete}`
+        );
+      } catch (error) {
+        this.toastError(error.message);
+      }
     },
     async loadRefGroupLingkupAudit(refresh = false) {
       this.loading = true;
@@ -77,7 +103,7 @@ export default {
             forceRefresh: refresh,
           }
         );
-        this.refGroupLingkupAudit =
+        this.items =
           this.$store.getters['m_ref_lingkup_audit/refGroupLingkupAudit'];
       } catch (error) {
         this.error = error.message || 'Something went wrong!';

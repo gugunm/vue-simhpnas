@@ -3,12 +3,19 @@
     <master-table
       top-title="Data Group"
       title="Lingkup Audit"
-      :desc-title="descGroupLingkupAudit.split(' ').slice(1,).join(' ')"
+      :desc-title="descGroupLingkupAudit.split(' ').slice(1).join(' ')"
       :items="items"
       :fields="fields"
       @open-create-modal="openCreate"
       @open-edit-modal="openEdit"
       @open-delete-modal="openDeleteModal"
+    />
+    <confirm-modal
+      v-model="isDeleteConfirm"
+      title="Hapus data"
+      msg="Apakah anda yakin akan menghapus data ini?"
+      @close-modal="isDeleteConfirm = false"
+      @confirm-ok="actionDelete"
     />
     <back-button title="Kembali" />
   </div>
@@ -19,6 +26,7 @@ import axios from 'axios';
 import { API_URL } from '@/utils/api.js';
 import MasterTable from '@/views/components/MasterTable';
 import BackButton from '@/views/components/BackButton';
+import ConfirmModal from '@/views/components/ConfirmModal.vue';
 
 const fields = [
   {
@@ -42,6 +50,7 @@ export default {
   components: {
     MasterTable,
     BackButton,
+    ConfirmModal,
   },
   props: {
     idGroupLingkupAudit: {
@@ -51,35 +60,55 @@ export default {
   },
   data() {
     return {
-      refLingkupAudit: null,
       fields,
+      items: null,
       descGroupLingkupAudit: null,
+      idToDelete: null,
+      isDeleteConfirm: false,
     };
   },
-  computed: {
-    items() {
-      return this.refLingkupAudit
-        ? this.refLingkupAudit.map((item, idx) => {
-            return { ...item, idx };
-          })
-        : [];
-    },
-  },
-  created() {
-    this.loadRefLingkupAudit();
-    this.loadDescGroupLingkupAudit();
+  async mounted() {
+    await this.loadRefLingkupAudit();
+    await this.loadDescGroupLingkupAudit();
   },
   methods: {
-    openEdit(item) {
-      this.$router.push({
-        name: 'master-edit-ref-lingkup-audit',
-        params: { idLingkupAudit: item.id },
-      });
-    },
     openCreate() {
       this.$router.push({
         name: 'master-create-ref-lingkup-audit',
+        params: {
+          idGroupLingkupAudit: this.idGroupLingkupAudit,
+        },
       });
+    },
+    openEdit(item) {
+      this.$router.push({
+        name: 'master-edit-ref-lingkup-audit',
+        params: {
+          idLingkupAudit: item.id,
+          idGroupLingkupAudit: this.idGroupLingkupAudit,
+        },
+      });
+    },
+    openDeleteModal(id) {
+      this.isDeleteConfirm = true;
+      this.idToDelete = id;
+    },
+    async actionDelete() {
+      try {
+        await this.$store.dispatch(
+          'm_ref_lingkup_audit/deleteRefLingkupAudit',
+          {
+            idLingkupAudit: this.idToDelete,
+          }
+        );
+        this.isDeleteConfirm = false;
+        await this.loadRefLingkupAudit();
+        this.toastSuccess(
+          `Berhasil menghapus data dengan ID ${this.idToDelete}`
+        );
+      } catch (error) {
+        this.toastError(error.message);
+      }
     },
     async loadRefLingkupAudit(refresh = false) {
       this.loading = true;
@@ -88,8 +117,7 @@ export default {
           idGroupLingkupAudit: this.idGroupLingkupAudit,
           forceRefresh: refresh,
         });
-        this.refLingkupAudit =
-          this.$store.getters['m_ref_lingkup_audit/refLingkupAudit'];
+        this.items = this.$store.getters['m_ref_lingkup_audit/refLingkupAudit'];
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
