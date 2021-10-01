@@ -142,7 +142,7 @@ export default {
       const listKlpTemuan = this.klpTemuan.map((v) => {
         return parseInt(v.id);
       });
-      return (Math.max(...listKlpTemuan) + 1).toString();
+      return (Math.max(...listKlpTemuan) + 1).toString().slice(-2);
     },
 
     clickSubmitForm() {

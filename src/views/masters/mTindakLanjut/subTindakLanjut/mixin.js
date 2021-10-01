@@ -1,20 +1,20 @@
 export default {
   methods: {
     createDataWithSelectedItem() {
-      this.form.idSubKlpTemuan.val = this.selectedItem.id;
-      this.form.descSubKlpTemuan.val = this.selectedItem.deskripsi;
+      this.form.idSubKlpTindakLanjut.val = this.selectedItem.id;
+      this.form.descSubKlpTindakLanjut.val = this.selectedItem.deskripsi;
     },
 
-
-    async loadSubKlpTemuanById(refresh = false) {
+    // dipanggil di file edit.vue
+    async loadSubKlpTindakLanjutById(refresh = false) {
       this.loading = true;
       try {
-        await this.$store.dispatch('m_temuan/loadSubKelompokTemuanById', {
+        await this.$store.dispatch('m_tindak_lanjut/loadSubKlpTindakLanjutById', {
           forceRefresh: refresh,
-          idSubKlpTemuan: this.idSubKlpTemuan
+          idSubKlpTindakLanjut: this.idSubKlpTindakLanjut
         });
-        
-        this.item = this.$store.getters['m_temuan/subKelompokTemuanById'];
+
+        this.item = this.$store.getters['m_tindak_lanjut/subKlpTindakLanjutById'];
 
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
@@ -22,20 +22,20 @@ export default {
       this.loading = false;
     },
 
-
+    // called by create and edit files
     async onSubmitForm(payload) {
       this.loading = true;
       if (payload.mode == 'create' && payload.formIsValid) {
         try {
-          const response = await this.$store.dispatch(
-            'm_temuan/createSubKelompokTemuan',
+          const result = await this.$store.dispatch(
+            'm_tindak_lanjut/createSubKlpTindakLanjut',
             payload.data
           );
 
-          if (response.status == 200 || response.status == 201) {
+          if (result) {
             setTimeout(() => {
               this.loading = false;
-              this.$router.push(`/master-sub-kelompok-temuan/${this.idKlpTemuan}`);
+              this.$router.push(`/master-tindak-lanjut/${this.idKlpTindakLanjut}`);
               this.toastSuccess('Berhasil menyimpan data');
             }, 500);
           }
@@ -46,15 +46,15 @@ export default {
         }
       } else if (payload.mode == 'edit' && payload.formIsValid) {
         try {
-          const response = await this.$store.dispatch(
-            'm_temuan/updateSubKelompokTemuan',
+          const result = await this.$store.dispatch(
+            'm_tindak_lanjut/updateSubKlpTindakLanjut',
             payload.data
           );
 
-          if (response.status == 200) {
+          if (result) {
             setTimeout(() => {
               this.loading = false;
-              this.$router.push(`/master-sub-kelompok-temuan/${this.idKlpTemuan}`);
+              this.$router.push(`/master-tindak-lanjut/${this.idKlpTindakLanjut}`);
               this.toastSuccess('Berhasil merubah data');
             }, 500);
           }
@@ -66,6 +66,7 @@ export default {
         this.toastError('Terdapat data belum valid');
       }
     },
+
 
     toastSuccess(msg) {
       this.$toast.open({
@@ -85,5 +86,6 @@ export default {
         duration: 5000,
       });
     },
+
   }
 }

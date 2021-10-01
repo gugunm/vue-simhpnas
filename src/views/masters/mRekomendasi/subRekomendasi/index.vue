@@ -9,7 +9,14 @@
       @open-edit-modal="openEdit"
       @open-delete-modal="openDeleteModal"
     />
-    <back-button title="Kembali" />
+    <confirm-modal
+      v-model="isDeleteConfirm"
+      title="Hapus data"
+      msg="Apakah anda yakin akan menghapus data ini?"
+      @close-modal="isDeleteConfirm = false"
+      @confirm-ok="actionDelete"
+    />
+    <back-button title="Kembali" to="/master-rekomendasi/" />
   </div>
 </template>
 
@@ -18,6 +25,8 @@ import axios from 'axios';
 import { API_URL } from '@/utils/api.js';
 import MasterTable from '@/views/components/MasterTable';
 import BackButton from '@/views/components/BackButton';
+import ConfirmModal from '@/views/components/ConfirmModal.vue';
+import mixin from './mixin';
 
 const fields = [
   {
@@ -41,7 +50,9 @@ export default {
   components: {
     MasterTable,
     BackButton,
+    ConfirmModal,
   },
+  mixins: [mixin],
   props: {
     idKlpRekomendasi: {
       type: String,
@@ -50,50 +61,70 @@ export default {
   },
   data() {
     return {
-      subKlpRekomendasi: null,
       fields,
+      items: null,
       descRekomendasi: null,
+      idToDelete: null,
+      isDeleteConfirm: false,
     };
   },
-  computed: {
-    items() {
-      return this.subKlpRekomendasi
-        ? this.subKlpRekomendasi.map((item, idx) => {
-            return { ...item, idx };
-          })
-        : [];
-    },
-  },
-  created() {
-    this.loadRefLingkupAudit();
-    this.loadDescRekomendasi();
+  async mounted() {
+    await this.loadSubKlpRekomendasi();
+    await this.loadDescRekomendasi();
   },
   methods: {
-    openEdit(item) {
-      this.$router.push({
-        name: 'master-edit-sub-klp-rekomendasi',
-        params: { idSubKlpRekomendasi: item.id },
-      });
-    },
     openCreate() {
       this.$router.push({
         name: 'master-create-sub-klp-rekomendasi',
+        params: {
+          idKlpRekomendasi: this.idKlpRekomendasi,
+        },
       });
     },
-    async loadRefLingkupAudit(refresh = false) {
+    openEdit(item) {
+      this.$router.push({
+        name: 'master-edit-sub-klp-rekomendasi',
+        params: {
+          idSubKlpRekomendasi: item.id,
+          idKlpRekomendasi: this.idKlpRekomendasi,
+        },
+      });
+    },
+    openDeleteModal(id) {
+      this.isDeleteConfirm = true;
+      this.idToDelete = id;
+    },
+    async actionDelete() {
+      try {
+        await this.$store.dispatch('m_rekomendasi/deleteSubKlpRekomendasi', {
+          idSubKlpRekomendasi: this.idToDelete,
+        });
+        this.isDeleteConfirm = false;
+
+        await this.loadSubKlpRekomendasi();
+
+        this.toastSuccess(
+          `Berhasil menghapus data dengan ID ${this.idToDelete}`
+        );
+      } catch (error) {
+        this.toastError(error.message);
+      }
+    },
+
+    async loadSubKlpRekomendasi(refresh = false) {
       this.loading = true;
       try {
         await this.$store.dispatch('m_rekomendasi/loadSubKlpRekomendasi', {
           idKlpRekomendasi: this.idKlpRekomendasi,
           forceRefresh: refresh,
         });
-        this.subKlpRekomendasi =
-          this.$store.getters['m_rekomendasi/subKlpRekomendasi'];
+        this.items = this.$store.getters['m_rekomendasi/subKlpRekomendasi'];
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
       this.loading = false;
     },
+
     async loadDescRekomendasi() {
       const response = await axios({
         method: 'GET',

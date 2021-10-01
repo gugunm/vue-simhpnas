@@ -10,7 +10,14 @@
       @open-edit-modal="openEdit"
       @open-delete-modal="openDeleteModal"
     />
-    <back-button title="Kembali" />
+    <confirm-modal
+      v-model="isDeleteConfirm"
+      title="Hapus data"
+      msg="Apakah anda yakin akan menghapus data ini?"
+      @close-modal="isDeleteConfirm = false"
+      @confirm-ok="actionDelete"
+    />
+    <back-button title="Kembali" to="/master-tindak-lanjut/" />
   </div>
 </template>
 
@@ -19,6 +26,8 @@ import axios from 'axios';
 import { API_URL } from '@/utils/api.js';
 import MasterTable from '@/views/components/MasterTable';
 import BackButton from '@/views/components/BackButton';
+import ConfirmModal from '@/views/components/ConfirmModal.vue';
+import mixin from './mixin';
 
 const fields = [
   {
@@ -42,7 +51,9 @@ export default {
   components: {
     MasterTable,
     BackButton,
+    ConfirmModal,
   },
+  mixins: [mixin],
   props: {
     idKlpTindakLanjut: {
       type: String,
@@ -51,36 +62,56 @@ export default {
   },
   data() {
     return {
-      subKlpTindakLanjut: null,
       fields,
+      items: null,
       descTindakLanjut: null,
+      idToDelete: null,
+      isDeleteConfirm: false,
     };
   },
-  computed: {
-    items() {
-      return this.subKlpTindakLanjut
-        ? this.subKlpTindakLanjut.map((item, idx) => {
-            return { ...item, idx };
-          })
-        : [];
-    },
-  },
-  created() {
-    this.loadSubKlpTindakLanjut();
-    this.loadDescTindakLanjut();
+  async mounted() {
+    await this.loadSubKlpTindakLanjut();
+    await this.loadDescTindakLanjut();
   },
   methods: {
-    openEdit(item) {
-      this.$router.push({
-        name: 'master-edit-sub-tl',
-        params: { idSubKlpTindakLanjut: item.id },
-      });
-    },
     openCreate() {
       this.$router.push({
         name: 'master-create-sub-tl',
+        params: {
+          idKlpTindakLanjut: this.idKlpTindakLanjut,
+        },
       });
     },
+    openEdit(item) {
+      this.$router.push({
+        name: 'master-edit-sub-tl',
+        params: {
+          idSubKlpTindakLanjut: item.id,
+          idKlpTindakLanjut: this.idKlpTindakLanjut,
+        },
+      });
+    },
+    openDeleteModal(id) {
+      this.isDeleteConfirm = true;
+      this.idToDelete = id;
+    },
+    async actionDelete() {
+      try {
+        await this.$store.dispatch('m_tindak_lanjut/deleteSubKlpTindakLanjut', {
+          idSubKlpTindakLanjut: this.idToDelete,
+        });
+        this.isDeleteConfirm = false;
+
+        await this.loadSubKlpTindakLanjut();
+
+        this.toastSuccess(
+          `Berhasil menghapus data dengan ID ${this.idToDelete}`
+        );
+      } catch (error) {
+        this.toastError(error.message);
+      }
+    },
+
     async loadSubKlpTindakLanjut(refresh = false) {
       this.loading = true;
       try {
@@ -88,8 +119,7 @@ export default {
           idKlpTindakLanjut: this.idKlpTindakLanjut,
           forceRefresh: refresh,
         });
-        this.subKlpTindakLanjut =
-          this.$store.getters['m_tindak_lanjut/subKlpTindakLanjut'];
+        this.items = this.$store.getters['m_tindak_lanjut/subKlpTindakLanjut'];
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }

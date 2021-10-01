@@ -6,10 +6,20 @@
       :desc-title="'- ' + descKlpTemuan"
       :items="items"
       :fields="fields"
+      @open-create-modal="openCreate"
+      @open-edit-modal="openEdit"
+      @open-delete-modal="openDeleteModal"
+    />
+    <confirm-modal
+      v-model="isDeleteConfirm"
+      title="Hapus data"
+      msg="Apakah anda yakin akan menghapus data ini?"
+      @close-modal="isDeleteConfirm = false"
+      @confirm-ok="actionDelete"
     />
     <back-button
       title="Kembali"
-      :to="/master-kelompok-temuan/ + idJenisTemuan"
+      :to="/master-kelompok-temuan/ + idKlpTemuan.charAt(0)"
     />
   </div>
 </template>
@@ -19,6 +29,8 @@ import axios from 'axios';
 import { API_URL } from '@/utils/api.js';
 import MasterTable from '@/views/components/MasterTable';
 import BackButton from '@/views/components/BackButton';
+import ConfirmModal from '@/views/components/ConfirmModal.vue';
+import mixin from './mixin';
 
 const fields = [
   {
@@ -47,7 +59,9 @@ export default {
   components: {
     MasterTable,
     BackButton,
+    ConfirmModal,
   },
+  mixins: [mixin],
   props: {
     idKlpTemuan: {
       type: String,
@@ -60,9 +74,11 @@ export default {
   },
   data() {
     return {
-      items: null,
       fields,
+      items: null,
       descKlpTemuan: null,
+      idToDelete: null,
+      isDeleteConfirm: false,
     };
   },
   async mounted() {
@@ -70,6 +86,46 @@ export default {
     await this.loadDescKlpTemuan();
   },
   methods: {
+    openCreate() {
+      this.$router.push({
+        name: 'master-create-sub-klp-temuan',
+        params: {
+          idKlpTemuan: this.idKlpTemuan,
+          idJenisTemuan: this.idJenisTemuan,
+        },
+      });
+    },
+
+    openEdit(item) {
+      this.$router.push({
+        name: 'master-edit-sub-klp-temuan',
+        params: {
+          idSubKlpTemuan: item.id,
+          idKlpTemuan: this.idKlpTemuan,
+        },
+      });
+    },
+
+    openDeleteModal(id) {
+      this.isDeleteConfirm = true;
+      this.idToDelete = id;
+    },
+
+    async actionDelete() {
+      try {
+        await this.$store.dispatch('m_temuan/deleteSubKelompokTemuan', {
+          idSubKelompokTemuan: this.idToDelete,
+        });
+        this.isDeleteConfirm = false;
+        this.toastSuccess(
+          `Berhasil menghapus data dengan ID ${this.idToDelete}`
+        );
+        this.loadSubKelompokTemuan();
+      } catch (error) {
+        this.toastError(error.message);
+      }
+    },
+
     async loadSubKelompokTemuan(refresh = false) {
       this.loading = true;
       try {

@@ -1,10 +1,27 @@
 <template>
-  <p>create sub rekomendasi</p>
+  <div>
+    <Form
+      mode="create"
+      :id-klp-rekomendasi="idKlpRekomendasi"
+      @click-submit-form="onSubmitForm"
+    />
+  </div>
 </template>
 
 <script>
-export default {};
-</script>
+import Form from './Form.vue';
+import mixin from './mixin';
 
-<style>
-</style>
+export default {
+  components: {
+    Form,
+  },
+  mixins: [mixin],
+  props: ['idKlpRekomendasi'],
+  data() {
+    return {
+      loading: false,
+    };
+  },
+};
+</script>

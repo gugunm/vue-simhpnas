@@ -40,7 +40,7 @@ export default {
     const response = await axios({
       method: 'GET',
       baseURL: API_URL,
-      url: `/api/klptl/${payload.idTindakLanjut}`,
+      url: `/api/klptl/${payload.idKlpTindakLanjut}`,
       params: {
         token: localStorage.getItem('api_token')
       },

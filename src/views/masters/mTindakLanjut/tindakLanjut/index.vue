@@ -11,11 +11,20 @@
       @open-edit-modal="openEdit"
       @open-delete-modal="openDeleteModal"
     />
+    <confirm-modal
+      v-model="isDeleteConfirm"
+      title="Hapus data"
+      msg="Apakah anda yakin akan menghapus data ini?"
+      @close-modal="isDeleteConfirm = false"
+      @confirm-ok="actionDelete"
+    />
   </div>
 </template>
 
 <script>
 import MasterTable from '@/views/components/MasterTable';
+import ConfirmModal from '@/views/components/ConfirmModal.vue';
+import mixin from './mixin';
 
 const fields = [
   {
@@ -36,36 +45,48 @@ const fields = [
 
 export default {
   name: 'AdvancedTables',
-  components: { MasterTable },
+  components: { MasterTable, ConfirmModal },
+  mixins: [mixin],
   data() {
     return {
-      klpTindakLanjut: null,
       fields,
+      items: null,
+      idToDelete: null,
+      isDeleteConfirm: false,
     };
   },
-  computed: {
-    items() {
-      return this.klpTindakLanjut
-        ? this.klpTindakLanjut.map((item, idx) => {
-            return { ...item, idx };
-          })
-        : [];
-    },
-  },
-  created() {
-    this.loadKlpTindakLanjut();
+  async mounted() {
+    await this.loadKlpTindakLanjut();
   },
   methods: {
+    openCreate() {
+      this.$router.push({
+        name: 'master-create-tl',
+      });
+    },
     openEdit(item) {
       this.$router.push({
         name: 'master-edit-tl',
         params: { idKlpTindakLanjut: item.id },
       });
     },
-    openCreate() {
-      this.$router.push({
-        name: 'master-create-tl',
-      });
+    openDeleteModal(id) {
+      this.isDeleteConfirm = true;
+      this.idToDelete = id;
+    },
+    async actionDelete() {
+      try {
+        await this.$store.dispatch('m_tindak_lanjut/deleteKlpTindakLanjut', {
+          idKlpTindakLanjut: this.idToDelete,
+        });
+        this.isDeleteConfirm = false;
+        await this.loadKlpTindakLanjut();
+        this.toastSuccess(
+          `Berhasil menghapus data dengan ID ${this.idToDelete}`
+        );
+      } catch (error) {
+        this.toastError(error.message);
+      }
     },
     async loadKlpTindakLanjut(refresh = false) {
       this.loading = true;
@@ -73,8 +94,7 @@ export default {
         await this.$store.dispatch('m_tindak_lanjut/loadKlpTindakLanjut', {
           forceRefresh: refresh,
         });
-        this.klpTindakLanjut =
-          this.$store.getters['m_tindak_lanjut/klpTindakLanjut'];
+        this.items = this.$store.getters['m_tindak_lanjut/klpTindakLanjut'];
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
