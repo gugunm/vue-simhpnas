@@ -8,7 +8,9 @@ export default {
     return {
       lastFetch: null,
       klpRekomendasi: [],
+      klpRekomendasiById: {},
       subKlpRekomendasi: [],
+      subKlpRekomendasiById: {}
     };
   },
   mutations,

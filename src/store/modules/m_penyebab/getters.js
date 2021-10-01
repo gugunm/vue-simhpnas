@@ -5,6 +5,9 @@ export default {
   hasPenyebab(state) {
     return state.penyebab && state.penyebab.length > 0;
   },
+  penyebabById(state) {
+    return state.penyebabById;
+  },
   shouldUpdate(state) {
     const lastFetch = state.lastFetch;
     if (!lastFetch) {

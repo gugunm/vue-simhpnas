@@ -9,11 +9,20 @@
       @open-edit-modal="openEdit"
       @open-delete-modal="openDeleteModal"
     />
+    <confirm-modal
+      v-model="isDeleteConfirm"
+      title="Hapus data"
+      msg="Apakah anda yakin akan menghapus data ini?"
+      @close-modal="isDeleteConfirm = false"
+      @confirm-ok="actionDelete"
+    />
   </div>
 </template>
 
 <script>
 import MasterTable from '@/views/components/MasterTable';
+import ConfirmModal from '@/views/components/ConfirmModal.vue';
+import mixin from './mixin';
 
 const fields = [
   {
@@ -36,37 +45,52 @@ export default {
   name: 'MasterPenyebab',
   components: {
     MasterTable,
+    ConfirmModal,
   },
+  mixins: [mixin],
   data() {
     return {
-      penyebab: null,
       fields,
-      selectedItem: null,
+      items: null,
+      idToDelete: null,
+      isDeleteConfirm: false,
     };
   },
-  computed: {
-    items() {
-      return this.penyebab
-        ? this.penyebab.map((item, idx) => {
-            return { ...item, idx };
-          })
-        : [];
-    },
-  },
-  created() {
-    this.loadPenyebab();
+  async mounted() {
+    await this.loadPenyebab();
   },
   methods: {
+    openCreate() {
+      this.$router.push({
+        name: 'master-create-penyebab',
+      });
+    },
     openEdit(item) {
       this.$router.push({
         name: 'master-edit-penyebab',
         params: { idPenyebab: item.id },
       });
     },
-    openCreate() {
-      this.$router.push({
-        name: 'master-create-penyebab',
-      });
+    openDeleteModal(id) {
+      this.isDeleteConfirm = true;
+      this.idToDelete = id;
+    },
+    async actionDelete() {
+      try {
+        await this.$store.dispatch('m_penyebab/deletePenyebab', {
+          idPenyebab: this.idToDelete,
+        });
+
+        this.isDeleteConfirm = false;
+
+        await this.loadPenyebab();
+
+        this.toastSuccess(
+          `Berhasil menghapus data dengan ID ${this.idToDelete}`
+        );
+      } catch (error) {
+        this.toastError(error.message);
+      }
     },
     async loadPenyebab(refresh = false) {
       this.loading = true;
@@ -74,7 +98,7 @@ export default {
         await this.$store.dispatch('m_penyebab/loadPenyebab', {
           forceRefresh: refresh,
         });
-        this.penyebab = this.$store.getters['m_penyebab/penyebab'];
+        this.items = this.$store.getters['m_penyebab/penyebab'];
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }

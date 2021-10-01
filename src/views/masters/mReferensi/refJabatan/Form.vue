@@ -33,7 +33,7 @@
                   label="Deskripsi Jabatan"
                   class="mb-2"
                   type="text"
-                  placeholder="deskripsi unit obrik"
+                  placeholder="deskripsi jabatan"
                   :is-valid="form.descJabatan.isValid"
                   @input="validateString(form.descJabatan, { length: 3 })"
                 />

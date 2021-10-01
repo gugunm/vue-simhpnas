@@ -9,6 +9,8 @@ export default {
       lastFetch: null,
       klpTindakLanjut: [],
       subKlpTindakLanjut: [],
+      klpTindakLanjutById: {},
+      subKlpTindakLanjutById: {},
     };
   },
   mutations,
