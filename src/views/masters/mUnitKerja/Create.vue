@@ -1,11 +1,6 @@
 <template>
   <div>
-    <Form
-      mode="create"
-      @click-submit-form="onSubmitForm"
-    />
-    <!-- :selected-item="item" -->
-    <!-- {{ $toast.open('Howdy!') }} -->
+    <Form mode="create" @click-submit-form="onSubmitForm" />
   </div>
 </template>
 

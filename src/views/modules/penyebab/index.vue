@@ -1,3 +1,138 @@
 <template>
-  <h1>Penyebab</h1>
+  <div>
+    <master-table
+      top-title="Penyebab"
+      :items="items"
+      :fields="fields"
+      :clickable-rows="true"
+      :is-edit-button="true"
+      @clicked-row="openDetail"
+      @open-create-modal="openCreate"
+      @open-edit-modal="openEdit"
+      @open-delete-modal="openDeleteModal"
+    />
+    <confirm-modal
+      v-model="isDeleteConfirm"
+      title="Hapus data"
+      msg="Apakah anda yakin akan menghapus data ini?"
+      @close-modal="isDeleteConfirm = false"
+      @confirm-ok="actionDelete"
+    />
+  </div>
 </template>
+
+<script>
+import MasterTable from '@/views/components/MasterTable';
+
+import mixin from './mixin';
+
+import ConfirmModal from '../../components/ConfirmModal.vue';
+
+const fields = [
+  {
+    key: 'id',
+    label: 'ID',
+  },
+  {
+    key: 'namaUnit',
+    label: 'Nama Unit',
+  },
+  {
+    key: 'namaPimpinan',
+    label: 'Nama Pimpinan',
+  },
+  {
+    key: 'provinsi',
+    label: 'Provinsi',
+  },
+  {
+    key: 'kabkot',
+    label: 'Kab/Kota',
+  },
+  {
+    key: 'jumlahObrik',
+    label: 'Jumlah Obrik',
+  },
+  {
+    key: 'actions',
+    label: 'Actions',
+  },
+];
+
+export default {
+  name: 'TemuanAudit',
+  components: {
+    MasterTable,
+    ConfirmModal,
+  },
+  mixins: [mixin],
+  data() {
+    return {
+      items: '',
+      fields,
+      isDeleteConfirm: false,
+      idToDelete: null,
+    };
+  },
+  created() {
+    this.loadUnitKerja();
+  },
+  methods: {
+    openDetail(item) {
+      this.$router.push({
+        name: 'module-detail-penyebab',
+        params: { idPenyebab: 1 },
+      });
+    },
+    openCreate() {
+      this.$router.push({
+        name: 'module-create-penyebab',
+      });
+    },
+    openEdit(item) {
+      this.$router.push({
+        name: 'module-edit-penyebab',
+        params: { idPenyebab: 1 },
+      });
+    },
+    openDeleteModal(id) {
+      this.isDeleteConfirm = true;
+      this.idToDelete = id;
+    },
+    async actionDelete() {
+      try {
+        await this.$store.dispatch('m_unit_kerja/deleteUnitKerjaById', {
+          idUnitKerja: this.idToDelete,
+        });
+        this.isDeleteConfirm = false;
+        this.loadUnitKerja();
+        this.$toast.open({
+          message: `Berhasil menghapus data dengan ID ${this.idToDelete}`,
+          type: 'success',
+          position: 'top-right',
+          duration: 3000,
+        });
+      } catch (error) {
+        this.$toast.open({
+          message: error.message,
+          type: 'error',
+          position: 'top-right',
+          duration: 3000,
+        });
+      }
+    },
+    async loadUnitKerja(refresh = false) {
+      // this.loading = true;
+      try {
+        await this.$store.dispatch('m_unit_kerja/loadUnitKerja', {
+          forceRefresh: refresh,
+        });
+        this.items = this.$store.getters['m_unit_kerja/unitKerja'];
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
+      // this.loading = false;
+    },
+  },
+};
+</script>

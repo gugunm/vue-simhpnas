@@ -6,10 +6,7 @@
     class="bg-sidebar shadow-none"
     @update:show="(value) => $store.commit('ui/set', ['sidebarShow', value])"
   >
-    <CSidebarBrand
-      class="d-md-down-none bg-sidebar py-4"
-      to="/"
-    >
+    <CSidebarBrand class="d-md-down-none bg-sidebar py-4" to="/">
       <!-- <CIcon
         class="c-sidebar-brand-full"
         name="logo"
@@ -37,10 +34,7 @@
         src="img/simhp/letter-logo.png"
       />
     </CSidebarBrand>
-    <CRenderFunction
-      flat
-      :content-to-render="nav"
-    />
+    <CRenderFunction flat :content-to-render="nav" />
     <CSidebarMinimizer
       class="c-d-md-down-none bg-transparent border-0"
       @click.native="$store.commit('ui/toggle', 'sidebarMinimize')"
@@ -163,7 +157,7 @@ export default {
             '/api/menu?token=' +
             localStorage.getItem('api_token') +
             '&locale=' +
-            this.locale
+            locale
         )
         .then(function (response) {
           self.nav = self.rebuildData(response.data);
