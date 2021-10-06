@@ -27,12 +27,12 @@ import mixin from './mixin';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 
 const fields = [
-  // {
-  //   key: 'id',
-  //   label: 'ID',
-  // },
   {
-    key: 'nomorLha',
+    key: 'id',
+    label: 'ID',
+  },
+  {
+    key: 'idLha',
     label: 'Nomor LHA',
   },
   {
@@ -154,7 +154,7 @@ export default {
       try {
         await this.$store.dispatch('module_temuan/loadTemuan', {
           forceRefresh: refresh,
-          nomorLha: 'LHA/1/2021',
+          idLha: 7,
         });
         this.items = this.$store.getters['module_temuan/temuan'];
       } catch (error) {

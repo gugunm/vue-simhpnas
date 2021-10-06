@@ -8,7 +8,7 @@ export default {
       baseURL: API_URL,
       url: '/api/temuan',
       params: {
-        Nomor_LHA: payload.nomorLha,
+        kode_lha: payload.idLha,
         token: localStorage.getItem('api_token')
       },
     })
@@ -26,8 +26,8 @@ export default {
 
     for (const key in responseData) {
       const data = {
-        // id: responseData[key]["id"],
-        nomorLha: responseData[key]["Nomor_LHA"],
+        id: responseData[key]["kode_temuan"],
+        idLha: responseData[key]["kode_lha"],
         nomorTemuan: responseData[key]["Nomor_Temuan"],
         kodeJenisTemuan: responseData[key]["Kode_Jenis_Temuan"],
         kodeKelompokTemuan: responseData[key]["Kode_Kelompok_Temuan"],

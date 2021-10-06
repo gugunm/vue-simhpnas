@@ -28,7 +28,7 @@ export default {
 
 
       const data = {
-        id: responseData[key]["id_lha"],
+        id: responseData[key]["kode_lha"],
         nomorLha: responseData[key]["Nomor_LHA"],
         tglLha: responseData[key]["Tanggal_LHA"],
         nomorST: responseData[key]["Nomor_ST"],
