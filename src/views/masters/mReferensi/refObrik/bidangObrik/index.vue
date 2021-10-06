@@ -19,19 +19,16 @@
       @close-modal="isDeleteConfirm = false"
       @confirm-ok="actionDelete"
     />
-    <back-button
-      title="Kembali"
-      to="/master-referensi/obrik"
-    />
+    <back-button title="Kembali" to="/master-referensi/obrik" />
   </div>
 </template>
 
 <script>
 import axios from 'axios';
 import { API_URL } from '@/utils/api.js';
-import MasterTable from '@/views/components/MasterTable';
-import BackButton from '@/views/components/BackButton';
-import ConfirmModal from '@/views/components/ConfirmModal.vue';
+import MasterTable from '@/components/MasterTable';
+import BackButton from '@/components/BackButton';
+import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 import mixin from './mixin';
 
 const fields = [

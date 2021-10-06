@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import MasterTable from '@/views/components/MasterTable';
+import MasterTable from '@/components/MasterTable';
 
 const fields = [
   {

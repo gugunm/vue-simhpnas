@@ -24,7 +24,7 @@
 <script>
 import TableTemuan from './TableTemuan.vue';
 import mixin from './mixin';
-import ConfirmModal from '../../components/ConfirmModal.vue';
+import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 
 const fields = [
   // {

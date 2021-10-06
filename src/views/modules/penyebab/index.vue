@@ -1,6 +1,6 @@
 <template>
   <div>
-    <master-table
+    <table-penyebab
       top-title="Penyebab"
       :items="items"
       :fields="fields"
@@ -22,11 +22,11 @@
 </template>
 
 <script>
-import MasterTable from '@/views/components/MasterTable';
+import TablePenyebab from './TablePenyebab.vue';
 
 import mixin from './mixin';
 
-import ConfirmModal from '../../components/ConfirmModal.vue';
+import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 
 const fields = [
   {
@@ -60,9 +60,9 @@ const fields = [
 ];
 
 export default {
-  name: 'TemuanAudit',
+  name: 'PenyebabTemuan',
   components: {
-    MasterTable,
+    TablePenyebab,
     ConfirmModal,
   },
   mixins: [mixin],
@@ -74,9 +74,10 @@ export default {
       idToDelete: null,
     };
   },
-  created() {
-    this.loadUnitKerja();
+  async mounted() {
+    await this.loadPenyebab();
   },
+
   methods: {
     openDetail(item) {
       this.$router.push({
@@ -84,28 +85,35 @@ export default {
         params: { idPenyebab: 1 },
       });
     },
+
     openCreate() {
       this.$router.push({
         name: 'module-create-penyebab',
       });
     },
+
     openEdit(item) {
       this.$router.push({
         name: 'module-edit-penyebab',
         params: { idPenyebab: 1 },
       });
     },
+
     openDeleteModal(id) {
       this.isDeleteConfirm = true;
       this.idToDelete = id;
     },
+
     async actionDelete() {
       try {
-        await this.$store.dispatch('m_unit_kerja/deleteUnitKerjaById', {
+        await this.$store.dispatch('module_penyebab/deletePenyebabById', {
           idUnitKerja: this.idToDelete,
         });
+
         this.isDeleteConfirm = false;
-        this.loadUnitKerja();
+
+        this.loadPenyebab();
+
         this.$toast.open({
           message: `Berhasil menghapus data dengan ID ${this.idToDelete}`,
           type: 'success',
@@ -121,13 +129,13 @@ export default {
         });
       }
     },
-    async loadUnitKerja(refresh = false) {
+    async loadPenyebab(refresh = false) {
       // this.loading = true;
       try {
-        await this.$store.dispatch('m_unit_kerja/loadUnitKerja', {
+        await this.$store.dispatch('module_penyebab/loadPenyebab', {
           forceRefresh: refresh,
         });
-        this.items = this.$store.getters['m_unit_kerja/unitKerja'];
+        this.items = this.$store.getters['module_penyebab/unitPenyebab'];
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }

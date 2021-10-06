@@ -2,24 +2,14 @@
   <CRow>
     <CCol sm="12">
       <div class="text-2xl mb-4 font-semibold">
-        <h3 v-if="mode == 'create'">
-          Create Bidang Obrik
-        </h3>
-        <h3 v-else>
-          Edit Bidang Obrik
-        </h3>
+        <h3 v-if="mode == 'create'">Create Bidang Obrik</h3>
+        <h3 v-else>Edit Bidang Obrik</h3>
       </div>
       <CCard>
         <CCardBody>
-          <CForm
-            method="POST"
-            @submit.prevent="clickSubmitForm"
-          >
+          <CForm method="POST" @submit.prevent="clickSubmitForm">
             <CRow class="mb-2 view-form">
-              <CCol
-                sm="12"
-                md="6"
-              >
+              <CCol sm="12" md="6">
                 <CInput
                   v-model="form.idBidangObrik.val"
                   label="Kode Bidang Obrik"
@@ -28,7 +18,7 @@
                   placeholder="kode"
                   :readonly="mode == 'edit'"
                   :is-valid="form.idBidangObrik.isValid"
-                  @input="validateString(form.idBidangObrik, {length:3})"
+                  @input="validateString(form.idBidangObrik, { length: 3 })"
                 />
                 <p
                   v-if="form.idBidangObrik.isValid == false"
@@ -37,10 +27,7 @@
                   *hanya 3 angka
                 </p>
               </CCol>
-              <CCol
-                sm="12"
-                md="6"
-              >
+              <CCol sm="12" md="6">
                 <CInput
                   v-model="form.descBidangObrik.val"
                   label="Deskripsi Bidang Obrik"
@@ -48,7 +35,7 @@
                   type="text"
                   placeholder="deskripsi bidang obrik"
                   :is-valid="form.descBidangObrik.isValid"
-                  @input="validateString(form.descBidangObrik, {length:3})"
+                  @input="validateString(form.descBidangObrik, { length: 3 })"
                 />
                 <p
                   v-if="form.descBidangObrik.isValid == false"
@@ -59,10 +46,7 @@
               </CCol>
             </CRow>
             <CRow class="mb-2 view-form">
-              <CCol
-                sm="12"
-                md="6"
-              >
+              <CCol sm="12" md="6">
                 <CButton
                   v-if="mode != 'view'"
                   variant="outline"
@@ -78,24 +62,11 @@
                 md="6"
                 class="content-center justify-end pr-3"
               >
-                <CButton
-                  type="submit"
-                  color="primary"
-                  class="px-4"
-                >
-                  <div
-                    v-if="loading"
-                    class="px-8"
-                  >
-                    <CSpinner
-                      color="white"
-                      size="sm"
-                      class="mr-2"
-                    />
+                <CButton type="submit" color="primary" class="px-4">
+                  <div v-if="loading" class="px-8">
+                    <CSpinner color="white" size="sm" class="mr-2" />
                   </div>
-                  <template v-else>
-                    Submit Data
-                  </template>
+                  <template v-else> Submit Data </template>
                 </CButton>
               </CCol>
             </CRow>
@@ -112,7 +83,7 @@
 </template>
 
 <script>
-import ConfirmModal from '@/views/components/ConfirmModal.vue';
+import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 import mixin from './mixin';
 
 export default {

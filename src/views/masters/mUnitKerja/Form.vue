@@ -2,28 +2,16 @@
   <CRow>
     <CCol sm="12">
       <div class="text-2xl mb-4 font-semibold">
-        <h3 v-if="mode == 'create'">
-          Create Unit Kerja
-        </h3>
-        <h3 v-else-if="mode == 'edit'">
-          Edit Unit Kerja
-        </h3>
-        <h3 v-else>
-          Detail Unit Kerja
-        </h3>
+        <h3 v-if="mode == 'create'">Create Unit Kerja</h3>
+        <h3 v-else-if="mode == 'edit'">Edit Unit Kerja</h3>
+        <h3 v-else>Detail Unit Kerja</h3>
       </div>
       <CCard class="p-2">
         <CCardBody>
-          <CForm
-            method="POST"
-            @submit.prevent="clickSubmitForm"
-          >
+          <CForm method="POST" @submit.prevent="clickSubmitForm">
             <!-- ROW 1 UNIT AUDIT -->
             <CRow class="mb-2 view-form">
-              <CCol
-                sm="12"
-                md="6"
-              >
+              <CCol sm="12" md="6">
                 <CInput
                   v-if="mode != 'create'"
                   v-model="id.val"
@@ -48,10 +36,7 @@
                   </v-select>
                 </template>
               </CCol>
-              <CCol
-                sm="12"
-                md="6"
-              >
+              <CCol sm="12" md="6">
                 <CInput
                   v-model="namaUnit.val"
                   label="Nama Unit Kerja"
@@ -63,10 +48,7 @@
             </CRow>
             <!-- ROW 2 -->
             <CRow class="mb-2 view-form">
-              <CCol
-                sm="12"
-                md="6"
-              >
+              <CCol sm="12" md="6">
                 <CInput
                   v-model="namaPimpinan.val"
                   label="Nama Pimpinan"
@@ -74,7 +56,7 @@
                   placeholder="Nama Pimpinan"
                   :readonly="mode == 'view'"
                   :is-valid="namaPimpinan.isValid"
-                  @input="validateString(namaPimpinan, {length:3})"
+                  @input="validateString(namaPimpinan, { length: 3 })"
                 />
                 <p
                   v-if="namaPimpinan.isValid == false"
@@ -83,10 +65,7 @@
                   *minimal 3 huruf
                 </p>
               </CCol>
-              <CCol
-                sm="12"
-                md="6"
-              >
+              <CCol sm="12" md="6">
                 <CInput
                   v-model="nipPimpinan.val"
                   label="NIP Pimpinan (tanpa spasi)"
@@ -94,7 +73,7 @@
                   placeholder="197501012000011001"
                   :readonly="mode == 'view'"
                   :is-valid="nipPimpinan.isValid"
-                  @input="validateNip(nipPimpinan, {length:18})"
+                  @input="validateNip(nipPimpinan, { length: 18 })"
                 />
                 <p
                   v-if="nipPimpinan.isValid == false"
@@ -106,10 +85,7 @@
             </CRow>
             <!-- ROW 3 -->
             <CRow class="mb-2 view-form">
-              <CCol
-                sm="12"
-                md="6"
-              >
+              <CCol sm="12" md="6">
                 <CInput
                   v-model="alamat.val"
                   label="Alamat"
@@ -117,19 +93,13 @@
                   placeholder="Jl. Jakarta..."
                   :readonly="mode == 'view'"
                   :is-valid="alamat.isValid"
-                  @input="validateString(alamat, {length:3})"
+                  @input="validateString(alamat, { length: 3 })"
                 />
-                <p
-                  v-if="alamat.isValid == false"
-                  class="text-red-500 text-sm"
-                >
+                <p v-if="alamat.isValid == false" class="text-red-500 text-sm">
                   *minimal 3 huruf
                 </p>
               </CCol>
-              <CCol
-                sm="12"
-                md="6"
-              >
+              <CCol sm="12" md="6">
                 <CInput
                   v-if="mode == 'view'"
                   :value="provinsi.val"
@@ -155,10 +125,7 @@
             </CRow>
             <!-- ROW 4 -->
             <CRow class="mb-2 view-form">
-              <CCol
-                sm="12"
-                md="6"
-              >
+              <CCol sm="12" md="6">
                 <CInput
                   v-if="mode == 'view'"
                   :value="kabkot.val"
@@ -181,10 +148,7 @@
                   </v-select>
                 </div>
               </CCol>
-              <CCol
-                sm="12"
-                md="6"
-              >
+              <CCol sm="12" md="6">
                 <CInput
                   v-if="mode == 'view'"
                   :value="kecamatan.val"
@@ -209,10 +173,7 @@
             </CRow>
             <!-- ROW 5 -->
             <CRow class="mb-2 view-form">
-              <CCol
-                sm="12"
-                md="6"
-              >
+              <CCol sm="12" md="6">
                 <CInput
                   v-if="mode == 'view'"
                   :value="kelurahan.val"
@@ -235,10 +196,7 @@
                   </v-select>
                 </div>
               </CCol>
-              <CCol
-                sm="12"
-                md="6"
-              >
+              <CCol sm="12" md="6">
                 <CInput
                   v-model="jumlahObrik.val"
                   label="Jumlah Obrik"
@@ -259,10 +217,7 @@
             </CRow>
             <!-- ROW 6 -->
             <CRow class="mb-2 view-form">
-              <CCol
-                sm="12"
-                md="6"
-              >
+              <CCol sm="12" md="6">
                 <CInput
                   v-model="jumlahObrikBersih.val"
                   label="Jumlah Obrik Bersih"
@@ -280,10 +235,7 @@
                   *tidak boleh kosong
                 </p>
               </CCol>
-              <CCol
-                sm="12"
-                md="6"
-              >
+              <CCol sm="12" md="6">
                 <CInput
                   v-model="telpon.val"
                   label="Telpon"
@@ -293,19 +245,14 @@
                   :is-valid="telpon.isValid"
                   @input="validateTelpon(telpon)"
                 />
-                <p
-                  v-if="telpon.isValid == false"
-                  class="text-red-500 text-sm"
-                >
-                  *nomor telpon tidak valid, minimal 11 angka dan diawali dengan '62'
+                <p v-if="telpon.isValid == false" class="text-red-500 text-sm">
+                  *nomor telpon tidak valid, minimal 11 angka dan diawali dengan
+                  '62'
                 </p>
               </CCol>
             </CRow>
             <CRow class="mb-2 view-form">
-              <CCol
-                sm="12"
-                md="6"
-              >
+              <CCol sm="12" md="6">
                 <CButton
                   v-if="mode != 'view'"
                   variant="outline"
@@ -327,27 +274,17 @@
                 md="6"
                 class="content-center justify-end pr-3"
               >
-                <CButton
-                  type="submit"
-                  color="primary"
-                  class="px-4"
-                >
+                <CButton type="submit" color="primary" class="px-4">
                   <template v-if="loading">
-                    <CSpinner
-                      color="white"
-                      size="sm"
-                      class="mr-2"
-                    />
+                    <CSpinner color="white" size="sm" class="mr-2" />
                     Processing
                   </template>
-                  <template v-else>
-                    Submit Data
-                  </template>
+                  <template v-else> Submit Data </template>
                 </CButton>
               </CCol>
             </CRow>
           </CForm>
-        </CCardbody>
+        </CCardBody>
       </CCard>
     </CCol>
     <confirm-modal
@@ -361,12 +298,12 @@
 <script>
 import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
-import BackButton from '@/views/components/BackButton';
+import BackButton from '@/components/BackButton';
 import mixin from './mixin';
 import mixinWilayah from './minxinWilayah';
 import mixinValidate from './mixinValidate';
 
-import ConfirmModal from '../../components/ConfirmModal.vue';
+import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 
 export default {
   name: 'FormUnitKerja',

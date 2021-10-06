@@ -88,7 +88,7 @@
 
 
 <script>
-import ConfirmModal from '@/views/components/ConfirmModal.vue';
+import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 import mixin from './mixin';
 
 export default {

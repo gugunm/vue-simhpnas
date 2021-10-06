@@ -2,24 +2,14 @@
   <CRow>
     <CCol sm="12">
       <div class="text-2xl mb-4 font-semibold">
-        <h3 v-if="mode == 'create'">
-          Create Sub Bidang Obrik
-        </h3>
-        <h3 v-else>
-          Edit Sub Bidang Obrik
-        </h3>
+        <h3 v-if="mode == 'create'">Create Sub Bidang Obrik</h3>
+        <h3 v-else>Edit Sub Bidang Obrik</h3>
       </div>
       <CCard>
         <CCardBody>
-          <CForm
-            method="POST"
-            @submit.prevent="clickSubmitForm"
-          >
+          <CForm method="POST" @submit.prevent="clickSubmitForm">
             <CRow class="mb-2 view-form">
-              <CCol
-                sm="12"
-                md="6"
-              >
+              <CCol sm="12" md="6">
                 <CInput
                   v-model="form.idSubBidangObrik.val"
                   label="Kode Sub Bidang Obrik"
@@ -28,7 +18,7 @@
                   placeholder="kode"
                   :readonly="mode == 'edit'"
                   :is-valid="form.idSubBidangObrik.isValid"
-                  @input="validateString(form.idSubBidangObrik, {length:3})"
+                  @input="validateString(form.idSubBidangObrik, { length: 3 })"
                 />
                 <p
                   v-if="form.idSubBidangObrik.isValid == false"
@@ -37,10 +27,7 @@
                   *hanya 3 angka
                 </p>
               </CCol>
-              <CCol
-                sm="12"
-                md="6"
-              >
+              <CCol sm="12" md="6">
                 <CInput
                   v-model="form.descSubBidangObrik.val"
                   label="Deskripsi Sub Bidang Obrik"
@@ -48,7 +35,9 @@
                   type="text"
                   placeholder="deskripsi sub bidang obrik"
                   :is-valid="form.descSubBidangObrik.isValid"
-                  @input="validateString(form.descSubBidangObrik, {length:3})"
+                  @input="
+                    validateString(form.descSubBidangObrik, { length: 3 })
+                  "
                 />
                 <p
                   v-if="form.descSubBidangObrik.isValid == false"
@@ -59,10 +48,7 @@
               </CCol>
             </CRow>
             <CRow class="mb-2 view-form">
-              <CCol
-                sm="12"
-                md="6"
-              >
+              <CCol sm="12" md="6">
                 <CButton
                   v-if="mode != 'view'"
                   variant="outline"
@@ -78,24 +64,11 @@
                 md="6"
                 class="content-center justify-end pr-3"
               >
-                <CButton
-                  type="submit"
-                  color="primary"
-                  class="px-4"
-                >
-                  <div
-                    v-if="loading"
-                    class="px-8"
-                  >
-                    <CSpinner
-                      color="white"
-                      size="sm"
-                      class="mr-2"
-                    />
+                <CButton type="submit" color="primary" class="px-4">
+                  <div v-if="loading" class="px-8">
+                    <CSpinner color="white" size="sm" class="mr-2" />
                   </div>
-                  <template v-else>
-                    Submit Data
-                  </template>
+                  <template v-else> Submit Data </template>
                 </CButton>
               </CCol>
             </CRow>
@@ -111,7 +84,7 @@
   </CRow>
 </template>
 <script>
-import ConfirmModal from '@/views/components/ConfirmModal.vue';
+import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 import mixin from './mixin';
 
 export default {

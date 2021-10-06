@@ -22,9 +22,9 @@
 </template>
 
 <script>
-import MasterTable from '@/views/components/MasterTable';
+import MasterTable from '@/components/MasterTable';
 import mixin from './mixin';
-import ConfirmModal from '../../components/ConfirmModal.vue';
+import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 
 const fields = [
   {

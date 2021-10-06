@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import MasterTable from '@/views/components/MasterTable';
-import ConfirmModal from '@/views/components/ConfirmModal.vue';
+import MasterTable from '@/components/MasterTable';
+import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 import mixin from './mixin';
 
 const fields = [

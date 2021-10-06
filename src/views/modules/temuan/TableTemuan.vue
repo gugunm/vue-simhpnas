@@ -26,6 +26,7 @@
               :options="optionsLha"
               label="id"
               placeholder="Pilih LHA"
+              :clearable="false"
             >
               <template v-slot:option="option">
                 <div class="my-2">
@@ -34,9 +35,9 @@
                     <span> - </span>
                     <span>{{ option.namaObrik }}</span>
                   </div>
-                  <p class="text-base">
+                  <em class="">
                     {{ option.judulLaporan }}
-                  </p>
+                  </em>
                 </div>
               </template>
             </v-select>
@@ -121,7 +122,7 @@ const lhas = [
 ];
 
 export default {
-  name: 'MasterTable',
+  name: 'TableTemuan',
   components: {
     vSelect,
   },

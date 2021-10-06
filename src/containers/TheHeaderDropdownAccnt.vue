@@ -3,19 +3,16 @@
     in-nav
     class="c-header-nav-items"
     placement="bottom-end"
-    add-menu-classes="pt-0"
+    add-menu-classes="pt-0 mt-1"
   >
     <template #toggler>
       <CHeaderNavLink>
         <div class="c-avatar">
-          <img
-            src="img/avatars/6.jpg"
-            class="c-avatar-img "
-          >
+          <img src="img/avatars/6.jpg" class="c-avatar-img" />
         </div>
       </CHeaderNavLink>
     </template>
-    <CDropdownHeader
+    <!-- <CDropdownHeader
       tag="div"
       class="text-center"
       color="light"
@@ -57,21 +54,13 @@
       >
         {{ itemsCount }}
       </CBadge>
-    </CDropdownItem>
-    <CDropdownHeader
-      tag="div"
-      class="text-center"
-      color="light"
-    >
+    </CDropdownItem> -->
+    <!-- <CDropdownHeader tag="div" class="text-center" color="light">
       <strong>Settings</strong>
-    </CDropdownHeader>
-    <CDropdownItem>
-      <CIcon name="cil-user" /> Profile
-    </CDropdownItem>
-    <CDropdownItem>
-      <CIcon name="cil-settings" /> Settings
-    </CDropdownItem>
-    <CDropdownItem>
+    </CDropdownHeader> -->
+    <CDropdownItem> <CIcon name="cil-user" /> Profile </CDropdownItem>
+    <CDropdownItem> <CIcon name="cil-settings" /> Settings </CDropdownItem>
+    <!-- <CDropdownItem>
       <CIcon name="cil-dollar" /> Payments
       <CBadge
         color="secondary"
@@ -88,11 +77,11 @@
       >
         {{ itemsCount }}
       </CBadge>
-    </CDropdownItem>
+    </CDropdownItem> -->
     <CDropdownDivider />
-    <CDropdownItem>
+    <!-- <CDropdownItem>
       <CIcon name="cil-shield-alt" /> Lock Account
-    </CDropdownItem>
+    </CDropdownItem> -->
     <CDropdownItem @click="logout()">
       <CIcon name="cil-lock-locked" /> Logout
     </CDropdownItem>
@@ -100,31 +89,38 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
 export default {
   name: 'TheHeaderDropdownAccnt',
-  data () {
+  data() {
     return {
       itemsCount: 42,
-    }
+    };
   },
-  methods:{
-    logout(){
+  methods: {
+    logout() {
       let self = this;
-      axios.post( this.$apiAdress + '/api/logout?token=' + localStorage.getItem("api_token"),{})
-      .then(function (response) {
-        localStorage.setItem('roles', '');
-        self.$router.push({ path: '/login' });
-      }).catch(function (error) {
-        console.log(error); 
-      });
-    }
-  }
-}
+      axios
+        .post(
+          this.$apiAdress +
+            '/api/logout?token=' +
+            localStorage.getItem('api_token'),
+          {}
+        )
+        .then(function (response) {
+          localStorage.setItem('roles', '');
+          self.$router.push({ path: '/login' });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+  },
+};
 </script>
 
 <style scoped>
-  .c-icon {
-    margin-right: 0.3rem;
-  }
+.c-icon {
+  margin-right: 0.3rem;
+}
 </style>

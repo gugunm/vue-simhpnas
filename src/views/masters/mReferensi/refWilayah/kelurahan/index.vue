@@ -15,8 +15,8 @@
 <script>
 import axios from 'axios';
 import { API_URL } from '@/utils/api.js';
-import MasterTable from '@/views/components/MasterTable';
-import BackButton from '@/views/components/BackButton';
+import MasterTable from '@/components/MasterTable';
+import BackButton from '@/components/BackButton';
 
 const fields = [
   {

@@ -1,8 +1,5 @@
 <template>
-  <CHeader
-    with-subheader
-    class="shadow-sm"
-  >
+  <CHeader with-subheader class="shadow-sm">
     <CToggler
       in-header
       class="ml-3 d-lg-none"
@@ -20,10 +17,7 @@
         />
       </slot>
     </CToggler>
-    <CHeaderBrand
-      class="mx-auto d-lg-none"
-      to="/"
-    >
+    <CHeaderBrand class="mx-auto d-lg-none" to="/">
       <!-- <CIcon name="logo" height="48" alt="Logo"/> -->
       <CImg
         class="sidebar-logo g-logo-expand"
@@ -49,19 +43,13 @@
           class="c-header-nav-btn"
           @click="() => $store.commit('ui/toggle', 'darkMode')"
         >
-          <CIcon
-            v-if="$store.state.ui.darkMode"
-            name="cil-sun"
-          />
-          <CIcon
-            v-else
-            name="cil-moon"
-          />
+          <CIcon v-if="$store.state.ui.darkMode" name="cil-sun" />
+          <CIcon v-else name="cil-moon" />
         </button>
       </CHeaderNavItem>
       <TheHeaderDropdownNotif />
-      <!-- <TheHeaderDropdownTasks/>
-      <TheHeaderDropdownMssgs/> -->
+      <!-- <TheHeaderDropdownTasks /> -->
+      <!-- <TheHeaderDropdownMssgs/> -->
       <TheHeaderDropdownAccnt class="pr-4" />
       <!-- <CHeaderNavItem class="px-3">
         <button
@@ -83,7 +71,7 @@
 <script>
 import TheHeaderDropdownAccnt from './TheHeaderDropdownAccnt';
 import TheHeaderDropdownNotif from './TheHeaderDropdownNotif';
-// import TheHeaderDropdownTasks from './TheHeaderDropdownTasks'
+// import TheHeaderDropdownTasks from './TheHeaderDropdownTasks';
 // import TheHeaderDropdownMssgs from './TheHeaderDropdownMssgs'
 import CMenu from './Menu';
 import axios from 'axios';
