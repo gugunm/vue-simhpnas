@@ -20,13 +20,15 @@
               <p class="text-lg font-semibold mb-2">
                 {{ title || 'Meninggalkan halaman' }}
               </p>
-              <p>{{ msg || 'Meniggalkan halaman tanpa melakukan submit data akan menghilangkan data yang telah diinput.' }} </p>
+              <p>
+                {{
+                  msg ||
+                  'Meniggalkan halaman tanpa melakukan submit data akan menghilangkan data yang telah diinput.'
+                }}
+              </p>
             </div>
           </div>
-          <div
-            class="flex justify-end px-4 py-3"
-            style="background: #F9FAFB"
-          >
+          <div class="flex justify-end px-4 py-3" style="background: #f9fafb">
             <CButton
               class="mr-2"
               color="dark"
@@ -35,11 +37,7 @@
             >
               Oke
             </CButton>
-            <CButton
-              color="info"
-              class=""
-              @click="confirmCancel"
-            >
+            <CButton color="info" class="" @click="confirmCancel">
               Cancel
             </CButton>
           </div>
@@ -78,9 +76,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.c_modal_header .modal-warning .modal-header {
-  background-color: blueviolet;
-}
-</style>

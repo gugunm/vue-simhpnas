@@ -1,6 +1,6 @@
 <template>
   <div>
-    <master-table
+    <TableLha
       top-title="Laporan Hasil Audit"
       :items="items"
       :fields="fields"
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import MasterTable from '@/components/MasterTable';
+import TableLha from './TableLha.vue';
 import mixin from './mixin';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 
@@ -91,6 +91,7 @@ const fields = [
   },
   {
     key: 'actions',
+    label: 'Aksi',
     _style: 'width: 10%',
   },
 ];
@@ -98,7 +99,7 @@ const fields = [
 export default {
   name: 'LHA',
   components: {
-    MasterTable,
+    TableLha,
     ConfirmModal,
   },
   mixins: [mixin],

@@ -6,23 +6,20 @@
           {{ topTitle }} {{ title }} {{ descTitle | descCamelCase }}
         </h4>
       </CCol>
-      <CCol v-if="isAddButton" class="px-0" lg="12" sm="12">
-        <CButton color="info" class="mb-4 px-4" @click="openCreateModal">
-          <CIcon name="cil-plus" class="my-0 mb-1 mr-1" /> Tambah
-          <!-- size="md" -->
-        </CButton>
-      </CCol>
     </CRow>
-    <CCard>
-      <CCardBody>
-        <CRow class="text-center">
-          <CCol>
-            <p class="mb-4 inline-block mr-3 font-semibold">
+    <CCard class="pt-0">
+      <CCardHeader style="background: #f9fafb; border-bottom: none">
+        <CRow class="py-3 px-3">
+          <CCol v-if="isAddButton" class="text-left px-0" lg="6" sm="12">
+            <CButton color="info" class="px-4" @click="openCreateModal">
+              <CIcon name="cil-plus" class="my-0 mb-1 mr-1" /> Tambah
+            </CButton>
+            <!-- <p class="mb-2 inline-block mr-3 font-semibold">
               Laporan Hasil Audit
             </p>
             <v-select
               v-model="nomorLha"
-              class="inline-block w-1/3"
+              class="inline-block w-2/3"
               :options="optionsLha"
               label="id"
               placeholder="Pilih LHA"
@@ -40,16 +37,35 @@
                   </em>
                 </div>
               </template>
+            </v-select> -->
+          </CCol>
+          <CCol class="text-right" lg="6" sm="12">
+            <p class="mb-2 inline-block mr-3 font-semibold">Tahun</p>
+            <v-select
+              v-model="nomorLha"
+              class="inline-block w-32"
+              :options="optionsLha"
+              label="tahun"
+              placeholder="Pilih Tahun"
+              :clearable="false"
+            >
+              <template v-slot:option="option">
+                <div class="my-2">
+                  <p>{{ option.tahun }}</p>
+                </div>
+              </template>
             </v-select>
           </CCol>
         </CRow>
+      </CCardHeader>
+      <CCardBody>
         <CDataTable
           :items="items"
           :fields="fields"
           hover
           column-filter
           sorter
-          table-filter
+          :table-filter="{ label: 'Search: ', placeholder: 'teks..' }"
           items-per-page-select
           :items-per-page="5"
           pagination
@@ -105,19 +121,16 @@ import 'vue-select/dist/vue-select.css';
 
 const lhas = [
   {
-    id: 'LHA/2021/0001',
-    namaObrik: 'Obrik 001',
-    judulLaporan: 'Judul Laporan 001',
+    tahun: 2018,
   },
   {
-    id: 'LHA/2021/0020',
-    namaObrik: 'Obrik 020',
-    judulLaporan: 'Judul Laporan 020',
+    tahun: 2019,
   },
   {
-    id: 'LHA/2021/0033',
-    namaObrik: 'Obrik 033',
-    judulLaporan: 'Judul Laporan 033',
+    tahun: 2020,
+  },
+  {
+    tahun: 2021,
   },
 ];
 
