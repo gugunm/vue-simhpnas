@@ -18,8 +18,13 @@ import m_ref_jabatan from './modules/m_ref_jabatan';
 import m_ref_jenis_anggaran from './modules/m_ref_jenis_anggaran';
 import m_ref_unit_audit from './modules/m_ref_unit_audit';
 
-import module_lha from './modules/module_lha'
-import module_temuan from './modules/module_temuan'
+import module_lha from './modules/module_lha';
+import module_temuan from './modules/module_temuan';
+import module_tim from './modules/module_tim';
+import module_pelaku from './modules/module_pelaku';
+import module_penyebab from './modules/module_penyebab';
+import module_rekomendasi from './modules/module_rekomendasi';
+import module_tindak_lanjut from './modules/module_tindak_lanjut';
 
 
 export default new Vuex.Store({
@@ -39,6 +44,11 @@ export default new Vuex.Store({
     m_ref_jenis_anggaran,
     m_ref_unit_audit,
     module_lha,
-    module_temuan
+    module_temuan,
+    module_tim,
+    module_pelaku,
+    module_penyebab,
+    module_rekomendasi,
+    module_tindak_lanjut,
   }
 })

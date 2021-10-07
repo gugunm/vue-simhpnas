@@ -1,7 +1,7 @@
 <template>
   <div>
     <table-temuan
-      top-title="Temuan Audit"
+      top-title="Temuan"
       :items="items"
       :fields="fields"
       :clickable-rows="true"

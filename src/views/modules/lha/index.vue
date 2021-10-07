@@ -65,10 +65,10 @@ const fields = [
     key: 'judulLaporan',
     _style: 'width: 13%',
   },
-  {
-    key: 'tahunAnggaran',
-    _style: 'width: 8%',
-  },
+  // {
+  //   key: 'tahunAnggaran',
+  //   _style: 'width: 8%',
+  // },
   {
     key: 'jenisAnggaran',
     _style: 'width: 8%',
@@ -90,9 +90,13 @@ const fields = [
     _style: 'width: 15%',
   },
   {
+    key: 'send',
+    label: 'Kirim',
+  },
+  {
     key: 'actions',
     label: 'Aksi',
-    _style: 'width: 10%',
+    _style: 'width: 12%',
   },
 ];
 

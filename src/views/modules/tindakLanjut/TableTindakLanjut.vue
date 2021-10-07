@@ -14,18 +14,16 @@
       </CCol>
     </CRow>
     <CCard>
-      <CCardBody>
-        <CRow class="text-center">
+      <CCardHeader style="background: #f9fafb; border-bottom: none">
+        <CRow class="py-3">
           <CCol>
-            <p class="mb-4 inline-block mr-3 font-semibold">
-              Laporan Hasil Audit
-            </p>
+            <p class="inline-block mr-3 font-semibold">Rekomendasi</p>
             <v-select
               v-model="nomorLha"
-              class="inline-block w-1/3"
+              class="inline-block w-1/3 style-pilih-lha"
               :options="optionsLha"
               label="id"
-              placeholder="Pilih LHA"
+              placeholder="Pilih nomor rekomendasi"
               :clearable="false"
             >
               <template v-slot:option="option">
@@ -43,16 +41,18 @@
             </v-select>
           </CCol>
         </CRow>
+      </CCardHeader>
+      <CCardBody>
         <CDataTable
           :items="items"
           :fields="fields"
           hover
           column-filter
           sorter
-          table-filter
-          items-per-page-select
           :items-per-page="5"
           pagination
+          :table-filter="{ label: 'Search: ', placeholder: 'teks..' }"
+          :items-per-page-select="{ label: 'Item per halaman: ' }"
         >
           <template #id="{ item }">
             <td

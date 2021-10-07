@@ -20,10 +20,9 @@
     <CHeaderBrand class="mx-auto d-lg-none" to="/">
       <!-- <CIcon name="logo" height="48" alt="Logo"/> -->
       <CImg
-        class="sidebar-logo g-logo-expand"
+        class="sidebar-logo g-logo-expand h-10"
         name="logo-expand"
         src="img/simhp/logo2.svg"
-        height="48"
       />
     </CHeaderBrand>
 
@@ -38,7 +37,7 @@
           @update:value="selectLocale"
         /> -->
       <!-- </CHeaderNavItem> -->
-      <CHeaderNavItem>
+      <!-- <CHeaderNavItem>
         <button
           class="c-header-nav-btn"
           @click="() => $store.commit('ui/toggle', 'darkMode')"
@@ -46,8 +45,8 @@
           <CIcon v-if="$store.state.ui.darkMode" name="cil-sun" />
           <CIcon v-else name="cil-moon" />
         </button>
-      </CHeaderNavItem>
-      <TheHeaderDropdownNotif />
+      </CHeaderNavItem> -->
+      <TheHeaderDropdownNotif class="mr-3" />
       <!-- <TheHeaderDropdownTasks /> -->
       <!-- <TheHeaderDropdownMssgs/> -->
       <TheHeaderDropdownAccnt class="pr-4" />

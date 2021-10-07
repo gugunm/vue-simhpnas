@@ -17,7 +17,7 @@ export default {
 
     if (response.status != 200) {
       const error = new Error(
-        responseData.message || 'Failed to fetch data unit kerja.'
+        responseData.message || 'Failed to fetch data'
       );
       throw error;
     }

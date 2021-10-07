@@ -14,6 +14,15 @@
       </CCol>
     </CRow>
     <CCard>
+      <!-- <CCardHeader style="background: #f9fafb; border-bottom: none">
+        <CRow class="py-3 px-3">
+          <CCol class="text-left px-0" lg="6" sm="12">
+            <CButton color="info" class="px-4" @click="openCreateModal">
+              <CIcon name="cil-plus" class="my-0 mb-1 mr-1" /> Tambah
+            </CButton>
+          </CCol>
+        </CRow>
+      </CCardHeader> -->
       <CCardBody>
         <CDataTable
           :items="items"
@@ -21,10 +30,10 @@
           hover
           column-filter
           sorter
-          :table-filter="{ label: 'Search: ', placeholder: 'teks..' }"
           :items-per-page="5"
           pagination
-          :items-per-page-select="{ label: 'Item Per Halaman: ' }"
+          :table-filter="{ label: 'Search: ', placeholder: 'teks..' }"
+          :items-per-page-select="{ label: 'Item per halaman: ' }"
         >
           <!-- :clickable-rows="clickableRows"
           @row-clicked="clickedRow" -->
@@ -43,8 +52,8 @@
           </template>
           <!-- <template #actions> -->
           <template #actions="{ item }">
-            <td class="">
-              <CRow class="mb-2">
+            <td>
+              <CRow>
                 <CCol>
                   <CButton
                     v-if="isDeleteButton"
@@ -56,7 +65,7 @@
                     variant="outline"
                     square
                     size="sm"
-                    class="inline-block mr-2"
+                    class="inline-block m-1"
                     @click="openDeleteModal(item.id)"
                   >
                     <svg
@@ -82,7 +91,7 @@
                     variant="outline"
                     square
                     size="sm"
-                    class="inline-block"
+                    class="inline-block m-1"
                     @click="openDeleteModal(item.id)"
                   >
                     <svg
@@ -111,7 +120,7 @@
                     variant="outline"
                     square
                     size="sm"
-                    class="mr-2 inline-block"
+                    class="m-1 inline-block"
                     @click="openEditModal(item)"
                   >
                     <!-- <font-awesome-icon :icon="['fas', 'pen']" /> -->
@@ -141,7 +150,7 @@
                     color="danger"
                     variant="outline"
                     size="sm"
-                    class="inline-block"
+                    class="m-1 inline-block"
                     @click="openDeleteModal(item.id)"
                   >
                     <svg
@@ -158,6 +167,25 @@
                     </svg>
                     <!-- <font-awesome-icon :icon="['fas', 'trash-alt']" /> -->
                     <!-- <p>Hapus</p> -->
+                  </CButton>
+                </CCol>
+              </CRow>
+            </td>
+          </template>
+          <template #send="{ item }">
+            <td>
+              <CRow>
+                <CCol>
+                  <CButton
+                    v-if="isDeleteButton"
+                    color="primary"
+                    variant="outline"
+                    square
+                    size="sm"
+                    class="inline-block m-1"
+                    @click="openSendModal(item.id)"
+                  >
+                    <span>Kirim</span>
                   </CButton>
                 </CCol>
               </CRow>

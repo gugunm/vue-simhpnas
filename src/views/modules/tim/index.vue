@@ -27,25 +27,31 @@ import mixin from './mixin';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 
 const fields = [
-  // {
-  //   key: 'id',
-  //   label: 'ID',
-  // },
+  {
+    key: 'id',
+    label: 'ID',
+  },
   {
     key: 'nomorLha',
     label: 'Nomor LHA',
-    _style: 'width: 15%',
   },
   {
-    key: 'nikAnggota',
-    _style: 'width: 15%',
+    key: 'nomorUrut',
   },
   {
-    key: 'namaAnggota',
+    key: 'nama',
   },
   {
-    key: 'actions',
-    _style: 'width: 10%',
+    key: 'nip',
+  },
+  {
+    key: 'peran',
+  },
+  {
+    key: 'unitAudit',
+  },
+  {
+    key: 'subUnitAudit',
   },
 ];
 
@@ -118,7 +124,7 @@ export default {
       try {
         await this.$store.dispatch('module_tim/loadTim', {
           forceRefresh: refresh,
-          nomorLha: 'LHA/1/2021',
+          idLha: 7,
         });
         this.items = this.$store.getters['module_tim/tim'];
       } catch (error) {

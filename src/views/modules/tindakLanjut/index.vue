@@ -1,7 +1,7 @@
 <template>
   <div>
     <table-tindak-lanjut
-      top-title="Tindak Lanjut Rekomendasi"
+      top-title="Tindak Lanjut"
       :items="items"
       :fields="fields"
       :clickable-rows="true"

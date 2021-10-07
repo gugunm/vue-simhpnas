@@ -6,23 +6,24 @@
           {{ topTitle }} {{ title }} {{ descTitle | descCamelCase }}
         </h4>
       </CCol>
+      <CCol v-if="isAddButton" class="px-0" lg="12" sm="12">
+        <CButton color="info" class="mb-4 px-4" @click="openCreateModal">
+          <CIcon name="cil-plus" class="my-0 mb-1 mr-1" /> Tambah
+          <!-- size="md" -->
+        </CButton>
+      </CCol>
     </CRow>
     <CCard class="pt-0">
       <CCardHeader style="background: #f9fafb; border-bottom: none">
-        <CRow class="py-3 px-3">
-          <CCol v-if="isAddButton" class="text-left px-0" lg="6" sm="12">
-            <CButton color="info" class="px-4" @click="openCreateModal">
-              <CIcon name="cil-plus" class="my-0 mb-1 mr-1" /> Tambah
-            </CButton>
-            <!-- <p class="mb-2 inline-block mr-3 font-semibold">
-              Laporan Hasil Audit
-            </p>
+        <CRow class="py-3">
+          <CCol>
+            <p class="inline-block mr-3 font-semibold">Laporan Hasil Audit</p>
             <v-select
               v-model="nomorLha"
-              class="inline-block w-2/3"
+              class="inline-block w-1/3 style-pilih-lha"
               :options="optionsLha"
               label="id"
-              placeholder="Pilih LHA"
+              placeholder="Pilih nomor LHA"
               :clearable="false"
             >
               <template v-slot:option="option">
@@ -37,23 +38,6 @@
                   </em>
                 </div>
               </template>
-            </v-select> -->
-          </CCol>
-          <CCol class="text-right" lg="6" sm="12">
-            <p class="mb-2 inline-block mr-3 font-semibold">Tahun</p>
-            <v-select
-              v-model="nomorLha"
-              class="inline-block w-32"
-              :options="optionsLha"
-              label="tahun"
-              placeholder="Pilih Tahun"
-              :clearable="false"
-            >
-              <template v-slot:option="option">
-                <div class="my-2">
-                  <p>{{ option.tahun }}</p>
-                </div>
-              </template>
             </v-select>
           </CCol>
         </CRow>
@@ -65,10 +49,10 @@
           hover
           column-filter
           sorter
-          :table-filter="{ label: 'Search: ', placeholder: 'teks..' }"
-          items-per-page-select
           :items-per-page="5"
           pagination
+          :table-filter="{ label: 'Search: ', placeholder: 'teks..' }"
+          :items-per-page-select="{ label: 'Item per halaman: ' }"
         >
           <template #id="{ item }">
             <td
@@ -121,16 +105,24 @@ import 'vue-select/dist/vue-select.css';
 
 const lhas = [
   {
-    tahun: 2018,
+    id: 1,
+    namaObrik: 'Obrik A',
+    judulLaporan: 'Judul Laporan',
   },
   {
-    tahun: 2019,
+    id: 1,
+    namaObrik: 'Obrik A',
+    judulLaporan: 'Judul Laporan',
   },
   {
-    tahun: 2020,
+    id: 1,
+    namaObrik: 'Obrik A',
+    judulLaporan: 'Judul Laporan',
   },
   {
-    tahun: 2021,
+    id: 1,
+    namaObrik: 'Obrik A',
+    judulLaporan: 'Judul Laporan',
   },
 ];
 
@@ -209,5 +201,9 @@ export default {
 <style scoped>
 .btn-action-table {
   border: 1px solid #fc8181;
+}
+
+.style-pilih-lha .vs__selected-options .vs__dropdown-toggle input {
+  padding: 6px;
 }
 </style>
