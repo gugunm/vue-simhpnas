@@ -27,21 +27,15 @@ import mixin from './mixin';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 
 const fields = [
-  // {
-  //   key: 'id',
-  //   label: 'ID',
-  // },
+  {
+    key: 'id',
+    label: 'ID',
+  },
   {
     key: 'nomorLha',
-    label: 'Nomor LHA',
-    _style: 'width: 15%',
   },
   {
     key: 'nomorRekomendasi',
-    _style: 'width: 20%',
-  },
-  {
-    key: 'tindakLanjut',
   },
   {
     key: 'actions',
@@ -65,24 +59,24 @@ export default {
     };
   },
   async mounted() {
-    await this.loadRekomendasi();
+    await this.loadTindakLanjut();
   },
   methods: {
     openDetail(item) {
       this.$router.push({
-        name: 'module-detail-rekomendasi',
-        params: { idRekomendasi: 1 },
+        name: 'module-detail-tindak-lanjut',
+        params: { idTindakLanjut: item.id },
       });
     },
     openCreate() {
       this.$router.push({
-        name: 'module-create-rekomendasi',
+        name: 'module-create-tindak-lanjut',
       });
     },
     openEdit(item) {
       this.$router.push({
-        name: 'module-edit-rekomendasi',
-        params: { idRekomendasi: 1 },
+        name: 'module-edit-tindak-lanjut',
+        params: { idTindakLanjut: item.id },
       });
     },
     openDeleteModal(id) {
@@ -91,12 +85,12 @@ export default {
     },
     async actionDelete() {
       try {
-        await this.$store.dispatch('module_lha/deleteRekomendasiById', {
-          idLha: this.idToDelete,
+        await this.$store.dispatch('module_lha/deleteTindakLanjutById', {
+          idRekomendasi: this.idToDelete,
         });
         this.isDeleteConfirm = false;
 
-        this.loadRekomendasi();
+        this.loadTindakLanjut();
 
         this.$toast.open({
           message: `Berhasil menghapus data dengan ID ${this.idToDelete}`,
@@ -113,14 +107,14 @@ export default {
         });
       }
     },
-    async loadRekomendasi(refresh = false) {
+    async loadTindakLanjut(refresh = false) {
       this.loading = true;
       try {
-        await this.$store.dispatch('module_rekomendasi/loadRekomendasi', {
+        await this.$store.dispatch('module_tindak_lanjut/loadTindakLanjut', {
           forceRefresh: refresh,
-          nomorLha: 'LHA/1/2021',
+          idRekomendasi: 'mZO105ro9W',
         });
-        this.items = this.$store.getters['module_rekomendasi/rekomendasi'];
+        this.items = this.$store.getters['module_tindak_lanjut/tindakLanjut'];
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }

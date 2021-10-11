@@ -1,9 +1,11 @@
 <template>
-  <p>Page Detail LHA</p>
+  <p>Page Detail LHA {{ idLha }}</p>
 </template>
 
 <script>
-export default {};
+export default {
+  props: ['idLha'],
+};
 </script>
 
 <style>

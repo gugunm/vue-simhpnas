@@ -122,7 +122,7 @@ export default {
     openDetail(item) {
       this.$router.push({
         name: 'module-detail-lha',
-        params: { idLha: 1 },
+        params: { idLha: item.id },
       });
     },
     openCreate() {
@@ -133,7 +133,7 @@ export default {
     openEdit(item) {
       this.$router.push({
         name: 'module-edit-lha',
-        params: { idLha: 1 },
+        params: { idLha: item.id },
       });
     },
     openDeleteModal(id) {

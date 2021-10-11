@@ -27,17 +27,18 @@ import mixin from './mixin';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 
 const fields = [
+  { key: 'id' },
   {
     key: 'nomorLha',
     label: 'Nomor LHA',
     _style: 'width: 15%',
   },
   {
-    key: 'nikPelaku',
+    key: 'nip',
     _style: 'width: 15%',
   },
   {
-    key: 'namaPelaku',
+    key: 'nama',
   },
   {
     key: 'actions',
@@ -67,7 +68,7 @@ export default {
     openDetail(item) {
       this.$router.push({
         name: 'module-detail-pelaku',
-        params: { idPelaku: 1 },
+        params: { idPelaku: item.id },
       });
     },
     openCreate() {
@@ -78,7 +79,7 @@ export default {
     openEdit(item) {
       this.$router.push({
         name: 'module-edit-pelaku',
-        params: { idPelaku: 1 },
+        params: { idPelaku: item.id },
       });
     },
     openDeleteModal(id) {
@@ -114,7 +115,7 @@ export default {
       try {
         await this.$store.dispatch('module_pelaku/loadPelaku', {
           forceRefresh: refresh,
-          nomorLha: 'LHA/1/2021',
+          idRekomendasi: 'mZO105ro9W',
         });
         this.items = this.$store.getters['module_pelaku/pelaku'];
       } catch (error) {

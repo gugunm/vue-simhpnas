@@ -34,24 +34,19 @@ const fields = [
     label: 'ID',
   },
   {
-    key: 'namaUnit',
-    label: 'Nama Unit',
+    key: 'nomorTemuan',
   },
   {
-    key: 'namaPimpinan',
-    label: 'Nama Pimpinan',
+    key: 'nomorLha',
   },
   {
-    key: 'provinsi',
-    label: 'Provinsi',
+    key: 'refKodePenyebab',
   },
   {
-    key: 'kabkot',
-    label: 'Kab/Kota',
+    key: 'deskripsi',
   },
   {
-    key: 'jumlahObrik',
-    label: 'Jumlah Obrik',
+    key: 'memoTemuan',
   },
   {
     key: 'actions',
@@ -74,6 +69,7 @@ export default {
       idToDelete: null,
     };
   },
+
   async mounted() {
     await this.loadPenyebab();
   },
@@ -82,7 +78,7 @@ export default {
     openDetail(item) {
       this.$router.push({
         name: 'module-detail-penyebab',
-        params: { idPenyebab: 1 },
+        params: { idPenyebab: item.id },
       });
     },
 
@@ -95,7 +91,7 @@ export default {
     openEdit(item) {
       this.$router.push({
         name: 'module-edit-penyebab',
-        params: { idPenyebab: 1 },
+        params: { idPenyebab: item.id },
       });
     },
 
@@ -133,9 +129,10 @@ export default {
       // this.loading = true;
       try {
         await this.$store.dispatch('module_penyebab/loadPenyebab', {
+          idTemuan: 'mgR1oZM85x',
           forceRefresh: refresh,
         });
-        this.items = this.$store.getters['module_penyebab/unitPenyebab'];
+        this.items = this.$store.getters['module_penyebab/penyebab'];
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }

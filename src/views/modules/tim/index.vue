@@ -77,7 +77,7 @@ export default {
     openDetail(item) {
       this.$router.push({
         name: 'module-detail-tim',
-        params: { idTim: 1 },
+        params: { idTim: item.id },
       });
     },
     openCreate() {
@@ -88,7 +88,7 @@ export default {
     openEdit(item) {
       this.$router.push({
         name: 'module-edit-tim',
-        params: { idTim: 1 },
+        params: { idTim: item.id },
       });
     },
     openDeleteModal(id) {
@@ -124,7 +124,7 @@ export default {
       try {
         await this.$store.dispatch('module_tim/loadTim', {
           forceRefresh: refresh,
-          idLha: 7,
+          idLha: 'lQ375o1825',
         });
         this.items = this.$store.getters['module_tim/tim'];
       } catch (error) {

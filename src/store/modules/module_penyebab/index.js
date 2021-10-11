@@ -6,6 +6,9 @@ export default {
   namespaced: true,
   state() {
     return {
+      lastFetch: null,
+      penyebab: [],
+      penyebabById: {}
     };
   },
   mutations,

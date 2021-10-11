@@ -107,7 +107,7 @@ export default {
     openDetail(item) {
       this.$router.push({
         name: 'module-detail-temuan',
-        params: { idTemuan: 1 },
+        params: { idTemuan: item.id },
       });
     },
     openCreate() {
@@ -118,7 +118,7 @@ export default {
     openEdit(item) {
       this.$router.push({
         name: 'module-edit-temuan',
-        params: { idTemuan: 1 },
+        params: { idTemuan: item.id },
       });
     },
     openDeleteModal(id) {
@@ -154,7 +154,7 @@ export default {
       try {
         await this.$store.dispatch('module_temuan/loadTemuan', {
           forceRefresh: refresh,
-          idLha: 7,
+          idLha: 'lQ375o1825',
         });
         this.items = this.$store.getters['module_temuan/temuan'];
       } catch (error) {

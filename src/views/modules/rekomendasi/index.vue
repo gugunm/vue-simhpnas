@@ -27,22 +27,31 @@ import mixin from './mixin';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 
 const fields = [
-  // {
-  //   key: 'id',
-  //   label: 'ID',
-  // },
   {
-    key: 'nomorLha',
-    label: 'Nomor LHA',
-    _style: 'width: 15%',
+    key: 'id',
+    label: 'ID',
   },
-  {
-    key: 'nomorTemuan',
-    _style: 'width: 15%',
-  },
-  {
-    key: 'Rekomendasi',
-  },
+  { key: 'nomorRekomendasi' },
+  // { key: 'kodeTemuan' },
+  { key: 'nomorTemuan' },
+  // { key: 'kodeLha' },
+  { key: 'nomorLha' },
+  // { key: 'kodeKelompokRekomendasi' },
+  // { key: 'kelompokRekomendasi' },
+  // { key: 'kodeSubKelompokRekomendasi' },
+  { key: 'subKelompokRekomendasi' },
+  { key: 'memoRekomendasi' },
+  // { key: 'flagPelaku' },
+  { key: 'nilaiRekomendasi' },
+  { key: 'nilaiTL' },
+  { key: 'statusRekomendasi' },
+  { key: 'memoKoreksiRek' },
+  // { key: 'kodeUnitObrikTl' },
+  { key: 'unitObrik' },
+  // { key: 'kodeBidangObrikTl' },
+  // { key: 'bidangObrik' },
+  // { key: 'kodeSubBidangObrikTl' },
+  // { key: 'subBidangObrik' },
   {
     key: 'actions',
     _style: 'width: 10%',
@@ -71,7 +80,7 @@ export default {
     openDetail(item) {
       this.$router.push({
         name: 'module-detail-rekomendasi',
-        params: { idRekomendasi: 1 },
+        params: { idRekomendasi: item.id },
       });
     },
     openCreate() {
@@ -82,7 +91,7 @@ export default {
     openEdit(item) {
       this.$router.push({
         name: 'module-edit-rekomendasi',
-        params: { idRekomendasi: 1 },
+        params: { idRekomendasi: item.id },
       });
     },
     openDeleteModal(id) {
@@ -118,7 +127,7 @@ export default {
       try {
         await this.$store.dispatch('module_rekomendasi/loadRekomendasi', {
           forceRefresh: refresh,
-          nomorLha: 'LHA/1/2021',
+          idTemuan: 'mgR1oZM85x',
         });
         this.items = this.$store.getters['module_rekomendasi/rekomendasi'];
       } catch (error) {

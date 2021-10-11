@@ -4,7 +4,7 @@
       <transition name="slide">
         <CCard>
           <CCardBody>
-            <h4>Menus</h4>
+            <!-- <h4>Menus</h4> -->
             <CButton color="primary" class="mb-3" @click="addElementToMenu()">
               Add Element to Menu
             </CButton>
