@@ -1,9 +1,11 @@
 <template>
   <div>
-    <CRow class="mb-3">
+    <CRow class="mb-4">
       <CCol>
         <h3 class="h3">Halo, Selamat Datang</h3>
-        <h6 class="h6">Inspektorat Kab. Pandeglang</h6>
+        <h6 class="h5 capitalize">
+          {{ namaUnit }}
+        </h6>
       </CCol>
     </CRow>
     <WidgetsDropdown />
@@ -442,6 +444,7 @@ export default {
   },
   data() {
     return {
+      namaUnit: '',
       selected: 'Month',
       tableItems: [
         {
@@ -535,6 +538,10 @@ export default {
         { key: this.$i18n.translate('dashboard.activity') },
 */
     };
+  },
+  mounted() {
+    const result = localStorage.getItem('namaUnit');
+    this.namaUnit = result.toLowerCase();
   },
   methods: {
     color(value) {

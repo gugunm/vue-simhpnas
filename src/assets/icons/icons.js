@@ -22,7 +22,7 @@ import {
   cibStripe,
   cibPaypal,
   cibGooglePay,
-  cibCcAmex
+  cibCcAmex,
 } from '@coreui/icons'
 import {
   cifUs,
@@ -61,6 +61,7 @@ import {
   cilColorBorder,
   cilColorPalette,
   cilCommentSquare,
+  cilCompress,
   cilCreditCard,
   cilCursor,
   cilCursorMove,
@@ -159,6 +160,7 @@ export const iconsSet = Object.assign({}, { logo }, {
   cilColorBorder,
   cilColorPalette,
   cilCommentSquare,
+  cilCompress,
   cilCreditCard,
   cilCursor,
   cilCursorMove,

@@ -112,7 +112,7 @@ export default {
     },
     selectRole() {
       let self = this;
-      console.log(this.roleSelected);
+      // console.log(this.roleSelected);
       axios
         .get(
           this.$apiAdress +

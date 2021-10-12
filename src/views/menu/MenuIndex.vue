@@ -1,20 +1,11 @@
 <template>
   <CRow>
-    <CCol
-      col="12"
-      xl="12"
-    >
+    <CCol col="12" xl="12">
       <transition name="slide">
         <CCard>
           <CCardBody>
-            <h4>
-              Menus
-            </h4>
-            <CButton
-              color="primary"
-              class="mb-3"
-              @click="addMenu()"
-            >
+            <h4>Menus</h4>
+            <CButton color="primary" class="mb-3" @click="addMenu()">
               Add Menu
             </CButton>
             <CDataTable
@@ -24,37 +15,28 @@
               :items-per-page="10"
               pagination
             >
-              <template #name="{item}">
+              <template #name="{ item }">
                 <td>
                   <strong>{{ item.name }}</strong>
                 </td>
               </template>
-              <template #menu_elements="{item}">
+              <template #menu_elements="{ item }">
                 <td>
-                  <CButton
-                    color="primary"
-                    @click="menuElements( item.id )"
-                  >
+                  <CButton color="primary" @click="menuElements(item.id)">
                     Menu Elements
                   </CButton>
                 </td>
               </template>
-              <template #edit="{item}">
+              <template #edit="{ item }">
                 <td>
-                  <CButton
-                    color="primary"
-                    @click="editMenu( item.id )"
-                  >
+                  <CButton color="primary" @click="editMenu(item.id)">
                     Edit
                   </CButton>
                 </td>
               </template>
-              <template #delete="{item}">
+              <template #delete="{ item }">
                 <td>
-                  <CButton
-                    color="danger"
-                    @click="deleteMenu( item.id )"
-                  >
+                  <CButton color="danger" @click="deleteMenu(item.id)">
                     Delete
                   </CButton>
                 </td>
@@ -68,42 +50,48 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
 export default {
   name: 'MenuIndex',
-  data () {
+  data() {
     return {
       fields: ['name', 'menu_elements', 'edit', 'delete'],
       items: [],
-    }
+    };
   },
-  mounted(){
+  mounted() {
     this.getMenus();
   },
   methods: {
-    menuElements(id){
-      this.$router.push({path: `menuelement/${id.toString()}/menuelement`});
+    menuElements(id) {
+      this.$router.push({ path: `menuelement/${id.toString()}/menuelement` });
     },
-    addMenu(){
-      this.$router.push({path: 'create'});
+    addMenu() {
+      this.$router.push({ path: 'create' });
     },
-    editMenu(id){
-      this.$router.push({path: `menu/${id.toString()}/edit`});
+    editMenu(id) {
+      this.$router.push({ path: `menu/${id.toString()}/edit` });
     },
-    deleteMenu(id){
-      this.$router.push({path: `menu/${id.toString()}/delete`});
+    deleteMenu(id) {
+      this.$router.push({ path: `menu/${id.toString()}/delete` });
     },
-    getMenus () {
+    getMenus() {
       let self = this;
-      axios.get(   this.$apiAdress + '/api/menu/menu?token=' + localStorage.getItem("api_token") )
-      .then(function (response) {
-        console.log(response.data);
-        self.items = response.data.menulist;
-      }).catch(function (error) {
-        console.log(error);
-        self.$router.push({ path: '/login' });
-      });
-    }
-  }
-}
+      axios
+        .get(
+          this.$apiAdress +
+            '/api/menu/menu?token=' +
+            localStorage.getItem('api_token')
+        )
+        .then(function (response) {
+          // console.log(response.data);
+          self.items = response.data.menulist;
+        })
+        .catch(function (error) {
+          console.log(error);
+          self.$router.push({ path: '/login' });
+        });
+    },
+  },
+};
 </script>

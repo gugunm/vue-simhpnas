@@ -47,6 +47,11 @@
         </button>
       </CHeaderNavItem> -->
       <TheHeaderDropdownNotif class="mr-3" />
+      <div class="mr-3">
+        <p class="capitalize pl-3 font-bold border-l border-gray-400">
+          {{ namaUser }}
+        </p>
+      </div>
       <!-- <TheHeaderDropdownTasks /> -->
       <!-- <TheHeaderDropdownMssgs/> -->
       <TheHeaderDropdownAccnt class="pr-4" />
@@ -88,9 +93,11 @@ export default {
     return {
       langs: [],
       locale: 'en',
+      namaUser: '',
     };
   },
   mounted() {
+    this.namaUser = localStorage.getItem('name');
     let self = this;
     if (typeof localStorage.locale !== 'undefined') {
       this.locale = localStorage.getItem('locale');

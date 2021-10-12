@@ -5,14 +5,9 @@
         <CCol md="6">
           <CCard class="mx-4 mb-0">
             <CCardBody class="p-4">
-              <CForm
-                method="POST"
-                @submit.prevent="register"
-              >
+              <CForm method="POST" @submit.prevent="register">
                 <h1>Register</h1>
-                <p class="text-muted">
-                  Create your account
-                </p>
+                <p class="text-muted">Create your account</p>
                 <CInput
                   v-model="name"
                   placeholder="Username"
@@ -51,11 +46,7 @@
                     <CIcon name="cil-lock-locked" />
                   </template>
                 </CInput>
-                <CButton
-                  type="submit"
-                  color="success"
-                  block
-                >
+                <CButton type="submit" color="success" block>
                   Create Account
                 </CButton>
               </CForm>
@@ -82,38 +73,38 @@
 </template>
 
   <script>
-    import axios from 'axios'
-    export default {
-      data() {
-        return {
-          name: '',
-          email: '',
-          password: '',
-          password_confirmation: ''
-        }
-      },
-      methods: {
-        register() {
-          var self = this;
-          axios.post( this.$apiAdress + '/api/register', {
-            name: self.name,
-            email: self.email,
-            password: self.password,
-            password_confirmation: self.password_confirmation
-          }).then(function (response) {
-            self.name = '';
-            self.email = '';
-            self.password = '';
-            self.password_confirmation = '';
-            console.log(response);
-            self.$router.push({ path: '/login' });
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-
-        }
-      }
-    }
-
-  </script>
+import axios from 'axios';
+export default {
+  data() {
+    return {
+      name: '',
+      email: '',
+      password: '',
+      password_confirmation: '',
+    };
+  },
+  methods: {
+    register() {
+      var self = this;
+      axios
+        .post(this.$apiAdress + '/api/register', {
+          name: self.name,
+          email: self.email,
+          password: self.password,
+          password_confirmation: self.password_confirmation,
+        })
+        .then(function (response) {
+          self.name = '';
+          self.email = '';
+          self.password = '';
+          self.password_confirmation = '';
+          // console.log(response);
+          self.$router.push({ path: '/login' });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+  },
+};
+</script>

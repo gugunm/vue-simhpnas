@@ -24,7 +24,7 @@ export default {
 
     // called by create and edit files
     async onSubmitForm(payload) {
-      console.log(payload.data)
+      // console.log(payload.data)
       this.loading = true;
       if (payload.mode == 'create' && payload.formIsValid) {
         try {

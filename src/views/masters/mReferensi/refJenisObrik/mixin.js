@@ -27,7 +27,7 @@ export default {
       this.loading = true;
       if (payload.mode == 'create' && payload.formIsValid) {
         try {
-          console.log(payload.data)
+          // console.log(payload.data)
           const result = await this.$store.dispatch(
             'm_ref_jenis_obrik/createRefJenisObrik',
             payload.data

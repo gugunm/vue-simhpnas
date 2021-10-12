@@ -108,7 +108,13 @@ export default {
           {}
         )
         .then(function (response) {
-          localStorage.setItem('roles', '');
+          localStorage.removeItem('api_token');
+          localStorage.removeItem('tokenExpiration');
+          localStorage.removeItem('idUnitKerja');
+          localStorage.removeItem('level');
+          localStorage.removeItem('name');
+          localStorage.removeItem('roles');
+          localStorage.removeItem('namaUnit');
           self.$router.push({ path: '/login' });
         })
         .catch(function (error) {

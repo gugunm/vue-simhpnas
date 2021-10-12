@@ -125,7 +125,7 @@ export default {
       this.loading = false;
     },
     showDetailKlpTemuan(item) {
-      console.log(item);
+      // console.log(item);
       this.$router.push({
         name: 'msubkelompoktemuan',
         params: { idKlpTemuan: item.id, idJenisTemuan: this.idJenisTemuan },

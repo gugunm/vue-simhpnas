@@ -169,7 +169,7 @@ export default {
           forceRefresh: refresh,
         });
         this.items = this.$store.getters['module_lha/lha'];
-        console.log(this.items);
+        // console.log(this.items);
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
