@@ -23,6 +23,9 @@ export default {
   hasRefKelurahan(state) {
     return state.refKelurahan && state.refKelurahan.length > 0;
   },
+  searchKelurahan(state) {
+    return state.searchKelurahan;
+  },
   shouldUpdate(state) {
     const lastFetch = state.lastFetch;
     if (!lastFetch) {

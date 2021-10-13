@@ -11,6 +11,9 @@ export default {
   setRefKelurahan(state, payload) {
     state.refKelurahan = payload;
   },
+  setSearchKelurahan(state, payload){
+    state.searchKelurahan = payload;
+  },
   setFetchTimestamp(state) {
     state.lastFetch = new Date().getTime();
   }

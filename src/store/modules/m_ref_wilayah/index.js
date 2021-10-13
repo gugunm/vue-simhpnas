@@ -10,7 +10,8 @@ export default {
       refProvinsi: [],
       refKabkot: [],
       refKecamatan: [],
-      refKelurahan: []
+      refKelurahan: [],
+      searchKelurahan: []
     };
   },
   mutations,

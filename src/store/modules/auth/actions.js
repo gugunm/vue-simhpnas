@@ -44,9 +44,11 @@ export default {
     localStorage.setItem('roles', responseData.roles);
     localStorage.setItem('tokenExpiration', expirationDate);
     localStorage.setItem('idUnitKerja', responseData.unitkerja);
+    localStorage.setItem('namaUnit', responseData.namaunitkerja);
     localStorage.setItem('level', responseData.level);
     localStorage.setItem('name', responseData.name);
-    localStorage.setItem('namaUnit', responseData.namaunitkerja);
+    localStorage.setItem('idSubUnitKerja', responseData.subunitkerja);
+    localStorage.setItem('namaSubUnit', responseData.namasubunitkerja);
 
 
     timer = setTimeout(function() {
@@ -90,6 +92,8 @@ export default {
     localStorage.removeItem('name');
     localStorage.removeItem('roles');
     localStorage.removeItem('namaUnit');
+    localStorage.removeItem('idSubUnitKerja');
+    localStorage.removeItem('namaSubUnit');
 
     clearTimeout(timer);
 

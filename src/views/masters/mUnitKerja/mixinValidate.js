@@ -22,7 +22,7 @@ export default {
       }
     },
     validateTelpon(data){
-      const phoneRegex = /^(^62)(\d{3,4}-?){2}\d{3,4}$/
+      const phoneRegex = /^(^62|0)(\d{3,4}-?){2}\d{2}$/
       if(phoneRegex.test(data.val)) {
         data.isValid = true
       }else {

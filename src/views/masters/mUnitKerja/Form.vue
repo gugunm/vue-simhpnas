@@ -178,7 +178,7 @@
                   v-if="mode == 'view'"
                   :value="kelurahan.val"
                   :readonly="mode == 'view'"
-                  label="Kecamatan"
+                  label="Kelurahan"
                   class="mb-2"
                 />
                 <div v-else>
@@ -246,8 +246,7 @@
                   @input="validateTelpon(telpon)"
                 />
                 <p v-if="telpon.isValid == false" class="text-red-500 text-sm">
-                  *nomor telpon tidak valid, minimal 11 angka dan diawali dengan
-                  '62'
+                  *nomor telpon tidak valid, minimal 9 angka
                 </p>
               </CCol>
             </CRow>

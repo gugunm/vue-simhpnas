@@ -115,6 +115,8 @@ export default {
           localStorage.removeItem('name');
           localStorage.removeItem('roles');
           localStorage.removeItem('namaUnit');
+          localStorage.removeItem('idSubUnitKerja');
+          localStorage.removeItem('namaSubUnit');
           self.$router.push({ path: '/login' });
         })
         .catch(function (error) {

@@ -260,4 +260,43 @@ export default {
 
     return kelurahanById
   },
+
+  async loadSearchKelurahan(context, payload) {
+    const response = await axios({
+      method: 'GET',
+      baseURL: API_URL,
+      url: '/api/searchkelurahan',
+      params: {
+        search: payload.textSearch,
+        token: localStorage.getItem('api_token')
+      },
+    })
+
+    const responseData = await response.data;
+
+    if (response.status != 200) {
+      const error = new Error(
+        responseData.message || 'Failed to fetch data jenis temuan'
+      );
+      throw error;
+    }
+
+    const kelurahans = [];
+
+    for (const key in responseData) {
+      const kel = {
+        id: responseData[key]["Kode_Kelurahan"],
+        deskripsi: responseData[key]["Kelurahan"],
+        idKecamatan: responseData[key]["Kode_Kecamatan"],
+        namaKecamatan: responseData[key]["Kecamatan"],
+        idKabkot: responseData[key]["Kode_KabupatenKota"],
+        namaKabkot: responseData[key]["Kabupaten_Kota"],
+        idProvinsi: responseData[key]["Kode_Provinsi"],
+        namaProvinsi: responseData[key]["Provinsi"]
+      };
+      kelurahans.push(kel);
+    }
+
+    context.commit('setSearchKelurahan', kelurahans);
+  }
 };
