@@ -3,7 +3,7 @@ export default {
     await this.loadGroupLingkupAudit();
     await this.loadJenisObrik();
     await this.loadUnitObrik();
-    // await this.loadSearchKelurahan('cimarga')
+    await this.loadJenisAnggaran();
   },
 
   methods: {
@@ -96,10 +96,24 @@ export default {
         });
 
         this.optionsSubBidangObrik = this.$store.getters['m_ref_unit_obrik/refSubBidangObrik'];
+     
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
+      this.loading = false;
+    },
 
-        // console.log('HERE!!')
-        // console.log(this.valueBidangObrik)
-        // console.log(this.optionsSubBidangObrik)
+    async loadJenisAnggaran(refresh = false) {
+      this.loading = true;
+      try {
+        await this.$store.dispatch(
+          'm_ref_jenis_anggaran/loadRefJenisAnggaran',
+          {
+            forceRefresh: refresh,
+          }
+        );
+        this.optionsJenisAnggaran =
+          this.$store.getters['m_ref_jenis_anggaran/refJenisAnggaran'];
      
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
@@ -129,15 +143,28 @@ export default {
       return `and ${count} other countries`
     },
 
-    // async asyncFindKelurahan (query) {
-    //   this.loadingKelurahan = true
-    //   await this.loadSearchKelurahan(query)
-    //   this.loadingKelurahan = false
-    // },
-
     clearAll () {
       this.selectedCountries = []
-    }
+    },
+
+    toastSuccess(msg) {
+      this.$toast.open({
+        message: msg,
+        type: 'success',
+        position: 'top-right',
+        duration: 3000,
+      });
+    },
+
+
+    toastError(msg) {
+      this.$toast.open({
+        message: msg,
+        type: 'error',
+        position: 'top-right',
+        duration: 5000,
+      });
+    },
 
   }
 }
