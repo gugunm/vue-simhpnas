@@ -17,6 +17,7 @@ import m_ref_lingkup_audit from './modules/m_ref_lingkup_audit';
 import m_ref_jabatan from './modules/m_ref_jabatan';
 import m_ref_jenis_anggaran from './modules/m_ref_jenis_anggaran';
 import m_ref_unit_audit from './modules/m_ref_unit_audit';
+import m_ref_peran from './modules/m_ref_peran';
 
 import module_lha from './modules/module_lha';
 import module_temuan from './modules/module_temuan';
@@ -43,6 +44,7 @@ export default new Vuex.Store({
     m_ref_jabatan,
     m_ref_jenis_anggaran,
     m_ref_unit_audit,
+    m_ref_peran,
     module_lha,
     module_temuan,
     module_tim,

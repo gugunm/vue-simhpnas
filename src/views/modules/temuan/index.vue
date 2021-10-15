@@ -10,6 +10,7 @@
       @open-create-modal="openCreate"
       @open-edit-modal="openEdit"
       @open-delete-modal="openDeleteModal"
+      @on-select-lha="onSelectLha"
     />
     <confirm-modal
       v-model="isDeleteConfirm"
@@ -98,6 +99,7 @@ export default {
       fields,
       isDeleteConfirm: false,
       idToDelete: null,
+      lha: {},
     };
   },
   async mounted() {
@@ -113,6 +115,7 @@ export default {
     openCreate() {
       this.$router.push({
         name: 'module-create-temuan',
+        query: { idlha: this.lha.id, nolha: this.lha.nomorLha },
       });
     },
     openEdit(item) {
@@ -125,6 +128,10 @@ export default {
       this.isDeleteConfirm = true;
       this.idToDelete = id;
     },
+    async onSelectLha(selectedLha) {
+      this.lha = selectedLha;
+      await this.loadTemuan();
+    },
     async actionDelete() {
       try {
         await this.$store.dispatch('module_lha/deleteTemuanById', {
@@ -134,19 +141,9 @@ export default {
 
         this.loadTemuan();
 
-        this.$toast.open({
-          message: `Berhasil menghapus data dengan ID ${this.idToDelete}`,
-          type: 'success',
-          position: 'top-right',
-          duration: 3000,
-        });
+        toastSuccess(`Berhasil menghapus data dengan ID ${this.idToDelete}`);
       } catch (error) {
-        this.$toast.open({
-          message: error.message,
-          type: 'error',
-          position: 'top-right',
-          duration: 3000,
-        });
+        toastError(error.message);
       }
     },
     async loadTemuan(refresh = false) {
@@ -154,7 +151,7 @@ export default {
       try {
         await this.$store.dispatch('module_temuan/loadTemuan', {
           forceRefresh: refresh,
-          idLha: 'lQ375o1825',
+          idLha: this.lha.id,
         });
         this.items = this.$store.getters['module_temuan/temuan'];
       } catch (error) {

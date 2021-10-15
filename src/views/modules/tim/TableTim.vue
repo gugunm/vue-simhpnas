@@ -6,44 +6,33 @@
           {{ topTitle }} {{ title }} {{ descTitle | descCamelCase }}
         </h4>
       </CCol>
-      <CCol v-if="isAddButton" class="px-0" lg="12" sm="12">
-        <CButton color="info" class="mb-4 px-4" @click="openCreateModal">
-          <CIcon name="cil-plus" class="my-0 mb-1 mr-1" /> Tambah
-          <!-- size="md" -->
-        </CButton>
-      </CCol>
     </CRow>
     <CCard class="pt-0">
       <CCardHeader style="background: #f9fafb; border-bottom: none">
-        <CRow class="py-3">
-          <CCol>
-            <p class="inline-block mr-3 font-semibold">Laporan Hasil Audit</p>
-            <v-select
-              v-model="nomorLha"
-              class="inline-block w-1/3 style-pilih-lha"
+        <CRow class="py-2">
+          <CCol lg="2" class="font-semibold py-2"> Laporan Hasil Audit </CCol>
+          <CCol lg="8">
+            <multiselect
+              v-if="optionsLha"
+              v-model="valueLha"
               :options="optionsLha"
-              label="id"
-              placeholder="Pilih nomor LHA"
-              :clearable="false"
-            >
-              <template v-slot:option="option">
-                <div class="my-2">
-                  <div class="text-xs mb-1">
-                    <span class="font-bold">{{ option.id }}</span>
-                    <span> - </span>
-                    <span>{{ option.namaObrik }}</span>
-                  </div>
-                  <em class="">
-                    {{ option.judulLaporan }}
-                  </em>
-                </div>
-              </template>
-            </v-select>
+              :custom-label="viewSelectSearch"
+              placeholder="Select laporan"
+              label="nomorLha"
+              track-by="nomorLha"
+              @select="onSelectLha"
+            />
           </CCol>
         </CRow>
       </CCardHeader>
+      <CCol>
+        <CButton class="px-4 mt-3" color="info" @click="openCreateModal">
+          <CIcon name="cil-plus" class="my-0 mb-1 mr-1" /> Tambah
+        </CButton>
+      </CCol>
       <CCardBody>
         <CDataTable
+          v-if="items"
           :items="items"
           :fields="fields"
           hover
@@ -100,36 +89,13 @@
 </template>
 
 <script>
-import vSelect from 'vue-select';
-import 'vue-select/dist/vue-select.css';
-
-const lhas = [
-  {
-    id: 1,
-    namaObrik: 'Obrik A',
-    judulLaporan: 'Judul Laporan',
-  },
-  {
-    id: 1,
-    namaObrik: 'Obrik A',
-    judulLaporan: 'Judul Laporan',
-  },
-  {
-    id: 1,
-    namaObrik: 'Obrik A',
-    judulLaporan: 'Judul Laporan',
-  },
-  {
-    id: 1,
-    namaObrik: 'Obrik A',
-    judulLaporan: 'Judul Laporan',
-  },
-];
+import Multiselect from 'vue-multiselect';
+import mixin from './mixin';
 
 export default {
   name: 'TableTim',
   components: {
-    vSelect,
+    Multiselect,
   },
   filters: {
     descCamelCase(val) {
@@ -140,6 +106,7 @@ export default {
         .join(' ');
     },
   },
+  mixins: [mixin],
   props: {
     topTitle: {
       type: String,
@@ -168,18 +135,30 @@ export default {
       type: Boolean,
       default: true,
     },
+    idLha: String,
   },
   data() {
     return {
-      nomorLha: null,
-      optionsLha: lhas,
+      valueLha: '',
+      optionsLha: [],
     };
+  },
+  async mounted() {
+    await this.loadLha();
+    // if (this.idLha) {
+    //   this.valueLha = this.optionsLha.filter((val) => val.id == this.idLha);
+    // } else {
+    //   this.valueLha = this.optionsLha[0];
+    // }
+    this.valueLha = this.optionsLha[0];
+    this.onSelectLha();
   },
   emits: [
     'clicked-row',
     'open-create-modal',
     'open-edit-modal',
     'open-delete-modal',
+    'on-select-lha',
   ],
   methods: {
     clickedRow(item) {
@@ -194,9 +173,20 @@ export default {
     openDeleteModal(id) {
       this.$emit('open-delete-modal', id);
     },
+    onSelectLha(val) {
+      this.$emit('on-select-lha', val);
+      if (!val) {
+        this.$emit('on-select-lha', this.valueLha);
+      }
+    },
+    viewSelectSearch({ id, nomorLha, subBidangObrik }) {
+      return `${nomorLha} - ${subBidangObrik}`;
+    },
   },
 };
 </script>
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style scoped>
 .btn-action-table {

@@ -6,10 +6,12 @@
       :fields="fields"
       :clickable-rows="true"
       :is-edit-button="true"
+      :id-lha="idLha"
       @clicked-row="openDetail"
       @open-create-modal="openCreate"
       @open-edit-modal="openEdit"
       @open-delete-modal="openDeleteModal"
+      @on-select-lha="onSelectLha"
     />
     <confirm-modal
       v-model="isDeleteConfirm"
@@ -35,9 +37,9 @@ const fields = [
     key: 'nomorLha',
     label: 'Nomor LHA',
   },
-  {
-    key: 'nomorUrut',
-  },
+  // {
+  //   key: 'nomorUrut',
+  // },
   {
     key: 'nama',
   },
@@ -45,14 +47,17 @@ const fields = [
     key: 'nip',
   },
   {
+    key: 'kodePeran',
+  },
+  {
     key: 'peran',
   },
-  {
-    key: 'unitAudit',
-  },
-  {
-    key: 'subUnitAudit',
-  },
+  // {
+  //   key: 'unitAudit',
+  // },
+  // {
+  //   key: 'subUnitAudit',
+  // },
 ];
 
 export default {
@@ -68,10 +73,15 @@ export default {
       fields,
       isDeleteConfirm: false,
       idToDelete: null,
+      lha: {},
+      // idLha: '',
     };
   },
   async mounted() {
-    await this.loadTim();
+    // if (this.$route.query.idlha) {
+    //   this.idLha = this.$route.query.idlha;
+    // }
+    // await this.loadLha();
   },
   methods: {
     openDetail(item) {
@@ -83,6 +93,7 @@ export default {
     openCreate() {
       this.$router.push({
         name: 'module-create-tim',
+        query: { idlha: this.lha.id, nolha: this.lha.nomorLha },
       });
     },
     openEdit(item) {
@@ -95,6 +106,10 @@ export default {
       this.isDeleteConfirm = true;
       this.idToDelete = id;
     },
+    async onSelectLha(selectedLha) {
+      this.lha = selectedLha;
+      await this.loadTim();
+    },
     async actionDelete() {
       try {
         await this.$store.dispatch('module_lha/deleteTimById', {
@@ -104,19 +119,9 @@ export default {
 
         this.loadTim();
 
-        this.$toast.open({
-          message: `Berhasil menghapus data dengan ID ${this.idToDelete}`,
-          type: 'success',
-          position: 'top-right',
-          duration: 3000,
-        });
+        toastSuccess(`Berhasil menghapus data dengan ID ${this.idToDelete}`);
       } catch (error) {
-        this.$toast.open({
-          message: error.message,
-          type: 'error',
-          position: 'top-right',
-          duration: 3000,
-        });
+        toastError(error.message);
       }
     },
     async loadTim(refresh = false) {
@@ -124,7 +129,7 @@ export default {
       try {
         await this.$store.dispatch('module_tim/loadTim', {
           forceRefresh: refresh,
-          idLha: 'lQ375o1825',
+          idLha: this.lha.id,
         });
         this.items = this.$store.getters['module_tim/tim'];
       } catch (error) {

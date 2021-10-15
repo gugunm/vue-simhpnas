@@ -13,36 +13,31 @@
           </div>
           <div class="p-3">
             <!-- ROW 1 -->
-            <CRow>
-              <CCol lg="6">
-                <CInput
-                  label="NIP"
-                  :lazy="false"
-                  :value.sync="$v.form.firstName.$model"
-                  :is-valid="checkIfValid('firstName')"
-                  placeholder="NIP"
-                  autocomplete="given-name"
-                  invalid-feedback="This is a required field and must be at least 2 characters"
-                />
-              </CCol>
-              <CCol lg="6">
-                <CInput
-                  label="Nama Lengkap"
-                  :lazy="false"
-                  :value.sync="$v.form.userName.$model"
-                  :is-valid="checkIfValid('userName')"
-                  placeholder="Nama Lengkap"
-                  autocomplete="username"
-                  invalid-feedback="This is a required field and must be at least 5 character"
-                />
-              </CCol>
-            </CRow>
-
-            <!-- ROW 2 -->
-            <CRow>
+            <CRow class="mb-3">
               <CCol lg="6">
                 <!-- V SELECT -->
                 <CInput
+                  label="Nomor LHA"
+                  :value="$route.query.nolha"
+                  :disabled="true"
+                  :readonly="true"
+                />
+              </CCol>
+              <CCol lg="6">
+                <div>
+                  <label>Peran</label>
+                  <multiselect
+                    v-if="optionsPeran"
+                    v-model="valuePeran"
+                    :options="optionsPeran"
+                    :custom-label="viewSelectSearch"
+                    placeholder="Select peran"
+                    label="deskeripsi"
+                    track-by="deskripsi"
+                  />
+                </div>
+                <!-- V SELECT -->
+                <!-- <CInput
                   label="Peran"
                   :lazy="false"
                   :value.sync="$v.form.userName.$model"
@@ -50,6 +45,45 @@
                   placeholder="Peran"
                   autocomplete="username"
                   invalid-feedback="This is a required field and must be at least 5 character"
+                /> -->
+              </CCol>
+            </CRow>
+            <!-- ROW 2 -->
+            <CRow>
+              <CCol lg="6">
+                <CInput
+                  type="number"
+                  label="NIP"
+                  :lazy="false"
+                  :value.sync="$v.form.nip.$model"
+                  :is-valid="checkIfValid('nip')"
+                  placeholder="NIP"
+                  autocomplete="nip"
+                  invalid-feedback="NIP wajib diisi 18 angka"
+                />
+              </CCol>
+              <CCol lg="6">
+                <CInput
+                  label="Nama Lengkap"
+                  :lazy="false"
+                  :value.sync="$v.form.nama.$model"
+                  :is-valid="checkIfValid('nama')"
+                  placeholder="Nama Lengkap"
+                  autocomplete="nama"
+                  invalid-feedback="Nama Lengkap wajib diisi"
+                />
+              </CCol>
+            </CRow>
+
+            <CRow>
+              <CCol lg="6">
+                <CInputCheckbox
+                  :is-valid="checkIfValid('accept')"
+                  :checked.sync="$v.form.accept.$model"
+                  label="Data yang di entry telah sesuai"
+                  invalid-feedback="Anda harus menyetujui sebelum melakukan submit"
+                  custom
+                  class="mb-4"
                 />
               </CCol>
             </CRow>
@@ -93,7 +127,8 @@
                   type="submit"
                   color="primary"
                   class="px-4 ml-1"
-                  :disabled="!isDirty"
+                  :disabled="!isValid || submitted"
+                  @click="submit"
                 >
                   <div v-if="loading" class="px-8">
                     <CSpinner color="white" size="sm" class="mr-2" />
@@ -122,17 +157,20 @@ import { validationMixin } from 'vuelidate';
 import {
   required,
   minLength,
-  email,
-  sameAs,
-  helpers,
+  // email,
+  // sameAs,
+  // helpers,
+  maxLength,
 } from 'vuelidate/lib/validators';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 import mixin from './mixin';
+import Multiselect from 'vue-multiselect';
 
 export default {
   name: 'LhaForm',
   components: {
     ConfirmModal,
+    Multiselect,
   },
   mixins: [validationMixin, mixin],
   props: ['mode', 'selectedItem'],
@@ -142,6 +180,8 @@ export default {
       submitted: false,
       loading: false,
       isOpenConfirm: false,
+      valuePeran: '',
+      optionsPeran: [],
     };
   },
   computed: {
@@ -155,36 +195,29 @@ export default {
       return this.$v.form.$anyDirty;
     },
   },
+  watch: {
+    valuePeran: function (val) {
+      this.$v.form.peran.$model = val.kodePeran;
+    },
+  },
+  async mounted() {
+    await this.loadPeran();
+  },
   validations: {
     form: {
-      firstName: {
+      nip: {
         required,
-        minLength: minLength(3),
+        minLength: minLength(18),
+        maxLength: maxLength(18),
       },
-      lastName: {
+      nama: {
         required,
         minLength: minLength(2),
       },
-      userName: {
+      peran: {
         required,
-        minLength: minLength(5),
       },
-      email: {
-        required,
-        email,
-      },
-      password: {
-        required,
-        minLength: minLength(8),
-        strongPass: helpers.regex(
-          'strongPass',
-          /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/
-        ),
-      },
-      confirmPassword: {
-        required,
-        sameAsPassword: sameAs('password'),
-      },
+
       accept: {
         required,
         mustAccept: (val) => val,
@@ -192,6 +225,10 @@ export default {
     },
   },
   methods: {
+    viewSelectSearch({ id, kodePeran, deskripsi }) {
+      return `${kodePeran} - ${deskripsi}`;
+    },
+
     checkIfValid(fieldName) {
       const field = this.$v.form[fieldName];
       if (!field.$dirty) {
@@ -200,9 +237,34 @@ export default {
       return !(field.$invalid || field.$model === '');
     },
 
-    submit() {
+    async submit() {
       if (this.isValid) {
         this.submitted = true;
+
+        const resultFormData = this.appendToFormData();
+
+        if (this.mode == 'create') {
+          this.loading = true;
+          const responseData = await this.$store.dispatch(
+            'module_tim/createTim',
+            resultFormData
+          );
+
+          if (responseData) {
+            setTimeout(() => {
+              this.loading = false;
+              this.$router.push({
+                path: '/tim-audit',
+                // query: {
+                //   idlha: this.$route.query.idlha,
+                // },
+              });
+              this.toastSuccess(
+                'Berhasil menyimpan data dengan ID ' + responseData.Kode_Peran
+              );
+            }, 500);
+          }
+        }
       }
     },
 
@@ -218,15 +280,23 @@ export default {
 
     getEmptyForm() {
       return {
-        firstName: '',
-        lastName: '',
-        userName: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
+        nip: '',
+        nama: '',
+        peran: '',
         accept: false,
       };
+    },
+
+    appendToFormData() {
+      const fd = new FormData();
+      fd.append('kode_lha', this.$route.query.idlha);
+      fd.append('Kode_Peran', this.$v.form.peran.$model);
+      fd.append('Nama', this.$v.form.nama.$model);
+      fd.append('NIP', this.$v.form.nip.$model);
+      return fd;
     },
   },
 };
 </script>
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
