@@ -10,7 +10,9 @@
     <CCard class="pt-0">
       <CCardHeader style="background: #f9fafb; border-bottom: none">
         <CRow class="py-2">
-          <CCol lg="2" class="font-semibold py-2"> Laporan Hasil Audit </CCol>
+          <CCol lg="2" class="font-semibold py-2 text-base">
+            Laporan Hasil Audit
+          </CCol>
           <CCol lg="8">
             <multiselect
               v-if="optionsLha"

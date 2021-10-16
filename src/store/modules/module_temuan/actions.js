@@ -27,6 +27,7 @@ export default {
     for (const key in responseData) {
       const data = {
         id: responseData[key]["kode_temuan"],
+        nomorLha: responseData[key]["Nomor_LHA"],
         idLha: responseData[key]["kode_lha"],
         nomorTemuan: responseData[key]["Nomor_Temuan"],
         kodeJenisTemuan: responseData[key]["Kode_Jenis_Temuan"],
@@ -49,5 +50,29 @@ export default {
 
     context.commit('setTemuan', temuan);
     context.commit('setFetchTimestamp');
+  },
+
+  async createTemuan(context, payload) {
+    const response = await axios({
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      data: payload,
+      baseURL: API_URL,
+      url: '/api/temuan',
+      params: {
+        token: localStorage.getItem('api_token')
+      },
+    })
+
+    const responseData = await response.data;
+    
+    if (response.statusText != "OK") {
+      const error = new Error(
+        responseData.message || 'Failed to save data'
+      );
+      throw error;
+    }
+    
+    return responseData
   },
 }

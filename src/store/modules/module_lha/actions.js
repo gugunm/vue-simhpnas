@@ -44,6 +44,7 @@ export default {
         nipPimpinan: responseData[key]["NIP_Pimpinan"],
         rencanaAnggaran: responseData[key]["Rencana_Anggaran"],
         realisasiAnggaran: responseData[key]["Realisasi_Anggaran"],
+        flagTpk: responseData[key]["Flag_TPK"],
         // anggaranYangDiaudit: responseData[key]["Anggaran_yang_diaudit"],
         anggaranYangDiaudit: anggaran
       };

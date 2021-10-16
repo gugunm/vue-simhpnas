@@ -25,6 +25,36 @@ export default {
       }
     },
 
+    async loadKlpTemuan(refresh = false){
+      try {
+        await this.$store.dispatch('m_temuan/loadKelompokTemuan', {
+          idJenisTemuan: this.valueJenisTemuan.id,
+          forceRefresh: refresh,
+        });
+
+        this.optionsKlpTemuan = this.$store.getters['m_temuan/kelompokTemuan'];
+
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
+    },
+
+    async loadSubKlpTemuan(refresh = false){
+      try {
+        await this.$store.dispatch('m_temuan/loadSubKelompokTemuan', {
+          idKlpTemuan: this.valueKlpTemuan.id,
+          forceRefresh: refresh,
+        });
+
+        this.optionsSubKlpTemuan = this.$store.getters['m_temuan/subKelompokTemuan'];
+
+        // console.log(this.optionsSubKlpTemuan)
+
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
+    },
+
     toastSuccess(msg) {
       this.$toast.open({
         message: msg,

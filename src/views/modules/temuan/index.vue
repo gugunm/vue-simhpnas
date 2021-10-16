@@ -33,7 +33,7 @@ const fields = [
     label: 'ID',
   },
   {
-    key: 'idLha',
+    key: 'nomorLha',
     label: 'Nomor LHA',
   },
   {
@@ -115,7 +115,11 @@ export default {
     openCreate() {
       this.$router.push({
         name: 'module-create-temuan',
-        query: { idlha: this.lha.id, nolha: this.lha.nomorLha },
+        query: {
+          idlha: this.lha.id,
+          nolha: this.lha.nomorLha,
+          tpk: this.lha.flagTpk,
+        },
       });
     },
     openEdit(item) {

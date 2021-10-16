@@ -5,27 +5,16 @@
         <h3 v-if="mode == 'create'">Create Temuan</h3>
         <h3 v-else>Edit Temuan</h3>
       </div>
-      <CRow class="mb-4">
-        <CCol lg="6">
-          <div class="flex items-center">
-            <p class="inline-block mr-3 font-semibold text-base">
-              Switch jika ini adalah Temuan Investigatif
-            </p>
-            <CSwitch
-              class="mx-1"
-              color="danger"
-              variant="3d"
-              v-bind="labelIcon"
-              :checked.sync="isAuditTpk"
-            />
-          </div>
-        </CCol>
-      </CRow>
-      <CCard v-if="!isAuditTpk">
+      <CCard>
         <!-- <CCardBody> -->
         <CForm>
-          <div class="p-3" style="background: #f9fafb">
+          <div v-if="!isAuditTpk" class="p-3" style="background: #f9fafb">
             <h5 class="text-base font-semibold">Data Temuan</h5>
+          </div>
+          <div v-else class="p-3" style="background: #f9fafb">
+            <h5 class="text-base font-semibold text-red-500">
+              Data Temuan Investigatif
+            </h5>
           </div>
           <div class="p-3">
             <!-- ROW 1 -->
@@ -35,7 +24,6 @@
                   label="Nomor LHA"
                   :value="$route.query.nolha"
                   :disabled="true"
-                  :readonly="true"
                 />
               </CCol>
             </CRow>
@@ -56,7 +44,7 @@
             </CRow>
 
             <!-- ROW 3 -->
-            <CRow>
+            <CRow class="mb-3">
               <CCol lg="4">
                 <div>
                   <label class="typo__label">Jenis Temuan</label>
@@ -81,7 +69,19 @@
                 /> -->
               </CCol>
               <CCol lg="4">
-                <CInput
+                <div>
+                  <label class="typo__label">Kelompok Temuan</label>
+                  <multiselect
+                    v-if="optionsKlpTemuan"
+                    v-model="valueKlpTemuan"
+                    :options="optionsKlpTemuan"
+                    :custom-label="viewSelectSearch"
+                    placeholder="Select kelompok temuan"
+                    label="deskripsi"
+                    track-by="deskripsi"
+                  />
+                </div>
+                <!-- <CInput
                   label="Kelompok Temuan"
                   :lazy="false"
                   :value.sync="$v.form.klpTemuan.$model"
@@ -89,10 +89,22 @@
                   placeholder="Kelompok Temuan"
                   autocomplete="klpTemuan"
                   invalid-feedback="Kelompok Temuan wajib diisi"
-                />
+                /> -->
               </CCol>
               <CCol lg="4">
-                <CInput
+                <div>
+                  <label class="typo__label">Sub Kelompok Temuan</label>
+                  <multiselect
+                    v-if="optionsSubKlpTemuan"
+                    v-model="valueSubKlpTemuan"
+                    :options="optionsSubKlpTemuan"
+                    :custom-label="viewSelectSearch"
+                    placeholder="Select sub kelompok temuan"
+                    label="deskripsi"
+                    track-by="deskripsi"
+                  />
+                </div>
+                <!-- <CInput
                   label="Sub Kelompok Temuan"
                   :lazy="false"
                   :value.sync="$v.form.subKlpTemuan.$model"
@@ -100,7 +112,7 @@
                   placeholder="Sub Kelompok Temuan"
                   autocomplete="subKlpTemuan"
                   invalid-feedback="Sub Kelompok Temuan wajib diisi"
-                />
+                /> -->
               </CCol>
             </CRow>
 
@@ -108,7 +120,9 @@
             <CRow>
               <CCol lg="8">
                 <CTextarea
-                  label="Memo Temuan"
+                  :label="
+                    isAuditTpk ? 'Memo Temuan / Uraian Kasus' : 'Memo Temuan'
+                  "
                   :lazy="false"
                   :value.sync="$v.form.memoTemuan.$model"
                   :is-valid="checkIfValid('memoTemuan')"
@@ -119,12 +133,66 @@
               </CCol>
             </CRow>
 
+            <CRow class="mb-4 mt-2">
+              <CCol lg="6">
+                <div class="flex items-center">
+                  <p class="inline-block mr-3 font-semibold">
+                    {{ isAuditTpk ? '' : 'Bukan' }} Temuan Investigatif
+                  </p>
+                  <CSwitch
+                    disabled
+                    class="mx-1"
+                    color="danger"
+                    variant="3d"
+                    v-bind="labelIcon"
+                    :checked.sync="isAuditTpk"
+                  />
+                </div>
+              </CCol>
+            </CRow>
+
             <!-- ROW 5 -->
+            <div v-if="isAuditTpk">
+              <CRow>
+                <CCol lg="2">
+                  <CInput
+                    label="Posisi Kasus"
+                    :lazy="false"
+                    :value.sync="$v.form.posisiKasus.$model"
+                    :is-valid="checkIfValid('posisiKasus')"
+                    placeholder="Posisi Kasus"
+                    autocomplete="posisiKasus"
+                    invalid-feedback="Posisi Kasus wajib diisi 1-2 angka"
+                  />
+                </CCol>
+              </CRow>
+
+              <!-- ROW 6 -->
+              <CRow>
+                <CCol lg="8">
+                  <CTextarea
+                    label="Modus Operandi"
+                    :lazy="false"
+                    :value.sync="$v.form.modusOperandi.$model"
+                    :is-valid="checkIfValid('modusOperandi')"
+                    placeholder="Modus operandi"
+                    autocomplete="modusOperandi"
+                    invalid-feedback="Modus Operandi wajib diisi"
+                  />
+                </CCol>
+              </CRow>
+            </div>
+
+            <!-- ROW 7 -->
             <CRow>
               <CCol lg="4">
                 <CInput
                   type="number"
-                  label="Nilai Temuan"
+                  :label="
+                    isAuditTpk
+                      ? 'Nilai Temuan (Jumlah Kerugian Negara)'
+                      : 'Nilai Temuan'
+                  "
                   :lazy="false"
                   :value.sync="$v.form.nilaiTemuan.$model"
                   :is-valid="checkIfValid('nilaiTemuan')"
@@ -134,6 +202,8 @@
                 />
               </CCol>
             </CRow>
+
+            <!-- ROW 8 -->
             <CRow>
               <CCol lg="6">
                 <CInputCheckbox
@@ -198,206 +268,6 @@
             </CRow>
           </div>
         </CForm>
-        <!-- </CCardBody> -->
-      </CCard>
-      <CCard v-else>
-        <!-- <CCardBody> -->
-        <CForm>
-          <div class="p-3" style="background: #f9fafb">
-            <h5 class="text-base font-semibold text-red-500">
-              Data Temuan Investigatif
-            </h5>
-          </div>
-          <div class="p-3">
-            <!-- ROW 1 -->
-            <CRow>
-              <CCol lg="6">
-                <CInput
-                  label="Nomor LHA"
-                  :value="$route.query.nolha"
-                  :disabled="true"
-                  :readonly="true"
-                />
-              </CCol>
-            </CRow>
-
-            <!-- ROW 2 -->
-            <CRow>
-              <CCol lg="6">
-                <CInput
-                  label="Nomor Temuan"
-                  :lazy="false"
-                  :value.sync="$v.form.nomorTemuan.$model"
-                  :is-valid="checkIfValid('nomorTemuan')"
-                  placeholder="Nomor Temuan"
-                  autocomplete="nomorTemuan"
-                  invalid-feedback="Nomor Temuan wajib diisi"
-                />
-              </CCol>
-            </CRow>
-
-            <!-- ROW 3 -->
-            <CRow>
-              <CCol lg="4">
-                <CInput
-                  label="Jenis Temuan"
-                  :lazy="false"
-                  :value.sync="$v.form.jenisTemuan.$model"
-                  :is-valid="checkIfValid('jenisTemuan')"
-                  placeholder="Jenis Temuan"
-                  autocomplete="jenisTemuan"
-                  invalid-feedback="Jenis Temuan wajib diisi"
-                />
-              </CCol>
-              <CCol lg="4">
-                <CInput
-                  label="Kelompok Temuan"
-                  :lazy="false"
-                  :value.sync="$v.form.klpTemuan.$model"
-                  :is-valid="checkIfValid('klpTemuan')"
-                  placeholder="Kelompok Temuan"
-                  autocomplete="klpTemuan"
-                  invalid-feedback="Kelompok Temuan wajib diisi"
-                />
-              </CCol>
-              <CCol lg="4">
-                <CInput
-                  label="Sub Kelompok Temuan"
-                  :lazy="false"
-                  :value.sync="$v.form.subKlpTemuan.$model"
-                  :is-valid="checkIfValid('subKlpTemuan')"
-                  placeholder="Sub Kelompok Temuan"
-                  autocomplete="subKlpTemuan"
-                  invalid-feedback="Sub Kelompok Temuan wajib diisi"
-                />
-              </CCol>
-            </CRow>
-
-            <!-- ROW 4 -->
-            <CRow>
-              <CCol lg="8">
-                <CTextarea
-                  label="Memo Temuan / Uraian Kasus"
-                  :lazy="false"
-                  :value.sync="$v.form.memoTemuan.$model"
-                  :is-valid="checkIfValid('memoTemuan')"
-                  placeholder="Memo Temuan"
-                  autocomplete="memoTemuan"
-                  invalid-feedback="Memo Temuan wajib diisi"
-                />
-              </CCol>
-            </CRow>
-
-            <!-- ROW 5 -->
-            <CRow>
-              <CCol lg="6">
-                <CInput
-                  label="Posisi Kasus"
-                  :lazy="false"
-                  :value.sync="$v.form.posisiKasus.$model"
-                  :is-valid="checkIfValid('posisiKasus')"
-                  placeholder="Posisi Kasus"
-                  autocomplete="posisiKasus"
-                  invalid-feedback="Posisi Kasus wajib diisi"
-                />
-              </CCol>
-            </CRow>
-
-            <!-- ROW 6 -->
-            <CRow>
-              <CCol lg="8">
-                <CTextarea
-                  label="Modus Operandi"
-                  :lazy="false"
-                  :value.sync="$v.form.modusOperandi.$model"
-                  :is-valid="checkIfValid('modusOperandi')"
-                  placeholder="Modus operandi"
-                  autocomplete="modusOperandi"
-                  invalid-feedback="Modus Operandi wajib diisi"
-                />
-              </CCol>
-            </CRow>
-
-            <!-- ROW 4 -->
-            <CRow>
-              <CCol lg="4">
-                <CInput
-                  type="number"
-                  label="Nilai Temuan (Jumlah Kerugian Negara)"
-                  :lazy="false"
-                  :value.sync="$v.form.nilaiTemuan.$model"
-                  :is-valid="checkIfValid('nilaiTemuan')"
-                  placeholder="Nilai Temuan"
-                  autocomplete="nilaiTemuan"
-                  invalid-feedback="Nilai Temuan wajib diisi"
-                />
-              </CCol>
-            </CRow>
-            <CRow>
-              <CCol lg="6">
-                <CInputCheckbox
-                  :is-valid="checkIfValid('accept')"
-                  :checked.sync="$v.form.accept.$model"
-                  label="Data yang di entry telah sesuai"
-                  invalid-feedback="Anda harus menyetujui sebelum melakukan submit"
-                  custom
-                  class="mb-4"
-                />
-              </CCol>
-            </CRow>
-          </div>
-
-          <div class="px-3">
-            <CRow class="mb-2 view-form">
-              <CCol sm="12" lg="6" class="mb-3">
-                <CButton
-                  v-if="mode != 'view'"
-                  variant="outline"
-                  color="dark"
-                  @click="isOpenConfirm = true"
-                >
-                  Kembali
-                </CButton>
-              </CCol>
-              <CCol
-                v-if="mode == 'create' || mode == 'edit'"
-                sm="12"
-                md="6"
-                class="content-center justify-end pr-3 mb-3"
-              >
-                <CButton
-                  class="ml-1"
-                  color="danger"
-                  :disabled="!isDirty"
-                  @click="reset"
-                >
-                  Reset
-                </CButton>
-                <CButton
-                  class="ml-1"
-                  color="success"
-                  :disabled="isValid"
-                  @click="validate"
-                >
-                  Validate
-                </CButton>
-                <CButton
-                  type="submit"
-                  color="primary"
-                  class="px-4 ml-1"
-                  :disabled="!isValid || submitted"
-                  @click="submit"
-                >
-                  <div v-if="loading" class="px-8">
-                    <CSpinner color="white" size="sm" class="mr-2" />
-                  </div>
-                  <template v-else> Submit Data </template>
-                </CButton>
-              </CCol>
-            </CRow>
-          </div>
-        </CForm>
-
         <!-- </CCardBody> -->
       </CCard>
     </CCol>
@@ -413,13 +283,7 @@
 
 <script>
 import { validationMixin } from 'vuelidate';
-import {
-  required,
-  minLength,
-  email,
-  sameAs,
-  helpers,
-} from 'vuelidate/lib/validators';
+import { required, minLength, maxLength } from 'vuelidate/lib/validators';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 import mixin from './mixin';
 import Multiselect from 'vue-multiselect';
@@ -445,6 +309,10 @@ export default {
       },
       valueJenisTemuan: '',
       optionsJenisTemuan: [],
+      valueKlpTemuan: '',
+      optionsKlpTemuan: [],
+      valueSubKlpTemuan: '',
+      optionsSubKlpTemuan: [],
     };
   },
   computed: {
@@ -458,8 +326,39 @@ export default {
       return this.$v.form.$anyDirty;
     },
   },
+  watch: {
+    valueJenisTemuan: function (val) {
+      this.$v.form.jenisTemuan.$model = val.id;
+      this.valueKlpTemuan = '';
+      this.optionsKlpTemuan = [];
+      this.loadKlpTemuan();
+    },
+    valueKlpTemuan: function (val) {
+      this.$v.form.klpTemuan.$model = val.id;
+      this.valueSubKlpTemuan = '';
+      this.optionsSubKlpTemuan = [];
+      this.loadSubKlpTemuan();
+    },
+    valueSubKlpTemuan: function (val) {
+      this.$v.form.subKlpTemuan.$model = val.id;
+    },
+    isAuditTpk: function (val) {
+      if (!val) {
+        this.$v.form.posisiKasus.$model = '0';
+        this.$v.form.modusOperandi.$model = 'TIDAK ADA';
+      } else {
+        this.$v.form.posisiKasus.$model = '';
+        this.$v.form.modusOperandi.$model = '';
+      }
+    },
+  },
   async mounted() {
     await this.loadJenisTemuan();
+    if (this.$route.query.tpk == 0) {
+      this.isAuditTpk = false;
+    } else {
+      this.isAuditTpk = true;
+    }
   },
   validations: {
     form: {
@@ -468,18 +367,17 @@ export default {
       klpTemuan: { required },
       subKlpTemuan: { required },
       memoTemuan: { required, minLength: minLength(2) },
-      posisiKasus: { required, minLength: minLength(2) },
+      posisiKasus: {
+        required,
+        minLength: minLength(1),
+        maxLength: maxLength(2),
+      },
       modusOperandi: { required, minLength: minLength(2) },
       nilaiTemuan: { required },
       accept: {
         required,
         mustAccept: (val) => val,
       },
-    },
-  },
-  watch: {
-    valueJenisTemuan: function (val) {
-      this.$v.form.jenisTemuan.$model = val.id;
     },
   },
   methods: {
@@ -495,9 +393,34 @@ export default {
       return !(field.$invalid || field.$model === '');
     },
 
-    submit() {
+    async submit() {
       if (this.isValid) {
         this.submitted = true;
+
+        const resultFormData = this.appendToFormData();
+
+        console.log('HEREE SUBMIT!!!');
+        console.log(resultFormData);
+
+        if (this.mode == 'create') {
+          this.loading = true;
+          const responseData = await this.$store.dispatch(
+            'module_temuan/createTemuan',
+            resultFormData
+          );
+
+          if (responseData) {
+            setTimeout(() => {
+              this.loading = false;
+              this.$router.push({
+                path: '/temuan',
+              });
+              this.toastSuccess(
+                'Berhasil menyimpan data dengan ID ' + responseData.Nomor_Temuan
+              );
+            }, 500);
+          }
+        }
       }
     },
 
@@ -512,28 +435,32 @@ export default {
     },
 
     getEmptyForm() {
-      if (this.isAuditTpk) {
-        return {
-          nomorTemuan: '',
-          jenisTemuan: '',
-          klpTemuan: '',
-          subKlpTemuan: '',
-          memoTemuan: '',
-          posisiKasus: '',
-          modusOperandi: '',
-          nilaiTemuan: 0,
-          accept: false,
-        };
-      }
       return {
         nomorTemuan: '',
         jenisTemuan: '',
         klpTemuan: '',
         subKlpTemuan: '',
         memoTemuan: '',
+        posisiKasus: '0',
+        modusOperandi: 'TIDAK ADA',
         nilaiTemuan: 0,
         accept: false,
       };
+    },
+
+    appendToFormData() {
+      const fd = new FormData();
+      fd.append('kode_lha', this.$route.query.idlha);
+      fd.append('Nomor_Temuan', this.$v.form.nomorTemuan.$model);
+      fd.append('Kode_Jenis_Temuan', this.$v.form.jenisTemuan.$model);
+      fd.append('Kode_Kelompok_Temuan', this.$v.form.klpTemuan.$model);
+      fd.append('Kode_Sub_Kelompok_Temuan', this.$v.form.subKlpTemuan.$model);
+      fd.append('Memo_Temuan', this.$v.form.memoTemuan.$model);
+      fd.append('Posisi_Kasus', this.$v.form.posisiKasus.$model);
+      fd.append('Modus_Operandi', this.$v.form.modusOperandi.$model);
+      fd.append('Flag_TPK', this.$route.query.tpk);
+      fd.append('Nilai_Temuan', this.$v.form.nilaiTemuan.$model);
+      return fd;
     },
   },
 };
