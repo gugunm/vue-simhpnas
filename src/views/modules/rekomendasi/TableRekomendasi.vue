@@ -196,6 +196,7 @@ export default {
       this.$emit('on-select-temuan', this.valueTemuan);
     },
     async onSelectLha(val) {
+      this.$emit('on-select-lha', val);
       await this.loadTemuan({ id: val.id });
       this.valueTemuan = this.optionsTemuan[0];
       this.$emit('on-select-temuan', this.valueTemuan);

@@ -51,4 +51,28 @@ export default {
     context.commit('setPelaku', pelaku);
     context.commit('setFetchTimestamp');
   },
+
+  async createPelaku(context, payload) {
+    const response = await axios({
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      data: payload,
+      baseURL: API_URL,
+      url: '/api/pelaku',
+      params: {
+        token: localStorage.getItem('api_token')
+      },
+    })
+
+    const responseData = await response.data;
+    
+    if (response.statusText != "OK") {
+      const error = new Error(
+        responseData.message || 'Failed to save data'
+      );
+      throw error;
+    }
+    
+    return responseData
+  },
 }

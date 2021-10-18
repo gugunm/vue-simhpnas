@@ -10,6 +10,9 @@
       @open-create-modal="openCreate"
       @open-edit-modal="openEdit"
       @open-delete-modal="openDeleteModal"
+      @on-select-lha="onSelectLha"
+      @on-select-temuan="onSelectTemuan"
+      @on-select-rekomendasi="onSelectRekomendasi"
     />
     <confirm-modal
       v-model="isDeleteConfirm"
@@ -59,6 +62,9 @@ export default {
       fields,
       isDeleteConfirm: false,
       idToDelete: null,
+      lha: {},
+      temuan: {},
+      rekomendasi: {},
     };
   },
   async mounted() {
@@ -74,6 +80,14 @@ export default {
     openCreate() {
       this.$router.push({
         name: 'module-create-pelaku',
+        query: {
+          idlha: this.lha.id,
+          nolha: this.lha.nomorLha,
+          idtemuan: this.temuan.id,
+          notemuan: this.temuan.nomorTemuan,
+          idrekomendasi: this.rekomendasi.id,
+          norekomendasi: this.rekomendasi.nomorRekomendasi,
+        },
       });
     },
     openEdit(item) {
@@ -86,6 +100,21 @@ export default {
       this.isDeleteConfirm = true;
       this.idToDelete = id;
     },
+
+    onSelectLha(selectedLha) {
+      this.lha = selectedLha;
+    },
+
+    async onSelectTemuan(selectedTemuan) {
+      this.temuan = selectedTemuan;
+      await this.loadRekomendasi();
+    },
+
+    async onSelectRekomendasi(selectedRekomendasi) {
+      this.rekomendasi = selectedRekomendasi;
+      await this.loadPelaku();
+    },
+
     async actionDelete() {
       try {
         await this.$store.dispatch('module_lha/deletePelakuById', {
@@ -95,19 +124,9 @@ export default {
 
         this.loadPelaku();
 
-        this.$toast.open({
-          message: `Berhasil menghapus data dengan ID ${this.idToDelete}`,
-          type: 'success',
-          position: 'top-right',
-          duration: 3000,
-        });
+        toastSuccess(`Berhasil menghapus data dengan ID ${this.idToDelete}`);
       } catch (error) {
-        this.$toast.open({
-          message: error.message,
-          type: 'error',
-          position: 'top-right',
-          duration: 3000,
-        });
+        toastError(error.message);
       }
     },
     async loadPelaku(refresh = false) {
@@ -115,7 +134,7 @@ export default {
       try {
         await this.$store.dispatch('module_pelaku/loadPelaku', {
           forceRefresh: refresh,
-          idRekomendasi: 'Vylrej7OqX',
+          idRekomendasi: this.rekomendasi.id,
         });
         this.items = this.$store.getters['module_pelaku/pelaku'];
       } catch (error) {

@@ -13,33 +13,58 @@
             <CRow>
               <CCol lg="6">
                 <CInput
+                  label="Nomor Urut"
+                  :lazy="false"
+                  :value.sync="$v.form.nomorUrut.$model"
+                  :is-valid="checkIfValid('nomorUrut')"
+                  placeholder="nomor urut"
+                  autocomplete="nomorUrut"
+                  invalid-feedback="Nomor Urut wajib diisi 1 angka"
+                />
+              </CCol>
+            </CRow>
+
+            <CRow>
+              <CCol lg="6">
+                <CInput
                   label="NIP"
                   :lazy="false"
-                  :value.sync="$v.form.firstName.$model"
-                  :is-valid="checkIfValid('firstName')"
+                  :value.sync="$v.form.nip.$model"
+                  :is-valid="checkIfValid('nip')"
                   placeholder="NIP"
-                  autocomplete="given-name"
-                  invalid-feedback="This is a required field and must be at least 2 characters"
+                  autocomplete="nip"
+                  invalid-feedback="NIP wajib diisi 18 angka"
                 />
               </CCol>
               <CCol lg="6">
                 <CInput
                   label="Nama Lengkap"
                   :lazy="false"
-                  :value.sync="$v.form.userName.$model"
-                  :is-valid="checkIfValid('userName')"
+                  :value.sync="$v.form.nama.$model"
+                  :is-valid="checkIfValid('nama')"
                   placeholder="Nama Lengkap"
-                  autocomplete="username"
-                  invalid-feedback="This is a required field and must be at least 5 character"
+                  autocomplete="nama"
+                  invalid-feedback="Nama Lengkap wajib diisi"
                 />
               </CCol>
             </CRow>
 
             <!-- ROW 2 -->
-            <CRow>
+            <CRow class="mb-3">
               <CCol lg="6">
-                <!-- V SELECT -->
-                <CInput
+                <div>
+                  <label class="typo__label">Jabatan</label>
+                  <multiselect
+                    v-if="optionsJabatan"
+                    v-model="valueJabatan"
+                    :options="optionsJabatan"
+                    :custom-label="viewSelectSearch"
+                    placeholder="Select jabatan"
+                    label="deskripsi"
+                    track-by="deskripsi"
+                  />
+                </div>
+                <!-- <CInput
                   label="Jabatan"
                   :lazy="false"
                   :value.sync="$v.form.userName.$model"
@@ -47,6 +72,33 @@
                   placeholder="Jabatan"
                   autocomplete="username"
                   invalid-feedback="This is a required field and must be at least 5 character"
+                /> -->
+              </CCol>
+            </CRow>
+
+            <CRow>
+              <CCol lg="8">
+                <CTextarea
+                  label="Memo Kesalahan"
+                  :lazy="false"
+                  :value.sync="$v.form.memoKesalahan.$model"
+                  :is-valid="checkIfValid('memoKesalahan')"
+                  placeholder="Memo Kesalahan"
+                  autocomplete="memoKesalahan"
+                  invalid-feedback="Memo Kesalahan wajib diisi"
+                />
+              </CCol>
+            </CRow>
+
+            <CRow>
+              <CCol lg="6">
+                <CInputCheckbox
+                  :is-valid="checkIfValid('accept')"
+                  :checked.sync="$v.form.accept.$model"
+                  label="Data yang di entry telah sesuai"
+                  invalid-feedback="Anda harus menyetujui sebelum melakukan submit"
+                  custom
+                  class="mb-4"
                 />
               </CCol>
             </CRow>
@@ -90,7 +142,8 @@
                   type="submit"
                   color="primary"
                   class="px-4 ml-1"
-                  :disabled="!isDirty"
+                  :disabled="!isValid || submitted"
+                  @click="submit"
                 >
                   <div v-if="loading" class="px-8">
                     <CSpinner color="white" size="sm" class="mr-2" />
@@ -116,20 +169,16 @@
 
 <script>
 import { validationMixin } from 'vuelidate';
-import {
-  required,
-  minLength,
-  email,
-  sameAs,
-  helpers,
-} from 'vuelidate/lib/validators';
+import { required, minLength, maxLength } from 'vuelidate/lib/validators';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 import mixin from './mixin';
+import Multiselect from 'vue-multiselect';
 
 export default {
   name: 'LhaForm',
   components: {
     ConfirmModal,
+    Multiselect,
   },
   mixins: [validationMixin, mixin],
   props: ['mode', 'selectedItem'],
@@ -139,6 +188,8 @@ export default {
       submitted: false,
       loading: false,
       isOpenConfirm: false,
+      valueJabatan: '',
+      optionsJabatan: [],
     };
   },
   computed: {
@@ -152,35 +203,34 @@ export default {
       return this.$v.form.$anyDirty;
     },
   },
+  watch: {
+    valueJabatan: function (val) {
+      this.$v.form.idJabatan.$model = val.id;
+    },
+  },
+  async mounted() {
+    await this.loadJabatan();
+  },
   validations: {
     form: {
-      firstName: {
+      nomorUrut: {
         required,
-        minLength: minLength(3),
+        minLength: minLength(1),
+        maxLength: maxLength(1),
       },
-      lastName: {
+      nama: {
         required,
-        minLength: minLength(2),
       },
-      userName: {
+      nip: {
         required,
-        minLength: minLength(5),
+        minLength: minLength(18),
+        maxLength: maxLength(18),
       },
-      email: {
+      idJabatan: {
         required,
-        email,
       },
-      password: {
+      memoKesalahan: {
         required,
-        minLength: minLength(8),
-        strongPass: helpers.regex(
-          'strongPass',
-          /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/
-        ),
-      },
-      confirmPassword: {
-        required,
-        sameAsPassword: sameAs('password'),
       },
       accept: {
         required,
@@ -189,6 +239,10 @@ export default {
     },
   },
   methods: {
+    viewSelectSearch({ id, deskripsi }) {
+      return `${id} - ${deskripsi}`;
+    },
+
     checkIfValid(fieldName) {
       const field = this.$v.form[fieldName];
       if (!field.$dirty) {
@@ -197,9 +251,29 @@ export default {
       return !(field.$invalid || field.$model === '');
     },
 
-    submit() {
+    async submit() {
       if (this.isValid) {
         this.submitted = true;
+
+        const resultFormData = this.appendToFormData();
+
+        if (this.mode == 'create') {
+          this.loading = true;
+          const responseData = await this.$store.dispatch(
+            'module_pelaku/createPelaku',
+            resultFormData
+          );
+
+          if (responseData) {
+            setTimeout(() => {
+              this.loading = false;
+              this.$router.push({
+                path: '/pelaku',
+              });
+              this.toastSuccess('Berhasil menyimpan data pelaku');
+            }, 500);
+          }
+        }
       }
     },
 
@@ -215,15 +289,30 @@ export default {
 
     getEmptyForm() {
       return {
-        firstName: '',
-        lastName: '',
-        userName: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
+        nomorUrut: '',
+        nama: '',
+        nip: '',
+        idJabatan: '',
+        memoKesalahan: '',
+
         accept: false,
       };
+    },
+
+    appendToFormData() {
+      const fd = new FormData();
+      fd.append('kode_rekomendasi', this.$route.query.idrekomendasi);
+      fd.append('kode_temuan', this.$route.query.idtemuan);
+      fd.append('kode_lha', this.$route.query.idlha);
+      fd.append('Nomor_Urut', this.$v.form.nomorUrut.$model);
+      fd.append('Nama', this.$v.form.nama.$model);
+      fd.append('NIP', this.$v.form.nip.$model);
+      fd.append('Kode_Jabatan', this.$v.form.idJabatan.$model);
+      fd.append('Memo_Kesalahan', this.$v.form.memoKesalahan.$model);
+      return fd;
     },
   },
 };
 </script>
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
