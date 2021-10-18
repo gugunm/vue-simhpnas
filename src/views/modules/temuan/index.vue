@@ -87,7 +87,7 @@ const fields = [
 ];
 
 export default {
-  name: 'LHA',
+  name: 'Temuan',
   components: {
     TableTemuan,
     ConfirmModal,

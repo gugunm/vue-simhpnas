@@ -19,68 +19,82 @@
               <CCol lg="6">
                 <CInput
                   label="Nomor LHA"
-                  :lazy="false"
-                  :value.sync="$v.form.firstName.$model"
-                  :is-valid="checkIfValid('firstName')"
-                  placeholder="Nomor LHA"
-                  autocomplete="given-name"
-                  invalid-feedback="This is a required field and must be at least 2 characters"
+                  :value="$route.query.nolha"
+                  :disabled="true"
+                />
+              </CCol>
+              <CCol lg="6">
+                <CInput
+                  label="Nomor Temuan"
+                  :value="$route.query.notemuan"
+                  :disabled="true"
                 />
               </CCol>
             </CRow>
 
             <!-- ROW 2 -->
-            <CRow>
+            <CRow class="mb-3">
               <CCol lg="6">
                 <CInput
-                  label="Nomor Temuan"
+                  label="Nomor Penyebab"
                   :lazy="false"
-                  :value.sync="$v.form.userName.$model"
-                  :is-valid="checkIfValid('userName')"
-                  placeholder="Nomor Temuan"
-                  autocomplete="username"
-                  invalid-feedback="This is a required field and must be at least 5 character"
+                  :value.sync="$v.form.nomorPenyebab.$model"
+                  :is-valid="checkIfValid('nomorPenyebab')"
+                  placeholder="Nomor Penyebab"
+                  autocomplete="nomorPenyebab"
+                  invalid-feedback="Nomor Penyebab wajib diisi 1-2 angka"
                 />
+              </CCol>
+              <CCol lg="6">
+                <div>
+                  <label class="typo__label">Kode Penyebab</label>
+                  <multiselect
+                    v-if="optionsPenyebab"
+                    v-model="valuePenyebab"
+                    :options="optionsPenyebab"
+                    :custom-label="viewSelectSearch"
+                    placeholder="Select kode penyebab"
+                    label="deskripsi"
+                    track-by="deskripsi"
+                  />
+                </div>
+                <!-- <CInput
+                  label="Kode Penyebab"
+                  :lazy="false"
+                  :value.sync="$v.form.kodePenyebab.$model"
+                  :is-valid="checkIfValid('kodePenyebab')"
+                  placeholder="Kode Penyebab"
+                  autocomplete="kodePenyebab"
+                  invalid-feedback="Kode Penyebab wajib diisi"
+                /> -->
               </CCol>
             </CRow>
 
             <!-- ROW 3 -->
             <CRow>
-              <CCol lg="6">
-                <CInput
-                  label="Nomor Penyebab"
+              <CCol lg="8">
+                <CTextarea
+                  label="Memo Penyebab"
                   :lazy="false"
-                  :value.sync="$v.form.userName.$model"
-                  :is-valid="checkIfValid('userName')"
-                  placeholder="Nomor Penyebab"
-                  autocomplete="username"
-                  invalid-feedback="This is a required field and must be at least 5 character"
-                />
-              </CCol>
-              <CCol lg="6">
-                <CInput
-                  label="Kode Penyebab"
-                  :lazy="false"
-                  :value.sync="$v.form.userName.$model"
-                  :is-valid="checkIfValid('userName')"
-                  placeholder="Kode Penyebab"
-                  autocomplete="username"
-                  invalid-feedback="This is a required field and must be at least 5 character"
+                  :value.sync="$v.form.memoPenyebab.$model"
+                  :is-valid="checkIfValid('memoPenyebab')"
+                  placeholder="Memo Penyebab"
+                  autocomplete="memoPenyebab"
+                  invalid-feedback="Memo wajib diisi"
                 />
               </CCol>
             </CRow>
 
             <!-- ROW 4 -->
             <CRow>
-              <CCol lg="8">
-                <CTextarea
-                  label="Memo Penyebab"
-                  :lazy="false"
-                  :value.sync="$v.form.firstName.$model"
-                  :is-valid="checkIfValid('firstName')"
-                  placeholder="Memo Penyebab"
-                  autocomplete="given-name"
-                  invalid-feedback="This is a required field and must be at least 2 characters"
+              <CCol lg="6">
+                <CInputCheckbox
+                  :is-valid="checkIfValid('accept')"
+                  :checked.sync="$v.form.accept.$model"
+                  label="Data yang di entry telah sesuai"
+                  invalid-feedback="Anda harus menyetujui sebelum melakukan submit"
+                  custom
+                  class="mb-4"
                 />
               </CCol>
             </CRow>
@@ -123,7 +137,8 @@
                   type="submit"
                   color="primary"
                   class="px-4 ml-1"
-                  :disabled="!isDirty"
+                  :disabled="!isValid || submitted"
+                  @click="submit"
                 >
                   <div v-if="loading" class="px-8">
                     <CSpinner color="white" size="sm" class="mr-2" />
@@ -149,20 +164,16 @@
 
 <script>
 import { validationMixin } from 'vuelidate';
-import {
-  required,
-  minLength,
-  email,
-  sameAs,
-  helpers,
-} from 'vuelidate/lib/validators';
+import { required, minLength, maxLength } from 'vuelidate/lib/validators';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 import mixin from './mixin';
+import Multiselect from 'vue-multiselect';
 
 export default {
   name: 'LhaForm',
   components: {
     ConfirmModal,
+    Multiselect,
   },
   mixins: [validationMixin, mixin],
   props: ['mode', 'selectedItem'],
@@ -172,6 +183,8 @@ export default {
       submitted: false,
       loading: false,
       isOpenConfirm: false,
+      valuePenyebab: '',
+      optionsPenyebab: [],
     };
   },
   computed: {
@@ -185,36 +198,24 @@ export default {
       return this.$v.form.$anyDirty;
     },
   },
+  watch: {
+    valuePenyebab: function (val) {
+      this.$v.form.kodePenyebab.$model = val.id;
+    },
+  },
+  async mounted() {
+    await this.loadKodePenyebab();
+  },
   validations: {
     form: {
-      firstName: {
+      nomorPenyebab: {
         required,
-        minLength: minLength(3),
+        minLength: minLength(1),
+        maxLength: maxLength(2),
       },
-      lastName: {
-        required,
-        minLength: minLength(2),
-      },
-      userName: {
-        required,
-        minLength: minLength(5),
-      },
-      email: {
-        required,
-        email,
-      },
-      password: {
-        required,
-        minLength: minLength(8),
-        strongPass: helpers.regex(
-          'strongPass',
-          /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/
-        ),
-      },
-      confirmPassword: {
-        required,
-        sameAsPassword: sameAs('password'),
-      },
+      kodePenyebab: { required },
+      memoPenyebab: { required },
+
       accept: {
         required,
         mustAccept: (val) => val,
@@ -222,6 +223,10 @@ export default {
     },
   },
   methods: {
+    viewSelectSearch({ id, deskripsi }) {
+      return `${id} - ${deskripsi}`;
+    },
+
     checkIfValid(fieldName) {
       const field = this.$v.form[fieldName];
       if (!field.$dirty) {
@@ -230,9 +235,32 @@ export default {
       return !(field.$invalid || field.$model === '');
     },
 
-    submit() {
+    async submit() {
       if (this.isValid) {
         this.submitted = true;
+
+        const resultFormData = this.appendToFormData();
+
+        if (this.mode == 'create') {
+          this.loading = true;
+          const responseData = await this.$store.dispatch(
+            'module_penyebab/createPenyebab',
+            resultFormData
+          );
+
+          if (responseData) {
+            setTimeout(() => {
+              this.loading = false;
+              this.$router.push({
+                path: '/penyebab',
+              });
+              this.toastSuccess(
+                'Berhasil menyimpan data dengan ID ' +
+                  responseData.Nomor_Penyebab
+              );
+            }, 500);
+          }
+        }
       }
     },
 
@@ -248,15 +276,25 @@ export default {
 
     getEmptyForm() {
       return {
-        firstName: '',
-        lastName: '',
-        userName: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
+        nomorPenyebab: '',
+        kodePenyebab: '',
+        memoPenyebab: '',
+
         accept: false,
       };
+    },
+
+    appendToFormData() {
+      const fd = new FormData();
+      fd.append('kode_temuan', this.$route.query.idtemuan);
+      fd.append('kode_lha', this.$route.query.idlha);
+      fd.append('Nomor_Penyebab', this.$v.form.nomorPenyebab.$model);
+      fd.append('Ref_Kode_Penyebab', this.$v.form.kodePenyebab.$model);
+      fd.append('Memo_Penyebab', this.$v.form.memoPenyebab.$model);
+      return fd;
     },
   },
 };
 </script>
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

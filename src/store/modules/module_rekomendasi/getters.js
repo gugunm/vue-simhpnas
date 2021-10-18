@@ -4,11 +4,15 @@ export default {
   },
 
   rekomendasiById(state) {
-    return state.rekomendasiById
+    return state.rekomendasiById;
   },
 
   hasRekomendasi(state) {
     return state.rekomendasi && state.rekomendasi.length > 0;
+  },
+
+  searchRekomendasi(state){
+    return state.searchRekomendasi;
   },
 
   shouldUpdate(state) {

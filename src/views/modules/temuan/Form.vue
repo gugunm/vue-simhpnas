@@ -38,7 +38,7 @@
                   :is-valid="checkIfValid('nomorTemuan')"
                   placeholder="Nomor Temuan"
                   autocomplete="nomorTemuan"
-                  invalid-feedback="Nomor Temuan wajib diisi"
+                  invalid-feedback="Nomor Temuan wajib diisi 1-2 angka"
                 />
               </CCol>
             </CRow>
@@ -345,7 +345,7 @@ export default {
     isAuditTpk: function (val) {
       if (!val) {
         this.$v.form.posisiKasus.$model = '0';
-        this.$v.form.modusOperandi.$model = 'TIDAK ADA';
+        this.$v.form.modusOperandi.$model = '-';
       } else {
         this.$v.form.posisiKasus.$model = '';
         this.$v.form.modusOperandi.$model = '';
@@ -362,7 +362,11 @@ export default {
   },
   validations: {
     form: {
-      nomorTemuan: { required, minLength: minLength(2) },
+      nomorTemuan: {
+        required,
+        minLength: minLength(1),
+        maxLength: maxLength(2),
+      },
       jenisTemuan: { required },
       klpTemuan: { required },
       subKlpTemuan: { required },
@@ -398,9 +402,6 @@ export default {
         this.submitted = true;
 
         const resultFormData = this.appendToFormData();
-
-        console.log('HEREE SUBMIT!!!');
-        console.log(resultFormData);
 
         if (this.mode == 'create') {
           this.loading = true;
@@ -442,7 +443,7 @@ export default {
         subKlpTemuan: '',
         memoTemuan: '',
         posisiKasus: '0',
-        modusOperandi: 'TIDAK ADA',
+        modusOperandi: '-',
         nilaiTemuan: 0,
         accept: false,
       };

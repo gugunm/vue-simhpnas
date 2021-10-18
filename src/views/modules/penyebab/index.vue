@@ -10,6 +10,8 @@
       @open-create-modal="openCreate"
       @open-edit-modal="openEdit"
       @open-delete-modal="openDeleteModal"
+      @on-select-lha="onSelectLha"
+      @on-select-temuan="onSelectTemuan"
     />
     <confirm-modal
       v-model="isDeleteConfirm"
@@ -40,7 +42,7 @@ const fields = [
     key: 'nomorLha',
   },
   {
-    key: 'refKodePenyebab',
+    key: 'nomorPenyebab',
   },
   {
     key: 'deskripsi',
@@ -67,6 +69,8 @@ export default {
       fields,
       isDeleteConfirm: false,
       idToDelete: null,
+      lha: {},
+      temuan: {},
     };
   },
 
@@ -85,6 +89,12 @@ export default {
     openCreate() {
       this.$router.push({
         name: 'module-create-penyebab',
+        query: {
+          idlha: this.lha.id,
+          nolha: this.lha.nomorLha,
+          idtemuan: this.temuan.id,
+          notemuan: this.temuan.nomorTemuan,
+        },
       });
     },
 
@@ -100,6 +110,15 @@ export default {
       this.idToDelete = id;
     },
 
+    onSelectLha(selectedLha) {
+      this.lha = selectedLha;
+    },
+
+    async onSelectTemuan(selectedTemuan) {
+      this.temuan = selectedTemuan;
+      await this.loadPenyebab();
+    },
+
     async actionDelete() {
       try {
         await this.$store.dispatch('module_penyebab/deletePenyebabById', {
@@ -110,26 +129,16 @@ export default {
 
         this.loadPenyebab();
 
-        this.$toast.open({
-          message: `Berhasil menghapus data dengan ID ${this.idToDelete}`,
-          type: 'success',
-          position: 'top-right',
-          duration: 3000,
-        });
+        toastSuccess(`Berhasil menghapus data dengan ID ${this.idToDelete}`);
       } catch (error) {
-        this.$toast.open({
-          message: error.message,
-          type: 'error',
-          position: 'top-right',
-          duration: 3000,
-        });
+        toastError(error.message);
       }
     },
     async loadPenyebab(refresh = false) {
       // this.loading = true;
       try {
         await this.$store.dispatch('module_penyebab/loadPenyebab', {
-          idTemuan: 'mgR1oZM85x',
+          idTemuan: this.temuan.id,
           forceRefresh: refresh,
         });
         this.items = this.$store.getters['module_penyebab/penyebab'];

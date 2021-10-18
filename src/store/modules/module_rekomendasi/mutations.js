@@ -7,6 +7,10 @@ export default {
     state.rekomendasiById = payload;
   },
 
+  setSearchRekomendasi(state, payload) {
+    state.searchRekomendasi = payload;
+  },
+
   setFetchTimestamp(state) {
     state.lastFetch = new Date().getTime();
   }

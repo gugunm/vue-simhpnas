@@ -17,7 +17,7 @@ export default {
 
     if (response.status != 200) {
       const error = new Error(
-        responseData.message || 'Failed to fetch data unit kerja.'
+        responseData.message || 'Failed to fetch data'
       );
       throw error;
     }
@@ -56,4 +56,61 @@ export default {
     context.commit('setRekomendasi', rekomendasi);
     context.commit('setFetchTimestamp');
   },
+
+  async createRekomendasi(context, payload) {
+    const response = await axios({
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      data: payload,
+      baseURL: API_URL,
+      url: '/api/rekomendasi',
+      params: {
+        token: localStorage.getItem('api_token')
+      },
+    })
+
+    const responseData = await response.data;
+    
+    if (response.statusText != "OK") {
+      const error = new Error(
+        responseData.message || 'Failed to save data'
+      );
+      throw error;
+    }
+    
+    return responseData
+  },
+
+  async loadSearchRekomendasi(context, payload) {
+    const response = await axios({
+      method: 'GET',
+      baseURL: API_URL,
+      url: '/api/searchrekomendasi',
+      params: {
+        kode_temuan: payload.idTemuan,
+        token: localStorage.getItem('api_token')
+      },
+    })
+
+    const responseData = await response.data;
+
+    if (response.status != 200) {
+      const error = new Error(
+        responseData.message || 'Failed to fetch data'
+      );
+      throw error;
+    }
+
+    const rekomendasi = [];
+
+    for (const key in responseData) {
+      const data = {
+        id: responseData[key]["kode_kelompok_rekomendasi"],
+        deskripsi: responseData[key]["diskripsi"],
+      };
+      rekomendasi.push(data);
+    }
+
+    context.commit('setSearchRekomendasi', rekomendasi);
+  }
 }

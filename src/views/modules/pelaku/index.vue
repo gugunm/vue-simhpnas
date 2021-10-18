@@ -115,7 +115,7 @@ export default {
       try {
         await this.$store.dispatch('module_pelaku/loadPelaku', {
           forceRefresh: refresh,
-          idRekomendasi: 'mZO105ro9W',
+          idRekomendasi: 'Vylrej7OqX',
         });
         this.items = this.$store.getters['module_pelaku/pelaku'];
       } catch (error) {

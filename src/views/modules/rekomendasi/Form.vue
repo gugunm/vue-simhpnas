@@ -19,12 +19,15 @@
               <CCol lg="6">
                 <CInput
                   label="Nomor LHA"
-                  :lazy="false"
-                  :value.sync="$v.form.firstName.$model"
-                  :is-valid="checkIfValid('firstName')"
-                  placeholder="Nomor LHA"
-                  autocomplete="given-name"
-                  invalid-feedback="This is a required field and must be at least 2 characters"
+                  :value="$route.query.nolha"
+                  :disabled="true"
+                />
+              </CCol>
+              <CCol lg="6">
+                <CInput
+                  label="Nomor Temuan"
+                  :value="$route.query.notemuan"
+                  :disabled="true"
                 />
               </CCol>
             </CRow>
@@ -33,55 +36,64 @@
             <CRow>
               <CCol lg="6">
                 <CInput
-                  label="Nomor Temuan"
+                  label="Nomor Rekomendasi"
                   :lazy="false"
-                  :value.sync="$v.form.userName.$model"
-                  :is-valid="checkIfValid('userName')"
-                  placeholder="Nomor Temuan"
-                  autocomplete="username"
-                  invalid-feedback="This is a required field and must be at least 5 character"
+                  :value.sync="$v.form.nomorRekomendasi.$model"
+                  :is-valid="checkIfValid('nomorRekomendasi')"
+                  placeholder="Nomor Rekomendasi"
+                  autocomplete="nomorRekomendasi"
+                  invalid-feedback="Nomor Rekomendasi wajib diisi 1-2 angka"
                 />
               </CCol>
             </CRow>
 
             <!-- ROW 3 -->
-            <CRow>
+            <CRow class="mb-3">
               <CCol lg="6">
-                <CInput
-                  label="Nomor Rekomendasi"
-                  :lazy="false"
-                  :value.sync="$v.form.userName.$model"
-                  :is-valid="checkIfValid('userName')"
-                  placeholder="Nomor Rekomendasi"
-                  autocomplete="username"
-                  invalid-feedback="This is a required field and must be at least 5 character"
-                />
-              </CCol>
-            </CRow>
-
-            <!-- ROW 4 -->
-            <CRow>
-              <CCol lg="6">
-                <CInput
+                <div>
+                  <label class="typo__label">Kode Rekomendasi</label>
+                  <multiselect
+                    v-if="optionsRekomendasi"
+                    v-model="valueRekomendasi"
+                    :options="optionsRekomendasi"
+                    :custom-label="viewSelectSearch"
+                    placeholder="Select kode rekomendasi"
+                    label="deskripsi"
+                    track-by="deskripsi"
+                  />
+                </div>
+                <!-- <CInput
                   label="Kelompok Rekomendasi"
                   :lazy="false"
-                  :value.sync="$v.form.userName.$model"
-                  :is-valid="checkIfValid('userName')"
+                  :value.sync="$v.form.klpRekomendasi.$model"
+                  :is-valid="checkIfValid('klpRekomendasi')"
                   placeholder="Kelompok Rekomendasi"
-                  autocomplete="username"
-                  invalid-feedback="This is a required field and must be at least 5 character"
-                />
+                  autocomplete="klpRekomendasi"
+                  invalid-feedback="Kelompok Rekomendasi wajib diisi"
+                /> -->
               </CCol>
               <CCol lg="6">
-                <CInput
+                <div>
+                  <label class="typo__label">Sub Kelompok Rekomendasi</label>
+                  <multiselect
+                    v-if="optionsSubKlpRekomendasi"
+                    v-model="valueSubKlpRekomendasi"
+                    :options="optionsSubKlpRekomendasi"
+                    :custom-label="viewSelectSearch"
+                    placeholder="Select sub kelompok rekomendasi"
+                    label="deskripsi"
+                    track-by="deskripsi"
+                  />
+                </div>
+                <!-- <CInput
                   label="Sub Kelompok Rekomendasi"
                   :lazy="false"
-                  :value.sync="$v.form.userName.$model"
-                  :is-valid="checkIfValid('userName')"
+                  :value.sync="$v.form.subKlpRekomendasi.$model"
+                  :is-valid="checkIfValid('subKlpRekomendasi')"
                   placeholder="Sub Kelompok Rekomendasi"
-                  autocomplete="username"
-                  invalid-feedback="This is a required field and must be at least 5 character"
-                />
+                  autocomplete="subKlpRekomendasi"
+                  invalid-feedback="Sub Kelompok Rekomendasi wajib diisi"
+                /> -->
               </CCol>
             </CRow>
 
@@ -91,11 +103,11 @@
                 <CTextarea
                   label="Memo Rekomendasi"
                   :lazy="false"
-                  :value.sync="$v.form.firstName.$model"
-                  :is-valid="checkIfValid('firstName')"
+                  :value.sync="$v.form.memoRekomendasi.$model"
+                  :is-valid="checkIfValid('memoRekomendasi')"
                   placeholder="Memo Rekomendasi"
-                  autocomplete="given-name"
-                  invalid-feedback="This is a required field and must be at least 2 characters"
+                  autocomplete="memoRekomendasi"
+                  invalid-feedback="Memo Rekomendasi wajib diisi"
                 />
               </CCol>
             </CRow>
@@ -104,14 +116,42 @@
             <CRow>
               <CCol lg="4">
                 <CInput
-                  type="number"
                   label="Nilai Rekomendasi"
-                  :lazy="false"
-                  :value.sync="$v.form.firstName.$model"
-                  :is-valid="checkIfValid('firstName')"
-                  placeholder="Nilai Rekomendasi"
-                  autocomplete="given-name"
-                  invalid-feedback="This is a required field and must be at least 2 characters"
+                  :value="$route.query.nilaitemuan"
+                  :disabled="true"
+                />
+              </CCol>
+              <CCol lg="6">
+                <label class="typo__label mb-3">Pelaku</label>
+                <div class="flex items-center">
+                  <CSwitch
+                    class="mr-4"
+                    color="warning"
+                    variant="3d"
+                    v-bind="labelIcon"
+                    :checked.sync="isPelaku"
+                  />
+                  <p class="inline-block mr-3 font-semibold uppercase">
+                    {{
+                      isPelaku
+                        ? 'Terdapat pelaku dalam rekomendasi'
+                        : 'Rekomendasi tanpa pelaku'
+                    }}
+                  </p>
+                </div>
+              </CCol>
+            </CRow>
+
+            <!-- ROW 6 -->
+            <CRow>
+              <CCol lg="6">
+                <CInputCheckbox
+                  :is-valid="checkIfValid('accept')"
+                  :checked.sync="$v.form.accept.$model"
+                  label="Data yang di entry telah sesuai"
+                  invalid-feedback="Anda harus menyetujui sebelum melakukan submit"
+                  custom
+                  class="mb-4"
                 />
               </CCol>
             </CRow>
@@ -154,7 +194,8 @@
                   type="submit"
                   color="primary"
                   class="px-4 ml-1"
-                  :disabled="!isDirty"
+                  :disabled="!isValid || submitted"
+                  @click="submit"
                 >
                   <div v-if="loading" class="px-8">
                     <CSpinner color="white" size="sm" class="mr-2" />
@@ -180,20 +221,16 @@
 
 <script>
 import { validationMixin } from 'vuelidate';
-import {
-  required,
-  minLength,
-  email,
-  sameAs,
-  helpers,
-} from 'vuelidate/lib/validators';
+import { required, minLength, maxLength } from 'vuelidate/lib/validators';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 import mixin from './mixin';
+import Multiselect from 'vue-multiselect';
 
 export default {
   name: 'LhaForm',
   components: {
     ConfirmModal,
+    Multiselect,
   },
   mixins: [validationMixin, mixin],
   props: ['mode', 'selectedItem'],
@@ -203,6 +240,15 @@ export default {
       submitted: false,
       loading: false,
       isOpenConfirm: false,
+      isPelaku: false,
+      labelIcon: {
+        labelOn: '\u2713',
+        labelOff: '\u2715',
+      },
+      valueRekomendasi: '',
+      optionsRekomendasi: [],
+      valueSubKlpRekomendasi: '',
+      optionsSubKlpRekomendasi: [],
     };
   },
   computed: {
@@ -216,36 +262,40 @@ export default {
       return this.$v.form.$anyDirty;
     },
   },
+  watch: {
+    valueRekomendasi: function (val) {
+      this.valueSubKlpRekomendasi = '';
+      this.optionsSubKlpRekomendasi = [];
+      this.$v.form.klpRekomendasi.$model = val.id;
+
+      this.loadSubKlpRekomendasi();
+    },
+    valueSubKlpRekomendasi: function (val) {
+      this.$v.form.subKlpRekomendasi.$model = val.id;
+    },
+    isPelaku: function (val) {
+      if (val) {
+        this.$v.form.flagPelaku.$model = 1;
+      } else {
+        this.$v.form.flagPelaku.$model = 0;
+      }
+    },
+  },
+  async mounted() {
+    await this.loadSearchRekomendasi();
+  },
   validations: {
     form: {
-      firstName: {
+      nomorRekomendasi: {
         required,
-        minLength: minLength(3),
+        minLength: minLength(1),
+        maxLength: maxLength(2),
       },
-      lastName: {
-        required,
-        minLength: minLength(2),
-      },
-      userName: {
-        required,
-        minLength: minLength(5),
-      },
-      email: {
-        required,
-        email,
-      },
-      password: {
-        required,
-        minLength: minLength(8),
-        strongPass: helpers.regex(
-          'strongPass',
-          /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/
-        ),
-      },
-      confirmPassword: {
-        required,
-        sameAsPassword: sameAs('password'),
-      },
+      klpRekomendasi: { required },
+      subKlpRekomendasi: { required },
+      memoRekomendasi: { required },
+      flagPelaku: { required },
+      nilaiRekomendasi: { required },
       accept: {
         required,
         mustAccept: (val) => val,
@@ -253,6 +303,10 @@ export default {
     },
   },
   methods: {
+    viewSelectSearch({ id, deskripsi }) {
+      return `${id} - ${deskripsi}`;
+    },
+
     checkIfValid(fieldName) {
       const field = this.$v.form[fieldName];
       if (!field.$dirty) {
@@ -261,9 +315,32 @@ export default {
       return !(field.$invalid || field.$model === '');
     },
 
-    submit() {
+    async submit() {
       if (this.isValid) {
         this.submitted = true;
+
+        const resultFormData = this.appendToFormData();
+
+        if (this.mode == 'create') {
+          this.loading = true;
+          const responseData = await this.$store.dispatch(
+            'module_rekomendasi/createRekomendasi',
+            resultFormData
+          );
+
+          if (responseData) {
+            setTimeout(() => {
+              this.loading = false;
+              this.$router.push({
+                path: '/rekomendasi',
+              });
+              this.toastSuccess(
+                'Berhasil menyimpan data dengan ID ' +
+                  responseData.Nomor_Rekomendasi
+              );
+            }, 500);
+          }
+        }
       }
     },
 
@@ -279,15 +356,36 @@ export default {
 
     getEmptyForm() {
       return {
-        firstName: '',
-        lastName: '',
-        userName: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
+        nomorRekomendasi: '',
+        klpRekomendasi: '',
+        subKlpRekomendasi: '',
+        memoRekomendasi: '',
+        flagPelaku: 0,
+        nilaiRekomendasi: 0,
         accept: false,
       };
+    },
+
+    appendToFormData() {
+      const fd = new FormData();
+      fd.append('kode_temuan', this.$route.query.idtemuan);
+      fd.append('kode_lha', this.$route.query.idlha);
+      fd.append('Nomor_Rekomendasi', this.$v.form.nomorRekomendasi.$model);
+      fd.append(
+        'Kode_Kelompok_Rekomendasi',
+        this.$v.form.klpRekomendasi.$model
+      );
+      fd.append(
+        'Kode_Sub_Kelompok_Rekomendasi',
+        this.$v.form.subKlpRekomendasi.$model
+      );
+      fd.append('Memo_Rekomendasi', this.$v.form.memoRekomendasi.$model);
+      fd.append('Flag_Pelaku', this.$v.form.flagPelaku.$model);
+      fd.append('Nilai_Rekomendasi', this.$route.query.nilaitemuan);
+      return fd;
     },
   },
 };
 </script>
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

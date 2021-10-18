@@ -46,9 +46,9 @@
           <CIcon v-else name="cil-moon" />
         </button>
       </CHeaderNavItem> -->
-      <TheHeaderDropdownNotif class="mr-3" />
+      <!-- <TheHeaderDropdownNotif class="mr-3" /> -->
       <div class="mr-3">
-        <p class="capitalize pl-3 font-bold border-l border-gray-400">
+        <p class="capitalize pr-3 font-bold border-r border-gray-400">
           {{ namaUser }}
         </p>
       </div>
@@ -74,7 +74,7 @@
 
 <script>
 import TheHeaderDropdownAccnt from './TheHeaderDropdownAccnt';
-import TheHeaderDropdownNotif from './TheHeaderDropdownNotif';
+// import TheHeaderDropdownNotif from './TheHeaderDropdownNotif';
 // import TheHeaderDropdownTasks from './TheHeaderDropdownTasks';
 // import TheHeaderDropdownMssgs from './TheHeaderDropdownMssgs'
 import CMenu from './Menu';
@@ -84,7 +84,7 @@ export default {
   name: 'TheHeader',
   components: {
     TheHeaderDropdownAccnt,
-    TheHeaderDropdownNotif,
+    // TheHeaderDropdownNotif,
     // TheHeaderDropdownTasks,
     // TheHeaderDropdownMssgs,
     CMenu,
