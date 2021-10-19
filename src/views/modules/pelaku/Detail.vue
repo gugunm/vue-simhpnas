@@ -1,10 +1,16 @@
 <template>
-  <p>Page Detail Pelaku</p>
+  <div>
+    <Form mode="view" :id-pelaku="idPelaku" />
+  </div>
 </template>
 
 <script>
-export default {};
-</script>
+import Form from './Form.vue';
 
-<style>
-</style>
+export default {
+  components: {
+    Form,
+  },
+  props: ['idPelaku'],
+};
+</script>

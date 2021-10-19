@@ -70,6 +70,20 @@ export default {
       this.loading = false;
     },
 
+    async loadTlById(refresh = false) {
+      this.loading = true;
+      try {
+        await this.$store.dispatch('module_tindak_lanjut/loadTindakLanjutById', {
+          idTl: this.idTl,
+          forceRefresh: refresh,
+        });
+        this.form = this.$store.getters['module_tindak_lanjut/tindakLanjutById'];
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
+      this.loading = false;
+    },
+
     toastSuccess(msg) {
       this.$toast.open({
         message: msg,

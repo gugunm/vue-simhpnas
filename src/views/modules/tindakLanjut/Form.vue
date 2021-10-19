@@ -3,6 +3,7 @@
     <CCol sm="12">
       <div class="text-2xl mb-4 font-semibold">
         <h3 v-if="mode == 'create'">Create Tindak Lanjut</h3>
+        <h3 v-else-if="mode == 'view'">Detail Tindak Lanjut</h3>
         <h3 v-else>Edit Tindak Lanjut</h3>
       </div>
       <CCard>
@@ -17,7 +18,7 @@
               <CCol lg="6">
                 <CInput
                   label="Nomor LHA"
-                  :value="$route.query.nolha"
+                  :value="mode == 'view' ? form.nomorLha : $route.query.nolha"
                   :disabled="true"
                 />
               </CCol>
@@ -28,14 +29,20 @@
               <CCol lg="3">
                 <CInput
                   label="Nomor Temuan"
-                  :value="$route.query.notemuan"
+                  :value="
+                    mode == 'view' ? form.nomorTemuan : $route.query.notemuan
+                  "
                   :disabled="true"
                 />
               </CCol>
               <CCol lg="3">
                 <CInput
                   label="Nomor Rekomendasi"
-                  :value="$route.query.norekomendasi"
+                  :value="
+                    mode == 'view'
+                      ? form.nomorRekomendasi
+                      : $route.query.norekomendasi
+                  "
                   :disabled="true"
                 />
               </CCol>
@@ -48,6 +55,7 @@
                   placeholder="Nomor Tindak Lanjut"
                   autocomplete="nomorTl"
                   invalid-feedback="Nomor TL wajib diisi"
+                  :disabled="mode == 'view'"
                 />
               </CCol>
             </CRow>
@@ -55,7 +63,13 @@
             <!-- ROW 3 -->
             <CRow class="mb-3">
               <CCol lg="6">
-                <div>
+                <CInput
+                  v-if="mode == 'view'"
+                  label="Kelompok TL"
+                  :value="form.kelompokTl"
+                  :disabled="true"
+                />
+                <div v-else>
                   <label class="typo__label">Kelompok TL</label>
                   <multiselect
                     v-if="optionsKlpTl"
@@ -67,18 +81,15 @@
                     track-by="deskripsi"
                   />
                 </div>
-                <!-- <CInput
-                  label="Kelompok Tindak Lanjut"
-                  :lazy="false"
-                  :value.sync="$v.form.userName.$model"
-                  :is-valid="checkIfValid('userName')"
-                  placeholder="Kelompok Tindak Lanjut"
-                  autocomplete="username"
-                  invalid-feedback="This is a required field and must be at least 5 character"
-                /> -->
               </CCol>
               <CCol lg="6">
-                <div>
+                <CInput
+                  v-if="mode == 'view'"
+                  label="Sub Kelompok TL"
+                  :value="form.subKelompokTl"
+                  :disabled="true"
+                />
+                <div v-else>
                   <label class="typo__label">Sub Kelompok TL</label>
                   <multiselect
                     v-if="optionsSubKlpTl"
@@ -90,15 +101,6 @@
                     track-by="deskripsi"
                   />
                 </div>
-                <!-- <CInput
-                  label="Sub Kelompok Tindak Lanjut"
-                  :lazy="false"
-                  :value.sync="$v.form.userName.$model"
-                  :is-valid="checkIfValid('userName')"
-                  placeholder="Sub Kelompok Tindak Lanjut"
-                  autocomplete="username"
-                  invalid-feedback="This is a required field and must be at least 5 character"
-                /> -->
               </CCol>
             </CRow>
 
@@ -113,13 +115,14 @@
                   placeholder="Memo Tindak Lanjut"
                   autocomplete="memoTl"
                   invalid-feedback="Memo TL wajib diisi"
+                  :disabled="mode == 'view'"
                 />
               </CCol>
             </CRow>
 
             <!-- ROW 5 -->
             <CRow>
-              <CCol lg="4">
+              <CCol v-if="mode != 'view'" lg="4">
                 <CInput
                   label="Nilai Rekomendasi"
                   :value="$route.query.nilairekomendasi"
@@ -136,11 +139,12 @@
                   placeholder="Nilai Tindak Lanjut"
                   autocomplete="nilaiTl"
                   invalid-feedback="Nilai TL wajib diisi"
+                  :disabled="mode == 'view'"
                 />
               </CCol>
             </CRow>
 
-            <CRow>
+            <CRow v-if="mode != 'view'">
               <CCol lg="6">
                 <label for="file-tl" class="block mb-2">Upload File TL</label>
                 <input
@@ -153,7 +157,7 @@
               </CCol>
             </CRow>
 
-            <CRow>
+            <CRow v-if="mode != 'view'">
               <CCol lg="6">
                 <CInputCheckbox
                   :is-valid="checkIfValid('accept')"
@@ -244,7 +248,7 @@ export default {
     Multiselect,
   },
   mixins: [validationMixin, mixin],
-  props: ['mode', 'selectedItem'],
+  props: ['mode', 'selectedItem', 'idTl'],
   data() {
     return {
       form: this.getEmptyForm(),
@@ -284,6 +288,9 @@ export default {
   },
   async mounted() {
     await this.loadKlpTl();
+    if (this.mode == 'view') {
+      await this.loadTlById();
+    }
   },
   validations: {
     form: {

@@ -1,10 +1,16 @@
 <template>
-  <p>Page Detail Rekomendasi</p>
+  <div>
+    <Form mode="view" :id-rekomendasi="idRekomendasi" />
+  </div>
 </template>
 
 <script>
-export default {};
-</script>
+import Form from './Form.vue';
 
-<style>
-</style>
+export default {
+  components: {
+    Form,
+  },
+  props: ['idRekomendasi'],
+};
+</script>

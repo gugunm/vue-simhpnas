@@ -3,6 +3,7 @@
     <CCol sm="12">
       <div class="text-2xl mb-4 font-semibold">
         <h3 v-if="mode == 'create'">Create Rekomendasi</h3>
+        <h3 v-else-if="mode == 'view'">Detail Rekomendasi</h3>
         <h3 v-else>Edit Rekomendasi</h3>
       </div>
       <CCard>
@@ -19,14 +20,16 @@
               <CCol lg="6">
                 <CInput
                   label="Nomor LHA"
-                  :value="$route.query.nolha"
+                  :value="mode == 'view' ? form.nomorLha : $route.query.nolha"
                   :disabled="true"
                 />
               </CCol>
               <CCol lg="6">
                 <CInput
                   label="Nomor Temuan"
-                  :value="$route.query.notemuan"
+                  :value="
+                    mode == 'view' ? form.nomorTemuan : $route.query.notemuan
+                  "
                   :disabled="true"
                 />
               </CCol>
@@ -43,12 +46,32 @@
                   placeholder="Nomor Rekomendasi"
                   autocomplete="nomorRekomendasi"
                   invalid-feedback="Nomor Rekomendasi wajib diisi 1-2 angka"
+                  :disabled="mode == 'view'"
+                />
+              </CCol>
+            </CRow>
+
+            <CRow v-if="mode == 'view'" class="mb-3">
+              <CCol lg="12">
+                <CInput
+                  v-if="mode == 'view'"
+                  label="Kode Rekomendasi"
+                  :value="form.kelompokRekomendasi"
+                  :disabled="true"
+                />
+              </CCol>
+              <CCol lg="12">
+                <CInput
+                  v-if="mode == 'view'"
+                  label="Kode Rekomendasi"
+                  :value="form.subKelompokRekomendasi"
+                  :disabled="true"
                 />
               </CCol>
             </CRow>
 
             <!-- ROW 3 -->
-            <CRow class="mb-3">
+            <CRow v-else class="mb-3">
               <CCol lg="6">
                 <div>
                   <label class="typo__label">Kode Rekomendasi</label>
@@ -62,15 +85,6 @@
                     track-by="deskripsi"
                   />
                 </div>
-                <!-- <CInput
-                  label="Kelompok Rekomendasi"
-                  :lazy="false"
-                  :value.sync="$v.form.klpRekomendasi.$model"
-                  :is-valid="checkIfValid('klpRekomendasi')"
-                  placeholder="Kelompok Rekomendasi"
-                  autocomplete="klpRekomendasi"
-                  invalid-feedback="Kelompok Rekomendasi wajib diisi"
-                /> -->
               </CCol>
               <CCol lg="6">
                 <div>
@@ -85,15 +99,6 @@
                     track-by="deskripsi"
                   />
                 </div>
-                <!-- <CInput
-                  label="Sub Kelompok Rekomendasi"
-                  :lazy="false"
-                  :value.sync="$v.form.subKlpRekomendasi.$model"
-                  :is-valid="checkIfValid('subKlpRekomendasi')"
-                  placeholder="Sub Kelompok Rekomendasi"
-                  autocomplete="subKlpRekomendasi"
-                  invalid-feedback="Sub Kelompok Rekomendasi wajib diisi"
-                /> -->
               </CCol>
             </CRow>
 
@@ -108,6 +113,7 @@
                   placeholder="Memo Rekomendasi"
                   autocomplete="memoRekomendasi"
                   invalid-feedback="Memo Rekomendasi wajib diisi"
+                  :disabled="mode == 'view'"
                 />
               </CCol>
             </CRow>
@@ -117,7 +123,11 @@
               <CCol lg="4">
                 <CInput
                   label="Nilai Rekomendasi"
-                  :value="$route.query.nilaitemuan"
+                  :value="
+                    mode == 'view'
+                      ? form.nilaiRekomendasi
+                      : $route.query.nilaitemuan
+                  "
                   :disabled="true"
                 />
               </CCol>
@@ -125,6 +135,7 @@
                 <label class="typo__label mb-3">Pelaku</label>
                 <div class="flex items-center">
                   <CSwitch
+                    :disabled="mode == 'view'"
                     class="mr-4"
                     color="warning"
                     variant="3d"
@@ -143,7 +154,7 @@
             </CRow>
 
             <!-- ROW 6 -->
-            <CRow>
+            <CRow v-if="mode != 'view'">
               <CCol lg="6">
                 <CInputCheckbox
                   :is-valid="checkIfValid('accept')"
@@ -233,7 +244,7 @@ export default {
     Multiselect,
   },
   mixins: [validationMixin, mixin],
-  props: ['mode', 'selectedItem'],
+  props: ['mode', 'selectedItem', 'idRekomendasi'],
   data() {
     return {
       form: this.getEmptyForm(),
@@ -283,6 +294,9 @@ export default {
   },
   async mounted() {
     await this.loadSearchRekomendasi();
+    if (this.mode == 'view') {
+      await this.loadRekomendasiById();
+    }
   },
   validations: {
     form: {

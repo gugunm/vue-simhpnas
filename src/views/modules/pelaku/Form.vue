@@ -3,6 +3,7 @@
     <CCol sm="12">
       <div class="text-2xl mb-4 font-semibold">
         <h3 v-if="mode == 'create'">Create Pelaku</h3>
+        <h3 v-else-if="mode == 'view'">Detail Pelaku</h3>
         <h3 v-else>Edit Pelaku</h3>
       </div>
       <CCard>
@@ -19,14 +20,16 @@
               <CCol lg="6">
                 <CInput
                   label="Nomor LHA"
-                  :value="$route.query.nolha"
+                  :value="mode == 'view' ? form.nomorLha : $route.query.nolha"
                   :disabled="true"
                 />
               </CCol>
               <CCol lg="6">
                 <CInput
                   label="Nomor Temuan"
-                  :value="$route.query.notemuan"
+                  :value="
+                    mode == 'view' ? form.nomorTemuan : $route.query.notemuan
+                  "
                   :disabled="true"
                 />
               </CCol>
@@ -43,12 +46,17 @@
                   placeholder="nomor urut"
                   autocomplete="nomorUrut"
                   invalid-feedback="Nomor Urut wajib diisi 1 angka"
+                  :disabled="mode == 'view'"
                 />
               </CCol>
               <CCol lg="6">
                 <CInput
                   label="Nomor Rekomendasi"
-                  :value="$route.query.norekomendasi"
+                  :value="
+                    mode == 'view'
+                      ? form.nomorRekomendasi
+                      : $route.query.norekomendasi
+                  "
                   :disabled="true"
                 />
               </CCol>
@@ -64,6 +72,7 @@
                   placeholder="NIP"
                   autocomplete="nip"
                   invalid-feedback="NIP wajib diisi 18 angka"
+                  :disabled="mode == 'view'"
                 />
               </CCol>
               <CCol lg="6">
@@ -75,6 +84,7 @@
                   placeholder="Nama Lengkap"
                   autocomplete="nama"
                   invalid-feedback="Nama Lengkap wajib diisi"
+                  :disabled="mode == 'view'"
                 />
               </CCol>
             </CRow>
@@ -82,7 +92,13 @@
             <!-- ROW 2 -->
             <CRow class="mb-3">
               <CCol lg="6">
-                <div>
+                <CInput
+                  v-if="mode == 'view'"
+                  label="Jabatan"
+                  :value="form.jabatan"
+                  :disabled="true"
+                />
+                <div v-else>
                   <label class="typo__label">Jabatan</label>
                   <multiselect
                     v-if="optionsJabatan"
@@ -94,15 +110,6 @@
                     track-by="deskripsi"
                   />
                 </div>
-                <!-- <CInput
-                  label="Jabatan"
-                  :lazy="false"
-                  :value.sync="$v.form.userName.$model"
-                  :is-valid="checkIfValid('userName')"
-                  placeholder="Jabatan"
-                  autocomplete="username"
-                  invalid-feedback="This is a required field and must be at least 5 character"
-                /> -->
               </CCol>
             </CRow>
 
@@ -116,11 +123,12 @@
                   placeholder="Memo Kesalahan"
                   autocomplete="memoKesalahan"
                   invalid-feedback="Memo Kesalahan wajib diisi"
+                  :disabled="mode == 'view'"
                 />
               </CCol>
             </CRow>
 
-            <CRow>
+            <CRow v-if="mode != 'view'">
               <CCol lg="6">
                 <CInputCheckbox
                   :is-valid="checkIfValid('accept')"
@@ -211,7 +219,7 @@ export default {
     Multiselect,
   },
   mixins: [validationMixin, mixin],
-  props: ['mode', 'selectedItem'],
+  props: ['mode', 'selectedItem', 'idPelaku'],
   data() {
     return {
       form: this.getEmptyForm(),
@@ -240,6 +248,9 @@ export default {
   },
   async mounted() {
     await this.loadJabatan();
+    if (this.mode == 'view') {
+      await this.loadPelakuById();
+    }
   },
   validations: {
     form: {

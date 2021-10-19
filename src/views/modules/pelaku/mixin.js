@@ -57,6 +57,21 @@ export default {
       this.loading = false;
     },
 
+    async loadPelakuById(refresh = false) {
+      this.loading = true;
+      try {
+        await this.$store.dispatch('module_pelaku/loadPelakuById', {
+          idPelaku: this.idPelaku,
+          forceRefresh: refresh,
+        });
+        
+        this.form = this.$store.getters['module_pelaku/pelakuById'];
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
+      this.loading = false;
+    },
+
 
     toastSuccess(msg) {
       this.$toast.open({

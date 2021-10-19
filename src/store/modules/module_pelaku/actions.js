@@ -52,6 +52,50 @@ export default {
     context.commit('setFetchTimestamp');
   },
 
+  async loadPelakuById(context, payload) {
+    const response = await axios({
+      method: 'GET',
+      baseURL: API_URL,
+      url: `/api/pelaku/${payload.idPelaku}`,
+      params: {
+        token: localStorage.getItem('api_token')
+      },
+    })
+
+    const responseData = await response.data;
+
+    if (response.status != 200) {
+      const error = new Error(
+        responseData.message || 'Failed to fetch data'
+      );
+      throw error;
+    }
+
+    const data = {
+      id: responseData["kode_pelaku"],
+      kodeRekomendasi: responseData["kode_rekomendasi"],
+      kodeTemuan: responseData["kode_temuan"],
+      kodeLha: responseData["kode_lha"],
+      nomorRekomendasi: responseData["Nomor_Rekomendasi"],
+      nomorTemuan: responseData["Nomor_Temuan"],
+      nomorLha: responseData["Nomor_LHA"],
+      nomorUrut: responseData["Nomor_Urut"],
+      nama: responseData["Nama"],
+      nip: responseData["NIP"],
+      kodeJabatan: responseData["Kode_Jabatan"],
+      jabatan: responseData["Nama_Jabatan"],
+      kodeUnitObrikTl: responseData["Kode_Unit_Obrik_TL"],
+      unitObrik: responseData["Unit_Obrik"],
+      kodeBidangObrikTl: responseData["Kode_Bidang_Obrik_TL"],
+      bidangObrik: responseData["Bidang_Obrik"],
+      kodeSubBidangObrikTl: responseData["Kode_Sub_Bidang_Obrik_TL"],
+      subBidangObrik: responseData["Sub_Bidang_Obrik"],
+      memoKesalahan: responseData["Memo_kesalahan"],
+    };
+
+    context.commit('setPelakuById', data);
+  },
+
   async createPelaku(context, payload) {
     const response = await axios({
       method: 'POST',

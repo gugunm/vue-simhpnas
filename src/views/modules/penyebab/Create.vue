@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Form mode="create" @click-submit-form="onSubmitForm" />
+    <Form mode="create" />
   </div>
 </template>
 

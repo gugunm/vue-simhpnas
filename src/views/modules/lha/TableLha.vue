@@ -83,7 +83,7 @@
                   <CButton
                     v-c-tooltip="{
                       content: '+ Tim Audit',
-                      placement: 'right',
+                      placement: 'left',
                     }"
                     color="success"
                     variant="outline"

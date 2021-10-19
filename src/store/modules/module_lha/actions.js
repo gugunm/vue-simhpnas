@@ -67,7 +67,7 @@ export default {
     const response = await axios({
       method: 'GET',
       baseURL: API_URL,
-      url: `/api/jabatan/${payload.idJabatan}`,
+      url: `/api/lha/${payload.idLha}`,
       params: {
         token: localStorage.getItem('api_token')
       },
@@ -82,12 +82,31 @@ export default {
       throw error;
     }
 
-    const rjabatan = {
-      id: responseData["kode_jabatan"],
-      deskripsi: responseData["diskripsi"]
+    const anggaran = await context.dispatch('convertToRupiah', responseData["Anggaran_yang_diaudit"]);
+
+    const lha = {
+      id: responseData["kode_lha"],
+      nomorLha: responseData["Nomor_LHA"],
+      tglLha: responseData["Tanggal_LHA"],
+      nomorST: responseData["Nomor_ST"],
+      tglST: responseData["Tanggal_ST"],
+      grupLingkupAudit: responseData["Grup_Lingkup_Audit"],
+      lingkupAudit: responseData["Lingkup_Audit"],
+      jenisObrik: responseData["Jenis_Obrik"],
+      subBidangObrik: responseData["Sub_Bidang_Obrik"],
+      judulLaporan: responseData["Judul_laporan"],
+      tahunAnggaran: responseData["Tahun_Anggaran"],
+      jenisAnggaran: responseData["Jenis_Anggaran"],
+      namaPimpinan: responseData["Nama_Pimpinan"],
+      nipPimpinan: responseData["NIP_Pimpinan"],
+      rencanaAnggaran: responseData["Rencana_Anggaran"],
+      realisasiAnggaran: responseData["Realisasi_Anggaran"],
+      flagTpk: responseData["Flag_TPK"],
+      // anggaranYangDiaudit: responseData[key]["Anggaran_yang_diaudit"],
+      anggaranYangDiaudit: anggaran
     };
 
-    context.commit('setRefJabatanById', rjabatan);
+    context.commit('setLhaById', lha);
   },
 
   async createLha(context, payload) {

@@ -57,6 +57,53 @@ export default {
     context.commit('setFetchTimestamp');
   },
 
+  async loadRekomendasiById(context, payload) {
+    const response = await axios({
+      method: 'GET',
+      baseURL: API_URL,
+      url: `/api/rekomendasi/${payload.idRekomendasi}`,
+      params: {
+        token: localStorage.getItem('api_token')
+      },
+    })
+
+    const responseData = await response.data;
+
+    if (response.status != 200) {
+      const error = new Error(
+        responseData.message || 'Failed to fetch data'
+      );
+      throw error;
+    }
+
+    const data = {
+      id: responseData["kode_rekomendasi"],
+      kodeTemuan: responseData["kode_temuan"],
+      nomorTemuan: responseData["Nomor_Temuan"],
+      kodeLha: responseData["kode_lha"],
+      nomorLha: responseData["Nomor_LHA"],
+      nomorRekomendasi: responseData["Nomor_Rekomendasi"],
+      kodeKelompokRekomendasi: responseData["Kode_Kelompok_Rekomendasi"],
+      kelompokRekomendasi: responseData["Kelompok_Rekomendasi"],
+      kodeSubKelompokRekomendasi: responseData["Kode_Sub_Kelompok_Rekomendasi"],
+      subKelompokRekomendasi: responseData["Sub_Kelompok_Rekomendasi"],
+      memoRekomendasi: responseData["Memo_Rekomendasi"],
+      flagPelaku: responseData["Flag_Pelaku"],
+      nilaiRekomendasi: responseData["Nilai_Rekomendasi"],
+      nilaiTL: responseData["Nilai_TL"],
+      statusRekomendasi: responseData["Status_Rekomendasi"],
+      memoKoreksiRek: responseData["Memo_Koreksi_rek"],
+      kodeUnitObrikTl: responseData["Kode_Unit_Obrik_TL"],
+      unitObrik: responseData["Unit_Obrik"],
+      kodeBidangObrikTl: responseData["Kode_Bidang_Obrik_TL"],
+      bidangObrik: responseData["Bidang_Obrik"],
+      kodeSubBidangObrikTl: responseData["Kode_Sub_Bidang_Obrik_TL"],
+      subBidangObrik: responseData["Sub_Bidang_Obrik"],
+    };
+
+    context.commit('setRekomendasiById', data);
+  },
+
   async createRekomendasi(context, payload) {
     const response = await axios({
       method: 'POST',

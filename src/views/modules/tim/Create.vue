@@ -1,7 +1,6 @@
 <template>
   <div>
-    <p>{{ $route.query.qId }}</p>
-    <Form mode="create" @click-submit-form="onSubmitForm" />
+    <Form mode="create" />
   </div>
 </template>
 

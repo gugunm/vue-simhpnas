@@ -3,6 +3,7 @@
     <CCol sm="12">
       <div class="text-2xl mb-4 font-semibold">
         <h3 v-if="mode == 'create'">Create Tim Audit</h3>
+        <h3 v-else-if="mode == 'view'">Detail Tim Audit</h3>
         <h3 v-else>Edit Tim Audit</h3>
       </div>
       <CCard>
@@ -15,16 +16,20 @@
             <!-- ROW 1 -->
             <CRow class="mb-3">
               <CCol lg="6">
-                <!-- V SELECT -->
                 <CInput
                   label="Nomor LHA"
-                  :value="$route.query.nolha"
+                  :value="mode == 'view' ? form.nomorLha : $route.query.nolha"
                   :disabled="true"
-                  :readonly="true"
                 />
               </CCol>
               <CCol lg="6">
-                <div>
+                <CInput
+                  v-if="mode == 'view'"
+                  label="Peran"
+                  :value="form.peran"
+                  :disabled="true"
+                />
+                <div v-else>
                   <label>Peran</label>
                   <multiselect
                     v-if="optionsPeran"
@@ -36,16 +41,6 @@
                     track-by="deskripsi"
                   />
                 </div>
-                <!-- V SELECT -->
-                <!-- <CInput
-                  label="Peran"
-                  :lazy="false"
-                  :value.sync="$v.form.userName.$model"
-                  :is-valid="checkIfValid('userName')"
-                  placeholder="Peran"
-                  autocomplete="username"
-                  invalid-feedback="This is a required field and must be at least 5 character"
-                /> -->
               </CCol>
             </CRow>
             <!-- ROW 2 -->
@@ -60,6 +55,7 @@
                   placeholder="NIP"
                   autocomplete="nip"
                   invalid-feedback="NIP wajib diisi 18 angka"
+                  :disabled="mode == 'view'"
                 />
               </CCol>
               <CCol lg="6">
@@ -71,11 +67,12 @@
                   placeholder="Nama Lengkap"
                   autocomplete="nama"
                   invalid-feedback="Nama Lengkap wajib diisi"
+                  :disabled="mode == 'view'"
                 />
               </CCol>
             </CRow>
 
-            <CRow>
+            <CRow v-if="mode != 'view'">
               <CCol lg="6">
                 <CInputCheckbox
                   :is-valid="checkIfValid('accept')"
@@ -154,14 +151,7 @@
 
 <script>
 import { validationMixin } from 'vuelidate';
-import {
-  required,
-  minLength,
-  // email,
-  // sameAs,
-  // helpers,
-  maxLength,
-} from 'vuelidate/lib/validators';
+import { required, minLength, maxLength } from 'vuelidate/lib/validators';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 import mixin from './mixin';
 import Multiselect from 'vue-multiselect';
@@ -173,7 +163,7 @@ export default {
     Multiselect,
   },
   mixins: [validationMixin, mixin],
-  props: ['mode', 'selectedItem'],
+  props: ['mode', 'selectedItem', 'idTim'],
   data() {
     return {
       form: this.getEmptyForm(),
@@ -202,6 +192,9 @@ export default {
   },
   async mounted() {
     await this.loadPeran();
+    if (this.mode == 'view') {
+      await this.loadTimById();
+    }
   },
   validations: {
     form: {

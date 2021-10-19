@@ -61,6 +61,22 @@ export default {
       this.loading = false;
     },
 
+    async loadRekomendasiById(refresh = false) {
+      this.loading = true;
+      try {
+        await this.$store.dispatch('module_rekomendasi/loadRekomendasiById', {
+          idRekomendasi: this.idRekomendasi,
+          forceRefresh: refresh,
+        });
+
+        this.form = this.$store.getters['module_rekomendasi/rekomendasiById'];
+        
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
+      this.loading = false;
+    },
+
     toastSuccess(msg) {
       this.$toast.open({
         message: msg,

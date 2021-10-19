@@ -3,6 +3,7 @@
     <CCol sm="12">
       <div class="text-2xl mb-4 font-semibold">
         <h3 v-if="mode == 'create'">Create Penyebab</h3>
+        <h3 v-else-if="mode == 'view'">Detail Penyebab</h3>
         <h3 v-else>Edit Penyebab</h3>
       </div>
       <CCard>
@@ -19,14 +20,16 @@
               <CCol lg="6">
                 <CInput
                   label="Nomor LHA"
-                  :value="$route.query.nolha"
+                  :value="mode == 'view' ? form.nomorLha : $route.query.nolha"
                   :disabled="true"
                 />
               </CCol>
               <CCol lg="6">
                 <CInput
                   label="Nomor Temuan"
-                  :value="$route.query.notemuan"
+                  :value="
+                    mode == 'view' ? form.nomorTemuan : $route.query.notemuan
+                  "
                   :disabled="true"
                 />
               </CCol>
@@ -43,10 +46,17 @@
                   placeholder="Nomor Penyebab"
                   autocomplete="nomorPenyebab"
                   invalid-feedback="Nomor Penyebab wajib diisi 1-2 angka"
+                  :disabled="mode == 'view'"
                 />
               </CCol>
               <CCol lg="6">
-                <div>
+                <CInput
+                  v-if="mode == 'view'"
+                  label="Penyebab"
+                  :value="`${form.refKodePenyebab} - ${form.deskripsi}`"
+                  :disabled="true"
+                />
+                <div v-else>
                   <label class="typo__label">Kode Penyebab</label>
                   <multiselect
                     v-if="optionsPenyebab"
@@ -58,15 +68,6 @@
                     track-by="deskripsi"
                   />
                 </div>
-                <!-- <CInput
-                  label="Kode Penyebab"
-                  :lazy="false"
-                  :value.sync="$v.form.kodePenyebab.$model"
-                  :is-valid="checkIfValid('kodePenyebab')"
-                  placeholder="Kode Penyebab"
-                  autocomplete="kodePenyebab"
-                  invalid-feedback="Kode Penyebab wajib diisi"
-                /> -->
               </CCol>
             </CRow>
 
@@ -81,12 +82,13 @@
                   placeholder="Memo Penyebab"
                   autocomplete="memoPenyebab"
                   invalid-feedback="Memo wajib diisi"
+                  :disabled="mode == 'view'"
                 />
               </CCol>
             </CRow>
 
             <!-- ROW 4 -->
-            <CRow>
+            <CRow v-if="mode != 'view'">
               <CCol lg="6">
                 <CInputCheckbox
                   :is-valid="checkIfValid('accept')"
@@ -176,7 +178,7 @@ export default {
     Multiselect,
   },
   mixins: [validationMixin, mixin],
-  props: ['mode', 'selectedItem'],
+  props: ['mode', 'selectedItem', 'idPenyebab'],
   data() {
     return {
       form: this.getEmptyForm(),
@@ -205,6 +207,9 @@ export default {
   },
   async mounted() {
     await this.loadKodePenyebab();
+    if (this.mode == 'view') {
+      await this.loadPenyebabById();
+    }
   },
   validations: {
     form: {

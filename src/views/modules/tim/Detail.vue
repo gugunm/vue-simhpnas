@@ -1,10 +1,16 @@
 <template>
-  <p>Page Detail Tim Audit</p>
+  <div>
+    <Form mode="view" :id-tim="idTim" />
+  </div>
 </template>
 
 <script>
-export default {};
-</script>
+import Form from './Form.vue';
 
-<style>
-</style>
+export default {
+  components: {
+    Form,
+  },
+  props: ['idTim'],
+};
+</script>

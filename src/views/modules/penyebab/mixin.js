@@ -43,6 +43,22 @@ export default {
       this.loading = false;
     },
 
+    async loadPenyebabById(refresh = false) {
+      this.loading = true;
+      try {
+        await this.$store.dispatch('module_penyebab/loadPenyebabById', {
+          idPenyebab: this.idPenyebab,
+          forceRefresh: refresh,
+        });
+
+        this.form = this.$store.getters['module_penyebab/penyebabById'];
+
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
+      this.loading = false;
+    },
+
     toastSuccess(msg) {
       this.$toast.open({
         message: msg,

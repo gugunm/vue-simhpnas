@@ -3,6 +3,7 @@
     <CCol sm="12">
       <div class="text-2xl mb-4 font-semibold">
         <h3 v-if="mode == 'create'">Create Temuan</h3>
+        <h3 v-else-if="mode == 'view'">Detail Temuan</h3>
         <h3 v-else>Edit Temuan</h3>
       </div>
       <CCard>
@@ -22,7 +23,7 @@
               <CCol lg="6">
                 <CInput
                   label="Nomor LHA"
-                  :value="$route.query.nolha"
+                  :value="mode == 'view' ? form.nomorLha : $route.query.nolha"
                   :disabled="true"
                 />
               </CCol>
@@ -39,12 +40,40 @@
                   placeholder="Nomor Temuan"
                   autocomplete="nomorTemuan"
                   invalid-feedback="Nomor Temuan wajib diisi 1-2 angka"
+                  :disabled="true"
+                />
+              </CCol>
+            </CRow>
+
+            <CRow v-if="mode == 'view'" class="mb-3">
+              <CCol lg="12">
+                <CInput
+                  v-if="mode == 'view'"
+                  label="Jenis Temuan"
+                  :value="form.jenisTemuan"
+                  :disabled="true"
+                />
+              </CCol>
+              <CCol lg="12">
+                <CInput
+                  v-if="mode == 'view'"
+                  label="Kelompok Temuan"
+                  :value="form.kelompokTemuan"
+                  :disabled="true"
+                />
+              </CCol>
+              <CCol lg="12">
+                <CInput
+                  v-if="mode == 'view'"
+                  label="Sub Kelompok Temuan"
+                  :value="form.subKelompokTemuan"
+                  :disabled="true"
                 />
               </CCol>
             </CRow>
 
             <!-- ROW 3 -->
-            <CRow class="mb-3">
+            <CRow v-else class="mb-3">
               <CCol lg="4">
                 <div>
                   <label class="typo__label">Jenis Temuan</label>
@@ -58,15 +87,6 @@
                     track-by="deskripsi"
                   />
                 </div>
-                <!-- <CInput
-                  label="Jenis Temuan"
-                  :lazy="false"
-                  :value.sync="$v.form.jenisTemuan.$model"
-                  :is-valid="checkIfValid('jenisTemuan')"
-                  placeholder="Jenis Temuan"
-                  autocomplete="jenisTemuan"
-                  invalid-feedback="Jenis Temuan wajib diisi"
-                /> -->
               </CCol>
               <CCol lg="4">
                 <div>
@@ -81,15 +101,6 @@
                     track-by="deskripsi"
                   />
                 </div>
-                <!-- <CInput
-                  label="Kelompok Temuan"
-                  :lazy="false"
-                  :value.sync="$v.form.klpTemuan.$model"
-                  :is-valid="checkIfValid('klpTemuan')"
-                  placeholder="Kelompok Temuan"
-                  autocomplete="klpTemuan"
-                  invalid-feedback="Kelompok Temuan wajib diisi"
-                /> -->
               </CCol>
               <CCol lg="4">
                 <div>
@@ -104,15 +115,6 @@
                     track-by="deskripsi"
                   />
                 </div>
-                <!-- <CInput
-                  label="Sub Kelompok Temuan"
-                  :lazy="false"
-                  :value.sync="$v.form.subKlpTemuan.$model"
-                  :is-valid="checkIfValid('subKlpTemuan')"
-                  placeholder="Sub Kelompok Temuan"
-                  autocomplete="subKlpTemuan"
-                  invalid-feedback="Sub Kelompok Temuan wajib diisi"
-                /> -->
               </CCol>
             </CRow>
 
@@ -129,6 +131,7 @@
                   placeholder="Memo Temuan"
                   autocomplete="memoTemuan"
                   invalid-feedback="Memo Temuan wajib diisi"
+                  :disabled="mode == 'view'"
                 />
               </CCol>
             </CRow>
@@ -156,6 +159,13 @@
               <CRow>
                 <CCol lg="2">
                   <CInput
+                    v-if="mode == 'view'"
+                    label="Posisi Kasus"
+                    :value="form.posisiKasus"
+                    :disabled="true"
+                  />
+                  <CInput
+                    v-else
                     label="Posisi Kasus"
                     :lazy="false"
                     :value.sync="$v.form.posisiKasus.$model"
@@ -171,6 +181,13 @@
               <CRow>
                 <CCol lg="8">
                   <CTextarea
+                    v-if="mode == 'view'"
+                    label="Modus Operandi"
+                    :value="form.modusOperandi"
+                    :disabled="true"
+                  />
+                  <CTextarea
+                    v-else
                     label="Modus Operandi"
                     :lazy="false"
                     :value.sync="$v.form.modusOperandi.$model"
@@ -199,12 +216,13 @@
                   placeholder="Nilai Temuan"
                   autocomplete="nilaiTemuan"
                   invalid-feedback="Nilai Temuan wajib diisi"
+                  :disabled="mode == 'view'"
                 />
               </CCol>
             </CRow>
 
             <!-- ROW 8 -->
-            <CRow>
+            <CRow v-if="mode != 'view'">
               <CCol lg="6">
                 <CInputCheckbox
                   :is-valid="checkIfValid('accept')"
@@ -295,7 +313,7 @@ export default {
     Multiselect,
   },
   mixins: [validationMixin, mixin],
-  props: ['mode', 'selectedItem'],
+  props: ['mode', 'selectedItem', 'idTemuan'],
   data() {
     return {
       form: this.getEmptyForm(),
@@ -358,6 +376,14 @@ export default {
       this.isAuditTpk = false;
     } else {
       this.isAuditTpk = true;
+    }
+    if (this.mode == 'view') {
+      await this.loadTemuanById();
+      if (this.form.flagTpk == 0) {
+        this.isAuditTpk = false;
+      } else {
+        this.isAuditTpk = true;
+      }
     }
   },
   validations: {

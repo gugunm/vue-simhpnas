@@ -55,6 +55,20 @@ export default {
       }
     },
 
+    async loadTemuanById(refresh = false) {
+      try {
+        await this.$store.dispatch('module_temuan/loadTemuanById', {
+          idTemuan: this.idTemuan,
+          forceRefresh: refresh,
+        });
+
+        this.form = this.$store.getters['module_temuan/temuanById'];  
+        
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
+    },
+
     toastSuccess(msg) {
       this.$toast.open({
         message: msg,

@@ -70,4 +70,41 @@ export default {
     
     return responseData
   },
+
+  async loadTimById(context, payload) {
+    const response = await axios({
+      method: 'GET',
+      baseURL: API_URL,
+      url: `/api/timaudit/${payload.idTim}`,
+      params: {
+        token: localStorage.getItem('api_token')
+      },
+    })
+
+    const responseData = await response.data;
+
+    if (response.status != 200) {
+      const error = new Error(
+        responseData.message || 'Failed to fetch data'
+      );
+      throw error;
+    }
+
+    const data = {
+      id: responseData["kode_timaudit"],
+      kodeLha: responseData["kode_lha"],
+      nomorLha: responseData["Nomor_LHA"],
+      // nomorUrut: responseData["Nomor_Urut"],
+      nama: responseData["Nama"],
+      nip: responseData["NIP"],
+      kodePeran: responseData["Kode_Peran"],
+      peran: responseData["Peran"],
+      kodeUnitAudit: responseData["Kode_Unit_Audit"],
+      unitAudit: responseData["Unit_Audit"],
+      kodeSubUnitAudit: responseData["Kode_Sub_Unit_Audit"],
+      subUnitAudit: responseData["Sub_Unit_Audit"],
+    }
+
+    context.commit('setTimById', data);
+  }
 }
