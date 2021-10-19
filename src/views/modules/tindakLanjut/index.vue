@@ -10,6 +10,9 @@
       @open-create-modal="openCreate"
       @open-edit-modal="openEdit"
       @open-delete-modal="openDeleteModal"
+      @on-select-lha="onSelectLha"
+      @on-select-temuan="onSelectTemuan"
+      @on-select-rekomendasi="onSelectRekomendasi"
     />
     <confirm-modal
       v-model="isDeleteConfirm"
@@ -34,8 +37,23 @@ const fields = [
   {
     key: 'nomorLha',
   },
+  // {
+  //   key: 'nomorTemuan',
+  // },
+  // {
+  //   key: 'nomorRekomendasi',
+  // },
   {
-    key: 'nomorRekomendasi',
+    key: 'nomorTl',
+  },
+  {
+    key: 'nilaiTl',
+  },
+  {
+    key: 'statusTl',
+  },
+  {
+    key: 'subKelompokTl',
   },
   {
     key: 'actions',
@@ -56,6 +74,9 @@ export default {
       fields,
       isDeleteConfirm: false,
       idToDelete: null,
+      lha: {},
+      temuan: {},
+      rekomendasi: {},
     };
   },
   async mounted() {
@@ -71,6 +92,15 @@ export default {
     openCreate() {
       this.$router.push({
         name: 'module-create-tindak-lanjut',
+        query: {
+          idlha: this.lha.id,
+          nolha: this.lha.nomorLha,
+          idtemuan: this.temuan.id,
+          notemuan: this.temuan.nomorTemuan,
+          idrekomendasi: this.rekomendasi.id,
+          norekomendasi: this.rekomendasi.nomorRekomendasi,
+          nilairekomendasi: this.rekomendasi.nilaiRekomendasi,
+        },
       });
     },
     openEdit(item) {
@@ -83,6 +113,21 @@ export default {
       this.isDeleteConfirm = true;
       this.idToDelete = id;
     },
+
+    onSelectLha(selectedLha) {
+      this.lha = selectedLha;
+    },
+
+    async onSelectTemuan(selectedTemuan) {
+      this.temuan = selectedTemuan;
+      await this.loadRekomendasi();
+    },
+
+    async onSelectRekomendasi(selectedRekomendasi) {
+      this.rekomendasi = selectedRekomendasi;
+      await this.loadTindakLanjut();
+    },
+
     async actionDelete() {
       try {
         await this.$store.dispatch('module_lha/deleteTindakLanjutById', {
@@ -92,19 +137,9 @@ export default {
 
         this.loadTindakLanjut();
 
-        this.$toast.open({
-          message: `Berhasil menghapus data dengan ID ${this.idToDelete}`,
-          type: 'success',
-          position: 'top-right',
-          duration: 3000,
-        });
+        toastSuccess(`Berhasil menghapus data dengan ID ${this.idToDelete}`);
       } catch (error) {
-        this.$toast.open({
-          message: error.message,
-          type: 'error',
-          position: 'top-right',
-          duration: 3000,
-        });
+        toastError(error.message);
       }
     },
     async loadTindakLanjut(refresh = false) {
@@ -112,7 +147,7 @@ export default {
       try {
         await this.$store.dispatch('module_tindak_lanjut/loadTindakLanjut', {
           forceRefresh: refresh,
-          idRekomendasi: 'mZO105ro9W',
+          idRekomendasi: this.rekomendasi.id,
         });
         this.items = this.$store.getters['module_tindak_lanjut/tindakLanjut'];
       } catch (error) {

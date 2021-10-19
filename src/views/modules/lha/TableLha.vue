@@ -56,7 +56,6 @@
               <CRow>
                 <CCol>
                   <CButton
-                    v-if="isDeleteButton"
                     v-c-tooltip="{
                       content: '+ Temuan',
                       placement: 'left',
@@ -66,7 +65,7 @@
                     square
                     size="sm"
                     class="inline-block m-1"
-                    @click="openDeleteModal(item.id)"
+                    @click="onAddTemuan(item)"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -82,7 +81,6 @@
                     </svg>
                   </CButton>
                   <CButton
-                    v-if="isDeleteButton"
                     v-c-tooltip="{
                       content: '+ Tim Audit',
                       placement: 'right',
@@ -92,7 +90,7 @@
                     square
                     size="sm"
                     class="inline-block m-1"
-                    @click="openDeleteModal(item.id)"
+                    @click="onAddTim(item)"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -256,6 +254,22 @@ export default {
     },
     openDeleteModal(id) {
       this.$emit('open-delete-modal', id);
+    },
+    onAddTemuan(item) {
+      this.$router.push({
+        name: 'module-create-temuan',
+        query: {
+          idlha: item.id,
+          nolha: item.nomorLha,
+          tpk: item.flagTpk,
+        },
+      });
+    },
+    onAddTim(item) {
+      this.$router.push({
+        name: 'module-create-tim',
+        query: { idlha: item.id, nolha: item.nomorLha },
+      });
     },
   },
 };

@@ -8,7 +8,30 @@
       <CCard>
         <!-- <CCardBody> -->
         <CForm>
+          <div class="p-3" style="background: #f9fafb">
+            <h5 class="text-base font-semibold">
+              Data Pelaku (Termasuk Pelaku untuk TPK)
+            </h5>
+          </div>
           <div class="p-3">
+            <!-- ROW 0 -->
+            <CRow>
+              <CCol lg="6">
+                <CInput
+                  label="Nomor LHA"
+                  :value="$route.query.nolha"
+                  :disabled="true"
+                />
+              </CCol>
+              <CCol lg="6">
+                <CInput
+                  label="Nomor Temuan"
+                  :value="$route.query.notemuan"
+                  :disabled="true"
+                />
+              </CCol>
+            </CRow>
+
             <!-- ROW 1 -->
             <CRow>
               <CCol lg="6">
@@ -20,6 +43,13 @@
                   placeholder="nomor urut"
                   autocomplete="nomorUrut"
                   invalid-feedback="Nomor Urut wajib diisi 1 angka"
+                />
+              </CCol>
+              <CCol lg="6">
+                <CInput
+                  label="Nomor Rekomendasi"
+                  :value="$route.query.norekomendasi"
+                  :disabled="true"
                 />
               </CCol>
             </CRow>
@@ -257,22 +287,29 @@ export default {
 
         const resultFormData = this.appendToFormData();
 
-        if (this.mode == 'create') {
-          this.loading = true;
-          const responseData = await this.$store.dispatch(
-            'module_pelaku/createPelaku',
-            resultFormData
-          );
+        try {
+          if (this.mode == 'create') {
+            this.loading = true;
+            const responseData = await this.$store.dispatch(
+              'module_pelaku/createPelaku',
+              resultFormData
+            );
 
-          if (responseData) {
-            setTimeout(() => {
-              this.loading = false;
-              this.$router.push({
-                path: '/pelaku',
-              });
-              this.toastSuccess('Berhasil menyimpan data pelaku');
-            }, 500);
+            if (responseData) {
+              setTimeout(() => {
+                this.loading = false;
+                this.$router.push({
+                  path: '/pelaku',
+                });
+                this.toastSuccess('Berhasil menyimpan data pelaku');
+              }, 500);
+            }
           }
+        } catch (error) {
+          setTimeout(() => {
+            this.loading = false;
+            this.toastError('Terjadi kesalahan saat submit data');
+          }, 500);
         }
       }
     },

@@ -10,9 +10,7 @@
     <CCard>
       <CCardHeader style="background: #f9fafb; border-bottom: none">
         <CRow class="pt-3 pb-2">
-          <CCol lg="3" class="font-semibold py-2 text-base">
-            Laporan Hasil Audit
-          </CCol>
+          <CCol lg="3" class="py-2 text-base"> Laporan Hasil Audit </CCol>
           <CCol lg="8">
             <multiselect
               v-if="optionsLha"
@@ -27,9 +25,7 @@
           </CCol>
         </CRow>
         <CRow class="pb-2 pt-2">
-          <CCol lg="3" class="font-semibold py-2 text-base">
-            Nomor Temuan
-          </CCol>
+          <CCol lg="3" class="py-2 text-base"> Nomor Temuan </CCol>
           <CCol lg="8">
             <multiselect
               v-if="optionsTemuan"
@@ -44,9 +40,7 @@
           </CCol>
         </CRow>
         <CRow class="pb-3 pt-2">
-          <CCol lg="3" class="font-semibold py-2 text-base">
-            Nomor Rekomendasi
-          </CCol>
+          <CCol lg="3" class="py-2 text-base"> Nomor Rekomendasi </CCol>
           <CCol lg="8">
             <multiselect
               v-if="optionsRekomendasi"
@@ -126,24 +120,6 @@
 <script>
 import Multiselect from 'vue-multiselect';
 import mixin from './mixin';
-
-const lhas = [
-  {
-    id: 'LHA/2021/0001',
-    namaObrik: 'Obrik 001',
-    judulLaporan: 'Judul Laporan 001',
-  },
-  {
-    id: 'LHA/2021/0020',
-    namaObrik: 'Obrik 020',
-    judulLaporan: 'Judul Laporan 020',
-  },
-  {
-    id: 'LHA/2021/0033',
-    namaObrik: 'Obrik 033',
-    judulLaporan: 'Judul Laporan 033',
-  },
-];
 
 export default {
   name: 'TablePelaku',

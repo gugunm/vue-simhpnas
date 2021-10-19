@@ -241,25 +241,32 @@ export default {
 
         const resultFormData = this.appendToFormData();
 
-        if (this.mode == 'create') {
-          this.loading = true;
-          const responseData = await this.$store.dispatch(
-            'module_penyebab/createPenyebab',
-            resultFormData
-          );
+        try {
+          if (this.mode == 'create') {
+            this.loading = true;
+            const responseData = await this.$store.dispatch(
+              'module_penyebab/createPenyebab',
+              resultFormData
+            );
 
-          if (responseData) {
-            setTimeout(() => {
-              this.loading = false;
-              this.$router.push({
-                path: '/penyebab',
-              });
-              this.toastSuccess(
-                'Berhasil menyimpan data dengan ID ' +
-                  responseData.Nomor_Penyebab
-              );
-            }, 500);
+            if (responseData) {
+              setTimeout(() => {
+                this.loading = false;
+                this.$router.push({
+                  path: '/penyebab',
+                });
+                this.toastSuccess(
+                  'Berhasil menyimpan data dengan ID ' +
+                    responseData.Nomor_Penyebab
+                );
+              }, 500);
+            }
           }
+        } catch (error) {
+          setTimeout(() => {
+            this.loading = false;
+            this.toastError('Terjadi kesalahan saat submit data');
+          }, 500);
         }
       }
     },

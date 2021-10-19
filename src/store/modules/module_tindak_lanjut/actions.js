@@ -37,7 +37,7 @@ export default {
         kodeKelompokTl: responseData[key]["Kode_Kelompok_TL"],
         kelompokTl: responseData[key]["Kelompok_TL"],
         kodeSubKelompokTl: responseData[key]["Kode_Sub_Kelompok_TL"],
-        sub_Kelompok_Tl: responseData[key]["Sub_Kelompok_TL"],
+        subKelompokTl: responseData[key]["Sub_Kelompok_TL"],
         memoTl: responseData[key]["Memo_TL"],
         nilaiTl: responseData[key]["Nilai_TL"],
         statusTl: responseData[key]["Status_TL"],
@@ -71,5 +71,29 @@ export default {
 
     context.commit('setTindakLanjut', tl);
     context.commit('setFetchTimestamp');
+  },
+
+  async createTindakLanjut(context, payload) {
+    const response = await axios({
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      data: payload,
+      baseURL: API_URL,
+      url: '/api/tl',
+      params: {
+        token: localStorage.getItem('api_token')
+      },
+    })
+
+    const responseData = await response.data;
+    
+    if (response.statusText != "OK") {
+      const error = new Error(
+        responseData.message || 'Failed to save data'
+      );
+      throw error;
+    }
+    
+    return responseData
   },
 }

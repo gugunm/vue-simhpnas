@@ -243,27 +243,34 @@ export default {
 
         const resultFormData = this.appendToFormData();
 
-        if (this.mode == 'create') {
-          this.loading = true;
-          const responseData = await this.$store.dispatch(
-            'module_tim/createTim',
-            resultFormData
-          );
+        try {
+          if (this.mode == 'create') {
+            this.loading = true;
+            const responseData = await this.$store.dispatch(
+              'module_tim/createTim',
+              resultFormData
+            );
 
-          if (responseData) {
-            setTimeout(() => {
-              this.loading = false;
-              this.$router.push({
-                path: '/tim-audit',
-                // query: {
-                //   idlha: this.$route.query.idlha,
-                // },
-              });
-              this.toastSuccess(
-                'Berhasil menyimpan data dengan ID ' + responseData.Kode_Peran
-              );
-            }, 500);
+            if (responseData) {
+              setTimeout(() => {
+                this.loading = false;
+                this.$router.push({
+                  path: '/tim-audit',
+                  // query: {
+                  //   idlha: this.$route.query.idlha,
+                  // },
+                });
+                this.toastSuccess(
+                  'Berhasil menyimpan data dengan ID ' + responseData.Kode_Peran
+                );
+              }, 500);
+            }
           }
+        } catch (error) {
+          setTimeout(() => {
+            this.loading = false;
+            this.toastError('Terjadi kesalahan saat submit data');
+          }, 500);
         }
       }
     },

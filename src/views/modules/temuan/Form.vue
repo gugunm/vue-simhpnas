@@ -344,8 +344,8 @@ export default {
     },
     isAuditTpk: function (val) {
       if (!val) {
-        this.$v.form.posisiKasus.$model = '0';
-        this.$v.form.modusOperandi.$model = '-';
+        this.$v.form.posisiKasus.$model = 0;
+        this.$v.form.modusOperandi.$model = 'TIDAK ADA';
       } else {
         this.$v.form.posisiKasus.$model = '';
         this.$v.form.modusOperandi.$model = '';
@@ -403,24 +403,32 @@ export default {
 
         const resultFormData = this.appendToFormData();
 
-        if (this.mode == 'create') {
-          this.loading = true;
-          const responseData = await this.$store.dispatch(
-            'module_temuan/createTemuan',
-            resultFormData
-          );
+        try {
+          if (this.mode == 'create') {
+            this.loading = true;
+            const responseData = await this.$store.dispatch(
+              'module_temuan/createTemuan',
+              resultFormData
+            );
 
-          if (responseData) {
-            setTimeout(() => {
-              this.loading = false;
-              this.$router.push({
-                path: '/temuan',
-              });
-              this.toastSuccess(
-                'Berhasil menyimpan data dengan ID ' + responseData.Nomor_Temuan
-              );
-            }, 500);
+            if (responseData) {
+              setTimeout(() => {
+                this.loading = false;
+                this.$router.push({
+                  path: '/temuan',
+                });
+                this.toastSuccess(
+                  'Berhasil menyimpan data dengan ID ' +
+                    responseData.Nomor_Temuan
+                );
+              }, 500);
+            }
           }
+        } catch (error) {
+          setTimeout(() => {
+            this.loading = false;
+            this.toastError('Terjadi kesalahan saat submit data');
+          }, 500);
         }
       }
     },
@@ -442,8 +450,8 @@ export default {
         klpTemuan: '',
         subKlpTemuan: '',
         memoTemuan: '',
-        posisiKasus: '0',
-        modusOperandi: '-',
+        posisiKasus: 0,
+        modusOperandi: 'TIDAK ADA',
         nilaiTemuan: 0,
         accept: false,
       };

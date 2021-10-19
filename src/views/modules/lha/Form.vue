@@ -884,22 +884,29 @@ export default {
 
       const resultFormData = this.appendToFormData();
 
-      if (this.mode == 'create') {
-        this.loading = true;
-        const responseData = await this.$store.dispatch(
-          'module_lha/createLha',
-          resultFormData
-        );
+      try {
+        if (this.mode == 'create') {
+          this.loading = true;
+          const responseData = await this.$store.dispatch(
+            'module_lha/createLha',
+            resultFormData
+          );
 
-        if (responseData) {
-          setTimeout(() => {
-            this.loading = false;
-            this.$router.push('/lha');
-            this.toastSuccess(
-              'Berhasil menyimpan data dengan ID ' + responseData.Nomor_LHA
-            );
-          }, 500);
+          if (responseData) {
+            setTimeout(() => {
+              this.loading = false;
+              this.$router.push('/lha');
+              this.toastSuccess(
+                'Berhasil menyimpan data dengan ID ' + responseData.Nomor_LHA
+              );
+            }, 500);
+          }
         }
+      } catch (error) {
+        setTimeout(() => {
+          this.loading = false;
+          this.toastError('Terjadi kesalahan saat submit data');
+        }, 500);
       }
     },
 
