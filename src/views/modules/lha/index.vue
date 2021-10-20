@@ -4,7 +4,7 @@
       top-title="Laporan Hasil Audit"
       :items="items"
       :fields="fields"
-      :clickable-rows="true"
+      :clickable-rows="level != 2"
       :is-edit-button="true"
       @clicked-row="openDetail"
       @open-create-modal="openCreate"
@@ -26,36 +26,51 @@ import TableLha from './TableLha.vue';
 import mixin from './mixin';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 
+// {
+//   key: 'id',
+// },
+// {
+//   key: 'nomorST',
+//   label: 'Nomor ST',
+// },
+// {
+//   key: 'tglST',
+//   label: 'Tanggal ST',
+// },
+// {
+//   key: 'grupLingkupAudit',
+// },
+// {
+//   key: 'lingkupAudit',
+// },
+// {
+//   key: 'jenisObrik',
+// },
+// {
+//   key: 'tahunAnggaran',
+//   _style: 'width: 8%',
+// },
+// {
+//   key: 'namaPimpinan',
+// },
+// {
+//   key: 'nipPimpinan',
+// },
+// {
+//   key: 'rencanaAnggaran',
+// },
+// {
+//   key: 'realisasiAnggaran',
+// },
 const fields = [
   {
-    key: 'id',
+    key: 'nomorLha',
     label: 'Nomor LHA',
   },
-  // {
-  //   key: 'nomorLha',
-  //   label: 'Nomor LHA',
-  // },
   {
     key: 'tglLha',
     label: 'Tanggal',
   },
-  // {
-  //   key: 'nomorST',
-  //   label: 'Nomor ST',
-  // },
-  // {
-  //   key: 'tglST',
-  //   label: 'Tanggal ST',
-  // },
-  // {
-  //   key: 'grupLingkupAudit',
-  // },
-  // {
-  //   key: 'lingkupAudit',
-  // },
-  // {
-  //   key: 'jenisObrik',
-  // },
   {
     key: 'subBidangObrik',
     label: 'Nama Obrik',
@@ -65,30 +80,19 @@ const fields = [
     key: 'judulLaporan',
     _style: 'width: 22%',
   },
-  // {
-  //   key: 'tahunAnggaran',
-  //   _style: 'width: 8%',
-  // },
+
   {
     key: 'jenisAnggaran',
     _style: 'width: 8%',
   },
-  // {
-  //   key: 'namaPimpinan',
-  // },
-  // {
-  //   key: 'nipPimpinan',
-  // },
-  // {
-  //   key: 'rencanaAnggaran',
-  // },
-  // {
-  //   key: 'realisasiAnggaran',
-  // },
+
   {
     key: 'anggaranYangDiaudit',
     _style: 'width: 15%',
   },
+];
+
+const fieldsKtOperator = [
   {
     key: 'send',
     label: 'Kirim',
@@ -97,6 +101,22 @@ const fields = [
     key: 'actions',
     label: 'Aksi',
     _style: 'width: 12%',
+  },
+];
+
+const fieldsDalnisDaltu = [
+  {
+    key: 'actionsDalnisDaltu',
+    label: 'Aksi',
+    _style: 'width: 10%',
+  },
+];
+
+const fieldsAdmin = [
+  {
+    key: 'actionsAdmin',
+    label: 'Aksi',
+    _style: 'width: 10%',
   },
 ];
 
@@ -110,13 +130,24 @@ export default {
   data() {
     return {
       items: '',
-      fields,
+      fields: [],
       isDeleteConfirm: false,
       idToDelete: null,
+      level: '',
     };
   },
   async mounted() {
     await this.loadLha();
+    this.level = localStorage.level;
+    if (this.level == 2) {
+      this.fields = [...fields, ...fieldsAdmin];
+    } else if (this.level == 3 || this.level == 4) {
+      this.fields = [...fields, ...fieldsKtOperator];
+    } else if (this.level == 5 || this.level == 6) {
+      this.fields = [...fields, ...fieldsDalnisDaltu];
+    } else {
+      this.fields = fields;
+    }
   },
   methods: {
     openDetail(item) {

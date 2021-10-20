@@ -31,7 +31,7 @@ import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 
 const fields = [
   {
-    key: 'id',
+    key: 'nomorTl',
     label: 'Nomor TL',
   },
   // {
@@ -57,6 +57,11 @@ const fields = [
   {
     key: 'subKelompokTl',
     label: 'Kelompok TL',
+  },
+  {
+    key: 'send',
+    label: 'Kirim',
+    _style: 'width: 7%',
   },
   {
     key: 'actions',

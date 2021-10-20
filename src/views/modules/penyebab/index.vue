@@ -32,7 +32,7 @@ import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 
 const fields = [
   {
-    key: 'id',
+    key: 'nomorPenyebab',
     label: 'Nomor Penyebab',
     _style: 'width: 15%',
   },

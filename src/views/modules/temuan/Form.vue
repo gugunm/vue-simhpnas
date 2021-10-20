@@ -23,7 +23,7 @@
               <CCol lg="6">
                 <CInput
                   label="Nomor LHA"
-                  :value="mode == 'view' ? form.nomorLha : $route.query.nolha"
+                  :value="mode == 'view' || mode == 'edit' ? form.nomorLha || editData.nomorLha : $route.query.nolha"
                   :disabled="true"
                 />
               </CCol>
@@ -331,6 +331,7 @@ export default {
       optionsKlpTemuan: [],
       valueSubKlpTemuan: '',
       optionsSubKlpTemuan: [],
+      editData: {}
     };
   },
   computed: {
@@ -372,18 +373,37 @@ export default {
   },
   async mounted() {
     await this.loadJenisTemuan();
-    if (this.$route.query.tpk == 0) {
+
+    if (this.mode == 'view') {
+      await this.loadTemuanById();
+    } else if (this.mode == 'edit') {
+      await this.loadEditTemuanById();
+
+      this.valueJenisTemuan = this.optionsJenisTemuan.filter((jt) => {
+        return jt.id == this.form.jenisTemuan
+      })[0];
+
+      await this.loadKlpTemuan();
+
+      this.valueKlpTemuan = this.optionsKlpTemuan.filter((kt) => {
+        return kt.id == this.form.klpTemuan
+      })[0];
+
+      await this.loadSubKlpTemuan();
+
+      this.valueSubKlpTemuan = this.optionsSubKlpTemuan.filter((skt) => {
+        return skt.id == this.form.subKlpTemuan
+      })[0];
+
+      console.log("DATA TEMUAN HEREEE!!");
+      console.log(this.form);
+      console.log(this.editData);
+    }
+
+    if (this.$route.query.tpk || this.form.flagTpk || this.editData.flagTpk == 0) {
       this.isAuditTpk = false;
     } else {
       this.isAuditTpk = true;
-    }
-    if (this.mode == 'view') {
-      await this.loadTemuanById();
-      if (this.form.flagTpk == 0) {
-        this.isAuditTpk = false;
-      } else {
-        this.isAuditTpk = true;
-      }
     }
   },
   validations: {
@@ -449,6 +469,28 @@ export default {
                 );
               }, 500);
             }
+          } else if (this.mode == 'edit') {
+            this.loading = true;
+
+            const responseData = await this.$store.dispatch(
+              'module_temuan/updateTemuanById',
+              {
+                idTemuan: this.editData.id,
+                data: resultFormData,
+              }
+            );
+
+            if (responseData) {
+              setTimeout(() => {
+                this.loading = false;
+                this.$router.push({
+                  path: '/temuan',
+                });
+                this.toastSuccess(
+                  'Berhasil edit data dengan ID ' + responseData.Nomor_Temuan
+                );
+              }, 500);
+            }
           }
         } catch (error) {
           setTimeout(() => {
@@ -485,7 +527,10 @@ export default {
 
     appendToFormData() {
       const fd = new FormData();
-      fd.append('kode_lha', this.$route.query.idlha);
+      if (this.mode == 'edit') {
+        fd.append('_method', 'PATCH');
+      }
+      fd.append('kode_lha', this.$route.query.idlha || this.editData.nomorLha);
       fd.append('Nomor_Temuan', this.$v.form.nomorTemuan.$model);
       fd.append('Kode_Jenis_Temuan', this.$v.form.jenisTemuan.$model);
       fd.append('Kode_Kelompok_Temuan', this.$v.form.klpTemuan.$model);
@@ -493,7 +538,7 @@ export default {
       fd.append('Memo_Temuan', this.$v.form.memoTemuan.$model);
       fd.append('Posisi_Kasus', this.$v.form.posisiKasus.$model);
       fd.append('Modus_Operandi', this.$v.form.modusOperandi.$model);
-      fd.append('Flag_TPK', this.$route.query.tpk);
+      fd.append('Flag_TPK', this.$route.query.tpk || this.editData.flagTpk);
       fd.append('Nilai_Temuan', this.$v.form.nilaiTemuan.$model);
       return fd;
     },

@@ -1,10 +1,16 @@
 <template>
-  <p>Page Edit Temuan</p>
+  <div>
+    <Form mode="edit" :id-temuan="idTemuan" />
+  </div>
 </template>
 
 <script>
-export default {};
-</script>
+import Form from './Form.vue';
 
-<style>
-</style>
+export default {
+  components: {
+    Form,
+  },
+  props: ['idTemuan'],
+};
+</script>

@@ -29,7 +29,7 @@ import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 
 const fields = [
   {
-    key: 'id',
+    key: 'nomorTemuan',
     label: 'Nomor Temuan',
   },
   // {
@@ -39,15 +39,14 @@ const fields = [
   // {
   //   key: 'nomorTemuan',
   // },
-  // {
-  //   key: 'kodeJenisTemuan',
-  // },
-  // {
-  //   key: 'kodeKelompokTemuan',
-  // },
   {
-    key: 'kodeSubKelompokTemuan',
-    label: 'Sub Kelompok Temuan',
+    key: 'jenisTemuan',
+  },
+  {
+    key: 'kelompokTemuan',
+  },
+  {
+    key: 'subKelompokTemuan',
   },
   // {
   //   key: 'memoTemuan',
@@ -64,16 +63,16 @@ const fields = [
   {
     key: 'nilaiTemuan',
   },
-  {
-    key: 'jumlahRekomendasi',
-  },
+  // {
+  //   key: 'jumlahRekomendasi',
+  // },
   // {
   //   key: 'jumlahSaldoRekomendasi',
   // },
-  {
-    key: 'nilaiTl',
-    label: 'Nilai TL',
-  },
+  // {
+  //   key: 'nilaiTl',
+  //   label: 'Nilai TL',
+  // },
   {
     key: 'statusTemuan',
   },
@@ -82,7 +81,7 @@ const fields = [
   // },
   {
     key: 'actions',
-    _style: 'width: 10%',
+    _style: 'width: 12%',
   },
 ];
 

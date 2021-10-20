@@ -154,5 +154,29 @@ export default {
     }
 
     return response
-  }
+  },
+
+  async updateLhaById(context, payload){
+    const response = await axios({
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      data: payload.data,
+      baseURL: API_URL,
+      url: `/api/lha/${payload.idLha}`,
+      params: {
+        token: localStorage.getItem('api_token')
+      },
+    })
+
+    const responseData = await response.data;
+
+    if (response.statusText != "OK") {
+      const error = new Error(
+        responseData.message || 'Failed to update data'
+      );
+      throw error;
+    }
+
+    return response
+  },
 }

@@ -72,7 +72,7 @@
           :items-per-page="5"
           pagination
         >
-          <template #id="{ item }">
+          <template #nip="{ item }">
             <td
               v-if="clickableRows"
               class="text-blue-500 uppercase hover:text-blue-700"

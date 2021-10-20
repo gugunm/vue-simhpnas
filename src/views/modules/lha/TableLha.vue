@@ -25,7 +25,7 @@
           :table-filter="{ label: 'Search: ', placeholder: 'teks..' }"
           :items-per-page-select="{ label: 'Item per halaman: ' }"
         >
-          <template #id="{ item }">
+          <template #nomorLha="{ item }">
             <td
               v-if="clickableRows"
               class="text-blue-500 uppercase hover:text-blue-700"
@@ -38,140 +38,193 @@
               {{ item.nomorLha }}
             </td>
           </template>
-          <template #actions="{ item }">
-            <td>
-              <CRow>
-                <CCol>
-                  <CButton
-                    v-c-tooltip="{
-                      content: '+ Temuan',
-                      placement: 'left',
-                    }"
-                    color="info"
-                    variant="outline"
-                    square
-                    size="sm"
-                    class="inline-block m-1"
-                    @click="onAddTemuan(item)"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-5 w-5"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V8z"
-                        clip-rule="evenodd"
-                      />
-                    </svg>
-                  </CButton>
-                  <CButton
-                    v-c-tooltip="{
-                      content: '+ Tim Audit',
-                      placement: 'left',
-                    }"
-                    color="success"
-                    variant="outline"
-                    square
-                    size="sm"
-                    class="inline-block m-1"
-                    @click="onAddTim(item)"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-5 w-5"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"
-                      />
-                    </svg>
-                    <!-- <p>Temuan</p> -->
-                  </CButton>
-                </CCol>
-              </CRow>
-              <CRow class="">
-                <CCol>
-                  <CButton
-                    v-if="isEditButton"
-                    v-c-tooltip="{
-                      content: 'Edit LHA',
-                      placement: 'left',
-                    }"
-                    color="warning"
-                    variant="outline"
-                    square
-                    size="sm"
-                    class="m-1 inline-block"
-                    @click="openEditModal(item)"
-                  >
-                    <!-- <font-awesome-icon :icon="['fas', 'pen']" /> -->
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-5 w-5"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
-                      />
-                      <path
-                        fill-rule="evenodd"
-                        d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-                        clip-rule="evenodd"
-                      />
-                    </svg>
-                    <!-- <span>Edit</span> -->
-                  </CButton>
-                  <CButton
-                    v-if="isDeleteButton"
-                    v-c-tooltip="{
-                      content: 'Hapus LHA',
-                      placement: 'left',
-                    }"
-                    color="danger"
-                    variant="outline"
-                    size="sm"
-                    class="m-1 inline-block"
-                    @click="openDeleteModal(item.id)"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-5 w-5"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                        clip-rule="evenodd"
-                      />
-                    </svg>
-                  </CButton>
-                </CCol>
-              </CRow>
-            </td>
-          </template>
           <template #send="{ item }">
             <td>
-              <CRow>
-                <CCol>
-                  <CButton
-                    v-if="isDeleteButton"
-                    color="primary"
-                    variant="outline"
-                    square
-                    size="sm"
-                    class="inline-block m-1"
-                    @click="openSendModal(item.id)"
+              <div class="flex justify-content-center">
+                <CRow>
+                  <CCol>
+                    <CButton
+                      color="primary"
+                      variant="outline"
+                      square
+                      size="sm"
+                      class="inline-block m-1"
+                      @click="openSendModal(item.id)"
+                    >
+                      <span>Kirim</span>
+                    </CButton>
+                  </CCol>
+                </CRow>
+              </div>
+            </td>
+          </template>
+          <template #actions="{ item }">
+            <td>
+              <div class="flex flex-wrap justify-content-center">
+                <CButton
+                  v-c-tooltip="{
+                    content: '+ Temuan',
+                    placement: 'left',
+                  }"
+                  color="info"
+                  variant="outline"
+                  square
+                  size="sm"
+                  class="inline-block m-1"
+                  @click="onAddTemuan(item)"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
                   >
-                    <span>Kirim</span>
-                  </CButton>
-                </CCol>
-              </CRow>
+                    <path
+                      d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2h-1.528A6 6 0 004 9.528V4z"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      d="M8 10a4 4 0 00-3.446 6.032l-1.261 1.26a1 1 0 101.414 1.415l1.261-1.261A4 4 0 108 10zm-2 4a2 2 0 114 0 2 2 0 01-4 0z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </CButton>
+                <CButton
+                  v-c-tooltip="{
+                    content: '+ Tim Audit',
+                    placement: 'left',
+                  }"
+                  color="success"
+                  variant="outline"
+                  square
+                  size="sm"
+                  class="inline-block m-1"
+                  @click="onAddTim(item)"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"
+                    />
+                  </svg>
+                  <!-- <p>Temuan</p> -->
+                </CButton>
+
+                <CButton
+                  v-if="isEditButton"
+                  v-c-tooltip="{
+                    content: 'Edit LHA',
+                    placement: 'left',
+                  }"
+                  color="warning"
+                  variant="outline"
+                  square
+                  size="sm"
+                  class="m-1 inline-block"
+                  @click="openEditModal(item)"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </CButton>
+                <CButton
+                  v-if="isDeleteButton"
+                  v-c-tooltip="{
+                    content: 'Hapus LHA',
+                    placement: 'left',
+                  }"
+                  color="danger"
+                  variant="outline"
+                  size="sm"
+                  class="m-1 inline-block"
+                  @click="openDeleteModal(item.id)"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </CButton>
+              </div>
+            </td>
+          </template>
+          <template #actionsDalnisDaltu="{ item }">
+            <td>
+              <div class="flex flex-wrap justify-content-center">
+                <CButton
+                  v-if="isEditButton"
+                  v-c-tooltip="{
+                    content: 'Edit LHA',
+                    placement: 'left',
+                  }"
+                  color="success"
+                  variant="fill"
+                  square
+                  size="sm"
+                  class="m-1 w-full"
+                  @click="onAccLha(item)"
+                >
+                  <span>Setuju</span>
+                </CButton>
+                <CButton
+                  v-if="isDeleteButton"
+                  v-c-tooltip="{
+                    content: 'Hapus LHA',
+                    placement: 'left',
+                  }"
+                  color="danger"
+                  variant="outline"
+                  size="sm"
+                  class="m-1 w-full"
+                  @click="openDeleteModal(item.id)"
+                >
+                  <span>Tolak</span>
+                </CButton>
+              </div>
+            </td>
+          </template>
+          <template #actionsAdmin="{ item }">
+            <td>
+              <div class="flex flex-wrap justify-content-center">
+                <CButton
+                  v-if="isEditButton"
+                  v-c-tooltip="{
+                    content: 'Edit LHA',
+                    placement: 'left',
+                  }"
+                  color="info"
+                  variant="fill"
+                  square
+                  size="sm"
+                  class="m-1 w-full"
+                  @click="onAccLha(item)"
+                >
+                  <span>Posting</span>
+                </CButton>
+              </div>
             </td>
           </template>
         </CDataTable>
@@ -221,6 +274,16 @@ export default {
       default: true,
     },
   },
+  // data() {
+  //   return {
+  //     level: '',
+  //   };
+  // },
+  // mounted() {
+  //   if (localStorage.level) {
+  //     this.level = localStorage.level;
+  //   }
+  // },
   emits: [
     'clicked-row',
     'open-create-modal',

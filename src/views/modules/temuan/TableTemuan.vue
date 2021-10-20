@@ -42,7 +42,7 @@
           :table-filter="{ label: 'Search: ', placeholder: 'teks..' }"
           :items-per-page-select="{ label: 'Item per halaman: ' }"
         >
-          <template #id="{ item }">
+          <template #nomorTemuan="{ item }">
             <td
               v-if="clickableRows"
               class="text-blue-500 uppercase hover:text-blue-700"
@@ -57,7 +57,56 @@
           </template>
           <!-- <template #actions> -->
           <template #actions="{ item }">
-            <td class="py-2 d-flex justify-content-center">
+            <td class="py-2 flex flex-wrap justify-content-center">
+              <CButton
+                v-c-tooltip="{
+                  content: '+ Penyebab',
+                  placement: 'top',
+                }"
+                color="info"
+                variant="outline"
+                size="sm"
+                class="m-1 inline-block"
+                @click="onAddPenyebab(item)"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M4 2a2 2 0 00-2 2v11a3 3 0 106 0V4a2 2 0 00-2-2H4zm1 14a1 1 0 100-2 1 1 0 000 2zm5-1.757l4.9-4.9a2 2 0 000-2.828L13.485 5.1a2 2 0 00-2.828 0L10 5.757v8.486zM16 18H9.071l6-6H16a2 2 0 012 2v2a2 2 0 01-2 2z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </CButton>
+              <CButton
+                v-c-tooltip="{
+                  content: '+ Rekomendasi',
+                  placement: 'top',
+                }"
+                color="success"
+                variant="outline"
+                size="sm"
+                class="m-1 inline-block"
+                @click="onAddRekomendasi(item)"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                  <path
+                    fill-rule="evenodd"
+                    d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </CButton>
               <CButton
                 v-if="isEditButton"
                 v-c-tooltip="{
@@ -207,6 +256,29 @@ export default {
     },
     viewSelectSearch({ id, nomorLha, subBidangObrik }) {
       return `${nomorLha} - ${subBidangObrik}`;
+    },
+    onAddPenyebab(item) {
+      this.$router.push({
+        name: 'module-create-penyebab',
+        query: {
+          idlha: item.idLha,
+          nolha: item.nomorLha,
+          idtemuan: item.id,
+          notemuan: item.nomorTemuan,
+        },
+      });
+    },
+    onAddRekomendasi(item) {
+      this.$router.push({
+        name: 'module-create-rekomendasi',
+        query: {
+          idlha: item.idLha,
+          nolha: item.nomorLha,
+          idtemuan: item.id,
+          notemuan: item.nomorTemuan,
+          nilaitemuan: item.nilaiTemuan,
+        },
+      });
     },
   },
 };

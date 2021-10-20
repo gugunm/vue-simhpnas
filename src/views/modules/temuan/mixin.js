@@ -69,6 +69,37 @@ export default {
       }
     },
 
+    async loadEditTemuanById(refresh = false) {
+      try {
+        await this.$store.dispatch('module_temuan/loadTemuanById', {
+          idTemuan: this.idTemuan,
+          forceRefresh: refresh,
+        });
+
+        const data = this.$store.getters['module_temuan/temuanById'];  
+
+        this.form = {
+          nomorTemuan: data.nomorTemuan,
+          jenisTemuan: data.kodeJenisTemuan,
+          klpTemuan: data.kodeKelompokTemuan,
+          subKlpTemuan: data.kodeSubKelompokTemuan,
+          memoTemuan: data.memoTemuan,
+          posisiKasus: data.posisiKasus,
+          modusOperandi: data.modusOperandi,
+          nilaiTemuan: data.nilaiTemuan,
+          accept: false,
+        }
+        
+        // console.log("DATA HEREEE!!!");
+        // console.log(data);
+
+        this.editData = data
+        
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
+    },
+
     toastSuccess(msg) {
       this.$toast.open({
         message: msg,

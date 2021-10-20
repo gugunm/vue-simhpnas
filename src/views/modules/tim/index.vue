@@ -30,7 +30,7 @@ import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 
 const fields = [
   {
-    key: 'id',
+    key: 'nip',
     label: 'NIP',
   },
   // {

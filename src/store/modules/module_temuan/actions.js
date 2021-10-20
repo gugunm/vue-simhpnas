@@ -31,8 +31,11 @@ export default {
         idLha: responseData[key]["kode_lha"],
         nomorTemuan: responseData[key]["Nomor_Temuan"],
         kodeJenisTemuan: responseData[key]["Kode_Jenis_Temuan"],
+        jenisTemuan: responseData[key]["Jenis_Temuan"],
         kodeKelompokTemuan: responseData[key]["Kode_Kelompok_Temuan"],
+        kelompokTemuan: responseData[key]["Kelompok_Temuan"],
         kodeSubKelompokTemuan: responseData[key]["Kode_Sub_Kelompok_Temuan"],
+        subKelompokTemuan: responseData[key]["Sub_Kelompok_Temuan"],
         memoTemuan: responseData[key]["Memo_Temuan"],
         flagTpk: responseData[key]["Flag_TPK"],
         posisiKasus: responseData[key]["Posisi_Kasus"],
@@ -142,5 +145,29 @@ export default {
     }
 
     return response
-  }
+  },
+
+  async updateTemuanById(context, payload){
+    const response = await axios({
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      data: payload.data,
+      baseURL: API_URL,
+      url: `/api/temuan/${payload.idTemuan}`,
+      params: {
+        token: localStorage.getItem('api_token')
+      },
+    })
+
+    const responseData = await response.data;
+
+    if (response.statusText != "OK") {
+      const error = new Error(
+        responseData.message || 'Failed to update data'
+      );
+      throw error;
+    }
+
+    return response
+  },
 }

@@ -72,7 +72,7 @@
           :table-filter="{ label: 'Search: ', placeholder: 'teks..' }"
           :items-per-page-select="{ label: 'Item per halaman: ' }"
         >
-          <template #id="{ item }">
+          <template #nomorTl="{ item }">
             <td
               v-if="clickableRows"
               class="text-blue-500 uppercase hover:text-blue-700"
@@ -142,6 +142,24 @@
                   />
                 </svg>
               </CButton>
+            </td>
+          </template>
+          <template #send="{ item }">
+            <td class="text-center">
+              <CRow>
+                <CCol>
+                  <CButton
+                    color="primary"
+                    variant="outline"
+                    square
+                    size="sm"
+                    class="inline-block m-1"
+                    @click="openSendModal(item.id)"
+                  >
+                    <span>Kirim</span>
+                  </CButton>
+                </CCol>
+              </CRow>
             </td>
           </template>
         </CDataTable>

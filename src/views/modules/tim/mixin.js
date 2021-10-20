@@ -40,6 +40,29 @@ export default {
       }
     },
 
+    async loadEditTimById(refresh = false) {
+      try {
+        await this.$store.dispatch('module_tim/loadTimById', {
+          idTim: this.idTim,
+          forceRefresh: refresh,
+        });
+
+        const data = this.$store.getters['module_tim/timById'];  
+
+        this.form = {
+          nip: data.nip,
+          nama: data.nama,
+          peran: data.kodePeran,
+          accept: false,
+        }
+
+        this.editData = data
+        
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
+    },
+
     toastSuccess(msg) {
       this.$toast.open({
         message: msg,
