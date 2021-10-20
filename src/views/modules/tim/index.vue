@@ -31,21 +31,21 @@ import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 const fields = [
   {
     key: 'id',
-    label: 'ID',
+    label: 'NIP',
   },
-  {
-    key: 'nomorLha',
-    label: 'Nomor LHA',
-  },
+  // {
+  //   key: 'nomorLha',
+  //   label: 'Nomor LHA',
+  // },
   // {
   //   key: 'nomorUrut',
   // },
   {
     key: 'nama',
   },
-  {
-    key: 'nip',
-  },
+  // {
+  //   key: 'nip',
+  // },
   {
     key: 'kodePeran',
   },
@@ -58,6 +58,11 @@ const fields = [
   // {
   //   key: 'subUnitAudit',
   // },
+  {
+    key: 'actions',
+    label: 'Aksi',
+    _style: 'width: 12%',
+  },
 ];
 
 export default {
@@ -74,7 +79,6 @@ export default {
       isDeleteConfirm: false,
       idToDelete: null,
       lha: {},
-      // idLha: '',
     };
   },
   async mounted() {
@@ -112,16 +116,24 @@ export default {
     },
     async actionDelete() {
       try {
-        await this.$store.dispatch('module_lha/deleteTimById', {
-          idLha: this.idToDelete,
-        });
+        const response = await this.$store.dispatch(
+          'module_tim/deleteTimById',
+          {
+            idTim: this.idToDelete,
+          }
+        );
+
         this.isDeleteConfirm = false;
 
-        this.loadTim();
+        if (response.status == 200) {
+          await this.loadTim();
 
-        toastSuccess(`Berhasil menghapus data dengan ID ${this.idToDelete}`);
+          this.toastSuccess(
+            `Berhasil menghapus data dengan ID ${this.idToDelete}`
+          );
+        }
       } catch (error) {
-        toastError(error.message);
+        this.toastError(error.message);
       }
     },
     async loadTim(refresh = false) {

@@ -160,4 +160,27 @@ export default {
     
     return responseData
   },
+
+  async deleteTindakLanjutById(context, payload) {
+    const response = await axios({
+      method: 'DELETE',
+      headers: { "Content-Type": "application/json" },
+      baseURL: API_URL,
+      url: `/api/tl/${payload.idTl}`,
+      params: {
+        token: localStorage.getItem('api_token')
+      },
+    })
+
+    const responseData = await response.data;
+
+    if (response.statusText != "OK") {
+      const error = new Error(
+        responseData.message || 'Failed to delete data'
+      );
+      throw error;
+    }
+
+    return response
+  }
 }

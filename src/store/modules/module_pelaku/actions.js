@@ -37,6 +37,7 @@ export default {
         nama: responseData[key]["Nama"],
         nip: responseData[key]["NIP"],
         kodeJabatan: responseData[key]["Kode_Jabatan"],
+        jabatan: responseData[key]["Nama_Jabatan"],
         kodeUnitObrikTl: responseData[key]["Kode_Unit_Obrik_TL"],
         unitObrik: responseData[key]["Unit_Obrik"],
         kodeBidangObrikTl: responseData[key]["Kode_Bidang_Obrik_TL"],
@@ -119,4 +120,27 @@ export default {
     
     return responseData
   },
+
+  async deletePelakuById(context, payload) {
+    const response = await axios({
+      method: 'DELETE',
+      headers: { "Content-Type": "application/json" },
+      baseURL: API_URL,
+      url: `/api/pelaku/${payload.idPelaku}`,
+      params: {
+        token: localStorage.getItem('api_token')
+      },
+    })
+
+    const responseData = await response.data;
+
+    if (response.statusText != "OK") {
+      const error = new Error(
+        responseData.message || 'Failed to delete data'
+      );
+      throw error;
+    }
+
+    return response
+  }
 }

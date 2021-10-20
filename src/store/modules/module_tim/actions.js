@@ -106,5 +106,28 @@ export default {
     }
 
     context.commit('setTimById', data);
+  },
+
+  async deleteTimById(context, payload) {
+    const response = await axios({
+      method: 'DELETE',
+      headers: { "Content-Type": "application/json" },
+      baseURL: API_URL,
+      url: `/api/timaudit/${payload.idTim}`,
+      params: {
+        token: localStorage.getItem('api_token')
+      },
+    })
+
+    const responseData = await response.data;
+
+    if (response.statusText != "OK") {
+      const error = new Error(
+        responseData.message || 'Failed to delete data'
+      );
+      throw error;
+    }
+
+    return response
   }
 }

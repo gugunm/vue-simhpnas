@@ -9,20 +9,10 @@
       <CCol v-if="isAddButton" class="px-0" lg="12" sm="12">
         <CButton color="info" class="mb-4 px-4" @click="openCreateModal">
           <CIcon name="cil-plus" class="my-0 mb-1 mr-1" /> Tambah
-          <!-- size="md" -->
         </CButton>
       </CCol>
     </CRow>
     <CCard>
-      <!-- <CCardHeader style="background: #f9fafb; border-bottom: none">
-        <CRow class="py-3 px-3">
-          <CCol class="text-left px-0" lg="6" sm="12">
-            <CButton color="info" class="px-4" @click="openCreateModal">
-              <CIcon name="cil-plus" class="my-0 mb-1 mr-1" /> Tambah
-            </CButton>
-          </CCol>
-        </CRow>
-      </CCardHeader> -->
       <CCardBody>
         <CDataTable
           :items="items"
@@ -35,8 +25,6 @@
           :table-filter="{ label: 'Search: ', placeholder: 'teks..' }"
           :items-per-page-select="{ label: 'Item per halaman: ' }"
         >
-          <!-- :clickable-rows="clickableRows"
-          @row-clicked="clickedRow" -->
           <template #id="{ item }">
             <td
               v-if="clickableRows"
@@ -44,13 +32,12 @@
               style="cursor: pointer"
               @click="clickedRow(item)"
             >
-              {{ item.id }}
+              {{ item.nomorLha }}
             </td>
             <td v-else>
-              {{ item.id }}
+              {{ item.nomorLha }}
             </td>
           </template>
-          <!-- <template #actions> -->
           <template #actions="{ item }">
             <td>
               <CRow>
@@ -163,8 +150,6 @@
                         clip-rule="evenodd"
                       />
                     </svg>
-                    <!-- <font-awesome-icon :icon="['fas', 'trash-alt']" /> -->
-                    <!-- <p>Hapus</p> -->
                   </CButton>
                 </CCol>
               </CRow>

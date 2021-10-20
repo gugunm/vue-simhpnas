@@ -33,26 +33,28 @@ import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 const fields = [
   {
     key: 'id',
-    label: 'ID',
+    label: 'Nomor Penyebab',
+    _style: 'width: 15%',
   },
-  {
-    key: 'nomorTemuan',
-  },
-  {
-    key: 'nomorLha',
-  },
-  {
-    key: 'nomorPenyebab',
-  },
+  // {
+  //   key: 'nomorTemuan',
+  // },
+  // {
+  //   key: 'nomorLha',
+  // },
+  // {
+  //   key: 'nomorPenyebab',
+  // },
   {
     key: 'deskripsi',
   },
   {
-    key: 'memoTemuan',
+    key: 'memoPenyebab',
   },
   {
     key: 'actions',
-    label: 'Actions',
+    label: 'Aksi',
+    _style: 'width: 12%',
   },
 ];
 
@@ -121,17 +123,24 @@ export default {
 
     async actionDelete() {
       try {
-        await this.$store.dispatch('module_penyebab/deletePenyebabById', {
-          idUnitKerja: this.idToDelete,
-        });
+        const response = await this.$store.dispatch(
+          'module_penyebab/deletePenyebabById',
+          {
+            idPenyebab: this.idToDelete,
+          }
+        );
 
         this.isDeleteConfirm = false;
 
-        this.loadPenyebab();
+        if (response.status == 200) {
+          await this.loadPenyebab();
 
-        toastSuccess(`Berhasil menghapus data dengan ID ${this.idToDelete}`);
+          this.toastSuccess(
+            `Berhasil menghapus data dengan ID ${this.idToDelete}`
+          );
+        }
       } catch (error) {
-        toastError(error.message);
+        this.toastError(error.message);
       }
     },
     async loadPenyebab(refresh = false) {

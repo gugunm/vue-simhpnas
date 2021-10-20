@@ -30,15 +30,15 @@ import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 const fields = [
   {
     key: 'id',
-    label: 'ID',
+    label: 'Nomor Temuan',
   },
-  {
-    key: 'nomorLha',
-    label: 'Nomor LHA',
-  },
-  {
-    key: 'nomorTemuan',
-  },
+  // {
+  //   key: 'nomorLha',
+  //   label: 'Nomor LHA',
+  // },
+  // {
+  //   key: 'nomorTemuan',
+  // },
   // {
   //   key: 'kodeJenisTemuan',
   // },
@@ -138,16 +138,24 @@ export default {
     },
     async actionDelete() {
       try {
-        await this.$store.dispatch('module_lha/deleteTemuanById', {
-          idLha: this.idToDelete,
-        });
+        const response = await this.$store.dispatch(
+          'module_temuan/deleteTemuanById',
+          {
+            idTemuan: this.idToDelete,
+          }
+        );
+
         this.isDeleteConfirm = false;
 
-        this.loadTemuan();
+        if (response.status == 200) {
+          await this.loadTemuan();
 
-        toastSuccess(`Berhasil menghapus data dengan ID ${this.idToDelete}`);
+          this.toastSuccess(
+            `Berhasil menghapus data dengan ID ${this.idToDelete}`
+          );
+        }
       } catch (error) {
-        toastError(error.message);
+        this.toastError(error.message);
       }
     },
     async loadTemuan(refresh = false) {

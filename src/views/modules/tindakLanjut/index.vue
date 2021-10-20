@@ -32,28 +32,31 @@ import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 const fields = [
   {
     key: 'id',
-    label: 'ID',
+    label: 'Nomor TL',
   },
-  {
-    key: 'nomorLha',
-  },
+  // {
+  //   key: 'nomorLha',
+  // },
   // {
   //   key: 'nomorTemuan',
   // },
   // {
   //   key: 'nomorRekomendasi',
   // },
-  {
-    key: 'nomorTl',
-  },
+  // {
+  //   key: 'nomorTl',
+  // },
   {
     key: 'nilaiTl',
+    label: 'Nilai TL',
   },
   {
     key: 'statusTl',
+    label: 'Status TL',
   },
   {
     key: 'subKelompokTl',
+    label: 'Kelompok TL',
   },
   {
     key: 'actions',
@@ -130,16 +133,24 @@ export default {
 
     async actionDelete() {
       try {
-        await this.$store.dispatch('module_lha/deleteTindakLanjutById', {
-          idRekomendasi: this.idToDelete,
-        });
+        const response = await this.$store.dispatch(
+          'module_tindak_lanjut/deleteTindakLanjutById',
+          {
+            idTl: this.idToDelete,
+          }
+        );
+
         this.isDeleteConfirm = false;
 
-        this.loadTindakLanjut();
+        if (response.status == 200) {
+          await this.loadTindakLanjut();
 
-        toastSuccess(`Berhasil menghapus data dengan ID ${this.idToDelete}`);
+          this.toastSuccess(
+            `Berhasil menghapus data dengan ID ${this.idToDelete}`
+          );
+        }
       } catch (error) {
-        toastError(error.message);
+        this.toastError(error.message);
       }
     },
     async loadTindakLanjut(refresh = false) {

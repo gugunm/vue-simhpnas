@@ -30,15 +30,21 @@ import mixin from './mixin';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 
 const fields = [
-  { key: 'id' },
   {
-    key: 'nomorLha',
-    label: 'Nomor LHA',
-    _style: 'width: 15%',
+    key: 'id',
+    label: 'NIP',
   },
+  // {
+  //   key: 'nomorLha',
+  //   label: 'Nomor LHA',
+  //   _style: 'width: 15%',
+  // },
+  // {
+  //   key: 'nip',
+  //   _style: 'width: 15%',
+  // },
   {
-    key: 'nip',
-    _style: 'width: 15%',
+    key: 'jabatan',
   },
   {
     key: 'nama',
@@ -117,16 +123,24 @@ export default {
 
     async actionDelete() {
       try {
-        await this.$store.dispatch('module_lha/deletePelakuById', {
-          idLha: this.idToDelete,
-        });
+        const response = await this.$store.dispatch(
+          'module_pelaku/deletePelakuById',
+          {
+            idPelaku: this.idToDelete,
+          }
+        );
+
         this.isDeleteConfirm = false;
 
-        this.loadPelaku();
+        if (response.status == 200) {
+          await this.loadPelaku();
 
-        toastSuccess(`Berhasil menghapus data dengan ID ${this.idToDelete}`);
+          this.toastSuccess(
+            `Berhasil menghapus data dengan ID ${this.idToDelete}`
+          );
+        }
       } catch (error) {
-        toastError(error.message);
+        this.toastError(error.message);
       }
     },
     async loadPelaku(refresh = false) {

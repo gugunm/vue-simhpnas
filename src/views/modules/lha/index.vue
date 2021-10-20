@@ -29,15 +29,15 @@ import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 const fields = [
   {
     key: 'id',
-    label: 'ID',
-  },
-  {
-    key: 'nomorLha',
     label: 'Nomor LHA',
   },
+  // {
+  //   key: 'nomorLha',
+  //   label: 'Nomor LHA',
+  // },
   {
     key: 'tglLha',
-    label: 'Tanggal LHA',
+    label: 'Tanggal',
   },
   // {
   //   key: 'nomorST',
@@ -63,7 +63,7 @@ const fields = [
   },
   {
     key: 'judulLaporan',
-    _style: 'width: 13%',
+    _style: 'width: 22%',
   },
   // {
   //   key: 'tahunAnggaran',
@@ -142,24 +142,24 @@ export default {
     },
     async actionDelete() {
       try {
-        await this.$store.dispatch('module_lha/deleteLhaById', {
-          idLha: this.idToDelete,
-        });
+        const response = await this.$store.dispatch(
+          'module_lha/deleteLhaById',
+          {
+            idLha: this.idToDelete,
+          }
+        );
+
         this.isDeleteConfirm = false;
-        this.loadLha();
-        this.$toast.open({
-          message: `Berhasil menghapus data dengan ID ${this.idToDelete}`,
-          type: 'success',
-          position: 'top-right',
-          duration: 3000,
-        });
+
+        if (response.status == 200) {
+          await this.loadLha();
+
+          this.toastSuccess(
+            `Berhasil menghapus data dengan ID ${this.idToDelete}`
+          );
+        }
       } catch (error) {
-        this.$toast.open({
-          message: error.message,
-          type: 'error',
-          position: 'top-right',
-          duration: 3000,
-        });
+        this.toastError(error.message);
       }
     },
     async loadLha(refresh = false) {

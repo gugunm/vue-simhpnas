@@ -31,13 +31,13 @@ import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 const fields = [
   {
     key: 'id',
-    label: 'ID',
+    label: 'Nomor Rekomendasi',
   },
-  { key: 'nomorRekomendasi' },
+  // { key: 'nomorRekomendasi' },
   // { key: 'kodeTemuan' },
   // { key: 'nomorTemuan' },
   // { key: 'kodeLha' },
-  { key: 'nomorLha' },
+  // { key: 'nomorLha' },
   // { key: 'kodeKelompokRekomendasi' },
   // { key: 'kelompokRekomendasi' },
   // { key: 'kodeSubKelompokRekomendasi' },
@@ -123,16 +123,24 @@ export default {
 
     async actionDelete() {
       try {
-        await this.$store.dispatch('module_lha/deleteRekomendasiById', {
-          idLha: this.idToDelete,
-        });
+        const response = await this.$store.dispatch(
+          'module_rekomendasi/deleteRekomendasiById',
+          {
+            idRekomendasi: this.idToDelete,
+          }
+        );
+
         this.isDeleteConfirm = false;
 
-        this.loadRekomendasi();
+        if (response.status == 200) {
+          await this.loadRekomendasi();
 
-        toastSuccess(`Berhasil menghapus data dengan ID ${this.idToDelete}`);
+          this.toastSuccess(
+            `Berhasil menghapus data dengan ID ${this.idToDelete}`
+          );
+        }
       } catch (error) {
-        toastError(error.message);
+        this.toastError(error.message);
       }
     },
     async loadRekomendasi(refresh = false) {
