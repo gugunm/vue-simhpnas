@@ -59,6 +59,31 @@ export default {
       this.loading = false;
     },
 
+    async loadEditPenyebabById(refresh = false) {
+      this.loading = true;
+      try {
+        await this.$store.dispatch('module_penyebab/loadPenyebabById', {
+          idPenyebab: this.idPenyebab,
+          forceRefresh: refresh,
+        });
+
+        const data = this.$store.getters['module_penyebab/penyebabById'];
+
+        this.form = {
+          nomorPenyebab: data.nomorPenyebab,
+          kodePenyebab: data.refKodePenyebab,
+          memoPenyebab: data.memoPenyebab,
+          accept: false,
+        }
+
+        this.editData = data
+
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
+      this.loading = false;
+    },
+
     toastSuccess(msg) {
       this.$toast.open({
         message: msg,

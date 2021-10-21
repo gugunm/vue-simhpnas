@@ -83,15 +83,6 @@
                     :masks="{ input: ['D MMM YYYY'], data: ['YYYY-MM-DD'] }"
                   />
                 </div>
-                <!-- <CInput
-                  label="Tanggal ST"
-                  :lazy="false"
-                  :value.sync="$v.form.tglSt.$model"
-                  :is-valid="checkIfValid('tglSt')"
-                  placeholder="Tanggal ST"
-                  autocomplete="tglSt"
-                  invalid-feedback="Tanggal ST wajib diisi"
-                /> -->
               </CCol>
             </CRow>
 
@@ -119,15 +110,6 @@
                     :masks="{ input: ['D MMM YYYY'] }"
                   />
                 </div>
-                <!-- <CInput
-                  label="Tanggal LHA"
-                  :lazy="false"
-                  :value.sync="$v.form.tglLha.$model"
-                  :is-valid="checkIfValid('tglLha')"
-                  placeholder="Tanggal LHA"
-                  autocomplete="tglLha"
-                  invalid-feedback="Tanggal LHA wajib diisi"
-                /> -->
               </CCol>
             </CRow>
 
@@ -146,15 +128,6 @@
                     track-by="deskripsi"
                   />
                 </div>
-                <!-- <CInput
-                  label="Group Lingkup Audit"
-                  :lazy="false"
-                  :value.sync="$v.form.groupLingkupAudit.$model"
-                  :is-valid="checkIfValid('groupLingkupAudit')"
-                  placeholder="Group Lingkup Audit"
-                  autocomplete="groupLingkupAudit"
-                  invalid-feedback="Group Lingkup Audit wajib diisi"
-                /> -->
               </CCol>
               <CCol lg="5">
                 <div>
@@ -169,15 +142,6 @@
                     track-by="deskripsi"
                   />
                 </div>
-                <!-- <CInput
-                  label="Lingkup Audit"
-                  :lazy="false"
-                  :value.sync="$v.form.lingkupAudit.$model"
-                  :is-valid="checkIfValid('lingkupAudit')"
-                  placeholder="Lingkup Audit"
-                  autocomplete="lingkupAudit"
-                  invalid-feedback="Lingkup Audit wajib diisi"
-                /> -->
               </CCol>
             </CRow>
             <CRow>
@@ -203,7 +167,6 @@
                   custom
                   class="my-2 text-base ml-2 font-semibold lower"
                 />
-                <!-- isLhaTpk -->
               </CCol>
             </CRow>
           </div>
@@ -243,15 +206,6 @@
                     track-by="deskripsi"
                   />
                 </div>
-                <!-- <CInput
-                  label="Jenis Obrik"
-                  :lazy="false"
-                  :value.sync="$v.form.jenisObrik.$model"
-                  :is-valid="checkIfValid('jenisObrik')"
-                  placeholder="Jenis Obrik"
-                  autocomplete="jenisObrik"
-                  invalid-feedback="Jenis Obrik wajib diisi"
-                /> -->
               </CCol>
             </CRow>
             <!-- ROW 3 -->
@@ -269,15 +223,6 @@
                     track-by="deskripsi"
                   />
                 </div>
-                <!-- <CInput
-                  label="Unit Obrik"
-                  :lazy="false"
-                  :value.sync="$v.form.unitObrik.$model"
-                  :is-valid="checkIfValid('unitObrik')"
-                  placeholder="Unit Obrik"
-                  autocomplete="unitObrik"
-                  invalid-feedback="Unit Obrik wajib diisi"
-                /> -->
               </CCol>
               <CCol lg="4">
                 <div>
@@ -292,15 +237,6 @@
                     track-by="deskripsi"
                   />
                 </div>
-                <!-- <CInput
-                  label="Bidang Obrik"
-                  :lazy="false"
-                  :value.sync="$v.form.bidangObrik.$model"
-                  :is-valid="checkIfValid('bidangObrik')"
-                  placeholder="Bidang Obrik"
-                  autocomplete="name"
-                  invalid-feedback="Bidang Obrik wajib diisi"
-                /> -->
               </CCol>
               <CCol lg="4">
                 <div>
@@ -315,15 +251,6 @@
                     track-by="deskripsi"
                   />
                 </div>
-                <!-- <CInput
-                  label="Sub Bidang Obrik"
-                  :lazy="false"
-                  :value.sync="$v.form.subBidangObrik.$model"
-                  :is-valid="checkIfValid('subBidangObrik')"
-                  placeholder="Sub Bidang Obrik"
-                  autocomplete="name"
-                  invalid-feedback="Sub Bidang Obrik wajib diisi"
-                /> -->
               </CCol>
             </CRow>
             <!-- ROW 5 -->
@@ -341,7 +268,6 @@
               </CCol>
               <CCol lg="6">
                 <CInput
-                  type="number"
                   label="NIP Pimpinan"
                   :lazy="false"
                   :value.sync="$v.form.nipPimpinan.$model"
@@ -386,15 +312,6 @@
                     track-by="deskripsi"
                   />
                 </div>
-                <!-- <CInput
-                  label="Jenis Anggaran"
-                  :lazy="false"
-                  :value.sync="$v.form.jenisAnggaran.$model"
-                  :is-valid="checkIfValid('jenisAnggaran')"
-                  placeholder="Jenis Anggaran"
-                  autocomplete="jenisAnggaran"
-                  invalid-feedback="Jenis Anggaran wajib diisi"
-                /> -->
               </CCol>
             </CRow>
             <!-- ROW 2 -->
@@ -471,15 +388,6 @@
                     @search-change="loadSearchKelurahan"
                   />
                 </div>
-                <!-- <CInput
-                  label="Kelurahan/Desa"
-                  :lazy="false"
-                  :value.sync="$v.form.kelurahan.$model"
-                  :is-valid="checkIfValid('kelurahan')"
-                  placeholder="Kelurahan/Desa"
-                  autocomplete="name"
-                  invalid-feedback="Kelurahan/Desa wajib diisi"
-                /> -->
               </CCol>
               <CCol lg="6">
                 <CInput
@@ -544,7 +452,6 @@
                 />
               </CCol>
             </CRow>
-            <!-- <p>{{ $v.form.accept.$model }}</p> -->
           </div>
 
           <div class="px-3">
@@ -588,7 +495,6 @@
                   class="px-4 ml-1"
                   :disabled="!isValid || submitted"
                 >
-                  <!-- :disabled="!isValid || submitted" -->
                   <div v-if="loading" class="px-8">
                     <CSpinner color="white" size="sm" class="mr-2" />
                   </div>

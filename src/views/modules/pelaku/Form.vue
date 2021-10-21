@@ -20,7 +20,11 @@
               <CCol lg="6">
                 <CInput
                   label="Nomor LHA"
-                  :value="mode == 'view' ? form.nomorLha : $route.query.nolha"
+                  :value="
+                    mode == 'view' || mode == 'edit'
+                      ? editData.nomorLha || form.nomorLha
+                      : $route.query.nolha
+                  "
                   :disabled="true"
                 />
               </CCol>
@@ -28,7 +32,9 @@
                 <CInput
                   label="Nomor Temuan"
                   :value="
-                    mode == 'view' ? form.nomorTemuan : $route.query.notemuan
+                    mode == 'view' || mode == 'edit'
+                      ? editData.nomorTemuan || form.nomorTemuan
+                      : $route.query.notemuan
                   "
                   :disabled="true"
                 />
@@ -53,8 +59,8 @@
                 <CInput
                   label="Nomor Rekomendasi"
                   :value="
-                    mode == 'view'
-                      ? form.nomorRekomendasi
+                    mode == 'view' || mode == 'edit'
+                      ? editData.nomorRekomendasi || form.nomorRekomendasi
                       : $route.query.norekomendasi
                   "
                   :disabled="true"
@@ -228,6 +234,7 @@ export default {
       isOpenConfirm: false,
       valueJabatan: '',
       optionsJabatan: [],
+      editData: {},
     };
   },
   computed: {
@@ -248,8 +255,15 @@ export default {
   },
   async mounted() {
     await this.loadJabatan();
+
     if (this.mode == 'view') {
       await this.loadPelakuById();
+    } else if (this.mode == 'edit') {
+      await this.loadEditPelakuById();
+
+      this.valueJabatan = this.optionsJabatan.filter(
+        (jabatan) => jabatan.id == this.form.idJabatan
+      )[0];
     }
   },
   validations: {
@@ -315,6 +329,25 @@ export default {
                 this.toastSuccess('Berhasil menyimpan data pelaku');
               }, 500);
             }
+          } else if (this.mode == 'edit') {
+            this.loading = true;
+            const responseData = await this.$store.dispatch(
+              'module_pelaku/updatePelakuById',
+              {
+                idPelaku: this.editData.id,
+                data: resultFormData,
+              }
+            );
+
+            if (responseData) {
+              setTimeout(() => {
+                this.loading = false;
+                this.$router.push({
+                  path: '/pelaku',
+                });
+                this.toastSuccess('Berhasil edit data pelaku');
+              }, 500);
+            }
           }
         } catch (error) {
           setTimeout(() => {
@@ -349,9 +382,14 @@ export default {
 
     appendToFormData() {
       const fd = new FormData();
-      fd.append('kode_rekomendasi', this.$route.query.idrekomendasi);
-      fd.append('kode_temuan', this.$route.query.idtemuan);
-      fd.append('kode_lha', this.$route.query.idlha);
+
+      if (this.mode == 'edit') {
+        fd.append('_method', 'PATCH');
+      } else if (this.mode == 'create') {
+        fd.append('kode_rekomendasi', this.$route.query.idrekomendasi);
+        fd.append('kode_temuan', this.$route.query.idtemuan);
+        fd.append('kode_lha', this.$route.query.idlha);
+      }
       fd.append('Nomor_Urut', this.$v.form.nomorUrut.$model);
       fd.append('Nama', this.$v.form.nama.$model);
       fd.append('NIP', this.$v.form.nip.$model);

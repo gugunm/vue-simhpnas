@@ -18,7 +18,11 @@
               <CCol lg="6">
                 <CInput
                   label="Nomor LHA"
-                  :value="mode == 'view' ? form.nomorLha : $route.query.nolha"
+                  :value="
+                    mode == 'view' || mode == 'edit'
+                      ? editData.nomorLha || form.nomorLha
+                      : $route.query.nolha
+                  "
                   :disabled="true"
                 />
               </CCol>
@@ -30,7 +34,9 @@
                 <CInput
                   label="Nomor Temuan"
                   :value="
-                    mode == 'view' ? form.nomorTemuan : $route.query.notemuan
+                    mode == 'view' || mode == 'edit'
+                      ? editData.nomorTemuan || form.nomorTemuan
+                      : $route.query.notemuan
                   "
                   :disabled="true"
                 />
@@ -39,8 +45,8 @@
                 <CInput
                   label="Nomor Rekomendasi"
                   :value="
-                    mode == 'view'
-                      ? form.nomorRekomendasi
+                    mode == 'view' || mode == 'edit'
+                      ? editData.nomorRekomendasi || form.nomorRekomendasi
                       : $route.query.norekomendasi
                   "
                   :disabled="true"
@@ -122,7 +128,7 @@
 
             <!-- ROW 5 -->
             <CRow>
-              <CCol v-if="mode != 'view'" lg="4">
+              <CCol v-if="mode == 'create'" lg="4">
                 <CInput
                   label="Nilai Rekomendasi"
                   :value="$route.query.nilairekomendasi"
@@ -260,6 +266,7 @@ export default {
       valueSubKlpTl: '',
       optionsSubKlpTl: [],
       fileTl: '',
+      editData: {},
     };
   },
   computed: {
@@ -290,6 +297,17 @@ export default {
     await this.loadKlpTl();
     if (this.mode == 'view') {
       await this.loadTlById();
+    } else if (this.mode == 'edit') {
+      await this.loadEditTlById();
+
+      this.valueKlpTl = this.optionsKlpTl.filter(
+        (data) => data.id == this.form.klpTl
+      )[0];
+
+      await this.loadSubKlpTl({ id: this.valueKlpTl.id });
+      this.valueSubKlpTl = this.optionsSubKlpTl.filter(
+        (data) => data.id == this.form.subKlpTl
+      )[0];
     }
   },
   validations: {
@@ -361,6 +379,26 @@ export default {
                 this.toastSuccess('Berhasil menyimpan data TL');
               }, 500);
             }
+          } else if (this.mode == 'edit') {
+            this.loading = true;
+
+            const responseData = await this.$store.dispatch(
+              'module_tindak_lanjut/updateTindakLanjutById',
+              {
+                idTl: this.editData.id,
+                data: resultFormData,
+              }
+            );
+
+            if (responseData) {
+              setTimeout(() => {
+                this.loading = false;
+                this.$router.push({
+                  path: '/tindak-lanjut',
+                });
+                this.toastSuccess('Berhasil edit data TL');
+              }, 500);
+            }
           }
         } catch (error) {
           setTimeout(() => {
@@ -396,16 +434,24 @@ export default {
 
     appendToFormData() {
       const fd = new FormData();
-      fd.append('kode_rekomendasi', this.$route.query.idrekomendasi);
-      fd.append('kode_temuan', this.$route.query.idtemuan);
-      fd.append('kode_lha', this.$route.query.idlha);
+
+      if (this.mode == 'edit') {
+        fd.append('_method', 'PATCH');
+      } else if (this.mode == 'create') {
+        fd.append('kode_rekomendasi', this.$route.query.idrekomendasi);
+        fd.append('kode_temuan', this.$route.query.idtemuan);
+        fd.append('kode_lha', this.$route.query.idlha);
+
+        fd.append('Upload_File_TL', this.fileTl);
+      }
       fd.append('Nomor_TL', this.$v.form.nomorTl.$model);
       fd.append('Kode_Kelompok_TL', this.$v.form.klpTl.$model);
       fd.append('Kode_Sub_Kelompok_TL', this.$v.form.subKlpTl.$model);
       fd.append('Memo_TL', this.$v.form.memoTl.$model);
       fd.append('Nilai_TL', this.$v.form.nilaiTl.$model);
       fd.append('Status_TL', this.$v.form.statusTl.$model);
-      fd.append('Upload_File_TL', this.fileTl);
+
+      // fd.append('Upload_File_TL', this.fileTl);
       return fd;
     },
   },

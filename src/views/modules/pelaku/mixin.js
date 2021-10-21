@@ -72,6 +72,48 @@ export default {
       this.loading = false;
     },
 
+    async loadPelakuById(refresh = false) {
+      this.loading = true;
+      try {
+        await this.$store.dispatch('module_pelaku/loadPelakuById', {
+          idPelaku: this.idPelaku,
+          forceRefresh: refresh,
+        });
+        
+        this.form = this.$store.getters['module_pelaku/pelakuById'];
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
+      this.loading = false;
+    },
+
+    async loadEditPelakuById(refresh = false) {
+      this.loading = true;
+      try {
+        await this.$store.dispatch('module_pelaku/loadPelakuById', {
+          idPelaku: this.idPelaku,
+          forceRefresh: refresh,
+        });
+        
+        const data = this.$store.getters['module_pelaku/pelakuById'];
+
+        this.form = {
+          nomorUrut: data.nomorUrut,
+          nama: data.nama,
+          nip: data.nip,
+          idJabatan: data.kodeJabatan,
+          memoKesalahan: data.memoKesalahan,
+
+          accept: false,
+        }
+
+        this.editData = data
+
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
+      this.loading = false;
+    },
 
     toastSuccess(msg) {
       this.$toast.open({

@@ -1,10 +1,16 @@
 <template>
-  <p>Page Edit TL</p>
+  <div>
+    <Form mode="edit" :id-tl="idTindakLanjut" />
+  </div>
 </template>
 
 <script>
-export default {};
-</script>
+import Form from './Form.vue';
 
-<style>
-</style>
+export default {
+  components: {
+    Form,
+  },
+  props: ['idTindakLanjut'],
+};
+</script>

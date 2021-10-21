@@ -1,10 +1,16 @@
 <template>
-  <p>Page Edit Penyebab</p>
+  <div>
+    <Form mode="edit" :id-penyebab="idPenyebab" />
+  </div>
 </template>
 
 <script>
-export default {};
-</script>
+import Form from './Form.vue';
 
-<style>
-</style>
+export default {
+  components: {
+    Form,
+  },
+  props: ['idPenyebab'],
+};
+</script>

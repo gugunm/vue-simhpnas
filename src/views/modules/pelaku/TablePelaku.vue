@@ -55,12 +55,22 @@
           </CCol>
         </CRow>
       </CCardHeader>
-      <CCol>
+      <CCol v-if="valueRekomendasi.flagPelaku == 1">
         <CButton class="px-4 mt-4" color="info" @click="openCreateModal">
           <CIcon name="cil-plus" class="my-0 mb-1 mr-1" /> Tambah
         </CButton>
       </CCol>
-      <CCardBody>
+      <CCardBody v-if="valueRekomendasi.flagPelaku == 0" class="text-center">
+        <CRow>
+          <CCol>
+            <h6 class="text-base tracking-wide">
+              Rekomendasi {{ valueRekomendasi.nomorRekomendasi }} Tidak memiliki
+              Pelaku
+            </h6>
+          </CCol>
+        </CRow>
+      </CCardBody>
+      <CCardBody v-else>
         <CDataTable
           :items="items"
           :fields="fields"

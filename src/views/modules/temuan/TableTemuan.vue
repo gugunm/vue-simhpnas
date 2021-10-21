@@ -26,7 +26,7 @@
         </CRow>
       </CCardHeader>
       <CCol>
-        <CButton class="px-4 mt-3" color="info" @click="openCreateModal">
+        <CButton class="px-4 mt-4" color="info" @click="openCreateModal">
           <CIcon name="cil-plus" class="my-0 mb-1 mr-1" /> Tambah
         </CButton>
       </CCol>

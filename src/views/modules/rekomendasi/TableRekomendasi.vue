@@ -74,6 +74,7 @@
           <template #actions="{ item }">
             <td class="py-2 flex flex-wrap justify-content-center">
               <CButton
+                v-if="item.flagPelaku == 1"
                 v-c-tooltip="{
                   content: '+ Pelaku',
                   placement: 'top',

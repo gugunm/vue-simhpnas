@@ -84,6 +84,35 @@ export default {
       this.loading = false;
     },
 
+    async loadEditTlById(refresh = false) {
+      this.loading = true;
+      try {
+        await this.$store.dispatch('module_tindak_lanjut/loadTindakLanjutById', {
+          idTl: this.idTl,
+          forceRefresh: refresh,
+        });
+
+        const data = this.$store.getters['module_tindak_lanjut/tindakLanjutById'];
+
+        this.form = {
+          nomorTl:  data.nomorTl,
+          klpTl:  data.kodeKelompokTl,
+          subKlpTl:  data.kodeSubKelompokTl,
+          memoTl:  data.memoTl,
+          nilaiTl: data.nilaiTl,
+          statusTl: data.statusTl,
+
+          accept: false,
+        }
+
+        this.editData = data
+
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
+      this.loading = false;
+    },
+
     toastSuccess(msg) {
       this.$toast.open({
         message: msg,

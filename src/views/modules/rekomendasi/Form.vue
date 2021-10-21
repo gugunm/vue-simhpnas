@@ -20,7 +20,11 @@
               <CCol lg="6">
                 <CInput
                   label="Nomor LHA"
-                  :value="mode == 'view' ? form.nomorLha : $route.query.nolha"
+                  :value="
+                    mode == 'view' || mode == 'edit'
+                      ? form.nomorLha || editData.nomorLha
+                      : $route.query.nolha
+                  "
                   :disabled="true"
                 />
               </CCol>
@@ -28,7 +32,9 @@
                 <CInput
                   label="Nomor Temuan"
                   :value="
-                    mode == 'view' ? form.nomorTemuan : $route.query.notemuan
+                    mode == 'view' || mode == 'edit'
+                      ? form.nomorTemuan || editData.nomorTemuan
+                      : $route.query.notemuan
                   "
                   :disabled="true"
                 />
@@ -124,8 +130,8 @@
                 <CInput
                   label="Nilai Rekomendasi"
                   :value="
-                    mode == 'view'
-                      ? form.nilaiRekomendasi
+                    mode == 'view' || mode == 'edit'
+                      ? editData.nilaiRekomendasi || form.nilaiRekomendasi
                       : $route.query.nilaitemuan
                   "
                   :disabled="true"
@@ -260,6 +266,7 @@ export default {
       optionsRekomendasi: [],
       valueSubKlpRekomendasi: '',
       optionsSubKlpRekomendasi: [],
+      editData: {},
     };
   },
   computed: {
@@ -293,9 +300,28 @@ export default {
     },
   },
   async mounted() {
-    await this.loadSearchRekomendasi();
-    if (this.mode == 'view') {
+    if (this.mode == 'create') {
+      await this.loadSearchRekomendasi();
+    } else if (this.mode == 'view') {
       await this.loadRekomendasiById();
+    } else if (this.mode == 'edit') {
+      await this.loadEditRekomendasiById();
+
+      await this.loadSearchRekomendasi();
+      this.valueRekomendasi = this.optionsRekomendasi.filter(
+        (rek) => rek.id == this.form.klpRekomendasi
+      )[0];
+
+      await this.loadSubKlpRekomendasi();
+      this.valueSubKlpRekomendasi = this.optionsSubKlpRekomendasi.filter(
+        (rek) => rek.id == this.form.subKlpRekomendasi
+      )[0];
+    }
+
+    if (this.form.flagPelaku == 0 || this.editData.flagPelaku == 0) {
+      this.isPelaku = false;
+    } else {
+      this.isPelaku = true;
     }
   },
   validations: {
@@ -355,6 +381,29 @@ export default {
                 );
               }, 500);
             }
+          } else if (this.mode == 'edit') {
+            this.loading = true;
+
+            const responseData = await this.$store.dispatch(
+              'module_rekomendasi/updateRekomendasiById',
+              {
+                idRekomendasi: this.editData.id,
+                data: resultFormData,
+              }
+            );
+
+            if (responseData) {
+              setTimeout(() => {
+                this.loading = false;
+                this.$router.push({
+                  path: '/rekomendasi',
+                });
+                this.toastSuccess(
+                  'Berhasil edit data dengan ID ' +
+                    responseData.Nomor_Rekomendasi
+                );
+              }, 500);
+            }
           }
         } catch (error) {
           setTimeout(() => {
@@ -389,8 +438,15 @@ export default {
 
     appendToFormData() {
       const fd = new FormData();
-      fd.append('kode_temuan', this.$route.query.idtemuan);
-      fd.append('kode_lha', this.$route.query.idlha);
+
+      if (this.mode == 'edit') {
+        fd.append('_method', 'PATCH');
+      } else if (this.mode == 'create') {
+        fd.append('kode_temuan', this.$route.query.idtemuan);
+        fd.append('kode_lha', this.$route.query.idlha);
+        fd.append('Nilai_Rekomendasi', this.$route.query.nilaitemuan);
+      }
+
       fd.append('Nomor_Rekomendasi', this.$v.form.nomorRekomendasi.$model);
       fd.append(
         'Kode_Kelompok_Rekomendasi',
@@ -402,7 +458,7 @@ export default {
       );
       fd.append('Memo_Rekomendasi', this.$v.form.memoRekomendasi.$model);
       fd.append('Flag_Pelaku', this.$v.form.flagPelaku.$model);
-      fd.append('Nilai_Rekomendasi', this.$route.query.nilaitemuan);
+
       return fd;
     },
   },

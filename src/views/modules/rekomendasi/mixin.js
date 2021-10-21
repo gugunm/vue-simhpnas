@@ -33,7 +33,7 @@ export default {
       this.loading = true;
       try {
         await this.$store.dispatch('module_rekomendasi/loadSearchRekomendasi', {
-          idTemuan: this.$route.query.idtemuan,
+          idTemuan: this.$route.query.idtemuan || this.editData.kodeTemuan,
           forceRefresh: refresh,
         });
 
@@ -70,6 +70,35 @@ export default {
         });
 
         this.form = this.$store.getters['module_rekomendasi/rekomendasiById'];
+        
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
+      this.loading = false;
+    },
+
+    async loadEditRekomendasiById(refresh = false) {
+      this.loading = true;
+      try {
+        await this.$store.dispatch('module_rekomendasi/loadRekomendasiById', {
+          idRekomendasi: this.idRekomendasi,
+          forceRefresh: refresh,
+        });
+
+        const data = this.$store.getters['module_rekomendasi/rekomendasiById'];
+
+        this.form = {
+          nomorRekomendasi:  data.nomorRekomendasi,
+          klpRekomendasi:  data.kodeKelompokRekomendasi,
+          subKlpRekomendasi:  data.kodeSubKelompokRekomendasi,
+          memoRekomendasi:  data.memoRekomendasi,
+          flagPelaku: data.flagPelaku,
+          nilaiRekomendasi: data.nilaiRekomendasi,
+
+          accept: false,
+        }
+
+        this.editData = data
         
       } catch (error) {
         this.error = error.message || 'Something went wrong!';

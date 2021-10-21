@@ -23,7 +23,11 @@
               <CCol lg="6">
                 <CInput
                   label="Nomor LHA"
-                  :value="mode == 'view' || mode == 'edit' ? form.nomorLha || editData.nomorLha : $route.query.nolha"
+                  :value="
+                    mode == 'view' || mode == 'edit'
+                      ? editData.nomorLha || form.nomorLha
+                      : $route.query.nolha
+                  "
                   :disabled="true"
                 />
               </CCol>
@@ -40,7 +44,7 @@
                   placeholder="Nomor Temuan"
                   autocomplete="nomorTemuan"
                   invalid-feedback="Nomor Temuan wajib diisi 1-2 angka"
-                  :disabled="true"
+                  :disabled="mode == 'view'"
                 />
               </CCol>
             </CRow>
@@ -331,7 +335,7 @@ export default {
       optionsKlpTemuan: [],
       valueSubKlpTemuan: '',
       optionsSubKlpTemuan: [],
-      editData: {}
+      editData: {},
     };
   },
   computed: {
@@ -380,27 +384,27 @@ export default {
       await this.loadEditTemuanById();
 
       this.valueJenisTemuan = this.optionsJenisTemuan.filter((jt) => {
-        return jt.id == this.form.jenisTemuan
+        return jt.id == this.form.jenisTemuan;
       })[0];
 
       await this.loadKlpTemuan();
 
       this.valueKlpTemuan = this.optionsKlpTemuan.filter((kt) => {
-        return kt.id == this.form.klpTemuan
+        return kt.id == this.form.klpTemuan;
       })[0];
 
       await this.loadSubKlpTemuan();
 
       this.valueSubKlpTemuan = this.optionsSubKlpTemuan.filter((skt) => {
-        return skt.id == this.form.subKlpTemuan
+        return skt.id == this.form.subKlpTemuan;
       })[0];
-
-      console.log("DATA TEMUAN HEREEE!!");
-      console.log(this.form);
-      console.log(this.editData);
     }
 
-    if (this.$route.query.tpk || this.form.flagTpk || this.editData.flagTpk == 0) {
+    if (
+      this.$route.query.tpk == 0 ||
+      this.form.flagTpk == 0 ||
+      this.editData.flagTpk == 0
+    ) {
       this.isAuditTpk = false;
     } else {
       this.isAuditTpk = true;
@@ -529,8 +533,12 @@ export default {
       const fd = new FormData();
       if (this.mode == 'edit') {
         fd.append('_method', 'PATCH');
+        fd.append('kode_lha', this.editData.nomorLha);
+        fd.append('Flag_TPK', this.editData.flagTpk);
+      } else if (this.mode == 'create') {
+        fd.append('kode_lha', this.$route.query.idlha);
+        fd.append('Flag_TPK', this.$route.query.tpk);
       }
-      fd.append('kode_lha', this.$route.query.idlha || this.editData.nomorLha);
       fd.append('Nomor_Temuan', this.$v.form.nomorTemuan.$model);
       fd.append('Kode_Jenis_Temuan', this.$v.form.jenisTemuan.$model);
       fd.append('Kode_Kelompok_Temuan', this.$v.form.klpTemuan.$model);
@@ -538,7 +546,6 @@ export default {
       fd.append('Memo_Temuan', this.$v.form.memoTemuan.$model);
       fd.append('Posisi_Kasus', this.$v.form.posisiKasus.$model);
       fd.append('Modus_Operandi', this.$v.form.modusOperandi.$model);
-      fd.append('Flag_TPK', this.$route.query.tpk || this.editData.flagTpk);
       fd.append('Nilai_Temuan', this.$v.form.nilaiTemuan.$model);
       return fd;
     },
