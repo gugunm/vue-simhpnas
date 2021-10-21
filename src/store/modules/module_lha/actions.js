@@ -45,6 +45,7 @@ export default {
         rencanaAnggaran: responseData[key]["Rencana_Anggaran"],
         realisasiAnggaran: responseData[key]["Realisasi_Anggaran"],
         flagTpk: responseData[key]["Flag_TPK"],
+        flagKirim: responseData[key]["Flag_kirim"],
         // anggaranYangDiaudit: responseData[key]["Anggaran_yang_diaudit"],
         anggaranYangDiaudit: anggaran
       };
@@ -102,6 +103,7 @@ export default {
       rencanaAnggaran: responseData["Rencana_Anggaran"],
       realisasiAnggaran: responseData["Realisasi_Anggaran"],
       flagTpk: responseData["Flag_TPK"],
+      flagKirim: responseData[key]["Flag_kirim"],
       // anggaranYangDiaudit: responseData[key]["Anggaran_yang_diaudit"],
       anggaranYangDiaudit: anggaran
     };
@@ -176,6 +178,28 @@ export default {
       );
       throw error;
     }
+
+    return response
+  },
+
+  async sendLhaById(context, payload){
+    const response = await axios({
+      method: 'PATCH',
+      headers: { "Content-Type": "application/json" },
+      baseURL: API_URL,
+      url: `/api/kirimlha/${payload.idLha}`,
+      params: {
+        token: localStorage.getItem('api_token')
+      },
+    })
+
+    if (response.status != 200) {
+      const error = new Error(
+        response.data.message || 'Failed to send data'
+      );
+
+      throw error;
+    } 
 
     return response
   },

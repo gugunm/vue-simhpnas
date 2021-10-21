@@ -429,14 +429,39 @@
 
             <CRow>
               <CCol lg="6">
-                <label for="file-lha" class="block mb-2">Upload File LHA</label>
-                <input
-                  id="file-lha"
-                  type="file"
-                  name="file-lha"
-                  class="mb-4"
-                  @change="onUploadLha"
-                />
+                <div class="flex flex-col">
+                  <label for="file-lha" class="block mb-3"
+                    >Upload File LHA</label
+                  >
+                  <div class="flex items-center mb-4">
+                    <CSwitch
+                      class="mx-1 mr-3"
+                      color="info"
+                      variant="3d"
+                      v-bind="labelIcon"
+                      :checked.sync="isStoredLha"
+                    />
+                    <span v-if="isStoredLha"
+                      >Upload File LHA di Server SIMHPNAS</span
+                    >
+                    <span v-else> Upload File LHA di Server Internal </span>
+                  </div>
+                  <input
+                    v-if="isStoredLha"
+                    id="file-lha"
+                    type="file"
+                    name="file-lha"
+                    class="mb-4"
+                    @change="onUploadLha"
+                  />
+                  <CInput
+                    v-else
+                    class="mb-4"
+                    :lazy="false"
+                    placeholder="http://server-anda.com/file.pdf"
+                    :value.sync="fileLha"
+                  />
+                </div>
               </CCol>
             </CRow>
 
@@ -524,7 +549,7 @@ import {
   minLength,
   // email,
   // sameAs,
-  // helpers,
+  helpers,
 } from 'vuelidate/lib/validators';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 import mixin from './mixin';
@@ -572,6 +597,11 @@ export default {
       selectedDateLha: new Date(),
       isLhaTpk: false,
       fileLha: '',
+      labelIcon: {
+        labelOn: '\u2713',
+        labelOff: '\u2715',
+      },
+      isStoredLha: true,
     };
   },
   computed: {
@@ -680,7 +710,7 @@ export default {
       // autocomplete
       bidangObrik: { required },
       // autocomplete
-      subBidangObrik: { required },
+      // subBidangObrik: {},
       // text
       namaPimpinan: { required },
       // text
@@ -874,7 +904,7 @@ export default {
         jenisObrik: '',
         unitObrik: '',
         bidangObrik: '',
-        subBidangObrik: '',
+        // subBidangObrik: '',
         namaPimpinan: '',
         nipPimpinan: '',
         // Data Anggaran
@@ -910,7 +940,6 @@ export default {
       fd.append('Kode_Jenis_Obrik', this.$v.form.jenisObrik.$model);
       fd.append('Kode_Unit_Obrik', this.$v.form.unitObrik.$model);
       fd.append('Kode_Bidang_Obrik', this.$v.form.bidangObrik.$model);
-      fd.append('Kode_Sub_Bidang_Obrik', this.$v.form.subBidangObrik.$model);
       fd.append('Nama_Pimpinan', this.$v.form.namaPimpinan.$model);
       fd.append('NIP_Pimpinan', this.$v.form.nipPimpinan.$model);
       fd.append('Rencana_Anggaran', this.$v.form.nilaiRencana.$model);
@@ -924,7 +953,15 @@ export default {
       fd.append('Kode_Jenis_anggaran', this.$v.form.jenisAnggaran.$model);
       fd.append('Ringkasan_LHA', this.$v.form.ringkasanLha.$model);
       fd.append('Flag_TPK', this.convertBoolean(this.$v.form.flagTpk.$model));
+
+      fd.append('is_stored', this.convertBoolean(this.isStoredLha));
       fd.append('Upload_file_LHA', this.fileLha);
+
+      if (this.valueSubBidangObrik) {
+        fd.append('Kode_Sub_Bidang_Obrik', this.valueSubBidangObrik.id);
+      }
+
+      // fd.append('Kode_Sub_Bidang_Obrik', this.$v.form.subBidangObrik.$model);
 
       return fd;
     },

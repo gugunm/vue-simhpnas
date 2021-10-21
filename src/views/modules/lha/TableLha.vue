@@ -44,14 +44,16 @@
                 <CRow>
                   <CCol>
                     <CButton
-                      color="primary"
+                      :color="isLhaSent(item) ? 'dark' : 'primary'"
                       variant="outline"
                       square
                       size="sm"
                       class="inline-block m-1"
+                      :disabled="isLhaSent(item)"
                       @click="openSendModal(item.id)"
                     >
-                      <span>Kirim</span>
+                      <span v-if="isLhaSent(item)">Terkirim</span>
+                      <span v-else>Kirim</span>
                     </CButton>
                   </CCol>
                 </CRow>
@@ -59,8 +61,11 @@
             </td>
           </template>
           <template #actions="{ item }">
-            <td>
-              <div class="flex flex-wrap justify-content-center">
+            <td class="text-center">
+              <div v-if="isLhaSent(item)">
+                <p>No Actions</p>
+              </div>
+              <div v-else class="flex flex-wrap justify-content-center">
                 <CButton
                   v-c-tooltip="{
                     content: '+ Temuan',
@@ -274,23 +279,21 @@ export default {
       default: true,
     },
   },
-  // data() {
-  //   return {
-  //     level: '',
-  //   };
-  // },
-  // mounted() {
-  //   if (localStorage.level) {
-  //     this.level = localStorage.level;
-  //   }
-  // },
   emits: [
     'clicked-row',
     'open-create-modal',
     'open-edit-modal',
     'open-delete-modal',
+    'on-send-lha',
   ],
   methods: {
+    isLhaSent(item) {
+      if (item.flagKirim % 2 == 0) {
+        return false;
+      } else {
+        return true;
+      }
+    },
     clickedRow(item) {
       this.$emit('clicked-row', item);
     },
@@ -302,6 +305,9 @@ export default {
     },
     openDeleteModal(id) {
       this.$emit('open-delete-modal', id);
+    },
+    openSendModal(id) {
+      this.$emit('on-send-lha', id);
     },
     onAddTemuan(item) {
       this.$router.push({

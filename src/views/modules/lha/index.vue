@@ -10,6 +10,7 @@
       @open-create-modal="openCreate"
       @open-edit-modal="openEdit"
       @open-delete-modal="openDeleteModal"
+      @on-send-lha="onSendLha"
     />
     <confirm-modal
       v-model="isDeleteConfirm"
@@ -17,6 +18,13 @@
       msg="Apakah anda yakin akan menghapus data ini?"
       @close-modal="isDeleteConfirm = false"
       @confirm-ok="actionDelete"
+    />
+    <confirm-modal
+      v-model="isSendLhaConfirm"
+      title="Kirim LHA"
+      msg="Apakah anda yakin akan mengirim data ini?"
+      @close-modal="isSendLhaConfirm = false"
+      @confirm-ok="actionSendLha"
     />
   </div>
 </template>
@@ -133,6 +141,8 @@ export default {
       fields: [],
       isDeleteConfirm: false,
       idToDelete: null,
+      isSendLhaConfirm: false,
+      idToSend: null,
       level: '',
     };
   },
@@ -200,11 +210,34 @@ export default {
           forceRefresh: refresh,
         });
         this.items = this.$store.getters['module_lha/lha'];
-        // console.log(this.items);
       } catch (error) {
-        this.error = error.message || 'Something went wrong!';
+        this.toastError(error.message);
       }
       this.loading = false;
+    },
+
+    onSendLha(id) {
+      this.isSendLhaConfirm = true;
+      this.idToSend = id;
+    },
+
+    async actionSendLha() {
+      try {
+        const res = await this.$store.dispatch('module_lha/sendLhaById', {
+          idLha: this.idToSend,
+        });
+
+        this.isSendLhaConfirm = false;
+
+        if (res.status == 200) {
+          await this.loadLha();
+          this.toastSuccess('Berhasil mengirim LHA');
+        }
+      } catch (error) {
+        this.isSendLhaConfirm = false;
+
+        this.toastError(error.message);
+      }
     },
   },
 };
