@@ -204,7 +204,7 @@
             </CRow>
 
             <pdf
-              src="http://10.10.20.43:8001/storage/5200/TL/5200_1634874476_CISA%20(Certified%20Information%20System%20Auditor).pdf"
+              src="http://simhpnas.bpkp.go.id:8001/storage/5200/TL/5200_1634874476_CISA%20(Certified%20Information%20System%20Auditor).pdf"
             />
           </div>
 
