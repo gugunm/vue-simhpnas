@@ -150,22 +150,6 @@
               </CCol>
             </CRow>
 
-            <!-- <CRow v-if="mode != 'view'">
-              <CCol lg="6">
-                <label
-                  for="file-tl"
-                  class="block mb-2"
-                >Upload File TL</label>
-                <input
-                  id="file-tl"
-                  type="file"
-                  name="file-tl"
-                  class="mb-4"
-                  @change="onUploadTl"
-                >
-              </CCol>
-            </CRow> -->
-
             <CRow v-if="mode != 'view'">
               <CCol lg="6">
                 <div class="flex flex-col">
@@ -218,6 +202,10 @@
                 />
               </CCol>
             </CRow>
+
+            <pdf
+              src="http://10.10.20.43:8001/storage/5200/TL/5200_1634874476_CISA%20(Certified%20Information%20System%20Auditor).pdf"
+            />
           </div>
 
           <div class="px-3">
@@ -289,12 +277,14 @@ import { required, minLength, maxLength } from 'vuelidate/lib/validators';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 import mixin from './mixin';
 import Multiselect from 'vue-multiselect';
+import pdf from 'vue-pdf';
 
 export default {
   name: 'LhaForm',
   components: {
     ConfirmModal,
     Multiselect,
+    pdf,
   },
   mixins: [validationMixin, mixin],
   props: ['mode', 'selectedItem', 'idTl'],
@@ -347,6 +337,8 @@ export default {
       await this.loadTlById();
     } else if (this.mode == 'edit') {
       await this.loadEditTlById();
+
+      this.isStoredTl = this.editData.isStored == 1 ? true : false;
 
       this.valueKlpTl = this.optionsKlpTl.filter(
         (data) => data.id == this.form.klpTl
@@ -499,10 +491,8 @@ export default {
         fd.append('kode_lha', this.$route.query.idlha);
       }
 
-      if (this.fileTl) {
-        fd.append('is_stored', this.convertBoolean(this.isStoredTl));
-        fd.append('Upload_File_TL', this.fileTl);
-      }
+      fd.append('is_stored', this.convertBoolean(this.isStoredTl));
+      fd.append('Upload_File_TL', this.fileTl);
 
       fd.append('Nomor_TL', this.$v.form.nomorTl.$model);
       fd.append('Kode_Kelompok_TL', this.$v.form.klpTl.$model);

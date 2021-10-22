@@ -131,6 +131,7 @@ export default {
       userGabung: responseData["User_Gabung"],
       statusPostTl: responseData["Status_post_tl"],
       memoKoreksiTl: responseData["Memo_Koreksi_tl"],
+      isStored: responseData["is_stored"],
       uploadFileTl: responseData["Upload_file_TL"],
     };
 
