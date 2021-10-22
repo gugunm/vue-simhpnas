@@ -80,7 +80,7 @@ const fields = [
     label: 'Tanggal',
   },
   {
-    key: 'subBidangObrik',
+    key: 'bidangObrik',
     label: 'Nama Obrik',
     _style: 'width: 20%',
   },

@@ -2,26 +2,15 @@
   <CRow>
     <CCol sm="12">
       <div class="text-2xl mb-4 font-semibold">
-        <h3 v-if="mode == 'create'">
-          Create Tindak Lanjut
-        </h3>
-        <h3 v-else-if="mode == 'view'">
-          Detail Tindak Lanjut
-        </h3>
-        <h3 v-else>
-          Edit Tindak Lanjut
-        </h3>
+        <h3 v-if="mode == 'create'">Create Tindak Lanjut</h3>
+        <h3 v-else-if="mode == 'view'">Detail Tindak Lanjut</h3>
+        <h3 v-else>Edit Tindak Lanjut</h3>
       </div>
       <CCard>
         <!-- <CCardBody> -->
         <CForm class="form-tl">
-          <div
-            class="p-3"
-            style="background: #f9fafb"
-          >
-            <h5 class="text-base font-semibold">
-              Data Tindak Lanjut
-            </h5>
+          <div class="p-3" style="background: #f9fafb">
+            <h5 class="text-base font-semibold">Data Tindak Lanjut</h5>
           </div>
           <div class="p-3">
             <!-- ROW 1 -->
@@ -139,10 +128,7 @@
 
             <!-- ROW 5 -->
             <CRow>
-              <CCol
-                v-if="mode == 'create'"
-                lg="4"
-              >
+              <CCol v-if="mode == 'create'" lg="4">
                 <CInput
                   label="Nilai Rekomendasi"
                   :value="$route.query.nilairekomendasi"
@@ -164,7 +150,7 @@
               </CCol>
             </CRow>
 
-            <CRow v-if="mode != 'view'">
+            <!-- <CRow v-if="mode != 'view'">
               <CCol lg="6">
                 <label
                   for="file-tl"
@@ -177,6 +163,46 @@
                   class="mb-4"
                   @change="onUploadTl"
                 >
+              </CCol>
+            </CRow> -->
+
+            <CRow v-if="mode != 'view'">
+              <CCol lg="6">
+                <div class="flex flex-col">
+                  <label for="file-tl" class="block mb-3"
+                    >Upload File Tindak Lanjut</label
+                  >
+                  <div class="flex items-center mb-4">
+                    <CSwitch
+                      class="mx-1 mr-3"
+                      color="info"
+                      variant="3d"
+                      v-bind="labelIcon"
+                      :checked.sync="isStoredTl"
+                    />
+                    <span v-if="isStoredTl"
+                      >Upload File Tindak Lanjut di Server SIMHPNAS</span
+                    >
+                    <span v-else>
+                      Upload File Tindak Lanjut di Server Internal
+                    </span>
+                  </div>
+                  <input
+                    v-if="isStoredTl"
+                    id="file-tl"
+                    type="file"
+                    name="file-tl"
+                    class="mb-4"
+                    @change="onUploadTl"
+                  />
+                  <CInput
+                    v-else
+                    class="mb-4"
+                    :lazy="false"
+                    placeholder="http://server-anda.com/file-tl.pdf"
+                    :value.sync="fileTl"
+                  />
+                </div>
               </CCol>
             </CRow>
 
@@ -196,11 +222,7 @@
 
           <div class="px-3">
             <CRow class="mb-2 view-form">
-              <CCol
-                sm="12"
-                lg="6"
-                class="mb-3"
-              >
+              <CCol sm="12" lg="6" class="mb-3">
                 <CButton
                   v-if="mode != 'view'"
                   variant="outline"
@@ -239,19 +261,10 @@
                   :disabled="!isValid || submitted"
                   @click="submit"
                 >
-                  <div
-                    v-if="loading"
-                    class="px-8"
-                  >
-                    <CSpinner
-                      color="white"
-                      size="sm"
-                      class="mr-2"
-                    />
+                  <div v-if="loading" class="px-8">
+                    <CSpinner color="white" size="sm" class="mr-2" />
                   </div>
-                  <template v-else>
-                    Submit Data
-                  </template>
+                  <template v-else> Submit Data </template>
                 </CButton>
               </CCol>
             </CRow>
@@ -297,6 +310,11 @@ export default {
       optionsSubKlpTl: [],
       fileTl: '',
       editData: {},
+      labelIcon: {
+        labelOn: '\u2713',
+        labelOff: '\u2715',
+      },
+      isStoredTl: true,
     };
   },
   computed: {
@@ -372,6 +390,14 @@ export default {
     onUploadTl(e) {
       let file = e.target.files[0];
       this.fileTl = file;
+    },
+
+    convertBoolean(val) {
+      if (val == true) {
+        return 1;
+      } else {
+        return 0;
+      }
     },
 
     viewSelectSearch({ id, deskripsi }) {
@@ -471,9 +497,13 @@ export default {
         fd.append('kode_rekomendasi', this.$route.query.idrekomendasi);
         fd.append('kode_temuan', this.$route.query.idtemuan);
         fd.append('kode_lha', this.$route.query.idlha);
+      }
 
+      if (this.fileTl) {
+        fd.append('is_stored', this.convertBoolean(this.isStoredTl));
         fd.append('Upload_File_TL', this.fileTl);
       }
+
       fd.append('Nomor_TL', this.$v.form.nomorTl.$model);
       fd.append('Kode_Kelompok_TL', this.$v.form.klpTl.$model);
       fd.append('Kode_Sub_Kelompok_TL', this.$v.form.subKlpTl.$model);

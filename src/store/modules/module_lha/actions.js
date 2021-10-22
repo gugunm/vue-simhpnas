@@ -36,6 +36,7 @@ export default {
         grupLingkupAudit: responseData[key]["Grup_Lingkup_Audit"],
         lingkupAudit: responseData[key]["Lingkup_Audit"],
         jenisObrik: responseData[key]["Jenis_Obrik"],
+        bidangObrik: responseData[key]["Bidang_Obrik"],
         subBidangObrik: responseData[key]["Sub_Bidang_Obrik"],
         judulLaporan: responseData[key]["Judul_laporan"],
         tahunAnggaran: responseData[key]["Tahun_Anggaran"],
