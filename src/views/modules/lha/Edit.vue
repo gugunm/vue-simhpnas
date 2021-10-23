@@ -1,10 +1,14 @@
 <template>
-  <p>Page Edit LHA</p>
+  <Form mode="edit" :id-lha="idLha" />
 </template>
 
 <script>
-export default {};
-</script>
+import Form from './Form.vue';
 
-<style>
-</style>
+export default {
+  components: {
+    Form,
+  },
+  props: ['idLha'],
+};
+</script>

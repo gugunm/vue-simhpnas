@@ -1,11 +1,4 @@
 export default {
-  async mounted() {
-    await this.loadGroupLingkupAudit();
-    await this.loadJenisObrik();
-    await this.loadUnitObrik();
-    await this.loadJenisAnggaran();
-  },
-
   methods: {
     async loadGroupLingkupAudit(refresh = false) {
       this.loading = true;
@@ -139,12 +132,52 @@ export default {
       }
     },
 
-    limitText (count) {
-      return `and ${count} other countries`
-    },
+    async loadEditLhaById() {
+      this.loading = true;
+      try {
+        await this.$store.dispatch('module_lha/loadLhaById', {
+          idLha: this.idLha,
+        });
+        
+        const data = this.$store.getters['module_lha/lhaById'];
 
-    clearAll () {
-      this.selectedCountries = []
+        this.form = {
+          noPkpt: data.nomorPkpt,
+          tahunPkpt: data.tahunPkpt,
+          noSt: data.nomorST,
+          // tglSt: new Date(tgleste[0], tgleste[1], tgleste[2]),
+          tglSt: data.tglST,
+          noLha: data.nomorLha,
+          tglLha: data.tglLha,
+          groupLingkupAudit: data.groupLingkupAudit,
+          lingkupAudit: data.lingkupAudit,
+          ringkasanLha: data.ringkasanLha,
+          flagTpk: data.flagTpk,
+          judulLaporan: data.judulLaporan,
+          jenisObrik: data.jenisObrik,
+          unitObrik: data.unitObrik,
+          bidangObrik: data.bidangObrik,
+          namaPimpinan: data.namaPimpinan,
+          nipPimpinan: data.nipPimpinan,
+          tahunAnggaran: data.tahunAnggaran,
+          jenisAnggaran: data.jenisAnggaran,
+          nilaiRencana: data.rencanaAnggaran,
+          nilaiRealisasi: data.realisasiAnggaran,
+          nilaiDiaudit: data.anggaranYangDiaudit,
+          kelurahan: data.kodeKelurahan,
+          provinsi: data.provinsi,
+          kabkot: data.kabkot,
+          kecamatan: data.kecamatan,
+
+          accept: false,
+        }
+
+        this.editData = data
+
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
+      this.loading = false;
     },
 
     toastSuccess(msg) {

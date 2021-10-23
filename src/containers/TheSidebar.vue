@@ -154,10 +154,11 @@ export default {
       axios
         .get(
           this.$apiAdress +
-            '/api/menu?token=' +
-            localStorage.getItem('api_token') +
-            '&locale=' +
-            locale
+            '/api/menusimhp?token=' +
+            localStorage.getItem('api_token')
+          // +
+          // '&locale=' +
+          // locale
         )
         .then(function (response) {
           self.nav = self.rebuildData(response.data);

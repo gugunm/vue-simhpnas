@@ -1,20 +1,14 @@
 <template>
-  <!-- <p>Page Detail LHA {{ idLha }}</p> -->
-  <Form mode="view" />
+  <Form mode="view" :id-lha="idLha" />
 </template>
 
 <script>
-import Form from './Form.vue';
+import Form from './FormDetail.vue';
 
 export default {
   components: {
     Form,
   },
   props: ['idLha'],
-  data() {
-    return {
-      loading: false,
-    };
-  },
 };
 </script>

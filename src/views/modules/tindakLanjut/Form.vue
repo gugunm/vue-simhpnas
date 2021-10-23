@@ -150,7 +150,29 @@
               </CCol>
             </CRow>
 
-            <CRow v-if="mode != 'view'">
+            <!-- editData.uploadFileTl -->
+            <!-- <CRow v-if="mode == 'edit' && fileTl"> -->
+            <CRow v-if="mode == 'edit' && editData.uploadFileTl">
+              <CCol>
+                <CButton
+                  color="danger"
+                  shape="pill"
+                  class="px-3 mb-3"
+                  size="sm"
+                  @click="onDeleteFileUpdate"
+                >
+                  Hapus File
+                </CButton>
+                <p class="mb-3">
+                  {{ 'Tampilin Data : ' + fileTl }}
+                </p>
+              </CCol>
+            </CRow>
+            <CRow
+              v-else-if="
+                (mode == 'edit' && !editData.uploadFileTl) || mode == 'create'
+              "
+            >
               <CCol lg="6">
                 <div class="flex flex-col">
                   <label for="file-tl" class="block mb-3"
@@ -203,59 +225,76 @@
               </CCol>
             </CRow>
 
-            <pdf
-              src="http://simhpnas.bpkp.go.id:8001/storage/5200/TL/5200_1634874476_CISA%20(Certified%20Information%20System%20Auditor).pdf"
+            <!-- <embed
+              v-if="mode == 'view'"
+              :src="
+                'http://simhpnas.bpkp.go.id:8001/storage/' + form.uploadFileTl
+              "
+              type="application/pdf"
+              width="100%"
+              height="600px"
             />
-          </div>
+            <embed
+              v-else-if="mode == 'edit'"
+              :src="
+                'http://simhpnas.bpkp.go.id:8001/storage/' +
+                editData.uploadFileTl
+              "
+              type="application/pdf"
+              width="100%"
+              height="600px"
+            />
+          </div> -->
 
-          <div class="px-3">
-            <CRow class="mb-2 view-form">
-              <CCol sm="12" lg="6" class="mb-3">
-                <CButton
-                  v-if="mode != 'view'"
-                  variant="outline"
-                  color="dark"
-                  @click="isOpenConfirm = true"
+            <div class="px-3">
+              <CRow class="mb-2 view-form">
+                <CCol sm="12" lg="6" class="mb-3">
+                  <CButton
+                    v-if="mode != 'view'"
+                    variant="outline"
+                    color="dark"
+                    @click="isOpenConfirm = true"
+                  >
+                    Kembali
+                  </CButton>
+                </CCol>
+                <CCol
+                  v-if="mode == 'create' || mode == 'edit'"
+                  sm="12"
+                  md="6"
+                  class="content-center justify-end pr-3 mb-3"
                 >
-                  Kembali
-                </CButton>
-              </CCol>
-              <CCol
-                v-if="mode == 'create' || mode == 'edit'"
-                sm="12"
-                md="6"
-                class="content-center justify-end pr-3 mb-3"
-              >
-                <CButton
-                  class="ml-1"
-                  color="danger"
-                  :disabled="!isDirty"
-                  @click="reset"
-                >
-                  Reset
-                </CButton>
-                <CButton
-                  class="ml-1"
-                  color="success"
-                  :disabled="isValid"
-                  @click="validate"
-                >
-                  Validate
-                </CButton>
-                <CButton
-                  type="submit"
-                  color="primary"
-                  class="px-4 ml-1"
-                  :disabled="!isValid || submitted"
-                  @click="submit"
-                >
-                  <div v-if="loading" class="px-8">
-                    <CSpinner color="white" size="sm" class="mr-2" />
-                  </div>
-                  <template v-else> Submit Data </template>
-                </CButton>
-              </CCol>
-            </CRow>
+                  <CButton
+                    class="ml-1"
+                    color="danger"
+                    :disabled="!isDirty"
+                    @click="reset"
+                  >
+                    Reset
+                  </CButton>
+                  <CButton
+                    class="ml-1"
+                    color="success"
+                    :disabled="isValid"
+                    @click="validate"
+                  >
+                    Validate
+                  </CButton>
+                  <CButton
+                    type="submit"
+                    color="primary"
+                    class="px-4 ml-1"
+                    :disabled="!isValid || submitted"
+                    @click="submit"
+                  >
+                    <div v-if="loading" class="px-8">
+                      <CSpinner color="white" size="sm" class="mr-2" />
+                    </div>
+                    <template v-else> Submit Data </template>
+                  </CButton>
+                </CCol>
+              </CRow>
+            </div>
           </div>
         </CForm>
         <!-- </CCardBody> -->
@@ -277,14 +316,12 @@ import { required, minLength, maxLength } from 'vuelidate/lib/validators';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 import mixin from './mixin';
 import Multiselect from 'vue-multiselect';
-import pdf from 'vue-pdf';
 
 export default {
   name: 'LhaForm',
   components: {
     ConfirmModal,
     Multiselect,
-    pdf,
   },
   mixins: [validationMixin, mixin],
   props: ['mode', 'selectedItem', 'idTl'],
@@ -340,6 +377,8 @@ export default {
 
       this.isStoredTl = this.editData.isStored == 1 ? true : false;
 
+      this.fileTl = this.editData.uploadFileTl;
+
       this.valueKlpTl = this.optionsKlpTl.filter(
         (data) => data.id == this.form.klpTl
       )[0];
@@ -379,6 +418,11 @@ export default {
     },
   },
   methods: {
+    onDeleteFileUpdate() {
+      this.editData.uploadFileTl = '';
+      this.fileTl = '';
+    },
+
     onUploadTl(e) {
       let file = e.target.files[0];
       this.fileTl = file;

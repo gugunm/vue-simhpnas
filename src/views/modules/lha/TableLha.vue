@@ -176,6 +176,27 @@
               </div>
             </td>
           </template>
+
+          <template #memoDalnisDaltu="{ item }">
+            <td>
+              <div class="flex justify-content-center">
+                <CRow>
+                  <CCol>
+                    <!-- variant="outline" -->
+                    <CButton
+                      color="primary"
+                      shape="pill"
+                      size="sm"
+                      class="inline-block px-3 m-1"
+                      @click="onOpenMemoModal(item)"
+                    >
+                      <span>Catatan</span>
+                    </CButton>
+                  </CCol>
+                </CRow>
+              </div>
+            </td>
+          </template>
           <template #actionsDalnisDaltu="{ item }">
             <td>
               <div class="flex flex-wrap justify-content-center">
@@ -235,10 +256,40 @@
         </CDataTable>
       </CCardBody>
     </CCard>
+    <CModal
+      title="Tambah Memo"
+      :close-on-backdrop="false"
+      size="lg"
+      color="primary"
+      :show.sync="memoModal"
+    >
+      <!-- <div v-if="selectedItem">
+        {{ selectedItem.id }}
+      </div> -->
+      <div class="text-right">
+        <CTextarea
+          rows="10"
+          class="py-2"
+          :value.sync="textMemo"
+          placeholder="Tuliskan memo disini.."
+        />
+        <CButton color="info" class="mb-2" @click="onSaveMemo">
+          Simpan Memo
+        </CButton>
+      </div>
+
+      <template #footer-wrapper>
+        <div />
+      </template>
+    </CModal>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+import mixin from './mixin';
+import { API_URL } from '@/utils/api.js';
+
 export default {
   name: 'TableLha',
   filters: {
@@ -250,6 +301,7 @@ export default {
         .join(' ');
     },
   },
+  mixins: [mixin],
   props: {
     topTitle: {
       type: String,
@@ -279,6 +331,13 @@ export default {
       default: true,
     },
   },
+  data() {
+    return {
+      memoModal: false,
+      selectedItem: null,
+      textMemo: null,
+    };
+  },
   emits: [
     'clicked-row',
     'open-create-modal',
@@ -287,6 +346,29 @@ export default {
     'on-send-lha',
   ],
   methods: {
+    async onSaveMemo() {
+      const response = await axios({
+        method: 'PUT',
+        baseURL: API_URL,
+        url: `/api/dalnisaddmemo/${this.selectedItem.id}`,
+        params: {
+          Catatan_Dalnis: this.textMemo,
+          token: localStorage.getItem('api_token'),
+        },
+      });
+
+      if (response.status == 200) {
+        this.memoModal = false;
+        this.toastSuccess('Berhasil menyimpan memo');
+        this.selectedItem = null;
+      } else {
+        this.toastError('Terjadi kesalahan saat simpan memo');
+      }
+    },
+    onOpenMemoModal(item) {
+      this.memoModal = true;
+      this.selectedItem = item;
+    },
     isLhaSent(item) {
       if (item.flagKirim % 2 == 0) {
         return false;

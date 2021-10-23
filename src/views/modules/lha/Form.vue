@@ -549,7 +549,7 @@ import {
   minLength,
   // email,
   // sameAs,
-  helpers,
+  // helpers,
 } from 'vuelidate/lib/validators';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 import mixin from './mixin';
@@ -564,7 +564,7 @@ export default {
     'v-date-picker': DatePicker,
   },
   mixins: [mixin, validationMixin],
-  props: ['mode', 'selectedItem'],
+  props: ['mode', 'selectedItem', 'idLha'],
   data() {
     return {
       form: this.getEmptyForm(),
@@ -602,6 +602,7 @@ export default {
         labelOff: '\u2715',
       },
       isStoredLha: true,
+      editData: {},
     };
   },
   computed: {
@@ -747,6 +748,53 @@ export default {
       },
     },
   },
+  async mounted() {
+    await this.loadGroupLingkupAudit();
+    await this.loadJenisObrik();
+    await this.loadUnitObrik();
+    await this.loadJenisAnggaran();
+
+    if (this.mode == 'edit') {
+      await this.loadEditLhaById();
+
+      this.selectedDateSt = new Date(this.form.tglSt);
+      this.selectedDateLha = new Date(this.form.tglLha);
+
+      this.valueGroupLingkupAudit = this.optionsGroupLingkupAudit.filter(
+        (data) => data.id == this.form.groupLingkupAudit
+      )[0];
+
+      await this.loadLingkupAudit();
+      this.valueLingkupAudit = this.optionsLingkupAudit.filter(
+        (data) => data.id == this.form.lingkupAudit
+      )[0];
+
+      this.isLhaTpk = this.editData.flagTpk == 1 ? true : false;
+
+      this.valueJenisObrik = this.optionsJenisObrik.filter(
+        (data) => data.id == this.form.jenisObrik
+      )[0];
+
+      this.valueUnitObrik = this.optionsUnitObrik.filter(
+        (data) => data.id == this.form.unitObrik
+      )[0];
+
+      await this.loadBidangObrik();
+      this.valueBidangObrik = this.optionsBidangObrik.filter(
+        (data) => data.id == this.form.bidangObrik
+      )[0];
+
+      await this.loadSubBidangObrik();
+      this.valueSubBidangObrik = this.optionsSubBidangObrik.filter(
+        (data) => data.id == this.form.subBidangObrik
+      )[0];
+
+      this.valueJenisAnggaran = this.optionsJenisAnggaran.filter(
+        (data) => data.id == this.form.jenisAnggaran
+      )[0];
+    }
+  },
+
   methods: {
     onUploadLha(e) {
       let file = e.target.files[0];
@@ -762,62 +810,6 @@ export default {
     },
 
     async clickSubmitForm() {
-      const dataFormLha = {
-        // Anggaran_yang_diaudit: '3000000000',
-        // Flag_TPK: 1,
-        // Judul_laporan: 'Judul Laporan Dummy',
-        // Kode_Bidang_Obrik: '520037010',
-        // Kode_Grup_Lingkup_Audit: '02',
-        // Kode_Jenis_Obrik: '06',
-        // Kode_Jenis_anggaran: '04',
-        // Kode_KabupatenKota: '5201',
-        // Kode_Kecamatan: '520103',
-        // Kode_Kelurahan: '5201032007',
-        // Kode_Lingkup_Audit: '0299',
-        // Kode_Provinsi: '52',
-        // Kode_Sub_Bidang_Obrik: '520037010002',
-        // Kode_Unit_Obrik: '520037',
-        // NIP_Pimpinan: '197401012020121006',
-        // Nama_Pimpinan: 'M. Hujaifa Amri',
-        // Nomor_LHA: '2021/INSP/LHA/0001',
-        // Nomor_PKPT: '2020/INSP/PKPT/0001',
-        // Nomor_ST: '2020/INSP/ST/0012',
-        // Realisasi_Anggaran: '3000000000',
-        // Rencana_Anggaran: '3500000000',
-        // Ringkasan_LHA: 'Ini ringkasan LHA dummy',
-        // Tahun_Anggaran: '2020',
-        // Tahun_PKPT: '2020',
-        // Tanggal_LHA: '2021-10-14',
-        // Tanggal_ST: '2021-10-14',
-        // Nomor_PKPT: this.$v.form.noPkpt.$model,
-        // Tahun_PKPT: this.$v.form.tahunPkpt.$model,
-        // Nomor_ST: this.$v.form.noSt.$model,
-        // Tanggal_ST: this.$v.form.tglSt.$model,
-        // Nomor_LHA: this.$v.form.noLha.$model,
-        // Tanggal_LHA: this.$v.form.tglLha.$model,
-        // Kode_Grup_Lingkup_Audit: this.$v.form.groupLingkupAudit.$model,
-        // Kode_Lingkup_Audit: this.$v.form.lingkupAudit.$model,
-        // Judul_laporan: this.$v.form.judulLaporan.$model,
-        // Kode_Jenis_Obrik: this.$v.form.jenisObrik.$model,
-        // Kode_Unit_Obrik: this.$v.form.unitObrik.$model,
-        // Kode_Bidang_Obrik: this.$v.form.bidangObrik.$model,
-        // Kode_Sub_Bidang_Obrik: this.$v.form.subBidangObrik.$model,
-        // Nama_Pimpinan: this.$v.form.namaPimpinan.$model,
-        // NIP_Pimpinan: this.$v.form.nipPimpinan.$model,
-        // Rencana_Anggaran: this.$v.form.nilaiRencana.$model,
-        // Realisasi_Anggaran: this.$v.form.nilaiRealisasi.$model,
-        // Anggaran_yang_diaudit: this.$v.form.nilaiDiaudit.$model,
-        // Kode_Kelurahan: this.$v.form.kelurahan.$model,
-        // Kode_Kecamatan: this.$v.form.kecamatan.$model,
-        // Kode_KabupatenKota: this.$v.form.kabkot.$model,
-        // Kode_Provinsi: this.$v.form.provinsi.$model,
-        // Tahun_Anggaran: this.$v.form.tahunAnggaran.$model,
-        // Kode_Jenis_anggaran: this.$v.form.jenisAnggaran.$model,
-        // Ringkasan_LHA: this.$v.form.ringkasanLha.$model,
-        // Flag_TPK: this.convertBoolean(this.$v.form.flagTpk.$model),
-        // Upload_file_LHA: this.fileLha,
-      };
-
       const resultFormData = this.appendToFormData();
 
       try {
