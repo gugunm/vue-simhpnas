@@ -24,7 +24,7 @@ export default {
     const lha = [];
 
     for (const key in responseData) {
-      const anggaran = await context.dispatch('convertToRupiah', responseData[key]["Anggaran_yang_diaudit"]);
+      const anggaranYangDiaudit = await context.dispatch('convertToRupiah', responseData[key]["Anggaran_yang_diaudit"]);
 
       const nilaiTemuan = await context.dispatch('convertToRupiah', responseData[key]["Total_Nilai_Temuan"]);  
 
@@ -58,8 +58,10 @@ export default {
         nilaiRekomendasi,
         jumlahTl: responseData[key]["Jumlah_Tindak_Lanjut"],
         nilaiTl,
-        // anggaranYangDiaudit: responseData[key]["Anggaran_yang_diaudit"],
-        anggaranYangDiaudit: anggaran
+        anggaranYangDiaudit,
+        flagDalnis: responseData[key]["Flag_Dalnis"],
+        flagDaltu: responseData[key]["Flag_Daltu"],
+        flagAdmin: responseData[key]["Flag_Admin"],
       };
       lha.push(data);
     }

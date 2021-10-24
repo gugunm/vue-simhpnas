@@ -188,6 +188,7 @@
                       shape="pill"
                       size="sm"
                       class="inline-block px-3 m-1"
+                      :disabled="statusDalnis(item)"
                       @click="onOpenMemoModal(item)"
                     >
                       <span>Catatan</span>
@@ -201,7 +202,6 @@
             <td>
               <div class="flex flex-wrap justify-content-center">
                 <CButton
-                  v-if="isEditButton"
                   v-c-tooltip="{
                     content: 'Edit LHA',
                     placement: 'left',
@@ -211,12 +211,12 @@
                   square
                   size="sm"
                   class="m-1 w-full"
+                  :disabled="statusDalnis(item)"
                   @click="onAccLha(item)"
                 >
                   <span>Setuju</span>
                 </CButton>
                 <CButton
-                  v-if="isDeleteButton"
                   v-c-tooltip="{
                     content: 'Hapus LHA',
                     placement: 'left',
@@ -225,7 +225,8 @@
                   variant="outline"
                   size="sm"
                   class="m-1 w-full"
-                  @click="openDeleteModal(item.id)"
+                  :disabled="statusDalnis(item)"
+                  @click="onRejectLha(item)"
                 >
                   <span>Tolak</span>
                 </CButton>
@@ -246,7 +247,8 @@
                   square
                   size="sm"
                   class="m-1 w-full"
-                  @click="onAccLha(item)"
+                  :disabled="statusAdmin(item)"
+                  @click="onPostingLha(item)"
                 >
                   <span>Posting</span>
                 </CButton>
@@ -282,6 +284,27 @@
         <div />
       </template>
     </CModal>
+    <confirm-modal
+      v-model="isOpenAcc"
+      title="ACC Laporan"
+      msg="Apakah anda yakin akan menyetujui laporan ini?"
+      @close-modal="isOpenAcc = false"
+      @confirm-ok="actionAccDalnis"
+    />
+    <confirm-modal
+      v-model="isOpenReject"
+      title="Tolak Laporan"
+      msg="Apakah anda yakin akan menolak laporan ini?"
+      @close-modal="isOpenReject = false"
+      @confirm-ok="actionRejectDalnis"
+    />
+    <confirm-modal
+      v-model="isOpenPosting"
+      title="Posting LHA"
+      msg="Apakah anda yakin akan memposting laporan ini?"
+      @close-modal="isOpenPosting = false"
+      @confirm-ok="actionPostingLha"
+    />
   </div>
 </template>
 
@@ -289,6 +312,7 @@
 import axios from 'axios';
 import mixin from './mixin';
 import { API_URL } from '@/utils/api.js';
+import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 
 export default {
   name: 'TableLha',
@@ -300,6 +324,9 @@ export default {
         .map((w) => w[0].toUpperCase() + w.substr(1).toLowerCase())
         .join(' ');
     },
+  },
+  components: {
+    ConfirmModal,
   },
   mixins: [mixin],
   props: {
@@ -336,6 +363,9 @@ export default {
       memoModal: false,
       selectedItem: null,
       textMemo: null,
+      isOpenAcc: false,
+      isOpenReject: false,
+      isOpenPosting: false,
     };
   },
   emits: [
@@ -346,6 +376,11 @@ export default {
     'on-send-lha',
   ],
   methods: {
+    onOpenMemoModal(item) {
+      this.memoModal = true;
+      this.selectedItem = item;
+    },
+
     async onSaveMemo() {
       const response = await axios({
         method: 'PUT',
@@ -365,10 +400,76 @@ export default {
         this.toastError('Terjadi kesalahan saat simpan memo');
       }
     },
-    onOpenMemoModal(item) {
-      this.memoModal = true;
+
+    onAccLha(item) {
+      this.isOpenAcc = true;
       this.selectedItem = item;
     },
+
+    async actionAccDalnis() {
+      const response = await axios({
+        method: 'PATCH',
+        baseURL: API_URL,
+        url: `/api/dalnisactionacc/${this.selectedItem.id}`,
+        params: {
+          token: localStorage.getItem('api_token'),
+        },
+      });
+      if (response.status == 200) {
+        this.isOpenAcc = false;
+        this.toastSuccess('Berhasil menyetujui LHA');
+        this.selectedItem = null;
+      } else {
+        this.toastError('Terjadi kesalahan saat acc laporan');
+      }
+    },
+
+    onRejectLha(item) {
+      this.isOpenReject = true;
+      this.selectedItem = item;
+    },
+
+    async actionRejectDalnis() {
+      const response = await axios({
+        method: 'PATCH',
+        baseURL: API_URL,
+        url: `/api/dalnisactiontolak/${this.selectedItem.id}`,
+        params: {
+          token: localStorage.getItem('api_token'),
+        },
+      });
+      if (response.status == 200) {
+        this.isOpenAcc = false;
+        this.toastSuccess('Berhasil menolak LHA');
+        this.selectedItem = null;
+      } else {
+        this.toastError('Terjadi kesalahan saat tolak laporan');
+      }
+    },
+
+    onPostingLha(item) {
+      this.isOpenPosting = true;
+      this.selectedItem = item;
+    },
+
+    async actionPostingLha() {
+      const response = await axios({
+        method: 'PATCH',
+        baseURL: API_URL,
+        url: `/api/adminactionacc/${this.selectedItem.id}`,
+        params: {
+          token: localStorage.getItem('api_token'),
+        },
+      });
+      if (response.status == 200) {
+        this.isOpenPosting = false;
+        this.toastSuccess('Berhasil memposting LHA');
+        this.selectedItem = null;
+      } else {
+        this.toastError('Terjadi kesalahan saat posting laporan');
+      }
+    },
+
     isLhaSent(item) {
       if (item.flagKirim % 2 == 0) {
         return false;
@@ -376,6 +477,23 @@ export default {
         return true;
       }
     },
+
+    statusDalnis(item) {
+      if (item.flagDalnis % 2 == 0) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+
+    statusAdmin(item) {
+      if (item.flagAdmin % 2 == 0) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+
     clickedRow(item) {
       this.$emit('clicked-row', item);
     },
