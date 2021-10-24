@@ -132,6 +132,20 @@ export default {
       }
     },
 
+    async loadKelurahanById(refresh = false) {
+      try {
+        const kelurahanById = await this.$store.dispatch('m_ref_wilayah/loadKelurahanById', {
+          idKelurahan: this.form.kelurahan,
+          forceRefresh: refresh,
+        });
+
+        return kelurahanById
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
+    },
+
+
     async loadEditLhaById() {
       this.loading = true;
       try {

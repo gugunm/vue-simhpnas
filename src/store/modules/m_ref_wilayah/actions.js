@@ -251,11 +251,19 @@ export default {
     }
 
     const kelurahanById = {
+      // id: responseData["Kode_Kelurahan"],
+      // idKecamatan: responseData["Kode_Kecamatan"],
+      // idKabkot: responseData["Kode_KabupatenKota"],
+      // idProvinsi: responseData["Kode_Provinsi"],
+      // deskripsi: responseData["diskripsi"],
       id: responseData["Kode_Kelurahan"],
+      deskripsi: responseData["Kelurahan"],
       idKecamatan: responseData["Kode_Kecamatan"],
+      namaKecamatan: responseData["Kecamatan"],
       idKabkot: responseData["Kode_KabupatenKota"],
+      namaKabkot: responseData["Kabupaten_Kota"],
       idProvinsi: responseData["Kode_Provinsi"],
-      deskripsi: responseData["diskripsi"],
+      namaProvinsi: responseData["Provinsi"]
     };
 
     return kelurahanById

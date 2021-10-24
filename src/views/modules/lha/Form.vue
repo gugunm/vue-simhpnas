@@ -7,7 +7,7 @@
       </div>
       <CCard>
         <!-- <CCardBody> -->
-        <CForm class="form-lha" method="POST" @submit.prevent="clickSubmitForm">
+        <CForm class="form-lha">
           <div class="p-3" style="background: #f9fafb">
             <h5 class="text-base font-semibold">Data Umum LHA</h5>
           </div>
@@ -427,7 +427,65 @@
               </CCol>
             </CRow>
 
-            <CRow>
+            <CRow v-if="mode == 'edit' && editData.uploadFileLha">
+              <CCol>
+                <CButton
+                  color="danger"
+                  shape="pill"
+                  class="px-3 mb-3"
+                  size="sm"
+                  @click="onDeleteFileUpdate"
+                >
+                  Hapus File
+                </CButton>
+                <p class="mb-3">
+                  {{ 'Link File : ' + fileLha }}
+                </p>
+              </CCol>
+            </CRow>
+            <CRow
+              v-else-if="
+                (mode == 'edit' && !editData.uploadFileLha) || mode == 'create'
+              "
+            >
+              <CCol lg="6">
+                <div class="flex flex-col">
+                  <label for="file-lha" class="block mb-3"
+                    >Upload File LHA</label
+                  >
+                  <div class="flex items-center mb-4">
+                    <CSwitch
+                      class="mx-1 mr-3"
+                      color="info"
+                      variant="3d"
+                      v-bind="labelIcon"
+                      :checked.sync="isStoredLha"
+                    />
+                    <span v-if="isStoredLha"
+                      >Upload File LHA di Server SIMHPNAS</span
+                    >
+                    <span v-else> Upload File LHA di Server Internal </span>
+                  </div>
+                  <input
+                    v-if="isStoredLha"
+                    id="file-lha"
+                    type="file"
+                    name="file-lha"
+                    class="mb-4"
+                    @change="onUploadLha"
+                  />
+                  <CInput
+                    v-else
+                    class="mb-4"
+                    :lazy="false"
+                    placeholder="http://server-anda.com/file-tl.pdf"
+                    :value.sync="fileLha"
+                  />
+                </div>
+              </CCol>
+            </CRow>
+
+            <!-- <CRow>
               <CCol lg="6">
                 <div class="flex flex-col">
                   <label for="file-lha" class="block mb-3"
@@ -463,7 +521,7 @@
                   />
                 </div>
               </CCol>
-            </CRow>
+            </CRow> -->
 
             <CRow>
               <CCol lg="6">
@@ -519,6 +577,7 @@
                   color="primary"
                   class="px-4 ml-1"
                   :disabled="!isValid || submitted"
+                  @click="submit"
                 >
                   <div v-if="loading" class="px-8">
                     <CSpinner color="white" size="sm" class="mr-2" />
@@ -681,9 +740,9 @@ export default {
     form: {
       // +++ Data Umum +++
       // autocomplete
-      unitAudit: { required },
-      // autocomplete
-      subUnitAudit: { required },
+      // unitAudit: { required },
+      // // autocomplete
+      // subUnitAudit: { required },
       // text
       noPkpt: { required, minLength: minLength(1) },
       // number
@@ -786,16 +845,28 @@ export default {
 
       await this.loadSubBidangObrik();
       this.valueSubBidangObrik = this.optionsSubBidangObrik.filter(
-        (data) => data.id == this.form.subBidangObrik
+        (data) => data.id == this.editData.subBidangObrik
       )[0];
 
       this.valueJenisAnggaran = this.optionsJenisAnggaran.filter(
         (data) => data.id == this.form.jenisAnggaran
       )[0];
+
+      this.valueKelurahan = await this.loadKelurahanById();
+
+      this.fileLha = this.editData.uploadFileLha;
+
+      // console.log('LHA HEREE');
+      // console.log(this.form);
     }
   },
 
   methods: {
+    onDeleteFileUpdate() {
+      this.editData.uploadFileLha = '';
+      this.fileLha = '';
+    },
+
     onUploadLha(e) {
       let file = e.target.files[0];
       this.fileLha = file;
@@ -809,32 +880,52 @@ export default {
       }
     },
 
-    async clickSubmitForm() {
-      const resultFormData = this.appendToFormData();
+    async submit() {
+      if (this.isValid) {
+        this.submitted = true;
+        const resultFormData = this.appendToFormData();
 
-      try {
-        if (this.mode == 'create') {
-          this.loading = true;
-          const responseData = await this.$store.dispatch(
-            'module_lha/createLha',
-            resultFormData
-          );
+        try {
+          if (this.mode == 'create') {
+            this.loading = true;
+            const responseData = await this.$store.dispatch(
+              'module_lha/createLha',
+              resultFormData
+            );
 
-          if (responseData) {
-            setTimeout(() => {
-              this.loading = false;
-              this.$router.push('/lha');
-              this.toastSuccess(
-                'Berhasil menyimpan data dengan ID ' + responseData.Nomor_LHA
-              );
-            }, 500);
+            if (responseData) {
+              setTimeout(() => {
+                this.loading = false;
+                this.$router.push('/lha');
+                this.toastSuccess(
+                  'Berhasil menyimpan data dengan ID ' + responseData.Nomor_LHA
+                );
+              }, 500);
+            }
+          } else if (this.mode == 'edit') {
+            this.loading = true;
+            const responseData = await this.$store.dispatch(
+              'module_lha/updateLhaById',
+              {
+                idLha: this.editData.id,
+                data: resultFormData,
+              }
+            );
+
+            if (responseData) {
+              setTimeout(() => {
+                this.loading = false;
+                this.$router.push('/lha');
+                this.toastSuccess('Berhasil edit data LHA');
+              }, 500);
+            }
           }
+        } catch (error) {
+          setTimeout(() => {
+            this.loading = false;
+            this.toastError('Terjadi kesalahan saat submit data');
+          }, 500);
         }
-      } catch (error) {
-        setTimeout(() => {
-          this.loading = false;
-          this.toastError('Terjadi kesalahan saat submit data');
-        }, 500);
       }
     },
 
@@ -860,12 +951,6 @@ export default {
       return !(field.$invalid || field.$model === '');
     },
 
-    submit() {
-      if (this.isValid) {
-        this.submitted = true;
-      }
-    },
-
     validate() {
       this.$v.$touch();
     },
@@ -879,8 +964,8 @@ export default {
     getEmptyForm() {
       return {
         // Data Umum
-        unitAudit: localStorage.getItem('idUnitKerja'),
-        subUnitAudit: localStorage.getItem('idSubUnitKerja'),
+        // unitAudit: localStorage.getItem('idUnitKerja'),
+        // subUnitAudit: localStorage.getItem('idSubUnitKerja'),
         noPkpt: '',
         tahunPkpt: '',
         noSt: '',
@@ -917,6 +1002,12 @@ export default {
 
     appendToFormData() {
       const fd = new FormData();
+
+      if (this.mode == 'edit') {
+        fd.append('_method', 'PUT');
+      } else if (this.mode == 'create') {
+      }
+
       fd.append('Nomor_PKPT', this.$v.form.noPkpt.$model);
       fd.append('Tahun_PKPT', this.$v.form.tahunPkpt.$model);
       fd.append('Nomor_ST', this.$v.form.noSt.$model);
@@ -946,9 +1037,9 @@ export default {
       fd.append('Ringkasan_LHA', this.$v.form.ringkasanLha.$model);
       fd.append('Flag_TPK', this.convertBoolean(this.$v.form.flagTpk.$model));
 
+      // OPSIONAL
       fd.append('is_stored', this.convertBoolean(this.isStoredLha));
       fd.append('Upload_file_LHA', this.fileLha);
-
       if (this.valueSubBidangObrik) {
         fd.append('Kode_Sub_Bidang_Obrik', this.valueSubBidangObrik.id);
       }

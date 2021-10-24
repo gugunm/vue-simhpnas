@@ -163,9 +163,9 @@
                 >
                   Hapus File
                 </CButton>
-                <p class="mb-3">
+                <!-- <p class="mb-3">
                   {{ 'Tampilin Data : ' + fileTl }}
-                </p>
+                </p> -->
               </CCol>
             </CRow>
             <CRow
