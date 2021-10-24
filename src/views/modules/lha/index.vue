@@ -104,6 +104,20 @@ const fields = [
   {
     key: 'nilaiTemuan',
   },
+  {
+    key: 'jumlahRekomendasi',
+  },
+  {
+    key: 'nilaiRekomendasi',
+  },
+  {
+    key: 'jumlahTl',
+    label: 'Jumlah TL',
+  },
+  {
+    key: 'nilaiTl',
+    label: 'Nilai TL',
+  },
 ];
 
 const fieldsKtOperator = [

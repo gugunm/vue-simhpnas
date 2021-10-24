@@ -26,13 +26,11 @@ export default {
     for (const key in responseData) {
       const anggaran = await context.dispatch('convertToRupiah', responseData[key]["Anggaran_yang_diaudit"]);
 
-      let nilaiTemuan= ''
-      if(responseData[key]["Total_Nilai_Temuan"]){
-        nilaiTemuan = await context.dispatch('convertToRupiah', responseData[key]["Total_Nilai_Temuan"]);
-      } else {
-        nilaiTemuan = 'Rp 0'
-      }
+      const nilaiTemuan = await context.dispatch('convertToRupiah', responseData[key]["Total_Nilai_Temuan"]);  
 
+      const nilaiRekomendasi = await context.dispatch('convertToRupiah', responseData[key]["Total_Nilai_Rekomendasi"]);  
+
+      const nilaiTl = await context.dispatch('convertToRupiah', responseData[key]["Total_Nilai_Tindak_Lanjut"]);
 
       const data = {
         id: responseData[key]["kode_lha"],
@@ -54,8 +52,12 @@ export default {
         realisasiAnggaran: responseData[key]["Realisasi_Anggaran"],
         flagTpk: responseData[key]["Flag_TPK"],
         flagKirim: responseData[key]["Flag_kirim"],
-        nilaiTemuan: nilaiTemuan,
         jumlahTemuan: responseData[key]["Jumlah_Temuan"],
+        nilaiTemuan,
+        jumlahRekomendasi: responseData[key]["Jumlah_Rekomendasi"],
+        nilaiRekomendasi,
+        jumlahTl: responseData[key]["Jumlah_Tindak_Lanjut"],
+        nilaiTl,
         // anggaranYangDiaudit: responseData[key]["Anggaran_yang_diaudit"],
         anggaranYangDiaudit: anggaran
       };
@@ -68,10 +70,13 @@ export default {
 
 
   async convertToRupiah(context, payload) {
-    var rupiah = '';		
-    var angkarev = payload.toString().split('').reverse().join('');
-    for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+',';
-    return 'Rp '+rupiah.split('',rupiah.length-1).reverse().join('');
+    let rupiah = '';
+    if(payload){
+      const angkarev = payload.toString().split('').reverse().join('');
+      for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+',';
+      return 'Rp '+rupiah.split('',rupiah.length-1).reverse().join('');
+    }
+    return 'Rp 0'
   },
 
   async loadLhaById(context, payload) {
