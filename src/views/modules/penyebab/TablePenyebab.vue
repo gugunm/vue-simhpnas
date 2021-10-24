@@ -185,8 +185,8 @@ export default {
   },
   data() {
     return {
-      valueLha: null,
-      optionsLha: null,
+      valueLha: '',
+      optionsLha: [],
       valueTemuan: '',
       optionsTemuan: [],
     };
@@ -233,8 +233,8 @@ export default {
     onSelectTemuan(val) {
       this.$emit('on-select-temuan', val);
     },
-    viewSelectSearchLha({ id, nomorLha, subBidangObrik }) {
-      return `${nomorLha} - ${subBidangObrik}`;
+    viewSelectSearchLha({ id, nomorLha, bidangObrik }) {
+      return `${nomorLha} - ${bidangObrik}`;
     },
     viewSelectSearchTemuan({ id, nomorTemuan }) {
       return `${nomorTemuan}`;

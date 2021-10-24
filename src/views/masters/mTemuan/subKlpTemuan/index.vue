@@ -32,28 +32,6 @@ import BackButton from '@/components/BackButton';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 import mixin from './mixin';
 
-const fields = [
-  {
-    key: 'id',
-    label: 'Kode',
-    _style: 'width: 15%',
-  },
-  {
-    key: 'deskripsi',
-    label: 'Deskripsi Sub Kelompok Temuan',
-    _style: 'width: 55%',
-  },
-  {
-    key: 'saran',
-    label: 'Rekomendasi',
-    _style: 'width: 20%',
-  },
-  {
-    key: 'actions',
-    _style: 'width: 10%',
-  },
-];
-
 export default {
   name: 'AdvancedTables',
   components: {
@@ -74,7 +52,7 @@ export default {
   },
   data() {
     return {
-      fields,
+      fields: [],
       items: null,
       descKlpTemuan: null,
       idToDelete: null,
@@ -84,6 +62,33 @@ export default {
   async mounted() {
     await this.loadSubKelompokTemuan();
     await this.loadDescKlpTemuan();
+
+    this.fields = [
+      {
+        key: 'id',
+        label: 'Kode',
+        _style: 'width: 15%',
+      },
+      {
+        key: 'deskripsi',
+        label: 'Deskripsi Sub Kelompok Temuan',
+        _style: 'width: 55%',
+      },
+      {
+        key: 'saran',
+        label: 'Rekomendasi',
+        _style: 'width: 20%',
+      },
+    ];
+    if (localStorage.level == 0 || localStorage.level == 1) {
+      this.fields = [
+        ...this.fields,
+        {
+          key: 'actions',
+          _style: 'width: 15%',
+        },
+      ];
+    }
   },
   methods: {
     openCreate() {

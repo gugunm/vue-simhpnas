@@ -29,37 +29,6 @@ import mixin from './mixin';
 
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 
-const fields = [
-  {
-    key: 'id',
-    label: 'ID',
-  },
-  {
-    key: 'namaUnit',
-    label: 'Nama Unit',
-  },
-  {
-    key: 'namaPimpinan',
-    label: 'Nama Pimpinan',
-  },
-  {
-    key: 'provinsi',
-    label: 'Provinsi',
-  },
-  {
-    key: 'kabkot',
-    label: 'Kab/Kota',
-  },
-  {
-    key: 'jumlahObrik',
-    label: 'Jumlah Obrik',
-  },
-  {
-    key: 'actions',
-    label: 'Actions',
-  },
-];
-
 export default {
   name: 'MasterUnitKerja',
   components: {
@@ -70,13 +39,49 @@ export default {
   data() {
     return {
       items: '',
-      fields,
+      fields: [],
       isDeleteConfirm: false,
       idToDelete: null,
     };
   },
   created() {
     this.loadUnitKerja();
+
+    this.fields = [
+      {
+        key: 'id',
+        label: 'ID',
+      },
+      {
+        key: 'namaUnit',
+        label: 'Nama Unit',
+      },
+      {
+        key: 'namaPimpinan',
+        label: 'Nama Pimpinan',
+      },
+      {
+        key: 'provinsi',
+        label: 'Provinsi',
+      },
+      {
+        key: 'kabkot',
+        label: 'Kab/Kota',
+      },
+      {
+        key: 'jumlahObrik',
+        label: 'Jumlah Obrik',
+      },
+    ];
+    if (localStorage.level == 0 || localStorage.level == 1) {
+      this.fields = [
+        ...this.fields,
+        {
+          key: 'actions',
+          _style: 'width: 15%',
+        },
+      ];
+    }
   },
   methods: {
     openDeleteModal(id) {

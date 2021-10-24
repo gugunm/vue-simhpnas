@@ -31,23 +31,6 @@ import BackButton from '@/components/BackButton';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 import mixin from './mixin';
 
-const fields = [
-  {
-    key: 'id',
-    label: 'Kode',
-    _style: 'width: 15%',
-  },
-  {
-    key: 'deskripsi',
-    label: 'Deskripsi Bidang Obrik',
-    _style: 'width: 70%',
-  },
-  {
-    key: 'actions',
-    _style: 'width: 15%',
-  },
-];
-
 export default {
   name: 'AdvancedTables',
   components: {
@@ -64,7 +47,7 @@ export default {
   },
   data() {
     return {
-      fields,
+      fields: [],
       items: null,
       descUnitObrik: null,
       idToDelete: null,
@@ -74,6 +57,27 @@ export default {
   async mounted() {
     await this.loadRefBidangObrik();
     await this.loadDescUnitObrik();
+    this.fields = [
+      {
+        key: 'id',
+        label: 'Kode',
+        _style: 'width: 15%',
+      },
+      {
+        key: 'deskripsi',
+        label: 'Deskripsi Bidang Obrik',
+        _style: 'width: 70%',
+      },
+    ];
+    if (localStorage.level == 0 || localStorage.level == 1) {
+      this.fields = [
+        ...this.fields,
+        {
+          key: 'actions',
+          _style: 'width: 15%',
+        },
+      ];
+    }
   },
   methods: {
     openCreate() {

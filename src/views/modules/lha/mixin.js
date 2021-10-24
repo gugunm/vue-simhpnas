@@ -158,30 +158,36 @@ export default {
         this.form = {
           noPkpt: data.nomorPkpt,
           tahunPkpt: data.tahunPkpt,
-          noSt: data.nomorST,
-          // tglSt: new Date(tgleste[0], tgleste[1], tgleste[2]),
-          tglSt: data.tglST,
+
           noLha: data.nomorLha,
           tglLha: data.tglLha,
+
+          noSt: data.nomorST,
+          tglSt: data.tglST,
+
           groupLingkupAudit: data.groupLingkupAudit,
           lingkupAudit: data.lingkupAudit,
-          ringkasanLha: data.ringkasanLha,
-          flagTpk: data.flagTpk,
-          judulLaporan: data.judulLaporan,
+
           jenisObrik: data.jenisObrik,
           unitObrik: data.unitObrik,
           bidangObrik: data.bidangObrik,
-          namaPimpinan: data.namaPimpinan,
-          nipPimpinan: data.nipPimpinan,
-          tahunAnggaran: data.tahunAnggaran,
-          jenisAnggaran: data.jenisAnggaran,
-          nilaiRencana: data.rencanaAnggaran,
-          nilaiRealisasi: data.realisasiAnggaran,
-          nilaiDiaudit: data.anggaranYangDiaudit,
-          kelurahan: data.kodeKelurahan,
+
+          kelurahan: data.kelurahan,
           provinsi: data.provinsi,
           kabkot: data.kabkot,
           kecamatan: data.kecamatan,
+
+          judulLaporan: data.judulLaporan,
+          tahunAnggaran: data.tahunAnggaran,
+          jenisAnggaran: data.jenisAnggaran,
+          namaPimpinan: data.namaPimpinan,
+          nipPimpinan: data.nipPimpinan,
+
+          nilaiRencana: data.rencanaAnggaran,
+          nilaiRealisasi: data.realisasiAnggaran,
+          nilaiDiaudit: data.anggaranYangDiaudit,
+          ringkasanLha: data.ringkasanLha,
+          flagTpk: data.flagTpk,
 
           accept: false,
         }

@@ -210,8 +210,8 @@ export default {
   },
   data() {
     return {
-      valueLha: null,
-      optionsLha: null,
+      valueLha: '',
+      optionsLha: [],
       valueTemuan: '',
       optionsTemuan: [],
       valueRekomendasi: '',
@@ -281,8 +281,8 @@ export default {
       this.$emit('on-select-rekomendasi', val);
     },
 
-    viewSelectSearchLha({ id, nomorLha, subBidangObrik }) {
-      return `${nomorLha} - ${subBidangObrik}`;
+    viewSelectSearchLha({ id, nomorLha, bidangObrik }) {
+      return `${nomorLha} - ${bidangObrik}`;
     },
 
     viewSelectSearchTemuan({ id, nomorTemuan }) {

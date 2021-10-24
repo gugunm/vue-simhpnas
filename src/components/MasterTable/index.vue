@@ -34,7 +34,12 @@
           {{ topTitle }} {{ title }} {{ descTitle | descCamelCase }}
         </h4>
       </CCol>
-      <CCol v-if="isAddButton" class="px-0" lg="12" sm="12">
+      <CCol
+        v-if="isAddButton && (level == 0 || level == 1)"
+        class="px-0"
+        lg="12"
+        sm="12"
+      >
         <CButton color="info" class="mb-4 px-4" @click="openCreateModal">
           <CIcon name="cil-plus" class="my-0 mb-1 mr-1" /> Tambah
           <!-- size="md" -->
@@ -143,6 +148,11 @@ export default {
       type: Boolean,
       default: true,
     },
+  },
+  data() {
+    return {
+      level: localStorage.level,
+    };
   },
   emits: [
     'clicked-row',

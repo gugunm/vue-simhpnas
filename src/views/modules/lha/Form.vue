@@ -485,44 +485,6 @@
               </CCol>
             </CRow>
 
-            <!-- <CRow>
-              <CCol lg="6">
-                <div class="flex flex-col">
-                  <label for="file-lha" class="block mb-3"
-                    >Upload File LHA</label
-                  >
-                  <div class="flex items-center mb-4">
-                    <CSwitch
-                      class="mx-1 mr-3"
-                      color="info"
-                      variant="3d"
-                      v-bind="labelIcon"
-                      :checked.sync="isStoredLha"
-                    />
-                    <span v-if="isStoredLha"
-                      >Upload File LHA di Server SIMHPNAS</span
-                    >
-                    <span v-else> Upload File LHA di Server Internal </span>
-                  </div>
-                  <input
-                    v-if="isStoredLha"
-                    id="file-lha"
-                    type="file"
-                    name="file-lha"
-                    class="mb-4"
-                    @change="onUploadLha"
-                  />
-                  <CInput
-                    v-else
-                    class="mb-4"
-                    :lazy="false"
-                    placeholder="http://server-anda.com/file.pdf"
-                    :value.sync="fileLha"
-                  />
-                </div>
-              </CCol>
-            </CRow> -->
-
             <CRow>
               <CCol lg="6">
                 <CInputCheckbox
@@ -829,6 +791,7 @@ export default {
       )[0];
 
       this.isLhaTpk = this.editData.flagTpk == 1 ? true : false;
+      this.isStoredLha = this.editData.isStored == 1 ? true : false;
 
       this.valueJenisObrik = this.optionsJenisObrik.filter(
         (data) => data.id == this.form.jenisObrik
@@ -856,8 +819,8 @@ export default {
 
       this.fileLha = this.editData.uploadFileLha;
 
-      // console.log('LHA HEREE');
-      // console.log(this.form);
+      console.log('LHA HEREE');
+      console.log(this.form);
     }
   },
 
@@ -883,6 +846,7 @@ export default {
     async submit() {
       if (this.isValid) {
         this.submitted = true;
+
         const resultFormData = this.appendToFormData();
 
         try {
@@ -907,7 +871,7 @@ export default {
             const responseData = await this.$store.dispatch(
               'module_lha/updateLhaById',
               {
-                idLha: this.editData.id,
+                idLha: this.idLha,
                 data: resultFormData,
               }
             );
@@ -1004,47 +968,52 @@ export default {
       const fd = new FormData();
 
       if (this.mode == 'edit') {
-        fd.append('_method', 'PUT');
-      } else if (this.mode == 'create') {
+        fd.append('_method', 'PATCH');
       }
 
       fd.append('Nomor_PKPT', this.$v.form.noPkpt.$model);
       fd.append('Tahun_PKPT', this.$v.form.tahunPkpt.$model);
-      fd.append('Nomor_ST', this.$v.form.noSt.$model);
-      fd.append('Tanggal_ST', this.$v.form.tglSt.$model);
       fd.append('Nomor_LHA', this.$v.form.noLha.$model);
       fd.append('Tanggal_LHA', this.$v.form.tglLha.$model);
+      fd.append('Nomor_ST', this.$v.form.noSt.$model);
+      fd.append('Tanggal_ST', this.$v.form.tglSt.$model);
       fd.append(
         'Kode_Grup_Lingkup_Audit',
         this.$v.form.groupLingkupAudit.$model
       );
       fd.append('Kode_Lingkup_Audit', this.$v.form.lingkupAudit.$model);
-      fd.append('Judul_laporan', this.$v.form.judulLaporan.$model);
       fd.append('Kode_Jenis_Obrik', this.$v.form.jenisObrik.$model);
       fd.append('Kode_Unit_Obrik', this.$v.form.unitObrik.$model);
       fd.append('Kode_Bidang_Obrik', this.$v.form.bidangObrik.$model);
+
+      fd.append('Kode_Provinsi', this.$v.form.provinsi.$model);
+      fd.append('Kode_KabupatenKota', this.$v.form.kabkot.$model);
+      fd.append('Kode_Kecamatan', this.$v.form.kecamatan.$model);
+      fd.append('Kode_Kelurahan', this.$v.form.kelurahan.$model);
+
+      fd.append('Judul_laporan', this.$v.form.judulLaporan.$model);
+      fd.append('Tahun_Anggaran', this.$v.form.tahunAnggaran.$model);
+      fd.append('Kode_Jenis_anggaran', this.$v.form.jenisAnggaran.$model);
+
       fd.append('Nama_Pimpinan', this.$v.form.namaPimpinan.$model);
       fd.append('NIP_Pimpinan', this.$v.form.nipPimpinan.$model);
       fd.append('Rencana_Anggaran', this.$v.form.nilaiRencana.$model);
       fd.append('Realisasi_Anggaran', this.$v.form.nilaiRealisasi.$model);
       fd.append('Anggaran_yang_diaudit', this.$v.form.nilaiDiaudit.$model);
-      fd.append('Kode_Kelurahan', this.$v.form.kelurahan.$model);
-      fd.append('Kode_Kecamatan', this.$v.form.kecamatan.$model);
-      fd.append('Kode_KabupatenKota', this.$v.form.kabkot.$model);
-      fd.append('Kode_Provinsi', this.$v.form.provinsi.$model);
-      fd.append('Tahun_Anggaran', this.$v.form.tahunAnggaran.$model);
-      fd.append('Kode_Jenis_anggaran', this.$v.form.jenisAnggaran.$model);
+
       fd.append('Ringkasan_LHA', this.$v.form.ringkasanLha.$model);
-      fd.append('Flag_TPK', this.convertBoolean(this.$v.form.flagTpk.$model));
+      fd.append('Flag_TPK', this.$v.form.flagTpk.$model);
 
       // OPSIONAL
       fd.append('is_stored', this.convertBoolean(this.isStoredLha));
-      fd.append('Upload_file_LHA', this.fileLha);
+
+      if (this.fileLha) {
+        fd.append('Upload_file_LHA', this.fileLha);
+      }
+
       if (this.valueSubBidangObrik) {
         fd.append('Kode_Sub_Bidang_Obrik', this.valueSubBidangObrik.id);
       }
-
-      // fd.append('Kode_Sub_Bidang_Obrik', this.$v.form.subBidangObrik.$model);
 
       return fd;
     },

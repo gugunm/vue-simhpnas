@@ -212,8 +212,8 @@ export default {
         this.$emit('on-select-lha', this.valueLha);
       }
     },
-    viewSelectSearch({ id, nomorLha, subBidangObrik }) {
-      return `${nomorLha} - ${subBidangObrik}`;
+    viewSelectSearch({ id, nomorLha, bidangObrik }) {
+      return `${nomorLha} - ${bidangObrik}`;
     },
   },
 };

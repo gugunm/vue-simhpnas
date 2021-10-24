@@ -17,23 +17,6 @@
 <script>
 import MasterTable from '@/components/MasterTable';
 
-const fields = [
-  {
-    key: 'id',
-    label: 'Kode',
-    _style: 'width: 15%',
-  },
-  {
-    key: 'deskripsi',
-    label: 'Deskripsi Unit Audit',
-    _style: 'width: 75%',
-  },
-  {
-    key: 'actions',
-    _style: 'width: 10%',
-  },
-];
-
 export default {
   name: 'AdvancedTables',
   components: {
@@ -41,12 +24,33 @@ export default {
   },
   data() {
     return {
-      fields,
+      fields: [],
       items: null,
     };
   },
   async mounted() {
     await this.loadRefUnitAudit();
+    this.fields = [
+      {
+        key: 'id',
+        label: 'Kode',
+        _style: 'width: 15%',
+      },
+      {
+        key: 'deskripsi',
+        label: 'Deskripsi Unit Audit',
+        _style: 'width: 75%',
+      },
+    ];
+    if (localStorage.level == 0 || localStorage.level == 1) {
+      this.fields = [
+        ...this.fields,
+        {
+          key: 'actions',
+          _style: 'width: 15%',
+        },
+      ];
+    }
   },
   methods: {
     openCreate() {

@@ -98,6 +98,12 @@ const fields = [
     key: 'anggaranYangDiaudit',
     _style: 'width: 15%',
   },
+  {
+    key: 'jumlahTemuan',
+  },
+  {
+    key: 'nilaiTemuan',
+  },
 ];
 
 const fieldsKtOperator = [

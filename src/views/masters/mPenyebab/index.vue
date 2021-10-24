@@ -24,23 +24,6 @@ import MasterTable from '@/components/MasterTable';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 import mixin from './mixin';
 
-const fields = [
-  {
-    key: 'id',
-    label: 'Kode',
-    _style: 'width: 15%',
-  },
-  {
-    key: 'deskripsi',
-    label: 'Deskripsi Penyebab',
-    _style: 'width: 70%',
-  },
-  {
-    key: 'actions',
-    _style: 'width: 15%',
-  },
-];
-
 export default {
   name: 'MasterPenyebab',
   components: {
@@ -50,7 +33,7 @@ export default {
   mixins: [mixin],
   data() {
     return {
-      fields,
+      fields: [],
       items: null,
       idToDelete: null,
       isDeleteConfirm: false,
@@ -58,6 +41,27 @@ export default {
   },
   async mounted() {
     await this.loadPenyebab();
+    this.fields = [
+      {
+        key: 'id',
+        label: 'Kode',
+        _style: 'width: 15%',
+      },
+      {
+        key: 'deskripsi',
+        label: 'Deskripsi Penyebab',
+        _style: 'width: 70%',
+      },
+    ];
+    if (localStorage.level == 0 || localStorage.level == 1) {
+      this.fields = [
+        ...this.fields,
+        {
+          key: 'actions',
+          _style: 'width: 15%',
+        },
+      ];
+    }
   },
   methods: {
     openCreate() {

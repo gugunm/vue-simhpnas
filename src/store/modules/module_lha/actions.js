@@ -6,7 +6,7 @@ export default {
     const response = await axios({
       method: 'GET',
       baseURL: API_URL,
-      url: '/api/lha',
+      url: '/api/lhaindex',
       params: {
         token: localStorage.getItem('api_token')
       },
@@ -25,6 +25,13 @@ export default {
 
     for (const key in responseData) {
       const anggaran = await context.dispatch('convertToRupiah', responseData[key]["Anggaran_yang_diaudit"]);
+
+      let nilaiTemuan= ''
+      if(responseData[key]["Total_Nilai_Temuan"]){
+        nilaiTemuan = await context.dispatch('convertToRupiah', responseData[key]["Total_Nilai_Temuan"]);
+      } else {
+        nilaiTemuan = 'Rp 0'
+      }
 
 
       const data = {
@@ -47,6 +54,8 @@ export default {
         realisasiAnggaran: responseData[key]["Realisasi_Anggaran"],
         flagTpk: responseData[key]["Flag_TPK"],
         flagKirim: responseData[key]["Flag_kirim"],
+        nilaiTemuan: nilaiTemuan,
+        jumlahTemuan: responseData[key]["Jumlah_Temuan"],
         // anggaranYangDiaudit: responseData[key]["Anggaran_yang_diaudit"],
         anggaranYangDiaudit: anggaran
       };
@@ -92,10 +101,10 @@ export default {
       tglLha: responseData["Tanggal_LHA"],
       nomorST: responseData["Nomor_ST"],
       tglST: responseData["Tanggal_ST"],
-      kodeKelurahan: responseData["Kode_Kelurahan"],
-      provinsi: responseData["Provinsi"],
-      kabkot: responseData["Kabkot"],
-      kecamatan: responseData["Kecamatan"],
+      kelurahan: responseData["Kode_Kelurahan"],
+      provinsi: responseData["Kode_Provinsi"],
+      kabkot: responseData["Kode_KabupatenKota"],
+      kecamatan: responseData["Kode_Kecamatan"],
 
       groupLingkupAudit: responseData["Grup_Lingkup_Audit"],
       lingkupAudit: responseData["Lingkup_Audit"],
@@ -106,7 +115,7 @@ export default {
       judulLaporan: responseData["Judul_laporan"],
 
       tahunAnggaran: responseData["Tahun_Anggaran"],
-      jenisAnggaran: responseData["Jenis_Anggaran"],
+      jenisAnggaran: responseData["kode_jenis_anggaran"],
       namaPimpinan: responseData["Nama_Pimpinan"],
       nipPimpinan: responseData["NIP_Pimpinan"],
 
