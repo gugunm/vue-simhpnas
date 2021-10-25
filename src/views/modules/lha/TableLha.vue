@@ -202,10 +202,6 @@
             <td>
               <div class="flex flex-wrap justify-content-center">
                 <CButton
-                  v-c-tooltip="{
-                    content: 'Edit LHA',
-                    placement: 'left',
-                  }"
                   color="success"
                   variant="fill"
                   square
@@ -217,10 +213,6 @@
                   <span>Setuju</span>
                 </CButton>
                 <CButton
-                  v-c-tooltip="{
-                    content: 'Hapus LHA',
-                    placement: 'left',
-                  }"
                   color="danger"
                   variant="outline"
                   size="sm"
@@ -237,11 +229,6 @@
             <td>
               <div class="flex flex-wrap justify-content-center">
                 <CButton
-                  v-if="isEditButton"
-                  v-c-tooltip="{
-                    content: 'Edit LHA',
-                    placement: 'left',
-                  }"
                   color="info"
                   variant="fill"
                   square
@@ -251,6 +238,17 @@
                   @click="onPostingLha(item)"
                 >
                   <span>Posting</span>
+                </CButton>
+                <CButton
+                  color="warning"
+                  variant="outline"
+                  square
+                  size="sm"
+                  class="m-1 w-full"
+                  :disabled="!statusAdmin(item)"
+                  @click="onUnPostLha(item)"
+                >
+                  <span>Unlock</span>
                 </CButton>
               </div>
             </td>
@@ -304,6 +302,13 @@
       msg="Apakah anda yakin akan memposting laporan ini?"
       @close-modal="isOpenPosting = false"
       @confirm-ok="actionPostingLha"
+    />
+    <confirm-modal
+      v-model="isOpenUnPost"
+      title="Buka LHA"
+      msg="Apakah anda yakin akan membuka laporan ini?"
+      @close-modal="isOpenUnPost = false"
+      @confirm-ok="actionUnPostLha"
     />
   </div>
 </template>
@@ -366,6 +371,7 @@ export default {
       isOpenAcc: false,
       isOpenReject: false,
       isOpenPosting: false,
+      isOpenUnPost: false,
     };
   },
   emits: [
@@ -374,6 +380,7 @@ export default {
     'open-edit-modal',
     'open-delete-modal',
     'on-send-lha',
+    'on-load-lha',
   ],
   methods: {
     onOpenMemoModal(item) {
@@ -396,6 +403,7 @@ export default {
         this.memoModal = false;
         this.toastSuccess('Berhasil menyimpan memo');
         this.selectedItem = null;
+        this.$emit('on-load-lha');
       } else {
         this.toastError('Terjadi kesalahan saat simpan memo');
       }
@@ -419,6 +427,7 @@ export default {
         this.isOpenAcc = false;
         this.toastSuccess('Berhasil menyetujui LHA');
         this.selectedItem = null;
+        this.$emit('on-load-lha');
       } else {
         this.toastError('Terjadi kesalahan saat acc laporan');
       }
@@ -442,6 +451,7 @@ export default {
         this.isOpenAcc = false;
         this.toastSuccess('Berhasil menolak LHA');
         this.selectedItem = null;
+        this.$emit('on-load-lha');
       } else {
         this.toastError('Terjadi kesalahan saat tolak laporan');
       }
@@ -465,8 +475,33 @@ export default {
         this.isOpenPosting = false;
         this.toastSuccess('Berhasil memposting LHA');
         this.selectedItem = null;
+        this.$emit('on-load-lha');
       } else {
         this.toastError('Terjadi kesalahan saat posting laporan');
+      }
+    },
+
+    onUnPostLha(item) {
+      this.isOpenUnPost = true;
+      this.selectedItem = item;
+    },
+
+    async actionUnPostLha() {
+      const response = await axios({
+        method: 'PATCH',
+        baseURL: API_URL,
+        url: `/api/adminactionunposting/${this.selectedItem.id}`,
+        params: {
+          token: localStorage.getItem('api_token'),
+        },
+      });
+      if (response.status == 200) {
+        this.isOpenUnPost = false;
+        this.toastSuccess('Berhasil membuka LHA');
+        this.selectedItem = null;
+        this.$emit('on-load-lha');
+      } else {
+        this.toastError('Terjadi kesalahan saat membuka laporan');
       }
     },
 

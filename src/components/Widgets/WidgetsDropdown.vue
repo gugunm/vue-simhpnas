@@ -156,7 +156,9 @@
     <CRow>
       <CCol sm="12" lg="4">
         <CWidgetProgress class="bg-green-500">
-          <div class="h4 m-0">30</div>
+          <div class="h4 m-0">
+            {{ data.TotalLHA }}
+          </div>
           <div class="card-header-actions">
             <router-link
               to="/lha"
@@ -168,12 +170,14 @@
             </router-link>
           </div>
           <p class="pt-2 pb-3">Total LHA</p>
-          <p class="text-xs">10 Obrik</p>
+          <p class="text-xs">{{ data.TotalObrik }} Obrik</p>
         </CWidgetProgress>
       </CCol>
       <CCol sm="12" lg="4">
         <CWidgetProgress class="bg-blue-500">
-          <div class="h4 m-0">Rp 23,000,000,000</div>
+          <div class="h4 m-0">
+            {{ convertToRupiah(data.NilaiTemuan) }}
+          </div>
           <div class="card-header-actions">
             <router-link
               to="/temuan"
@@ -185,12 +189,14 @@
             </router-link>
           </div>
           <p class="pt-2 pb-3">Nilai Temuan</p>
-          <p class="text-xs">18 Temuan</p>
+          <p class="text-xs">{{ data.JumlahTemuan }} Temuan</p>
         </CWidgetProgress>
       </CCol>
       <CCol sm="12" lg="4">
         <CWidgetProgress class="bg-yellow-500">
-          <div class="h4 m-0">Rp 20,000,000,000</div>
+          <div class="h4 m-0">
+            {{ convertToRupiah(data.NilaiTL) }}
+          </div>
           <div class="card-header-actions">
             <router-link
               to="/tindak-lanjut"
@@ -202,7 +208,7 @@
             </router-link>
           </div>
           <p class="pt-2 pb-3">Nilai Tindak Lanjut</p>
-          <p class="text-xs">15 Tindak Lanjut</p>
+          <p class="text-xs">{{ data.JumlahTL }} Tindak Lanjut</p>
         </CWidgetProgress>
       </CCol>
       <!-- <CCol sm="6" lg="3">
@@ -219,15 +225,28 @@
 </template>
 
 <script>
-// import {
-//   CChartLineSimple,
-//   CChartBarSimple,
-// } from '@/components/charts/index.js';
-
-// export default {
-//   name: 'WidgetsDropdown',
-//   components: { CChartLineSimple, CChartBarSimple },
-// };
+export default {
+  name: 'TopDashboard',
+  props: ['data'],
+  methods: {
+    convertToRupiah(payload) {
+      let rupiah = '';
+      if (payload) {
+        const angkarev = payload.toString().split('').reverse().join('');
+        for (var i = 0; i < angkarev.length; i++)
+          if (i % 3 == 0) rupiah += angkarev.substr(i, 3) + ',';
+        return (
+          'Rp ' +
+          rupiah
+            .split('', rupiah.length - 1)
+            .reverse()
+            .join('')
+        );
+      }
+      return 'Rp 0';
+    },
+  },
+};
 </script>
 
 

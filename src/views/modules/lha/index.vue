@@ -11,6 +11,7 @@
       @open-edit-modal="openEdit"
       @open-delete-modal="openDeleteModal"
       @on-send-lha="onSendLha"
+      @on-load-lha="onLoadLha"
     />
     <confirm-modal
       v-model="isDeleteConfirm"
@@ -263,6 +264,10 @@ export default {
 
         this.toastError(error.message);
       }
+    },
+
+    async onLoadLha() {
+      await this.loadLha();
     },
   },
 };
