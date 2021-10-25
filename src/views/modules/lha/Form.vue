@@ -80,7 +80,7 @@
                     mode="single"
                     :input-debounce="500"
                     is-required
-                    :masks="{ input: ['DD/MM/YYYY'], data: ['YYYY-MM-DD'] }"
+                    :masks="{ input: ['DD/MM/YYYY'] }"
                   />
                   <!-- :masks="{ input: ['D MMM YYYY'], data: ['YYYY-MM-DD'] }" -->
                 </div>
@@ -108,7 +108,7 @@
                     mode="single"
                     :input-debounce="500"
                     is-required
-                    :masks="{ input: ['DD/MM/YYYY'], data: ['YYYY-MM-DD'] }"
+                    :masks="{ input: ['DD/MM/YYYY'] }"
                   />
                   <!-- :masks="{ input: ['D MMM YYYY'] }" -->
                 </div>
@@ -570,6 +570,7 @@ import { validationMixin } from 'vuelidate';
 import {
   required,
   minLength,
+  minValue,
   // email,
   // sameAs,
   // helpers,
@@ -716,9 +717,15 @@ export default {
       // date
       tglSt: { required },
       // text
-      noLha: { required, minLength: minLength(1) },
+      noLha: {
+        required,
+        minLength: minLength(1),
+      },
       // date
-      tglLha: { required },
+      tglLha: {
+        required,
+        // minValue: minValue((value) => value > this.$v.form.tglSt.$model),
+      },
       // autocomplete
       groupLingkupAudit: { required },
       // autocomplete
