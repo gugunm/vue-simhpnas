@@ -2,14 +2,23 @@
   <CRow>
     <CCol sm="12">
       <div class="text-2xl mb-4 font-semibold">
-        <h3 v-if="mode == 'create'">Create Laporan Hasil Audit</h3>
-        <h3 v-else>Edit Laporan Hasil Audit</h3>
+        <h3 v-if="mode == 'create'">
+          Create Laporan Hasil Audit
+        </h3>
+        <h3 v-else>
+          Edit Laporan Hasil Audit
+        </h3>
       </div>
       <CCard>
         <!-- <CCardBody> -->
         <CForm class="form-lha">
-          <div class="p-3" style="background: #f9fafb">
-            <h5 class="text-base font-semibold">Data Umum LHA</h5>
+          <div
+            class="p-3"
+            style="background: #f9fafb"
+          >
+            <h5 class="text-base font-semibold">
+              Data Umum LHA
+            </h5>
           </div>
           <div class="p-3">
             <!-- ROW 1 -->
@@ -173,8 +182,13 @@
             </CRow>
           </div>
 
-          <div class="p-3" style="background: #f9fafb">
-            <h5 class="text-base font-semibold">Data Obrik</h5>
+          <div
+            class="p-3"
+            style="background: #f9fafb"
+          >
+            <h5 class="text-base font-semibold">
+              Data Obrik
+            </h5>
           </div>
 
           <div class="p-3">
@@ -282,8 +296,13 @@
             </CRow>
           </div>
 
-          <div class="p-3" style="background: #f9fafb">
-            <h5 class="text-base font-semibold">Data Anggaran</h5>
+          <div
+            class="p-3"
+            style="background: #f9fafb"
+          >
+            <h5 class="text-base font-semibold">
+              Data Anggaran
+            </h5>
           </div>
 
           <div class="p-3">
@@ -360,8 +379,13 @@
             </CRow>
           </div>
 
-          <div class="p-3" style="background: #f9fafb">
-            <h5 class="text-base font-semibold">Data Wilayah</h5>
+          <div
+            class="p-3"
+            style="background: #f9fafb"
+          >
+            <h5 class="text-base font-semibold">
+              Data Wilayah
+            </h5>
           </div>
 
           <div class="p-3">
@@ -369,7 +393,10 @@
             <CRow>
               <CCol lg="6">
                 <div>
-                  <label class="typo__label" for="ajax">Kelurahan/Desa</label>
+                  <label
+                    class="typo__label"
+                    for="ajax"
+                  >Kelurahan/Desa</label>
                   <multiselect
                     v-if="optionsKelurahan"
                     id="ajax"
@@ -452,9 +479,10 @@
             >
               <CCol lg="6">
                 <div class="flex flex-col">
-                  <label for="file-lha" class="block mb-3"
-                    >Upload File LHA</label
-                  >
+                  <label
+                    for="file-lha"
+                    class="block mb-3"
+                  >Upload File LHA</label>
                   <div class="flex items-center mb-4">
                     <CSwitch
                       class="mx-1 mr-3"
@@ -463,9 +491,9 @@
                       v-bind="labelIcon"
                       :checked.sync="isStoredLha"
                     />
-                    <span v-if="isStoredLha"
-                      >Upload File LHA di Server SIMHPNAS</span
-                    >
+                    <span
+                      v-if="isStoredLha"
+                    >Upload File LHA di Server SIMHPNAS</span>
                     <span v-else> Upload File LHA di Server Internal </span>
                   </div>
                   <input
@@ -475,7 +503,7 @@
                     name="file-lha"
                     class="mb-4"
                     @change="onUploadLha"
-                  />
+                  >
                   <CInput
                     v-else
                     class="mb-4"
@@ -503,7 +531,11 @@
 
           <div class="px-3">
             <CRow class="mb-2 view-form">
-              <CCol sm="12" lg="6" class="mb-3">
+              <CCol
+                sm="12"
+                lg="6"
+                class="mb-3"
+              >
                 <CButton
                   v-if="mode != 'view'"
                   variant="outline"
@@ -543,10 +575,19 @@
                   :disabled="!isValid || submitted"
                   @click="submit"
                 >
-                  <div v-if="loading" class="px-8">
-                    <CSpinner color="white" size="sm" class="mr-2" />
+                  <div
+                    v-if="loading"
+                    class="px-8"
+                  >
+                    <CSpinner
+                      color="white"
+                      size="sm"
+                      class="mr-2"
+                    />
                   </div>
-                  <template v-else> Submit Data </template>
+                  <template v-else>
+                    Submit Data
+                  </template>
                 </CButton>
               </CCol>
             </CRow>
@@ -570,10 +611,10 @@ import { validationMixin } from 'vuelidate';
 import {
   required,
   minLength,
-  minValue,
+  // minValue,
   // email,
   // sameAs,
-  // helpers,
+  helpers,
 } from 'vuelidate/lib/validators';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 import mixin from './mixin';

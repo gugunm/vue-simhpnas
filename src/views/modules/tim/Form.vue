@@ -263,6 +263,9 @@ export default {
                 this.loading = false;
                 this.$router.push({
                   path: '/tim-audit',
+                  query: {
+                    filterlha: this.$route.query.idlha,
+                  },
                 });
                 this.toastSuccess(
                   'Berhasil menyimpan data dengan ID ' + responseData.Kode_Peran
@@ -285,6 +288,9 @@ export default {
                 this.loading = false;
                 this.$router.push({
                   path: '/tim-audit',
+                  query: {
+                    filterlha: this.editData.kodeLha,
+                  },
                 });
                 this.toastSuccess(
                   'Berhasil edit data dengan ID ' + responseData.Kode_Peran

@@ -169,6 +169,7 @@ export default {
       default: true,
     },
     idLha: String,
+    filterlha: String,
   },
   data() {
     return {
@@ -183,7 +184,14 @@ export default {
     // } else {
     //   this.valueLha = this.optionsLha[0];
     // }
-    this.valueLha = this.optionsLha[0];
+    if (this.filterlha) {
+      this.valueLha = this.optionsLha.filter(
+        (data) => data.id == this.filterlha
+      )[0];
+    } else {
+      this.valueLha = this.optionsLha[0];
+    }
+
     this.onSelectLha();
   },
   emits: [

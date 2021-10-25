@@ -7,6 +7,7 @@
       :clickable-rows="true"
       :is-edit-button="true"
       :id-lha="idLha"
+      :filterlha="$route.query.filterlha"
       @clicked-row="openDetail"
       @open-create-modal="openCreate"
       @open-edit-modal="openEdit"
@@ -81,12 +82,7 @@ export default {
       lha: {},
     };
   },
-  async mounted() {
-    // if (this.$route.query.idlha) {
-    //   this.idLha = this.$route.query.idlha;
-    // }
-    // await this.loadLha();
-  },
+  async mounted() {},
   methods: {
     openDetail(item) {
       this.$router.push({
@@ -112,6 +108,12 @@ export default {
     },
     async onSelectLha(selectedLha) {
       this.lha = selectedLha;
+      this.$router.push({
+        path: '/tim-audit',
+        query: {
+          filterlha: this.lha.id,
+        },
+      });
       await this.loadTim();
     },
     async actionDelete() {

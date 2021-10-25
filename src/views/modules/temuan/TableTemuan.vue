@@ -221,6 +221,7 @@ export default {
       type: Boolean,
       default: true,
     },
+    filterlha: String,
   },
   data() {
     return {
@@ -230,7 +231,13 @@ export default {
   },
   async mounted() {
     await this.loadLha();
-    this.valueLha = this.optionsLha[0];
+    if (this.filterlha) {
+      this.valueLha = this.optionsLha.filter(
+        (data) => data.id == this.filterlha
+      )[0];
+    } else {
+      this.valueLha = this.optionsLha[0];
+    }
     this.onSelectLha();
   },
   emits: [

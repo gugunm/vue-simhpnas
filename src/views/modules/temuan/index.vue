@@ -6,6 +6,7 @@
       :fields="fields"
       :clickable-rows="true"
       :is-edit-button="true"
+      :filterlha="$route.query.filterlha"
       @clicked-row="openDetail"
       @open-create-modal="openCreate"
       @open-edit-modal="openEdit"
@@ -133,6 +134,13 @@ export default {
     },
     async onSelectLha(selectedLha) {
       this.lha = selectedLha;
+      this.$router.push({
+        path: '/temuan',
+        query: {
+          filterlha: this.lha.id,
+        },
+      });
+      // this.$route.query.filterlha = this.lha.id;
       await this.loadTemuan();
     },
     async actionDelete() {

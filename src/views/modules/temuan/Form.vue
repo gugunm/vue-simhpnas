@@ -466,6 +466,9 @@ export default {
                 this.loading = false;
                 this.$router.push({
                   path: '/temuan',
+                  query: {
+                    filterlha: this.$route.query.idlha,
+                  },
                 });
                 this.toastSuccess(
                   'Berhasil menyimpan data dengan ID ' +
@@ -489,6 +492,9 @@ export default {
                 this.loading = false;
                 this.$router.push({
                   path: '/temuan',
+                  query: {
+                    filterlha: this.editData.kodeLha,
+                  },
                 });
                 this.toastSuccess(
                   'Berhasil edit data dengan ID ' + responseData.Nomor_Temuan
