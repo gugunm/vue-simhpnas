@@ -8,7 +8,7 @@
       </div>
       <CCard>
         <!-- <CCardBody> -->
-        <CForm>
+        <CForm class="form-temuan">
           <div v-if="!isAuditTpk" class="p-3" style="background: #f9fafb">
             <h5 class="text-base font-semibold">Data Temuan</h5>
           </div>
@@ -124,8 +124,9 @@
 
             <!-- ROW 4 -->
             <CRow>
-              <CCol lg="8">
+              <CCol lg="12">
                 <CTextarea
+                  rows="4"
                   :label="
                     isAuditTpk ? 'Memo Temuan / Uraian Kasus' : 'Memo Temuan'
                   "
@@ -144,7 +145,7 @@
               <CCol lg="6">
                 <div class="flex items-center">
                   <p class="inline-block mr-3 font-semibold">
-                    {{ isAuditTpk ? '' : 'Bukan' }} Temuan Investigatif
+                    {{ isAuditTpk ? '' : 'Bukan' }} Temuan Tindak Pidana Khusus
                   </p>
                   <CSwitch
                     disabled
@@ -206,7 +207,7 @@
 
             <!-- ROW 7 -->
             <CRow>
-              <CCol lg="4">
+              <CCol lg="2">
                 <CInput
                   type="number"
                   :label="
@@ -560,3 +561,10 @@ export default {
 </script>
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+
+<style>
+.form-temuan .multiselect__option {
+  font-size: 12px;
+  font-weight: 600;
+}
+</style>

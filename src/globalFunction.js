@@ -15,4 +15,8 @@ export const func = {
     }
     return 'Rp 0';
   },
+
+  rupiahToNumber: (payload) => {
+    return  Number(payload.replace(/[^0-9.-]+/g,""));
+  }
 }

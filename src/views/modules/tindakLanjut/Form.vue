@@ -149,14 +149,14 @@
 
             <!-- ROW 5 -->
             <CRow>
-              <CCol v-if="mode == 'create'" lg="4">
+              <CCol v-if="mode == 'create'" lg="2">
                 <CInput
                   label="Nilai Rekomendasi"
                   :value="$route.query.nilairekomendasi"
                   :disabled="true"
                 />
               </CCol>
-              <CCol lg="4">
+              <CCol lg="2">
                 <CInput
                   type="number"
                   label="Nilai Tindak Lanjut"

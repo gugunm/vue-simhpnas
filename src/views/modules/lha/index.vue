@@ -73,6 +73,10 @@ import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 // },
 const fields = [
   {
+    key: 'nomor',
+    label: 'No',
+  },
+  {
     key: 'nomorLha',
     label: 'Nomor LHA',
   },
@@ -236,6 +240,11 @@ export default {
           forceRefresh: refresh,
         });
         this.items = this.$store.getters['module_lha/lha'];
+
+        this.items = this.items.map((item, index) => ({
+          no: index + 1,
+          ...item,
+        }));
       } catch (error) {
         this.toastError(error.message);
       }

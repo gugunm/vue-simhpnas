@@ -157,7 +157,7 @@
       <CCol sm="12" lg="4">
         <CWidgetProgress class="bg-green-500">
           <div class="h4 m-0">
-            {{ data.TotalLHA }}
+            {{ data.TotalLHA || 0 }}
           </div>
           <div class="card-header-actions">
             <router-link
@@ -170,7 +170,7 @@
             </router-link>
           </div>
           <p class="pt-2 pb-3">Total LHA</p>
-          <p class="text-xs">{{ data.TotalObrik }} Obrik</p>
+          <p class="text-xs">{{ data.TotalObrik || 0 }} Obrik</p>
         </CWidgetProgress>
       </CCol>
       <CCol sm="12" lg="4">
@@ -189,7 +189,7 @@
             </router-link>
           </div>
           <p class="pt-2 pb-3">Nilai Temuan</p>
-          <p class="text-xs">{{ data.JumlahTemuan }} Temuan</p>
+          <p class="text-xs">{{ data.JumlahTemuan || 0 }} Temuan</p>
         </CWidgetProgress>
       </CCol>
       <CCol sm="12" lg="4">
@@ -208,7 +208,7 @@
             </router-link>
           </div>
           <p class="pt-2 pb-3">Nilai Tindak Lanjut</p>
-          <p class="text-xs">{{ data.JumlahTL }} Tindak Lanjut</p>
+          <p class="text-xs">{{ data.JumlahTL || 0 }} Tindak Lanjut</p>
         </CWidgetProgress>
       </CCol>
       <!-- <CCol sm="6" lg="3">

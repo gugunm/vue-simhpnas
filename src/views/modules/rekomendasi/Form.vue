@@ -126,14 +126,14 @@
 
             <!-- ROW 5 -->
             <CRow>
-              <CCol v-if="mode == 'create'" lg="4">
+              <CCol v-if="mode == 'create'" lg="2">
                 <CInput
                   label="Nilai Temuan"
                   :value="$route.query.nilaitemuan"
                   :disabled="true"
                 />
               </CCol>
-              <CCol lg="4">
+              <CCol lg="2">
                 <CInput
                   label="Nilai Rekomendasi"
                   type="number"

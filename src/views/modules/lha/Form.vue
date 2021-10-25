@@ -2,596 +2,561 @@
   <CRow>
     <CCol sm="12">
       <div class="text-2xl mb-4 font-semibold">
-        <h3 v-if="mode == 'create'">
-          Create Laporan Hasil Audit
-        </h3>
-        <h3 v-else>
-          Edit Laporan Hasil Audit
-        </h3>
+        <h3 v-if="mode == 'create'">Create Laporan Hasil Audit</h3>
+        <h3 v-else>Edit Laporan Hasil Audit</h3>
       </div>
       <CCard>
         <!-- <CCardBody> -->
         <CForm class="form-lha">
-          <div
-            class="p-3"
-            style="background: #f9fafb"
-          >
-            <h5 class="text-base font-semibold">
-              Data Umum LHA
-            </h5>
-          </div>
-          <div class="p-3">
-            <!-- ROW 1 -->
-            <CRow>
-              <CCol lg="6">
-                <CInput
-                  label="Unit Audit"
-                  :lazy="false"
-                  :value.sync="namaUnit"
-                  :readonly="true"
-                />
-              </CCol>
-              <CCol lg="6">
-                <CInput
-                  label="Sub Unit Audit"
-                  :lazy="false"
-                  :value.sync="namaSubUnit"
-                  :readonly="true"
-                />
-              </CCol>
-            </CRow>
-
-            <!-- ROW 2 -->
-            <CRow>
-              <CCol lg="6">
-                <CInput
-                  label="Nomor PKPT"
-                  :lazy="false"
-                  :value.sync="$v.form.noPkpt.$model"
-                  :is-valid="checkIfValid('noPkpt')"
-                  placeholder="Nomor PKPT"
-                  autocomplete="noPkpt"
-                  invalid-feedback="Nomor PKPT wajib diisi"
-                />
-              </CCol>
-              <CCol lg="6">
-                <CInput
-                  type="number"
-                  label="Tahun PKPT"
-                  :lazy="false"
-                  :value.sync="$v.form.tahunPkpt.$model"
-                  :is-valid="checkIfValid('tahunPkpt')"
-                  placeholder="Tahun PKPT"
-                  autocomplete="tahunPkpt"
-                  invalid-feedback="Tahun PKPT wajib diisi"
-                />
-              </CCol>
-            </CRow>
-
-            <!-- ROW 3 -->
-            <CRow>
-              <CCol lg="7">
-                <CInput
-                  label="Nomor ST"
-                  :lazy="false"
-                  :value.sync="$v.form.noSt.$model"
-                  :is-valid="checkIfValid('noSt')"
-                  placeholder="Nomor ST"
-                  autocomplete="noSt"
-                  invalid-feedback="Nomor ST wajib diisi"
-                />
-              </CCol>
-              <CCol lg="2">
-                <div>
-                  <label class="typo__label block">Tanggal ST</label>
-                  <v-date-picker
-                    v-model="selectedDateSt"
-                    mode="single"
-                    :input-debounce="500"
-                    is-required
-                    :masks="{ input: ['DD/MM/YYYY'] }"
-                  />
-                  <!-- :masks="{ input: ['D MMM YYYY'], data: ['YYYY-MM-DD'] }" -->
-                </div>
-              </CCol>
-            </CRow>
-
-            <!-- ROW 4 -->
-            <CRow>
-              <CCol lg="7">
-                <CInput
-                  label="Nomor LHA"
-                  :lazy="false"
-                  :value.sync="$v.form.noLha.$model"
-                  :is-valid="checkIfValid('noLha')"
-                  placeholder="Nomor LHA"
-                  autocomplete="noLha"
-                  invalid-feedback="Nomor LHA wajib diisi"
-                />
-              </CCol>
-              <CCol lg="2">
-                <div>
-                  <label class="typo__label block">Tanggal LHA</label>
-                  <v-date-picker
-                    v-model="selectedDateLha"
-                    mode="single"
-                    :input-debounce="500"
-                    is-required
-                    :masks="{ input: ['DD/MM/YYYY'] }"
-                  />
-                  <!-- :masks="{ input: ['D MMM YYYY'] }" -->
-                </div>
-              </CCol>
-            </CRow>
-
-            <!-- ROW 5 -->
-            <CRow class="mb-3">
-              <CCol lg="5">
-                <div>
-                  <label class="typo__label">Institusi Yang Mengaudit</label>
-                  <multiselect
-                    v-if="optionsGroupLingkupAudit"
-                    v-model="valueGroupLingkupAudit"
-                    :options="optionsGroupLingkupAudit"
-                    :custom-label="viewSelectSearch"
-                    placeholder="Select institusi"
-                    label="deskripsi"
-                    track-by="deskripsi"
-                  />
-                </div>
-              </CCol>
-              <CCol lg="5">
-                <div>
-                  <label class="typo__label">Jenis Kegiatan Pengawasan</label>
-                  <multiselect
-                    v-if="optionsLingkupAudit"
-                    v-model="valueLingkupAudit"
-                    :options="optionsLingkupAudit"
-                    :custom-label="viewSelectSearch"
-                    placeholder="Select jenis kegiatan pengawasan"
-                    label="deskripsi"
-                    track-by="deskripsi"
-                  />
-                </div>
-              </CCol>
-            </CRow>
-            <CRow>
-              <CCol lg="10">
-                <CTextarea
-                  type=""
-                  label="Ringkasan LHA"
-                  :lazy="false"
-                  :value.sync="$v.form.ringkasanLha.$model"
-                  :is-valid="checkIfValid('ringkasanLha')"
-                  placeholder="Ringkasan LHA"
-                  autocomplete="ringkasanLha"
-                  invalid-feedback="Ringkasan LHA wajib diisi"
-                />
-              </CCol>
-            </CRow>
-            <CRow>
-              <CCol lg="6">
-                <CInputCheckbox
-                  :is-valid="checkIfValid('flagTpk')"
-                  :checked.sync="$v.form.flagTpk.$model"
-                  label="Centang jika LHA Tindak Pidana Khusus"
-                  custom
-                  class="my-2 text-base ml-2 font-semibold lower"
-                />
-              </CCol>
-            </CRow>
-          </div>
-
-          <div
-            class="p-3"
-            style="background: #f9fafb"
-          >
-            <h5 class="text-base font-semibold">
-              Data Obrik
-            </h5>
-          </div>
-
-          <div class="p-3">
-            <!-- ROW 1 -->
-            <CRow>
-              <CCol lg="8">
-                <CTextarea
-                  type=""
-                  label="Judul Laporan"
-                  :lazy="false"
-                  :value.sync="$v.form.judulLaporan.$model"
-                  :is-valid="checkIfValid('judulLaporan')"
-                  placeholder="Judul Laporan"
-                  autocomplete="judulLaporan"
-                  invalid-feedback="Judul Laporan wajib diisi"
-                />
-              </CCol>
-            </CRow>
-            <!-- ROW 2 -->
-            <CRow class="mb-3">
-              <CCol lg="5">
-                <div>
-                  <label class="typo__label">Jenis Obrik</label>
-                  <multiselect
-                    v-if="optionsJenisObrik"
-                    v-model="valueJenisObrik"
-                    :options="optionsJenisObrik"
-                    :custom-label="viewSelectSearch"
-                    placeholder="Select jenis obrik"
-                    label="deskripsi"
-                    track-by="deskripsi"
-                  />
-                </div>
-              </CCol>
-            </CRow>
-            <!-- ROW 3 -->
-            <CRow class="mb-3">
-              <CCol lg="4">
-                <div>
-                  <label class="typo__label">Unit Obrik</label>
-                  <multiselect
-                    v-if="optionsUnitObrik"
-                    v-model="valueUnitObrik"
-                    :options="optionsUnitObrik"
-                    :custom-label="viewSelectSearch"
-                    placeholder="Select unit obrik"
-                    label="deskripsi"
-                    track-by="deskripsi"
-                  />
-                </div>
-              </CCol>
-              <CCol lg="4">
-                <div>
-                  <label class="typo__label">Bidang Obrik</label>
-                  <multiselect
-                    v-if="optionsBidangObrik"
-                    v-model="valueBidangObrik"
-                    :options="optionsBidangObrik"
-                    :custom-label="viewSelectSearch"
-                    placeholder="Select bidang obrik"
-                    label="deskripsi"
-                    track-by="deskripsi"
-                  />
-                </div>
-              </CCol>
-              <CCol lg="4">
-                <div>
-                  <label class="typo__label">Sub Bidang Obrik</label>
-                  <multiselect
-                    v-if="optionsSubBidangObrik"
-                    v-model="valueSubBidangObrik"
-                    :options="optionsSubBidangObrik"
-                    :custom-label="viewSelectSearch"
-                    placeholder="Select sub bidang obrik"
-                    label="deskripsi"
-                    track-by="deskripsi"
-                  />
-                </div>
-              </CCol>
-            </CRow>
-            <!-- ROW 5 -->
-            <CRow>
-              <CCol lg="6">
-                <CInput
-                  label="Nama Pimpinan"
-                  :lazy="false"
-                  :value.sync="$v.form.namaPimpinan.$model"
-                  :is-valid="checkIfValid('namaPimpinan')"
-                  placeholder="Nama Pimpinan"
-                  autocomplete="namaPimpinan"
-                  invalid-feedback="Nama Pimpinan wajib diisi"
-                />
-              </CCol>
-              <CCol lg="6">
-                <CInput
-                  label="NIP Pimpinan"
-                  :lazy="false"
-                  :value.sync="$v.form.nipPimpinan.$model"
-                  :is-valid="checkIfValid('nipPimpinan')"
-                  placeholder="NIP Pimpinan"
-                  autocomplete="nipPimpinan"
-                  invalid-feedback="NIP Pimpinan wajib diisi"
-                />
-              </CCol>
-            </CRow>
-          </div>
-
-          <div
-            class="p-3"
-            style="background: #f9fafb"
-          >
-            <h5 class="text-base font-semibold">
-              Data Anggaran
-            </h5>
-          </div>
-
-          <div class="p-3">
-            <!-- ROW 1 -->
-            <CRow>
-              <CCol lg="6">
-                <CInput
-                  type="number"
-                  label="Tahun Anggaran"
-                  :lazy="false"
-                  :value.sync="$v.form.tahunAnggaran.$model"
-                  :is-valid="checkIfValid('tahunAnggaran')"
-                  placeholder="Tahun anggaran"
-                  autocomplete="tahunAnggaran"
-                  invalid-feedback="Tahun Anggaran wajib diisi"
-                />
-              </CCol>
-              <CCol lg="6">
-                <div>
-                  <label class="typo__label">Jenis Anggaran</label>
-                  <multiselect
-                    v-if="optionsJenisAnggaran"
-                    v-model="valueJenisAnggaran"
-                    :options="optionsJenisAnggaran"
-                    :custom-label="viewSelectSearch"
-                    placeholder="Select jenis anggaran"
-                    label="deskripsi"
-                    track-by="deskripsi"
-                  />
-                </div>
-              </CCol>
-            </CRow>
-            <!-- ROW 2 -->
-            <CRow>
-              <CCol lg="6">
-                <CInput
-                  type="number"
-                  label="Rencana"
-                  :lazy="false"
-                  :value.sync="$v.form.nilaiRencana.$model"
-                  :is-valid="checkIfValid('nilaiRencana')"
-                  placeholder="Rencana"
-                  autocomplete="nilaiRencana"
-                  invalid-feedback="Rencana wajib diisi"
-                />
-              </CCol>
-              <CCol lg="6">
-                <CInput
-                  type="number"
-                  label="Realisasi"
-                  :lazy="false"
-                  :value.sync="$v.form.nilaiRealisasi.$model"
-                  :is-valid="checkIfValid('nilaiRealisasi')"
-                  placeholder="Realisasi"
-                  autocomplete="nilaiRealisasi"
-                  invalid-feedback="Realisasi wajib diisi"
-                />
-              </CCol>
-            </CRow>
-            <!-- ROW 3 -->
-            <CRow>
-              <CCol lg="6">
-                <CInput
-                  type="number"
-                  label="Yang Diaudit"
-                  :lazy="false"
-                  :value.sync="$v.form.nilaiDiaudit.$model"
-                  :is-valid="checkIfValid('nilaiDiaudit')"
-                  placeholder="Yang Diaudit"
-                  autocomplete="nilaiDiaudit"
-                  invalid-feedback="Yang Diaudit wajib diisi"
-                />
-              </CCol>
-            </CRow>
-          </div>
-
-          <div
-            class="p-3"
-            style="background: #f9fafb"
-          >
-            <h5 class="text-base font-semibold">
-              Data Wilayah
-            </h5>
-          </div>
-
-          <div class="p-3">
-            <!-- ROW 1 -->
-            <CRow>
-              <CCol lg="6">
-                <div>
-                  <label
-                    class="typo__label"
-                    for="ajax"
-                  >Kelurahan/Desa</label>
-                  <multiselect
-                    v-if="optionsKelurahan"
-                    id="ajax"
-                    v-model="valueKelurahan"
-                    label="deskripsi"
-                    track-by="id"
-                    placeholder="Ketik untuk mencari"
-                    open-direction="bottom"
-                    :options="optionsKelurahan"
-                    :searchable="true"
-                    :loading="isLoadingKelurahan"
-                    :internal-search="true"
-                    :options-limit="300"
-                    :max-height="600"
-                    :show-no-results="false"
-                    :hide-selected="true"
-                    :custom-label="viewSelectSearchKelurahan"
-                    @search-change="loadSearchKelurahan"
-                  />
-                </div>
-              </CCol>
-              <CCol lg="6">
-                <CInput
-                  :readonly="true"
-                  label="Kecamatan"
-                  :lazy="false"
-                  :value.sync="valueKecamatan"
-                  :is-valid="checkIfValid('kecamatan')"
-                  autocomplete="name"
-                  invalid-feedback="Kecamatan wajib diisi"
-                />
-              </CCol>
-            </CRow>
-            <!-- ROW 2 -->
-            <CRow>
-              <CCol lg="6">
-                <CInput
-                  :readonly="true"
-                  label="Kabupaten / Kota"
-                  :lazy="false"
-                  :value.sync="valueKabkot"
-                  :is-valid="checkIfValid('kabkot')"
-                  autocomplete="name"
-                  invalid-feedback="Kabupaten / Kota wajib diisi"
-                />
-              </CCol>
-              <CCol lg="6">
-                <CInput
-                  :readonly="true"
-                  label="Provinsi"
-                  :lazy="false"
-                  :value.sync="valueProvinsi"
-                  :is-valid="checkIfValid('provinsi')"
-                  autocomplete="name"
-                  invalid-feedback="Provinsi wajib diisi"
-                />
-              </CCol>
-            </CRow>
-
-            <CRow v-if="mode == 'edit' && editData.uploadFileLha">
-              <CCol>
-                <CButton
-                  color="danger"
-                  shape="pill"
-                  class="px-3 mb-3"
-                  size="sm"
-                  @click="onDeleteFileUpdate"
-                >
-                  Hapus File
-                </CButton>
-                <p class="mb-3">
-                  {{ 'Link File : ' + fileLha }}
-                </p>
-              </CCol>
-            </CRow>
-            <CRow
-              v-else-if="
-                (mode == 'edit' && !editData.uploadFileLha) || mode == 'create'
-              "
-            >
-              <CCol lg="6">
-                <div class="flex flex-col">
-                  <label
-                    for="file-lha"
-                    class="block mb-3"
-                  >Upload File LHA</label>
-                  <div class="flex items-center mb-4">
-                    <CSwitch
-                      class="mx-1 mr-3"
-                      color="info"
-                      variant="3d"
-                      v-bind="labelIcon"
-                      :checked.sync="isStoredLha"
-                    />
-                    <span
-                      v-if="isStoredLha"
-                    >Upload File LHA di Server SIMHPNAS</span>
-                    <span v-else> Upload File LHA di Server Internal </span>
-                  </div>
-                  <input
-                    v-if="isStoredLha"
-                    id="file-lha"
-                    type="file"
-                    name="file-lha"
-                    class="mb-4"
-                    @change="onUploadLha"
-                  >
+          <CCardBody>
+            <!-- <masked-input
+              v-model="rpRencana.$model"
+              type="text"
+              class="form-control"
+              :mask="numberMask"
+              :guide="true"
+            /> -->
+            <div class="p-3" style="background: #f9fafb">
+              <h5 class="text-base font-semibold">Data Umum LHA</h5>
+            </div>
+            <div class="p-3">
+              <!-- ROW 1 -->
+              <CRow>
+                <CCol lg="6">
                   <CInput
-                    v-else
-                    class="mb-4"
+                    label="Unit Audit"
                     :lazy="false"
-                    placeholder="http://server-anda.com/file-tl.pdf"
-                    :value.sync="fileLha"
+                    :value.sync="namaUnit"
+                    :readonly="true"
                   />
-                </div>
-              </CCol>
-            </CRow>
+                </CCol>
+                <CCol lg="6">
+                  <CInput
+                    label="Sub Unit Audit"
+                    :lazy="false"
+                    :value.sync="namaSubUnit"
+                    :readonly="true"
+                  />
+                </CCol>
+              </CRow>
 
-            <CRow>
-              <CCol lg="6">
-                <CInputCheckbox
-                  :is-valid="checkIfValid('accept')"
-                  :checked.sync="$v.form.accept.$model"
-                  label="Data yang di entry telah sesuai"
-                  invalid-feedback="Anda harus menyetujui sebelum melakukan submit"
-                  custom
-                  class="mb-4"
-                />
-              </CCol>
-            </CRow>
-          </div>
+              <!-- ROW 2 -->
+              <CRow>
+                <CCol lg="6">
+                  <CInput
+                    label="Nomor PKPT"
+                    :lazy="false"
+                    :value.sync="$v.form.noPkpt.$model"
+                    :is-valid="checkIfValid('noPkpt')"
+                    placeholder="Nomor PKPT"
+                    autocomplete="noPkpt"
+                    invalid-feedback="Nomor PKPT wajib diisi"
+                  />
+                </CCol>
+                <CCol lg="6">
+                  <CInput
+                    type="number"
+                    label="Tahun PKPT"
+                    :lazy="false"
+                    :value.sync="$v.form.tahunPkpt.$model"
+                    :is-valid="checkIfValid('tahunPkpt')"
+                    placeholder="Tahun PKPT"
+                    autocomplete="tahunPkpt"
+                    invalid-feedback="Tahun PKPT wajib diisi"
+                  />
+                </CCol>
+              </CRow>
 
-          <div class="px-3">
-            <CRow class="mb-2 view-form">
-              <CCol
-                sm="12"
-                lg="6"
-                class="mb-3"
-              >
-                <CButton
-                  v-if="mode != 'view'"
-                  variant="outline"
-                  color="dark"
-                  @click="isOpenConfirm = true"
-                >
-                  Kembali
-                </CButton>
-              </CCol>
-              <CCol
-                v-if="mode == 'create' || mode == 'edit'"
-                sm="12"
-                md="6"
-                class="content-center justify-end pr-3 mb-3"
-              >
-                <CButton
-                  class="ml-1"
-                  color="danger"
-                  :disabled="!isDirty"
-                  @click="reset"
-                >
-                  Reset
-                </CButton>
-                <CButton
-                  class="ml-1"
-                  color="success"
-                  :disabled="isValid"
-                  @click="validate"
-                >
-                  Validate
-                </CButton>
+              <!-- ROW 3 -->
+              <CRow>
+                <CCol lg="7">
+                  <CInput
+                    label="Nomor ST"
+                    :lazy="false"
+                    :value.sync="$v.form.noSt.$model"
+                    :is-valid="checkIfValid('noSt')"
+                    placeholder="Nomor ST"
+                    autocomplete="noSt"
+                    invalid-feedback="Nomor ST wajib diisi"
+                  />
+                </CCol>
+                <CCol lg="2">
+                  <div>
+                    <label class="typo__label block">Tanggal ST</label>
+                    <v-date-picker
+                      v-model="selectedDateSt"
+                      mode="single"
+                      :input-debounce="500"
+                      is-required
+                      :masks="{ input: ['DD/MM/YYYY'] }"
+                    />
+                    <!-- :masks="{ input: ['D MMM YYYY'], data: ['YYYY-MM-DD'] }" -->
+                  </div>
+                </CCol>
+              </CRow>
 
-                <CButton
-                  type="submit"
-                  color="primary"
-                  class="px-4 ml-1"
-                  :disabled="!isValid || submitted"
-                  @click="submit"
-                >
-                  <div
-                    v-if="loading"
-                    class="px-8"
-                  >
-                    <CSpinner
-                      color="white"
-                      size="sm"
-                      class="mr-2"
+              <!-- ROW 4 -->
+              <CRow>
+                <CCol lg="7">
+                  <CInput
+                    label="Nomor LHA"
+                    :lazy="false"
+                    :value.sync="$v.form.noLha.$model"
+                    :is-valid="checkIfValid('noLha')"
+                    placeholder="Nomor LHA"
+                    autocomplete="noLha"
+                    invalid-feedback="Nomor LHA wajib diisi"
+                  />
+                </CCol>
+                <CCol lg="2">
+                  <div>
+                    <label class="typo__label block">Tanggal LHA</label>
+                    <v-date-picker
+                      v-model="selectedDateLha"
+                      mode="single"
+                      :input-debounce="500"
+                      is-required
+                      :masks="{ input: ['DD/MM/YYYY'] }"
+                    />
+                    <!-- :masks="{ input: ['D MMM YYYY'] }" -->
+                  </div>
+                </CCol>
+              </CRow>
+
+              <!-- ROW 5 -->
+              <CRow class="mb-3">
+                <CCol lg="5">
+                  <div>
+                    <label class="typo__label">Institusi Yang Mengaudit</label>
+                    <multiselect
+                      v-if="optionsGroupLingkupAudit"
+                      v-model="valueGroupLingkupAudit"
+                      :options="optionsGroupLingkupAudit"
+                      :custom-label="viewSelectSearch"
+                      placeholder="Select institusi"
+                      label="deskripsi"
+                      track-by="deskripsi"
                     />
                   </div>
-                  <template v-else>
-                    Submit Data
-                  </template>
-                </CButton>
-              </CCol>
-            </CRow>
-          </div>
+                </CCol>
+                <CCol lg="5">
+                  <div>
+                    <label class="typo__label">Jenis Kegiatan Pengawasan</label>
+                    <multiselect
+                      v-if="optionsLingkupAudit"
+                      v-model="valueLingkupAudit"
+                      :options="optionsLingkupAudit"
+                      :custom-label="viewSelectSearch"
+                      placeholder="Select jenis kegiatan pengawasan"
+                      label="deskripsi"
+                      track-by="deskripsi"
+                    />
+                  </div>
+                </CCol>
+              </CRow>
+              <CRow>
+                <CCol lg="10">
+                  <CTextarea
+                    type=""
+                    label="Ringkasan LHA"
+                    :lazy="false"
+                    :value.sync="$v.form.ringkasanLha.$model"
+                    :is-valid="checkIfValid('ringkasanLha')"
+                    placeholder="Sintesa / simpulan hasil pengawasan"
+                    autocomplete="ringkasanLha"
+                    invalid-feedback="Ringkasan LHA wajib diisi"
+                  />
+                </CCol>
+              </CRow>
+              <CRow>
+                <CCol lg="6">
+                  <CInputCheckbox
+                    :is-valid="checkIfValid('flagTpk')"
+                    :checked.sync="$v.form.flagTpk.$model"
+                    label="Centang jika LHA Tindak Pidana Khusus"
+                    custom
+                    class="my-2 text-base ml-2 font-semibold lower"
+                  />
+                </CCol>
+              </CRow>
+            </div>
+
+            <div class="p-3" style="background: #f9fafb">
+              <h5 class="text-base font-semibold">Data Obrik</h5>
+            </div>
+
+            <div class="p-3">
+              <!-- ROW 1 -->
+              <CRow>
+                <CCol lg="8">
+                  <CTextarea
+                    type=""
+                    label="Judul Laporan"
+                    :lazy="false"
+                    :value.sync="$v.form.judulLaporan.$model"
+                    :is-valid="checkIfValid('judulLaporan')"
+                    placeholder="Judul Laporan"
+                    autocomplete="judulLaporan"
+                    invalid-feedback="Judul Laporan wajib diisi"
+                  />
+                </CCol>
+              </CRow>
+              <!-- ROW 2 -->
+              <CRow class="mb-3">
+                <CCol lg="5">
+                  <div>
+                    <label class="typo__label">Jenis Obrik</label>
+                    <multiselect
+                      v-if="optionsJenisObrik"
+                      v-model="valueJenisObrik"
+                      :options="optionsJenisObrik"
+                      :custom-label="viewSelectSearch"
+                      placeholder="Select jenis obrik"
+                      label="deskripsi"
+                      track-by="deskripsi"
+                    />
+                  </div>
+                </CCol>
+              </CRow>
+              <!-- ROW 3 -->
+              <CRow class="mb-3">
+                <CCol lg="4">
+                  <div>
+                    <label class="typo__label">Unit Obrik</label>
+                    <multiselect
+                      v-if="optionsUnitObrik"
+                      v-model="valueUnitObrik"
+                      :options="optionsUnitObrik"
+                      :custom-label="viewSelectSearch"
+                      placeholder="Select unit obrik"
+                      label="deskripsi"
+                      track-by="deskripsi"
+                    />
+                  </div>
+                </CCol>
+                <CCol lg="4">
+                  <div>
+                    <label class="typo__label">Bidang Obrik</label>
+                    <multiselect
+                      v-if="optionsBidangObrik"
+                      v-model="valueBidangObrik"
+                      :options="optionsBidangObrik"
+                      :custom-label="viewSelectSearch"
+                      placeholder="Select bidang obrik"
+                      label="deskripsi"
+                      track-by="deskripsi"
+                    />
+                  </div>
+                </CCol>
+                <CCol lg="4">
+                  <div>
+                    <label class="typo__label">Sub Bidang Obrik</label>
+                    <multiselect
+                      v-if="optionsSubBidangObrik"
+                      v-model="valueSubBidangObrik"
+                      :options="optionsSubBidangObrik"
+                      :custom-label="viewSelectSearch"
+                      placeholder="Select sub bidang obrik"
+                      label="deskripsi"
+                      track-by="deskripsi"
+                    />
+                  </div>
+                </CCol>
+              </CRow>
+              <!-- ROW 5 -->
+              <CRow>
+                <CCol lg="6">
+                  <CInput
+                    label="Nama Pimpinan"
+                    :lazy="false"
+                    :value.sync="$v.form.namaPimpinan.$model"
+                    :is-valid="checkIfValid('namaPimpinan')"
+                    placeholder="Nama Pimpinan"
+                    autocomplete="namaPimpinan"
+                    invalid-feedback="Nama Pimpinan wajib diisi"
+                  />
+                </CCol>
+                <CCol lg="6">
+                  <CInput
+                    label="NIP Pimpinan"
+                    :lazy="false"
+                    :value.sync="$v.form.nipPimpinan.$model"
+                    :is-valid="checkIfValid('nipPimpinan')"
+                    placeholder="NIP tanpa spasi"
+                    autocomplete="nipPimpinan"
+                    invalid-feedback="NIP Pimpinan wajib diisi maksimal 18 angka"
+                  />
+                </CCol>
+              </CRow>
+            </div>
+
+            <div class="p-3" style="background: #f9fafb">
+              <h5 class="text-base font-semibold">Data Anggaran</h5>
+            </div>
+
+            <div class="p-3">
+              <!-- ROW 1 -->
+              <CRow>
+                <CCol lg="6">
+                  <CInput
+                    label="Tahun Anggaran"
+                    :lazy="false"
+                    :value.sync="$v.form.tahunAnggaran.$model"
+                    :is-valid="checkIfValid('tahunAnggaran')"
+                    placeholder="Tahun anggaran"
+                    autocomplete="tahunAnggaran"
+                    invalid-feedback="Tahun Anggaran wajib diisi"
+                  />
+                </CCol>
+                <CCol lg="6">
+                  <div>
+                    <label class="typo__label">Jenis Anggaran</label>
+                    <multiselect
+                      v-if="optionsJenisAnggaran"
+                      v-model="valueJenisAnggaran"
+                      :options="optionsJenisAnggaran"
+                      :custom-label="viewSelectSearch"
+                      placeholder="Select jenis anggaran"
+                      label="deskripsi"
+                      track-by="deskripsi"
+                    />
+                  </div>
+                </CCol>
+              </CRow>
+              <!-- ROW 2 -->
+              <CRow>
+                <CCol lg="2">
+                  <CInput
+                    type="number"
+                    label="Rencana"
+                    :lazy="false"
+                    :value.sync="$v.form.nilaiRencana.$model"
+                    :is-valid="checkIfValid('nilaiRencana')"
+                    placeholder="Rencana"
+                    autocomplete="nilaiRencana"
+                    invalid-feedback="Rencana wajib diisi"
+                  />
+                </CCol>
+                <CCol lg="2">
+                  <CInput
+                    type="number"
+                    label="Realisasi"
+                    :lazy="false"
+                    :value.sync="$v.form.nilaiRealisasi.$model"
+                    :is-valid="checkIfValid('nilaiRealisasi')"
+                    placeholder="Realisasi"
+                    autocomplete="nilaiRealisasi"
+                    invalid-feedback="Realisasi wajib diisi"
+                  />
+                </CCol>
+                <CCol lg="2">
+                  <CInput
+                    type="number"
+                    label="Yang Diaudit"
+                    :lazy="false"
+                    :value.sync="$v.form.nilaiDiaudit.$model"
+                    :is-valid="checkIfValid('nilaiDiaudit')"
+                    placeholder="Yang Diaudit"
+                    autocomplete="nilaiDiaudit"
+                    invalid-feedback="Yang Diaudit wajib diisi"
+                  />
+                </CCol>
+              </CRow>
+            </div>
+
+            <div class="p-3" style="background: #f9fafb">
+              <h5 class="text-base font-semibold">Data Wilayah</h5>
+            </div>
+
+            <div class="p-3">
+              <!-- ROW 1 -->
+              <CRow>
+                <CCol lg="6">
+                  <div>
+                    <label class="typo__label" for="ajax">Kelurahan/Desa</label>
+                    <multiselect
+                      v-if="optionsKelurahan"
+                      id="ajax"
+                      v-model="valueKelurahan"
+                      label="deskripsi"
+                      track-by="id"
+                      placeholder="Ketik untuk mencari"
+                      open-direction="bottom"
+                      :options="optionsKelurahan"
+                      :searchable="true"
+                      :loading="isLoadingKelurahan"
+                      :internal-search="true"
+                      :options-limit="300"
+                      :max-height="600"
+                      :show-no-results="false"
+                      :hide-selected="true"
+                      :custom-label="viewSelectSearchKelurahan"
+                      @search-change="loadSearchKelurahan"
+                    />
+                  </div>
+                </CCol>
+                <CCol lg="6">
+                  <CInput
+                    :readonly="true"
+                    label="Kecamatan"
+                    :lazy="false"
+                    :value.sync="valueKecamatan"
+                    :is-valid="checkIfValid('kecamatan')"
+                    autocomplete="name"
+                    invalid-feedback="Kecamatan wajib diisi"
+                  />
+                </CCol>
+              </CRow>
+              <!-- ROW 2 -->
+              <CRow>
+                <CCol lg="6">
+                  <CInput
+                    :readonly="true"
+                    label="Kabupaten / Kota"
+                    :lazy="false"
+                    :value.sync="valueKabkot"
+                    :is-valid="checkIfValid('kabkot')"
+                    autocomplete="name"
+                    invalid-feedback="Kabupaten / Kota wajib diisi"
+                  />
+                </CCol>
+                <CCol lg="6">
+                  <CInput
+                    :readonly="true"
+                    label="Provinsi"
+                    :lazy="false"
+                    :value.sync="valueProvinsi"
+                    :is-valid="checkIfValid('provinsi')"
+                    autocomplete="name"
+                    invalid-feedback="Provinsi wajib diisi"
+                  />
+                </CCol>
+              </CRow>
+
+              <CRow v-if="mode == 'edit' && editData.uploadFileLha">
+                <CCol>
+                  <CButton
+                    color="danger"
+                    shape="pill"
+                    class="px-3 mb-3"
+                    size="sm"
+                    @click="onDeleteFileUpdate"
+                  >
+                    Hapus File
+                  </CButton>
+                  <p class="mb-3">
+                    {{ 'Link File : ' + fileLha }}
+                  </p>
+                </CCol>
+              </CRow>
+              <CRow
+                v-else-if="
+                  (mode == 'edit' && !editData.uploadFileLha) ||
+                  mode == 'create'
+                "
+              >
+                <CCol lg="6">
+                  <div class="flex flex-col">
+                    <label for="file-lha" class="block mb-3"
+                      >Upload File LHA</label
+                    >
+                    <div class="flex items-center mb-4">
+                      <CSwitch
+                        class="mx-1 mr-3"
+                        color="info"
+                        variant="3d"
+                        v-bind="labelIcon"
+                        :checked.sync="isStoredLha"
+                      />
+                      <span v-if="isStoredLha"
+                        >Upload File LHA di Server SIMHPNAS</span
+                      >
+                      <span v-else> Upload File LHA di Server Internal </span>
+                    </div>
+                    <input
+                      v-if="isStoredLha"
+                      id="file-lha"
+                      type="file"
+                      name="file-lha"
+                      class="mb-4"
+                      @change="onUploadLha"
+                    />
+                    <CInput
+                      v-else
+                      class="mb-4"
+                      :lazy="false"
+                      placeholder="http://server-anda.com/file-tl.pdf"
+                      :value.sync="fileLha"
+                    />
+                  </div>
+                </CCol>
+              </CRow>
+
+              <CRow>
+                <CCol lg="6">
+                  <CInputCheckbox
+                    :is-valid="checkIfValid('accept')"
+                    :checked.sync="$v.form.accept.$model"
+                    label="Data yang di entry telah sesuai"
+                    invalid-feedback="Anda harus menyetujui sebelum melakukan submit"
+                    custom
+                    class="mb-4"
+                  />
+                </CCol>
+              </CRow>
+            </div>
+
+            <div class="px-3">
+              <CRow class="mb-2 view-form">
+                <CCol sm="12" lg="6" class="mb-3">
+                  <CButton
+                    v-if="mode != 'view'"
+                    variant="outline"
+                    color="dark"
+                    @click="isOpenConfirm = true"
+                  >
+                    Kembali
+                  </CButton>
+                </CCol>
+                <CCol
+                  v-if="mode == 'create' || mode == 'edit'"
+                  sm="12"
+                  md="6"
+                  class="content-center justify-end pr-3 mb-3"
+                >
+                  <CButton
+                    class="ml-1"
+                    color="danger"
+                    :disabled="!isDirty"
+                    @click="reset"
+                  >
+                    Reset
+                  </CButton>
+                  <CButton
+                    class="ml-1"
+                    color="success"
+                    :disabled="isValid"
+                    @click="validate"
+                  >
+                    Validate
+                  </CButton>
+
+                  <CButton
+                    type="submit"
+                    color="primary"
+                    class="px-4 ml-1"
+                    :disabled="!isValid || submitted"
+                    @click="submit"
+                  >
+                    <div v-if="loading" class="px-8">
+                      <CSpinner color="white" size="sm" class="mr-2" />
+                    </div>
+                    <template v-else> Submit Data </template>
+                  </CButton>
+                </CCol>
+              </CRow>
+            </div>
+          </CCardBody>
         </CForm>
         <!-- </CCardBody> -->
       </CCard>
@@ -611,6 +576,7 @@ import { validationMixin } from 'vuelidate';
 import {
   required,
   minLength,
+  maxLength,
   // minValue,
   // email,
   // sameAs,
@@ -620,12 +586,15 @@ import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 import mixin from './mixin';
 import Multiselect from 'vue-multiselect';
 import { DatePicker } from 'v-calendar';
+import createNumberMask from 'text-mask-addons/dist/createNumberMask';
+import MaskedInput from 'vue-text-mask';
 
 export default {
   name: 'LhaForm',
   components: {
     ConfirmModal,
     Multiselect,
+    // MaskedInput,
     'v-date-picker': DatePicker,
   },
   mixins: [mixin, validationMixin],
@@ -668,8 +637,16 @@ export default {
       },
       isStoredLha: true,
       editData: {},
+      numberMask: createNumberMask({
+        // prefix: 'Rp. ',
+        // suffix: '',
+        includeThousandsSeparator: true,
+        thousandsSeparatorSymbol: ',',
+      }),
+      rpRencanaAnggaran: 0,
     };
   },
+  computed: {},
   computed: {
     formString() {
       return JSON.stringify(this.form, null, 4);
@@ -786,7 +763,7 @@ export default {
       // text
       namaPimpinan: { required },
       // text
-      nipPimpinan: { required },
+      nipPimpinan: { required, maxLength: maxLength(18) },
 
       // +++ Data Anggaran +++
       // number
@@ -805,7 +782,7 @@ export default {
       provinsi: { required },
 
       // number
-      tahunAnggaran: { required },
+      tahunAnggaran: { required, maxLength: maxLength(9) },
       // autocomplete
       jenisAnggaran: { required },
       // textarea

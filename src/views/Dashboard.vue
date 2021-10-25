@@ -9,11 +9,13 @@
       </CCol>
     </CRow>
     <WidgetsDropdown :data="dashData" />
+    <!-- <SamplePDF :data="dashData" /> -->
   </div>
 </template>
 
 <script>
 import WidgetsDropdown from '@/components/Widgets/WidgetsDropdown.vue';
+import SamplePDF from '@/components/Reports/Sample.vue';
 import { API_URL } from '@/utils/api.js';
 import axios from 'axios';
 
@@ -21,6 +23,7 @@ export default {
   name: 'Dashboard',
   components: {
     WidgetsDropdown,
+    // SamplePDF,
   },
   data() {
     return {

@@ -25,6 +25,11 @@
           :table-filter="{ label: 'Search: ', placeholder: 'teks..' }"
           :items-per-page-select="{ label: 'Item per halaman: ' }"
         >
+          <template #nomor="{ item }">
+            <td class="font-semibold">
+              {{ item.no + '/' + items.length }}
+            </td>
+          </template>
           <template #nomorLha="{ item }">
             <td
               v-if="clickableRows"
