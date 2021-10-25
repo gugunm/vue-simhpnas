@@ -27,7 +27,7 @@
 <script>
 import axios from 'axios';
 import { API_URL } from '@/utils/api.js';
-import MasterTable from '@/components/MasterTable';
+import MasterTable from './Table.vue';
 import BackButton from '@/components/BackButton';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 import mixin from './mixin';
@@ -73,7 +73,7 @@ export default {
         _style: 'width: 70%',
       },
     ];
-    if (localStorage.level == 0 || localStorage.level == 1) {
+    if (localStorage.level != 5 || localStorage.level != 6) {
       this.fields = [
         ...this.fields,
         {

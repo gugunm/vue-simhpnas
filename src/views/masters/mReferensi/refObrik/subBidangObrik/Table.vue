@@ -7,7 +7,7 @@
         </h4>
       </CCol>
       <CCol
-        v-if="isAddButton && (level == 0 || level == 1)"
+        v-if="isAddButton && (level != 5 || level != 6)"
         class="px-0"
         lg="12"
         sm="12"
@@ -31,8 +31,6 @@
           :items-per-page="5"
           pagination
         >
-          <!-- :clickable-rows="clickableRows"
-          @row-clicked="clickedRow" -->
           <template #id="{ item }">
             <td
               v-if="clickableRows"
