@@ -971,6 +971,38 @@ export default {
         fd.append('_method', 'PATCH');
       }
 
+      // console.log('LHA HEREE!!');
+      // console.log({
+      //   Nomor_PKPT: this.$v.form.noPkpt.$model,
+      //   Tahun_PKPT: this.$v.form.tahunPkpt.$model,
+      //   Nomor_LHA: this.$v.form.noLha.$model,
+      //   Tanggal_LHA: this.$v.form.tglLha.$model,
+      //   Nomor_ST: this.$v.form.noSt.$model,
+      //   Tanggal_ST: this.$v.form.tglSt.$model,
+      //   Kode_Grup_Lingkup_Audit: this.$v.form.groupLingkupAudit.$model,
+      //   Kode_Lingkup_Audit: this.$v.form.lingkupAudit.$model,
+      //   Kode_Jenis_Obrik: this.$v.form.jenisObrik.$model,
+      //   Kode_Unit_Obrik: this.$v.form.unitObrik.$model,
+      //   Kode_Bidang_Obrik: this.$v.form.bidangObrik.$model,
+      //   Kode_Provinsi: this.$v.form.provinsi.$model,
+      //   Kode_KabupatenKota: this.$v.form.kabkot.$model,
+      //   Kode_Kecamatan: this.$v.form.kecamatan.$model,
+      //   Kode_Kelurahan: this.$v.form.kelurahan.$model,
+      //   Judul_laporan: this.$v.form.judulLaporan.$model,
+      //   Tahun_Anggaran: this.$v.form.tahunAnggaran.$model,
+      //   Kode_Jenis_anggaran: this.$v.form.jenisAnggaran.$model,
+      //   Nama_Pimpinan: this.$v.form.namaPimpinan.$model,
+      //   NIP_Pimpinan: this.$v.form.nipPimpinan.$model,
+      //   Rencana_Anggaran: this.$v.form.nilaiRencana.$model,
+      //   Realisasi_Anggaran: this.$v.form.nilaiRealisasi.$model,
+      //   Anggaran_yang_diaudit: this.$v.form.nilaiDiaudit.$model,
+      //   Ringkasan_LHA: this.$v.form.ringkasanLha.$model,
+      //   Flag_TPK: this.convertBoolean(this.isLhaTpk),
+      //   is_stored: this.convertBoolean(this.isStoredLha),
+      //   Upload_file_LHA: this.fileLha,
+      //   Kode_Sub_Bidang_Obrik: this.valueSubBidangObrik.id,
+      // });
+
       fd.append('Nomor_PKPT', this.$v.form.noPkpt.$model);
       fd.append('Tahun_PKPT', this.$v.form.tahunPkpt.$model);
       fd.append('Nomor_LHA', this.$v.form.noLha.$model);
@@ -1002,7 +1034,7 @@ export default {
       fd.append('Anggaran_yang_diaudit', this.$v.form.nilaiDiaudit.$model);
 
       fd.append('Ringkasan_LHA', this.$v.form.ringkasanLha.$model);
-      fd.append('Flag_TPK', this.$v.form.flagTpk.$model);
+      fd.append('Flag_TPK', this.convertBoolean(this.isLhaTpk)); // this.$v.form.flagTpk.$model);
 
       // OPSIONAL
       fd.append('is_stored', this.convertBoolean(this.isStoredLha));
