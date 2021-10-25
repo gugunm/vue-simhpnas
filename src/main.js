@@ -19,15 +19,26 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import './assets/tailwind.css'
+
+import {func} from './globalFunction'
+
 library.add(fas)
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.prototype.$apiAdress = API_URL
+
+
+
 Vue.use(CoreuiVue)
 Vue.use(VueToast, {
   position: 'top'
 })
 Vue.use(vuexI18n.plugin, store);
+// Global Function
+
+Vue.prototype.$func = func
+
+
 Vue.i18n.add('en', Locales.en);
 Vue.i18n.add('pl', Locales.pl);
 let locale = 'en'

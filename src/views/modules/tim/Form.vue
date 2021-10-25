@@ -51,14 +51,13 @@
             <CRow>
               <CCol lg="6">
                 <CInput
-                  type="number"
                   label="NIP"
                   :lazy="false"
                   :value.sync="$v.form.nip.$model"
                   :is-valid="checkIfValid('nip')"
                   placeholder="NIP"
                   autocomplete="nip"
-                  invalid-feedback="NIP wajib diisi 18 angka"
+                  invalid-feedback="NIP wajib diisi"
                   :disabled="mode == 'view'"
                 />
               </CCol>
@@ -212,8 +211,8 @@ export default {
     form: {
       nip: {
         required,
-        minLength: minLength(18),
-        maxLength: maxLength(18),
+        minLength: minLength(1),
+        // maxLength: maxLength(18),
       },
 
       nama: {
@@ -325,7 +324,7 @@ export default {
       const fd = new FormData();
       if (this.mode == 'create') {
         fd.append('kode_lha', this.$route.query.idlha);
-      } else if (this.mode == 'edit'){
+      } else if (this.mode == 'edit') {
         fd.append('_method', 'PATCH');
       }
       fd.append('Kode_Peran', this.$v.form.peran.$model);

@@ -77,7 +77,7 @@
                   :is-valid="checkIfValid('nip')"
                   placeholder="NIP"
                   autocomplete="nip"
-                  invalid-feedback="NIP wajib diisi 18 angka"
+                  invalid-feedback="NIP wajib diisi"
                   :disabled="mode == 'view'"
                 />
               </CCol>
@@ -278,8 +278,8 @@ export default {
       },
       nip: {
         required,
-        minLength: minLength(18),
-        maxLength: maxLength(18),
+        minLength: minLength(1),
+        // maxLength: maxLength(18),
       },
       idJabatan: {
         required,

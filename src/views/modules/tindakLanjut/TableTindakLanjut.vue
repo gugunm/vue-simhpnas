@@ -85,7 +85,28 @@
               {{ item.nomorTl }}
             </td>
           </template>
-          <!-- <template #actions> -->
+          <template #send="{ item }">
+            <td>
+              <div class="flex justify-content-center">
+                <CRow>
+                  <CCol>
+                    <CButton
+                      :color="isTlSent(item) ? 'dark' : 'primary'"
+                      variant="outline"
+                      square
+                      size="sm"
+                      class="inline-block m-1"
+                      :disabled="isTlSent(item)"
+                      @click="onOpenSend(item)"
+                    >
+                      <span v-if="isTlSent(item)">Terkirim</span>
+                      <span v-else>Kirim</span>
+                    </CButton>
+                  </CCol>
+                </CRow>
+              </div>
+            </td>
+          </template>
           <template #actions="{ item }">
             <td class="py-2 d-flex justify-content-center">
               <CButton
@@ -144,31 +165,23 @@
               </CButton>
             </td>
           </template>
-          <template #send="{ item }">
-            <td class="text-center">
-              <CRow>
-                <CCol>
-                  <CButton
-                    color="primary"
-                    variant="outline"
-                    square
-                    size="sm"
-                    class="inline-block m-1"
-                    @click="openSendModal(item.id)"
-                  >
-                    <span>Kirim</span>
-                  </CButton>
-                </CCol>
-              </CRow>
-            </td>
-          </template>
         </CDataTable>
       </CCardBody>
     </CCard>
+    <confirm-modal
+      v-model="isOpenSend"
+      title="Kirim Laporan"
+      msg="Apakah anda yakin akan mengirim laporan ini?"
+      @close-modal="isOpenSend = false"
+      @confirm-ok="actionSend"
+    />
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+import { API_URL } from '@/utils/api.js';
+import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 import Multiselect from 'vue-multiselect';
 import mixin from './mixin';
 
@@ -176,6 +189,7 @@ export default {
   name: 'TableTindakLanjut',
   components: {
     Multiselect,
+    ConfirmModal,
   },
   filters: {
     descCamelCase(val) {
@@ -224,6 +238,7 @@ export default {
       optionsTemuan: [],
       valueRekomendasi: '',
       optionsRekomendasi: [],
+      isOpenSend: false,
     };
   },
   async mounted() {
@@ -237,6 +252,7 @@ export default {
     'on-select-lha',
     'on-select-temuan',
     'on-select-rekomendasi',
+    'on-load-tl',
   ],
   methods: {
     clickedRow(item) {
@@ -294,12 +310,54 @@ export default {
       return `${nomorLha} - ${bidangObrik}`;
     },
 
-    viewSelectSearchTemuan({ id, nomorTemuan }) {
-      return `${nomorTemuan}`;
+    viewSelectSearchTemuan({
+      id,
+      nomorTemuan,
+      subKelompokTemuan,
+      kodeSubKelompokTemuan,
+    }) {
+      return `${nomorTemuan} - (${kodeSubKelompokTemuan}) ${subKelompokTemuan} `;
     },
 
-    viewSelectSearchRekomendasi({ id, nomorRekomendasi }) {
-      return `${nomorRekomendasi}`;
+    viewSelectSearchRekomendasi({
+      id,
+      nomorRekomendasi,
+      kodeSubKelompokRekomendasi,
+      subKelompokRekomendasi,
+    }) {
+      return `${nomorRekomendasi} - (${kodeSubKelompokRekomendasi}) ${subKelompokRekomendasi}`;
+    },
+
+    isTlSent(item) {
+      if (item.flagKirim % 2 == 0) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+
+    onOpenSend(item) {
+      this.isOpenSend = true;
+      this.selectedItem = item;
+    },
+
+    async actionSend() {
+      const response = await axios({
+        method: 'PATCH',
+        baseURL: API_URL,
+        url: `/api/kirimtl/${this.selectedItem.id}`,
+        params: {
+          token: localStorage.getItem('api_token'),
+        },
+      });
+      if (response.status == 200) {
+        this.isOpenSend = false;
+        this.toastSuccess('Berhasil mengirim laporan');
+        this.selectedItem = null;
+        this.$emit('on-load-tl');
+      } else {
+        this.toastError('Terjadi kesalahan saat mengirim laporan');
+      }
     },
   },
 };

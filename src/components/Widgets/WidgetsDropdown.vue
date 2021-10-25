@@ -176,7 +176,7 @@
       <CCol sm="12" lg="4">
         <CWidgetProgress class="bg-blue-500">
           <div class="h4 m-0">
-            {{ convertToRupiah(data.NilaiTemuan) }}
+            {{ $func.convertToRupiah(data.NilaiTemuan) }}
           </div>
           <div class="card-header-actions">
             <router-link
@@ -195,7 +195,7 @@
       <CCol sm="12" lg="4">
         <CWidgetProgress class="bg-yellow-500">
           <div class="h4 m-0">
-            {{ convertToRupiah(data.NilaiTL) }}
+            {{ $func.convertToRupiah(data.NilaiTL) }}
           </div>
           <div class="card-header-actions">
             <router-link
@@ -228,24 +228,6 @@
 export default {
   name: 'TopDashboard',
   props: ['data'],
-  methods: {
-    convertToRupiah(payload) {
-      let rupiah = '';
-      if (payload) {
-        const angkarev = payload.toString().split('').reverse().join('');
-        for (var i = 0; i < angkarev.length; i++)
-          if (i % 3 == 0) rupiah += angkarev.substr(i, 3) + ',';
-        return (
-          'Rp ' +
-          rupiah
-            .split('', rupiah.length - 1)
-            .reverse()
-            .join('')
-        );
-      }
-      return 'Rp 0';
-    },
-  },
 };
 </script>
 

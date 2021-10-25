@@ -285,12 +285,22 @@ export default {
       return `${nomorLha} - ${bidangObrik}`;
     },
 
-    viewSelectSearchTemuan({ id, nomorTemuan }) {
-      return `${nomorTemuan}`;
+    viewSelectSearchTemuan({
+      id,
+      nomorTemuan,
+      subKelompokTemuan,
+      kodeSubKelompokTemuan,
+    }) {
+      return `${nomorTemuan} - (${kodeSubKelompokTemuan}) ${subKelompokTemuan} `;
     },
 
-    viewSelectSearchRekomendasi({ id, nomorRekomendasi }) {
-      return `${nomorRekomendasi}`;
+    viewSelectSearchRekomendasi({
+      id,
+      nomorRekomendasi,
+      kodeSubKelompokRekomendasi,
+      subKelompokRekomendasi,
+    }) {
+      return `${nomorRekomendasi} - (${kodeSubKelompokRekomendasi}) ${subKelompokRekomendasi}`;
     },
   },
 };

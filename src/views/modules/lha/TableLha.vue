@@ -38,6 +38,26 @@
               {{ item.nomorLha }}
             </td>
           </template>
+          <template #nilaiTemuan="{ item }">
+            <td>
+              {{ $func.convertToRupiah(item.nilaiTemuan) }}
+            </td>
+          </template>
+          <template #anggaranYangDiaudit="{ item }">
+            <td>
+              {{ $func.convertToRupiah(item.anggaranYangDiaudit) }}
+            </td>
+          </template>
+          <template #nilaiRekomendasi="{ item }">
+            <td>
+              {{ $func.convertToRupiah(item.nilaiRekomendasi) }}
+            </td>
+          </template>
+          <template #nilaiTl="{ item }">
+            <td>
+              {{ $func.convertToRupiah(item.nilaiTl) }}
+            </td>
+          </template>
           <template #send="{ item }">
             <td>
               <div class="flex justify-content-center">
@@ -263,9 +283,6 @@
       color="primary"
       :show.sync="memoModal"
     >
-      <!-- <div v-if="selectedItem">
-        {{ selectedItem.id }}
-      </div> -->
       <div class="text-right">
         <CTextarea
           rows="10"

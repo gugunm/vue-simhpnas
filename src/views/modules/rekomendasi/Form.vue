@@ -126,17 +126,24 @@
 
             <!-- ROW 5 -->
             <CRow>
-              <CCol lg="4">
+              <CCol v-if="mode == 'create'" lg="4">
                 <CInput
-                  label="Nilai Rekomendasi"
-                  :value="
-                    mode == 'view' || mode == 'edit'
-                      ? editData.nilaiRekomendasi || form.nilaiRekomendasi
-                      : $route.query.nilaitemuan
-                  "
+                  label="Nilai Temuan"
+                  :value="$route.query.nilaitemuan"
                   :disabled="true"
                 />
               </CCol>
+              <CCol lg="4">
+                <CInput
+                  label="Nilai Rekomendasi"
+                  type="number"
+                  :value.sync="$v.form.nilaiRekomendasi.$model"
+                  :disabled="mode == 'view'"
+                />
+              </CCol>
+            </CRow>
+
+            <CRow class="mb-4">
               <CCol lg="6">
                 <label class="typo__label mb-3">Pelaku</label>
                 <div class="flex items-center">
@@ -444,7 +451,6 @@ export default {
       } else if (this.mode == 'create') {
         fd.append('kode_temuan', this.$route.query.idtemuan);
         fd.append('kode_lha', this.$route.query.idlha);
-        fd.append('Nilai_Rekomendasi', this.$route.query.nilaitemuan);
       }
 
       fd.append('Nomor_Rekomendasi', this.$v.form.nomorRekomendasi.$model);
@@ -457,6 +463,7 @@ export default {
         this.$v.form.subKlpRekomendasi.$model
       );
       fd.append('Memo_Rekomendasi', this.$v.form.memoRekomendasi.$model);
+      fd.append('Nilai_Rekomendasi', this.$v.form.nilaiRekomendasi.$model);
       fd.append('Flag_Pelaku', this.$v.form.flagPelaku.$model);
 
       return fd;

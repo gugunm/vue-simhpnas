@@ -24,14 +24,6 @@ export default {
     const lha = [];
 
     for (const key in responseData) {
-      const anggaranYangDiaudit = await context.dispatch('convertToRupiah', responseData[key]["Anggaran_yang_diaudit"]);
-
-      const nilaiTemuan = await context.dispatch('convertToRupiah', responseData[key]["Total_Nilai_Temuan"]);  
-
-      const nilaiRekomendasi = await context.dispatch('convertToRupiah', responseData[key]["Total_Nilai_Rekomendasi"]);  
-
-      const nilaiTl = await context.dispatch('convertToRupiah', responseData[key]["Total_Nilai_Tindak_Lanjut"]);
-
       const data = {
         id: responseData[key]["kode_lha"],
         nomorLha: responseData[key]["Nomor_LHA"],
@@ -53,12 +45,12 @@ export default {
         flagTpk: responseData[key]["Flag_TPK"],
         flagKirim: responseData[key]["Flag_kirim"],
         jumlahTemuan: responseData[key]["Jumlah_Temuan"],
-        nilaiTemuan,
+        nilaiTemuan: responseData[key]["Total_Nilai_Temuan"],
         jumlahRekomendasi: responseData[key]["Jumlah_Rekomendasi"],
-        nilaiRekomendasi,
+        nilaiRekomendasi: responseData[key]["Total_Nilai_Rekomendasi"],
         jumlahTl: responseData[key]["Jumlah_Tindak_Lanjut"],
-        nilaiTl,
-        anggaranYangDiaudit,
+        nilaiTl: responseData[key]["Total_Nilai_Tindak_Lanjut"],
+        anggaranYangDiaudit: responseData[key]["Anggaran_yang_diaudit"],
         flagDalnis: responseData[key]["Flag_Dalnis"],
         flagDaltu: responseData[key]["Flag_Daltu"],
         flagAdmin: responseData[key]["Flag_Admin"],
@@ -68,17 +60,6 @@ export default {
 
     context.commit('setLha', lha);
     context.commit('setFetchTimestamp');
-  },
-
-
-  async convertToRupiah(context, payload) {
-    let rupiah = '';
-    if(payload){
-      const angkarev = payload.toString().split('').reverse().join('');
-      for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+',';
-      return 'Rp '+rupiah.split('',rupiah.length-1).reverse().join('');
-    }
-    return 'Rp 0'
   },
 
   async loadLhaById(context, payload) {

@@ -40,6 +40,22 @@
           </CCol>
         </CRow>
       </CCardHeader>
+      <CRow v-if="valueTemuan" class="px-3 pt-3">
+        <CCol lg="2">
+          <p class="text-base mb-1">Nilai Temuan</p>
+          <p>{{ $func.convertToRupiah(valueTemuan.nilaiTemuan) }}</p>
+        </CCol>
+        <CCol lg="3" class="border-r">
+          <p class="text-base mb-1">Total Nilai Rekomendasi</p>
+          <p>{{ $func.convertToRupiah(valueTemuan.jumlahSaldoRekomendasi) }}</p>
+        </CCol>
+        <CCol lg="7">
+          <p class="text-base mb-1">Memo Temuan</p>
+          <p class="break-words">
+            {{ valueTemuan.memoTemuan }}
+          </p>
+        </CCol>
+      </CRow>
       <CCol>
         <CButton class="px-4 mt-4" color="info" @click="openCreateModal">
           <CIcon name="cil-plus" class="my-0 mb-1 mr-1" /> Tambah
@@ -236,8 +252,13 @@ export default {
     viewSelectSearchLha({ id, nomorLha, bidangObrik }) {
       return `${nomorLha} - ${bidangObrik}`;
     },
-    viewSelectSearchTemuan({ id, nomorTemuan }) {
-      return `${nomorTemuan}`;
+    viewSelectSearchTemuan({
+      id,
+      nomorTemuan,
+      subKelompokTemuan,
+      kodeSubKelompokTemuan,
+    }) {
+      return `${nomorTemuan} - (${kodeSubKelompokTemuan}) ${subKelompokTemuan} `;
     },
   },
 };

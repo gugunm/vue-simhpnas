@@ -55,6 +55,11 @@
               {{ item.nomorTemuan }}
             </td>
           </template>
+          <template #nilaiTemuan="{ item }">
+            <td>
+              {{ $func.convertToRupiah(item.nilaiTemuan) }}
+            </td>
+          </template>
           <!-- <template #actions> -->
           <template #actions="{ item }">
             <td class="py-2 flex flex-wrap justify-content-center">

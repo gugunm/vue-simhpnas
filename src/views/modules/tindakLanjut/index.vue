@@ -13,6 +13,7 @@
       @on-select-lha="onSelectLha"
       @on-select-temuan="onSelectTemuan"
       @on-select-rekomendasi="onSelectRekomendasi"
+      @on-load-tl="onLoadTl"
     />
     <confirm-modal
       v-model="isDeleteConfirm"
@@ -58,6 +59,9 @@ const fields = [
     key: 'subKelompokTl',
     label: 'Kelompok TL',
   },
+];
+
+const fieldsKtOperator = [
   {
     key: 'send',
     label: 'Kirim',
@@ -65,6 +69,28 @@ const fields = [
   },
   {
     key: 'actions',
+    label: 'Aksi',
+    _style: 'width: 10%',
+  },
+];
+
+const fieldsDalnisDaltu = [
+  {
+    key: 'memoDalnisDaltu',
+    label: 'Memo',
+    _style: 'width: 10%',
+  },
+  {
+    key: 'actionsDalnisDaltu',
+    label: 'Aksi',
+    _style: 'width: 10%',
+  },
+];
+
+const fieldsAdmin = [
+  {
+    key: 'actionsAdmin',
+    label: 'Aksi',
     _style: 'width: 10%',
   },
 ];
@@ -79,16 +105,27 @@ export default {
   data() {
     return {
       items: '',
-      fields,
+      fields: [],
       isDeleteConfirm: false,
       idToDelete: null,
       lha: {},
       temuan: {},
       rekomendasi: {},
+      level: '',
     };
   },
   async mounted() {
     await this.loadTindakLanjut();
+    this.level = localStorage.level;
+    if (this.level == 2) {
+      this.fields = [...fields, ...fieldsAdmin];
+    } else if (this.level == 3 || this.level == 4) {
+      this.fields = [...fields, ...fieldsKtOperator];
+    } else if (this.level == 5 || this.level == 6) {
+      this.fields = [...fields, ...fieldsDalnisDaltu];
+    } else {
+      this.fields = fields;
+    }
   },
   methods: {
     openDetail(item) {
@@ -170,6 +207,10 @@ export default {
         this.error = error.message || 'Something went wrong!';
       }
       this.loading = false;
+    },
+
+    async onLoadTl() {
+      await this.loadTindakLanjut();
     },
   },
 };

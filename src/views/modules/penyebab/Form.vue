@@ -332,7 +332,7 @@ export default {
 
     appendToFormData() {
       const fd = new FormData();
-      if (this.mode == 'view') {
+      if (this.mode == 'create') {
         fd.append('kode_temuan', this.$route.query.idtemuan);
         fd.append('kode_lha', this.$route.query.idlha);
       } else if (this.mode == 'edit') {
