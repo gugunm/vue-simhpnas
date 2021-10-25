@@ -113,7 +113,10 @@
             </td>
           </template>
           <template #actions="{ item }">
-            <td class="py-2 d-flex justify-content-center">
+            <td v-if="isTlSent(item)" class="text-center">
+              <p>No Actions</p>
+            </td>
+            <td v-else class="py-2 d-flex justify-content-center">
               <CButton
                 v-if="isEditButton"
                 v-c-tooltip="{
