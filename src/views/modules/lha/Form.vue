@@ -72,7 +72,7 @@
                   invalid-feedback="Nomor ST wajib diisi"
                 />
               </CCol>
-              <CCol lg="5">
+              <CCol lg="2">
                 <div>
                   <label class="typo__label block">Tanggal ST</label>
                   <v-date-picker
@@ -80,8 +80,9 @@
                     mode="single"
                     :input-debounce="500"
                     is-required
-                    :masks="{ input: ['D MMM YYYY'], data: ['YYYY-MM-DD'] }"
+                    :masks="{ input: ['DD/MM/YYYY'], data: ['YYYY-MM-DD'] }"
                   />
+                  <!-- :masks="{ input: ['D MMM YYYY'], data: ['YYYY-MM-DD'] }" -->
                 </div>
               </CCol>
             </CRow>
@@ -99,7 +100,7 @@
                   invalid-feedback="Nomor LHA wajib diisi"
                 />
               </CCol>
-              <CCol lg="5">
+              <CCol lg="2">
                 <div>
                   <label class="typo__label block">Tanggal LHA</label>
                   <v-date-picker
@@ -107,8 +108,9 @@
                     mode="single"
                     :input-debounce="500"
                     is-required
-                    :masks="{ input: ['D MMM YYYY'] }"
+                    :masks="{ input: ['DD/MM/YYYY'], data: ['YYYY-MM-DD'] }"
                   />
+                  <!-- :masks="{ input: ['D MMM YYYY'] }" -->
                 </div>
               </CCol>
             </CRow>

@@ -85,6 +85,11 @@
               {{ item.nomorTl }}
             </td>
           </template>
+          <template #nilaiTl="{ item }">
+            <td>
+              {{ $func.convertToRupiah(item.nilaiTl) }}
+            </td>
+          </template>
           <template #send="{ item }">
             <td>
               <div class="flex justify-content-center">
@@ -165,6 +170,34 @@
               </CButton>
             </td>
           </template>
+          <template #actionsAdmin="{ item }">
+            <td>
+              <div class="flex flex-wrap justify-content-center">
+                <CButton
+                  color="info"
+                  variant="fill"
+                  square
+                  size="sm"
+                  class="m-1 w-full"
+                  :disabled="statusAdmin(item)"
+                  @click="onPostingTl(item)"
+                >
+                  <span>Posting</span>
+                </CButton>
+                <CButton
+                  color="warning"
+                  variant="outline"
+                  square
+                  size="sm"
+                  class="m-1 w-full"
+                  :disabled="!statusAdmin(item)"
+                  @click="onUnPostTl(item)"
+                >
+                  <span>Unlock</span>
+                </CButton>
+              </div>
+            </td>
+          </template>
         </CDataTable>
       </CCardBody>
     </CCard>
@@ -174,6 +207,20 @@
       msg="Apakah anda yakin akan mengirim laporan ini?"
       @close-modal="isOpenSend = false"
       @confirm-ok="actionSend"
+    />
+    <confirm-modal
+      v-model="isOpenPosting"
+      title="Posting TL"
+      msg="Apakah anda yakin akan memposting laporan ini?"
+      @close-modal="isOpenPosting = false"
+      @confirm-ok="actionPostingTl"
+    />
+    <confirm-modal
+      v-model="isOpenUnPost"
+      title="Buka Tl"
+      msg="Apakah anda yakin akan membuka laporan ini?"
+      @close-modal="isOpenUnPost = false"
+      @confirm-ok="actionUnPostTl"
     />
   </div>
 </template>
@@ -239,6 +286,8 @@ export default {
       valueRekomendasi: '',
       optionsRekomendasi: [],
       isOpenSend: false,
+      isOpenPosting: false,
+      isOpenUnPost: false,
     };
   },
   async mounted() {
@@ -357,6 +406,62 @@ export default {
         this.$emit('on-load-tl');
       } else {
         this.toastError('Terjadi kesalahan saat mengirim laporan');
+      }
+    },
+
+    statusAdmin(item) {
+      if (item.flagAdmin % 2 == 0) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+
+    onPostingTl(item) {
+      this.isOpenPosting = true;
+      this.selectedItem = item;
+    },
+
+    onUnPostTl(item) {
+      this.isOpenUnPost = true;
+      this.selectedItem = item;
+    },
+
+    async actionPostingTl() {
+      const response = await axios({
+        method: 'PATCH',
+        baseURL: API_URL,
+        url: `/api/adminactionacctl/${this.selectedItem.id}`,
+        params: {
+          token: localStorage.getItem('api_token'),
+        },
+      });
+      if (response.status == 200) {
+        this.isOpenPosting = false;
+        this.toastSuccess('Berhasil memposting TL');
+        this.selectedItem = null;
+        this.$emit('on-load-tl');
+      } else {
+        this.toastError('Terjadi kesalahan saat posting laporan');
+      }
+    },
+
+    async actionUnPostTl() {
+      const response = await axios({
+        method: 'PATCH',
+        baseURL: API_URL,
+        url: `/api/adminactionunpostingtl/${this.selectedItem.id}`,
+        params: {
+          token: localStorage.getItem('api_token'),
+        },
+      });
+      if (response.status == 200) {
+        this.isOpenUnPost = false;
+        this.toastSuccess('Berhasil membuka TL');
+        this.selectedItem = null;
+        this.$emit('on-load-tl');
+      } else {
+        this.toastError('Terjadi kesalahan saat membuka laporan');
       }
     },
   },
