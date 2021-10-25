@@ -173,6 +173,10 @@ export default {
           idLha: this.lha.id,
         });
         this.items = this.$store.getters['module_temuan/temuan'];
+
+        if (this.items.length == 0) {
+          this.items = [];
+        }
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }

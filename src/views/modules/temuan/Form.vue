@@ -493,7 +493,7 @@ export default {
                 this.$router.push({
                   path: '/temuan',
                   query: {
-                    filterlha: this.editData.kodeLha,
+                    filterlha: this.editData.idLha,
                   },
                 });
                 this.toastSuccess(
