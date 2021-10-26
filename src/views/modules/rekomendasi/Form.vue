@@ -381,6 +381,10 @@ export default {
                 this.loading = false;
                 this.$router.push({
                   path: '/rekomendasi',
+                  query: {
+                    filterlha: this.$route.query.idlha,
+                    filtertemuan: this.$route.query.idtemuan,
+                  },
                 });
                 this.toastSuccess(
                   'Berhasil menyimpan data dengan ID ' +
@@ -404,6 +408,10 @@ export default {
                 this.loading = false;
                 this.$router.push({
                   path: '/rekomendasi',
+                  query: {
+                    filterlha: this.editData.kodeLha,
+                    filtertemuan: this.editData.kodeTemuan,
+                  },
                 });
                 this.toastSuccess(
                   'Berhasil edit data dengan ID ' +

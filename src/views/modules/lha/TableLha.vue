@@ -43,6 +43,16 @@
               {{ item.nomorLha }}
             </td>
           </template>
+          <template #bidangObrik="{ item }">
+            <div style="width: 200px">
+              <td>{{ item.bidangObrik }}</td>
+            </div>
+          </template>
+          <!-- <template #judulLaporan="{ item }">
+            <div style="width: 200px">
+              <td>{{ item.judulLaporan }}</td>
+            </div>
+          </template> -->
           <template #nilaiTemuan="{ item }">
             <td>
               {{ $func.convertToRupiah(item.nilaiTemuan) }}
@@ -73,12 +83,12 @@
                       variant="outline"
                       square
                       size="sm"
-                      class="inline-block m-1"
+                      class="block"
                       :disabled="isLhaSent(item)"
                       @click="openSendModal(item.id)"
                     >
-                      <span v-if="isLhaSent(item)">Terkirim</span>
-                      <span v-else>Kirim</span>
+                      <p v-if="isLhaSent(item)">Terkirim</p>
+                      <p v-else class="px-2">Kirim</p>
                     </CButton>
                   </CCol>
                 </CRow>
@@ -90,114 +100,24 @@
               <div v-if="isLhaSent(item)">
                 <p>No Actions</p>
               </div>
-              <div v-else class="flex flex-wrap justify-content-center">
-                <CButton
-                  v-c-tooltip="{
-                    content: '+ Temuan',
-                    placement: 'left',
-                  }"
-                  color="info"
-                  variant="outline"
-                  square
-                  size="sm"
-                  class="inline-block m-1"
-                  @click="onAddTemuan(item)"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2h-1.528A6 6 0 004 9.528V4z"
-                    />
-                    <path
-                      fill-rule="evenodd"
-                      d="M8 10a4 4 0 00-3.446 6.032l-1.261 1.26a1 1 0 101.414 1.415l1.261-1.261A4 4 0 108 10zm-2 4a2 2 0 114 0 2 2 0 01-4 0z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
-                </CButton>
-                <CButton
-                  v-c-tooltip="{
-                    content: '+ Tim Audit',
-                    placement: 'left',
-                  }"
-                  color="success"
-                  variant="outline"
-                  square
-                  size="sm"
-                  class="inline-block m-1"
-                  @click="onAddTim(item)"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"
-                    />
-                  </svg>
-                  <!-- <p>Temuan</p> -->
-                </CButton>
-
-                <CButton
-                  v-if="isEditButton"
-                  v-c-tooltip="{
-                    content: 'Edit LHA',
-                    placement: 'left',
-                  }"
-                  color="warning"
-                  variant="outline"
-                  square
-                  size="sm"
-                  class="m-1 inline-block"
-                  @click="openEditModal(item)"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
-                    />
-                    <path
-                      fill-rule="evenodd"
-                      d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
-                </CButton>
-                <CButton
-                  v-if="isDeleteButton"
-                  v-c-tooltip="{
-                    content: 'Hapus LHA',
-                    placement: 'left',
-                  }"
-                  color="danger"
-                  variant="outline"
-                  size="sm"
-                  class="m-1 inline-block"
-                  @click="openDeleteModal(item.id)"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
-                </CButton>
+              <div v-else>
+                <CDropdown color="link" size="lg" :caret="true" class="p-0">
+                  <template #toggler-content>
+                    <font-awesome-icon icon="cog" />
+                  </template>
+                  <CDropdownItem @click="onAddTemuan(item)">
+                    <p>Tambah <b>Temuan</b></p>
+                  </CDropdownItem>
+                  <CDropdownItem @click="onAddTim(item)">
+                    <p>Tambah <b>Tim Audit</b></p>
+                  </CDropdownItem>
+                  <CDropdownItem @click="openEditModal(item)">
+                    <p>Edit LHA</p>
+                  </CDropdownItem>
+                  <CDropdownItem @click="openDeleteModal(item.id)">
+                    <p>Hapus LHA</p>
+                  </CDropdownItem>
+                </CDropdown>
               </div>
             </td>
           </template>

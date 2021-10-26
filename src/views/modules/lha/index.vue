@@ -73,10 +73,6 @@ import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 // },
 const fields = [
   {
-    key: 'nomor',
-    label: 'No',
-  },
-  {
     key: 'nomorLha',
     label: 'Nomor LHA',
   },
@@ -87,11 +83,11 @@ const fields = [
   {
     key: 'bidangObrik',
     label: 'Nama Obrik',
-    _style: 'width: 20%',
+    // _style: 'width: 30%',
   },
   {
     key: 'judulLaporan',
-    _style: 'width: 22%',
+    // _style: 'width: 22%',
   },
 
   {
@@ -127,17 +123,25 @@ const fields = [
 
 const fieldsKtOperator = [
   {
-    key: 'send',
-    label: 'Kirim',
+    key: 'nomor',
+    label: 'No',
   },
   {
     key: 'actions',
     label: 'Aksi',
-    _style: 'width: 12%',
+    _style: 'width: 20%',
+  },
+  {
+    key: 'send',
+    label: 'Kirim',
   },
 ];
 
 const fieldsDalnisDaltu = [
+  {
+    key: 'nomor',
+    label: 'No',
+  },
   {
     key: 'memoDalnisDaltu',
     label: 'Memo',
@@ -151,6 +155,10 @@ const fieldsDalnisDaltu = [
 ];
 
 const fieldsAdmin = [
+  {
+    key: 'nomor',
+    label: 'No',
+  },
   {
     key: 'actionsAdmin',
     label: 'Aksi',
@@ -180,11 +188,11 @@ export default {
     await this.loadLha();
     this.level = localStorage.level;
     if (this.level == 2) {
-      this.fields = [...fields, ...fieldsAdmin];
+      this.fields = [...fieldsAdmin, ...fields];
     } else if (this.level == 3 || this.level == 4) {
-      this.fields = [...fields, ...fieldsKtOperator];
+      this.fields = [...fieldsKtOperator, ...fields];
     } else if (this.level == 5 || this.level == 6) {
-      this.fields = [...fields, ...fieldsDalnisDaltu];
+      this.fields = [...fieldsDalnisDaltu, ...fields];
     } else {
       this.fields = fields;
     }

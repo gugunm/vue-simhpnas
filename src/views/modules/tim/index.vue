@@ -6,7 +6,6 @@
       :fields="fields"
       :clickable-rows="true"
       :is-edit-button="true"
-      :id-lha="idLha"
       :filterlha="$route.query.filterlha"
       @clicked-row="openDetail"
       @open-create-modal="openCreate"
@@ -14,6 +13,7 @@
       @open-delete-modal="openDeleteModal"
       @on-select-lha="onSelectLha"
     />
+    <!-- :id-lha="idLha" -->
     <confirm-modal
       v-model="isDeleteConfirm"
       title="Hapus data"
@@ -138,19 +138,19 @@ export default {
         this.toastError(error.message);
       }
     },
-    async loadTim(refresh = false) {
-      this.loading = true;
-      try {
-        await this.$store.dispatch('module_tim/loadTim', {
-          forceRefresh: refresh,
-          idLha: this.lha.id,
-        });
-        this.items = this.$store.getters['module_tim/tim'];
-      } catch (error) {
-        this.error = error.message || 'Something went wrong!';
-      }
-      this.loading = false;
-    },
+    // async loadTim(refresh = false) {
+    //   this.loading = true;
+    //   try {
+    //     await this.$store.dispatch('module_tim/loadTim', {
+    //       forceRefresh: refresh,
+    //       idLha: this.lha.id,
+    //     });
+    //     this.items = this.$store.getters['module_tim/tim'];
+    //   } catch (error) {
+    //     this.error = error.message || 'Something went wrong!';
+    //   }
+    //   this.loading = false;
+    // },
   },
 };
 </script>

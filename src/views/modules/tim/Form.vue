@@ -6,6 +6,23 @@
         <h3 v-else-if="mode == 'view'">Detail Tim Audit</h3>
         <h3 v-else>Edit Tim Audit</h3>
       </div>
+      <div v-if="mode == 'create'" class="mb-4">
+        <CAlert
+          v-if="items.length > 0"
+          color="info"
+          close-button
+          :show.sync="alertMembers"
+        >
+          <p class="text-sm font-semibold">Tim audit yang telah di entry</p>
+          <div class="pl-4 pt-2">
+            <ol class="list-decimal text-sm">
+              <li v-for="item in items" :key="item.id" class="leading-loose">
+                {{ item.nama }} - ({{ item.kodePeran }}) {{ item.peran }}
+              </li>
+            </ol>
+          </div>
+        </CAlert>
+      </div>
       <CCard>
         <!-- <CCardBody> -->
         <CForm>
@@ -96,8 +113,9 @@
                   v-if="mode != 'view'"
                   variant="outline"
                   color="dark"
-                  @click="isOpenConfirm = true"
+                  @click="$router.go(-1)"
                 >
+                  <!-- @click="isOpenConfirm = true" -->
                   Kembali
                 </CButton>
               </CCol>
@@ -142,11 +160,11 @@
         <!-- </CCardBody> -->
       </CCard>
     </CCol>
-    <confirm-modal
+    <!-- <confirm-modal
       v-model="isOpenConfirm"
       @close-modal="isOpenConfirm = false"
       @confirm-ok="$router.go(-1)"
-    />
+    /> -->
   </CRow>
 </template>
 
@@ -155,18 +173,18 @@
 <script>
 import { validationMixin } from 'vuelidate';
 import { required, minLength, maxLength } from 'vuelidate/lib/validators';
-import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
+// import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 import mixin from './mixin';
 import Multiselect from 'vue-multiselect';
 
 export default {
   name: 'LhaForm',
   components: {
-    ConfirmModal,
+    // ConfirmModal,
     Multiselect,
   },
   mixins: [validationMixin, mixin],
-  props: ['mode', 'selectedItem', 'idTim'],
+  props: ['mode', 'selectedItem', 'idTim', 'items'],
   data() {
     return {
       form: this.getEmptyForm(),
@@ -176,6 +194,7 @@ export default {
       valuePeran: '',
       optionsPeran: [],
       editData: {},
+      alertMembers: true,
     };
   },
   computed: {
@@ -203,7 +222,6 @@ export default {
       const dataPeran = this.optionsPeran.filter((peran) => {
         return peran.kodePeran == this.form.peran;
       });
-
       this.valuePeran = dataPeran[0];
     }
   },
@@ -261,16 +279,20 @@ export default {
             if (responseData) {
               setTimeout(() => {
                 this.loading = false;
-                this.$router.push({
-                  path: '/tim-audit',
-                  query: {
-                    filterlha: this.$route.query.idlha,
-                  },
-                });
+                // this.$router.push({
+                //   name: 'module-create-tim',
+                //   query: {
+                //     idlha: this.$route.query.idlha,
+                //     nolha: this.$route.query.nolha,
+                //   },
+                // });
+                this.$emit('on-load-tim');
                 this.toastSuccess(
                   'Berhasil menyimpan data dengan ID ' + responseData.Kode_Peran
                 );
               }, 500);
+              this.reset();
+              await this.loadPeran();
             }
           } else if (this.mode == 'edit') {
             this.loading = true;
@@ -315,6 +337,9 @@ export default {
       this.form = this.getEmptyForm();
       this.submitted = false;
       this.$v.$reset();
+
+      this.valuePeran = '';
+      this.optionsPeran = [];
     },
 
     getEmptyForm() {

@@ -6,6 +6,8 @@
       :fields="fields"
       :clickable-rows="true"
       :is-edit-button="true"
+      :filterlha="$route.query.filterlha"
+      :filtertemuan="$route.query.filtertemuan"
       @clicked-row="openDetail"
       @open-create-modal="openCreate"
       @open-edit-modal="openEdit"
@@ -118,6 +120,13 @@ export default {
 
     async onSelectTemuan(selectedTemuan) {
       this.temuan = selectedTemuan;
+      this.$router.push({
+        path: '/penyebab',
+        query: {
+          filterlha: this.lha.id,
+          filtertemuan: this.temuan.id ? this.temuan.id : '',
+        },
+      });
       await this.loadPenyebab();
     },
 
@@ -146,11 +155,15 @@ export default {
     async loadPenyebab(refresh = false) {
       // this.loading = true;
       try {
-        await this.$store.dispatch('module_penyebab/loadPenyebab', {
-          idTemuan: this.temuan.id,
-          forceRefresh: refresh,
-        });
-        this.items = this.$store.getters['module_penyebab/penyebab'];
+        if (this.temuan.length != 0) {
+          await this.$store.dispatch('module_penyebab/loadPenyebab', {
+            idTemuan: this.temuan.id,
+            forceRefresh: refresh,
+          });
+          this.items = this.$store.getters['module_penyebab/penyebab'];
+        } else {
+          this.items = [];
+        }
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }

@@ -251,6 +251,8 @@ export default {
       type: Boolean,
       default: true,
     },
+    filterlha: String,
+    filtertemuan: String,
   },
   data() {
     return {
@@ -286,22 +288,38 @@ export default {
     },
     async selectLhaMounted() {
       await this.loadLha();
-      this.valueLha = this.optionsLha[0];
+      if (this.filterlha && this.filtertemuan) {
+        this.valueLha = this.optionsLha.filter(
+          (data) => data.id == this.filterlha
+        )[0];
+      } else {
+        this.valueLha = this.optionsLha[0];
+      }
       this.$emit('on-select-lha', this.valueLha);
 
       await this.loadTemuan({ id: this.valueLha.id });
-      this.valueTemuan = this.optionsTemuan[0];
-      this.$emit('on-select-temuan', this.valueTemuan);
+      if (this.filterlha && this.filtertemuan) {
+        this.valueTemuan = this.optionsTemuan.filter(
+          (data) => data.id == this.filtertemuan
+        )[0];
+      } else {
+        this.valueTemuan = this.optionsTemuan[0];
+      }
+
+      this.onSelectTemuan();
     },
     async onSelectLha(val) {
-      this.$emit('on-select-lha', val);
-
       await this.loadTemuan({ id: val.id });
+
       this.valueTemuan = this.optionsTemuan[0];
-      this.$emit('on-select-temuan', this.valueTemuan);
+      this.$emit('on-select-lha', val);
+      this.onSelectTemuan();
     },
     onSelectTemuan(val) {
       this.$emit('on-select-temuan', val);
+      if (!val) {
+        this.$emit('on-select-temuan', this.valueTemuan);
+      }
     },
     viewSelectSearchLha({ id, nomorLha, bidangObrik }) {
       return `${nomorLha} - ${bidangObrik}`;

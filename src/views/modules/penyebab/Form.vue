@@ -298,6 +298,10 @@ export default {
                 this.loading = false;
                 this.$router.push({
                   path: '/penyebab',
+                  query: {
+                    filterlha: this.editData.kodeLha,
+                    filtertemuan: this.editData.kodeTemuan,
+                  },
                 });
                 this.toastSuccess(
                   'Berhasil edit data dengan ID ' + responseData.Nomor_Penyebab

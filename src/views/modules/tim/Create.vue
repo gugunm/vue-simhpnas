@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Form mode="create" />
+    <Form mode="create" :items="items" @on-load-tim="loadTim" />
   </div>
 </template>
 
@@ -16,7 +16,11 @@ export default {
   data() {
     return {
       loading: false,
+      items: '',
     };
+  },
+  async mounted() {
+    this.loadTim();
   },
 };
 </script>

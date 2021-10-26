@@ -260,15 +260,18 @@ export default {
     openDeleteModal(id) {
       this.$emit('open-delete-modal', id);
     },
+
     onSelectLha(val) {
-      this.$emit('on-select-lha', val);
       if (!val) {
         this.$emit('on-select-lha', this.valueLha);
       }
+      this.$emit('on-select-lha', val);
     },
+
     viewSelectSearch({ id, nomorLha, bidangObrik }) {
       return `${nomorLha} - ${bidangObrik}`;
     },
+
     onAddPenyebab(item) {
       this.$router.push({
         name: 'module-create-penyebab',

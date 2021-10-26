@@ -103,7 +103,7 @@ export default {
     };
   },
   async mounted() {
-    await this.loadTemuan();
+    // await this.loadTemuan();
   },
   methods: {
     openDetail(item) {
@@ -174,9 +174,8 @@ export default {
         });
         this.items = this.$store.getters['module_temuan/temuan'];
 
-        if (this.items.length == 0) {
-          this.items = [];
-        }
+        console.log('TEMUAN HEREE!!');
+        console.log(this.items);
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }

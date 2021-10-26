@@ -6,6 +6,8 @@
       :fields="fields"
       :clickable-rows="true"
       :is-edit-button="true"
+      :filterlha="$route.query.filterlha"
+      :filtertemuan="$route.query.filtertemuan"
       @clicked-row="openDetail"
       @open-create-modal="openCreate"
       @open-edit-modal="openEdit"
@@ -118,6 +120,13 @@ export default {
 
     async onSelectTemuan(selectedTemuan) {
       this.temuan = selectedTemuan;
+      this.$router.push({
+        path: '/rekomendasi',
+        query: {
+          filterlha: this.lha.id,
+          filtertemuan: this.temuan.id,
+        },
+      });
       await this.loadRekomendasi();
     },
 

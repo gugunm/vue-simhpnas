@@ -6,6 +6,7 @@ export default {
     const response = await axios({
       method: 'GET',
       baseURL: API_URL,
+      headers: { "Content-Type": "application/json" },
       url: '/api/temuan',
       params: {
         kode_lha: payload.idLha,

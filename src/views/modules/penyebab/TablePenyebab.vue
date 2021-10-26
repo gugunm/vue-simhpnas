@@ -41,15 +41,11 @@
         </CRow>
       </CCardHeader>
       <CRow v-if="valueTemuan" class="px-3 pt-3">
-        <CCol lg="2">
+        <CCol lg="2" class="border-r">
           <p class="text-base mb-1">Nilai Temuan</p>
           <p>{{ $func.convertToRupiah(valueTemuan.nilaiTemuan) }}</p>
         </CCol>
-        <CCol lg="3" class="border-r">
-          <p class="text-base mb-1">Total Nilai Rekomendasi</p>
-          <p>{{ $func.convertToRupiah(valueTemuan.jumlahSaldoRekomendasi) }}</p>
-        </CCol>
-        <CCol lg="7">
+        <CCol lg="10">
           <p class="text-base mb-1">Memo Temuan</p>
           <p class="break-words">
             {{ valueTemuan.memoTemuan }}
@@ -198,6 +194,8 @@ export default {
       type: Boolean,
       default: true,
     },
+    filterlha: String,
+    filtertemuan: String,
   },
   data() {
     return {
@@ -233,22 +231,49 @@ export default {
     },
     async selectLhaMounted() {
       await this.loadLha();
-      this.valueLha = this.optionsLha[0];
+      if (this.filterlha) {
+        //&& this.filtertemuan) {
+        this.valueLha = this.optionsLha.filter(
+          (data) => data.id == this.filterlha
+        )[0];
+      } else {
+        this.valueLha = this.optionsLha[0];
+      }
       this.$emit('on-select-lha', this.valueLha);
 
       await this.loadTemuan({ id: this.valueLha.id });
-      this.valueTemuan = this.optionsTemuan[0];
-      this.$emit('on-select-temuan', this.valueTemuan);
+      if (this.optionsTemuan.length > 0 && this.filterlha) {
+        this.valueTemuan = this.optionsTemuan.filter(
+          (data) => data.id == this.filtertemuan
+        )[0];
+        this.onSelectTemuan();
+      } else {
+        this.valueTemuan = '';
+        this.$emit('on-select-temuan', []);
+      }
     },
     async onSelectLha(val) {
       this.$emit('on-select-lha', val);
+
       await this.loadTemuan({ id: val.id });
-      this.valueTemuan = this.optionsTemuan[0];
-      this.$emit('on-select-temuan', this.valueTemuan);
+      console.log('TEMUAN HEREE!!');
+      console.log(this.optionsTemuan);
+      if (this.optionsTemuan.length > 0 && this.filterlha) {
+        this.valueTemuan = this.optionsTemuan[0];
+        this.onSelectTemuan();
+      } else {
+        this.valueTemuan = '';
+        this.$emit('on-select-temuan', []);
+      }
     },
+
     onSelectTemuan(val) {
       this.$emit('on-select-temuan', val);
+      if (!val) {
+        this.$emit('on-select-temuan', this.valueTemuan);
+      }
     },
+
     viewSelectSearchLha({ id, nomorLha, bidangObrik }) {
       return `${nomorLha} - ${bidangObrik}`;
     },

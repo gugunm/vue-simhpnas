@@ -168,7 +168,7 @@ export default {
       type: Boolean,
       default: true,
     },
-    idLha: String,
+    // idLha: String,
     filterlha: String,
   },
   data() {
@@ -179,11 +179,6 @@ export default {
   },
   async mounted() {
     await this.loadLha();
-    // if (this.idLha) {
-    //   this.valueLha = this.optionsLha.filter((val) => val.id == this.idLha);
-    // } else {
-    //   this.valueLha = this.optionsLha[0];
-    // }
     if (this.filterlha) {
       this.valueLha = this.optionsLha.filter(
         (data) => data.id == this.filterlha
@@ -191,7 +186,6 @@ export default {
     } else {
       this.valueLha = this.optionsLha[0];
     }
-
     this.onSelectLha();
   },
   emits: [

@@ -13,6 +13,20 @@ export default {
       }
     },
 
+    async loadTim(refresh = false) {
+      this.loading = true;
+      try {
+        await this.$store.dispatch('module_tim/loadTim', {
+          forceRefresh: refresh,
+          idLha: this.$route.query.idlha || this.lha.id,
+        });
+        this.items = this.$store.getters['module_tim/tim'];
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
+      this.loading = false;
+    },
+
     async loadPeran(refresh = false) {
       try {
         await this.$store.dispatch('m_ref_peran/loadRefPeran', {
