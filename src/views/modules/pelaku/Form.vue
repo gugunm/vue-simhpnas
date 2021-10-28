@@ -323,9 +323,7 @@ export default {
             if (responseData) {
               setTimeout(() => {
                 this.loading = false;
-                this.$router.push({
-                  path: '/pelaku',
-                });
+                this.$router.back();
                 this.toastSuccess('Berhasil menyimpan data pelaku');
               }, 500);
             }
@@ -342,9 +340,7 @@ export default {
             if (responseData) {
               setTimeout(() => {
                 this.loading = false;
-                this.$router.push({
-                  path: '/pelaku',
-                });
+                this.$router.back();
                 this.toastSuccess('Berhasil edit data pelaku');
               }, 500);
             }

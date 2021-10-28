@@ -233,9 +233,12 @@ export default {
         if (response.status == 200) {
           await this.loadLha();
 
-          this.toastSuccess(
-            `Berhasil menghapus data dengan ID ${this.idToDelete}`
-          );
+          this.toastSuccess(response.data['dataPelaku']);
+          this.toastSuccess(response.data['dataRekomendasi']);
+          this.toastSuccess(response.data['dataPenyebab']);
+          this.toastSuccess(response.data['dataTemuan']);
+          this.toastSuccess(response.data['dataTimAudit']);
+          this.toastSuccess(response.data['dataLha']);
         }
       } catch (error) {
         this.toastError(error.message);

@@ -6,6 +6,9 @@
       :fields="fields"
       :clickable-rows="true"
       :is-edit-button="true"
+      :filterlha="$route.query.filterlha"
+      :filtertemuan="$route.query.filtertemuan"
+      :filterrekomendasi="$route.query.filterrekomendasi"
       @clicked-row="openDetail"
       @open-create-modal="openCreate"
       @open-edit-modal="openEdit"
@@ -14,6 +17,8 @@
       @on-select-temuan="onSelectTemuan"
       @on-select-rekomendasi="onSelectRekomendasi"
       @on-load-tl="onLoadTl"
+      @on-add-temuan="onAddTemuan"
+      @on-add-rekomendasi="onAddRekomendasi"
     />
     <confirm-modal
       v-model="isDeleteConfirm"
@@ -51,10 +56,10 @@ const fields = [
     key: 'nilaiTl',
     label: 'Nilai TL',
   },
-  {
-    key: 'statusTl',
-    label: 'Status TL',
-  },
+  // {
+  //   key: 'statusTl',
+  //   label: 'Status TL',
+  // },
   {
     key: 'subKelompokTl',
     label: 'Kelompok TL',
@@ -159,17 +164,51 @@ export default {
       this.idToDelete = id;
     },
 
+    onAddTemuan(lha) {
+      this.$router.push({
+        name: 'module-create-temuan',
+        query: {
+          idlha: lha.id,
+          nolha: lha.nomorLha,
+          tpk: lha.flagTpk,
+        },
+      });
+    },
+
+    onAddRekomendasi(temuan) {
+      this.$router.push({
+        name: 'module-create-rekomendasi',
+        query: {
+          idlha: temuan.idLha,
+          nolha: temuan.nomorLha,
+          idtemuan: temuan.id,
+          notemuan: temuan.nomorTemuan,
+          nilaitemuan: temuan.nilaiTemuan,
+        },
+      });
+    },
+
     onSelectLha(selectedLha) {
       this.lha = selectedLha;
     },
 
     async onSelectTemuan(selectedTemuan) {
       this.temuan = selectedTemuan;
-      await this.loadRekomendasi();
+      if (this.temuan != 'empty') {
+        await this.loadRekomendasi({ id: this.temuan.id });
+      }
     },
 
     async onSelectRekomendasi(selectedRekomendasi) {
       this.rekomendasi = selectedRekomendasi;
+      this.$router.push({
+        path: '/tindak-lanjut',
+        query: {
+          filterlha: this.lha.id,
+          filtertemuan: this.temuan.id ? this.temuan.id : '',
+          filterrekomendasi: this.rekomendasi.id ? this.rekomendasi.id : '',
+        },
+      });
       await this.loadTindakLanjut();
     },
 
@@ -198,11 +237,15 @@ export default {
     async loadTindakLanjut(refresh = false) {
       this.loading = true;
       try {
-        await this.$store.dispatch('module_tindak_lanjut/loadTindakLanjut', {
-          forceRefresh: refresh,
-          idRekomendasi: this.rekomendasi.id,
-        });
-        this.items = this.$store.getters['module_tindak_lanjut/tindakLanjut'];
+        if (this.rekomendasi != 'empty' || this.temuan != 'empty') {
+          await this.$store.dispatch('module_tindak_lanjut/loadTindakLanjut', {
+            forceRefresh: refresh,
+            idRekomendasi: this.rekomendasi.id,
+          });
+          this.items = this.$store.getters['module_tindak_lanjut/tindakLanjut'];
+        } else {
+          this.items = [];
+        }
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }

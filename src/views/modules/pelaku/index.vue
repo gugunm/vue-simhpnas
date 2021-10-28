@@ -6,6 +6,9 @@
       :fields="fields"
       :clickable-rows="true"
       :is-edit-button="true"
+      :filterlha="$route.query.filterlha"
+      :filtertemuan="$route.query.filtertemuan"
+      :filterrekomendasi="$route.query.filterrekomendasi"
       @clicked-row="openDetail"
       @open-create-modal="openCreate"
       @open-edit-modal="openEdit"
@@ -13,6 +16,8 @@
       @on-select-lha="onSelectLha"
       @on-select-temuan="onSelectTemuan"
       @on-select-rekomendasi="onSelectRekomendasi"
+      @on-add-temuan="onAddTemuan"
+      @on-add-rekomendasi="onAddRekomendasi"
     />
     <confirm-modal
       v-model="isDeleteConfirm"
@@ -107,17 +112,51 @@ export default {
       this.idToDelete = id;
     },
 
+    onAddTemuan(lha) {
+      this.$router.push({
+        name: 'module-create-temuan',
+        query: {
+          idlha: lha.id,
+          nolha: lha.nomorLha,
+          tpk: lha.flagTpk,
+        },
+      });
+    },
+
+    onAddRekomendasi(temuan) {
+      this.$router.push({
+        name: 'module-create-rekomendasi',
+        query: {
+          idlha: temuan.idLha,
+          nolha: temuan.nomorLha,
+          idtemuan: temuan.id,
+          notemuan: temuan.nomorTemuan,
+          nilaitemuan: temuan.nilaiTemuan,
+        },
+      });
+    },
+
     onSelectLha(selectedLha) {
       this.lha = selectedLha;
     },
 
     async onSelectTemuan(selectedTemuan) {
       this.temuan = selectedTemuan;
-      await this.loadRekomendasi();
+      if (this.temuan != 'empty') {
+        await this.loadRekomendasi({ id: this.temuan.id });
+      }
     },
 
     async onSelectRekomendasi(selectedRekomendasi) {
       this.rekomendasi = selectedRekomendasi;
+      this.$router.push({
+        path: '/pelaku',
+        query: {
+          filterlha: this.lha.id,
+          filtertemuan: this.temuan.id ? this.temuan.id : '',
+          filterrekomendasi: this.rekomendasi.id ? this.rekomendasi.id : '',
+        },
+      });
       await this.loadPelaku();
     },
 
@@ -143,14 +182,19 @@ export default {
         this.toastError(error.message);
       }
     },
+
     async loadPelaku(refresh = false) {
       this.loading = true;
       try {
-        await this.$store.dispatch('module_pelaku/loadPelaku', {
-          forceRefresh: refresh,
-          idRekomendasi: this.rekomendasi.id,
-        });
-        this.items = this.$store.getters['module_pelaku/pelaku'];
+        if (this.rekomendasi != 'empty' || this.temuan != 'empty') {
+          await this.$store.dispatch('module_pelaku/loadPelaku', {
+            forceRefresh: refresh,
+            idRekomendasi: this.rekomendasi.id,
+          });
+          this.items = this.$store.getters['module_pelaku/pelaku'];
+        } else {
+          this.items = [];
+        }
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }

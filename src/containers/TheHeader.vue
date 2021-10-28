@@ -47,7 +47,7 @@
         </button>
       </CHeaderNavItem> -->
       <!-- <TheHeaderDropdownNotif class="mr-3" /> -->
-      <div class="mr-3">
+      <div class="mr-2">
         <p class="capitalize pr-3 font-bold border-r border-gray-400">
           {{ namaUser }}
         </p>

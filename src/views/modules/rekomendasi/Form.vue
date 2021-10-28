@@ -126,10 +126,10 @@
 
             <!-- ROW 5 -->
             <CRow>
-              <CCol v-if="mode == 'create'" lg="2">
+              <CCol lg="2">
                 <CInput
                   label="Nilai Temuan"
-                  :value="$route.query.nilaitemuan"
+                  :value="$route.query.nilaitemuan || editData.nilaiTemuan"
                   :disabled="true"
                 />
               </CCol>
@@ -379,13 +379,7 @@ export default {
             if (responseData) {
               setTimeout(() => {
                 this.loading = false;
-                this.$router.push({
-                  path: '/rekomendasi',
-                  query: {
-                    filterlha: this.$route.query.idlha,
-                    filtertemuan: this.$route.query.idtemuan,
-                  },
-                });
+                this.$router.back();
                 this.toastSuccess(
                   'Berhasil menyimpan data dengan ID ' +
                     responseData.Nomor_Rekomendasi
@@ -406,13 +400,7 @@ export default {
             if (responseData) {
               setTimeout(() => {
                 this.loading = false;
-                this.$router.push({
-                  path: '/rekomendasi',
-                  query: {
-                    filterlha: this.editData.kodeLha,
-                    filtertemuan: this.editData.kodeTemuan,
-                  },
-                });
+                this.$router.back();
                 this.toastSuccess(
                   'Berhasil edit data dengan ID ' +
                     responseData.Nomor_Rekomendasi

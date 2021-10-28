@@ -14,6 +14,7 @@
       @open-delete-modal="openDeleteModal"
       @on-select-lha="onSelectLha"
       @on-select-temuan="onSelectTemuan"
+      @on-add-temuan="onAddTemuan"
     />
     <confirm-modal
       v-model="isDeleteConfirm"
@@ -114,6 +115,17 @@ export default {
       this.idToDelete = id;
     },
 
+    onAddTemuan(lha) {
+      this.$router.push({
+        name: 'module-create-temuan',
+        query: {
+          idlha: lha.id,
+          nolha: lha.nomorLha,
+          tpk: lha.flagTpk,
+        },
+      });
+    },
+
     onSelectLha(selectedLha) {
       this.lha = selectedLha;
     },
@@ -152,10 +164,11 @@ export default {
         this.toastError(error.message);
       }
     },
+
     async loadPenyebab(refresh = false) {
       // this.loading = true;
       try {
-        if (this.temuan.length != 0) {
+        if (this.temuan != 'empty') {
           await this.$store.dispatch('module_penyebab/loadPenyebab', {
             idTemuan: this.temuan.id,
             forceRefresh: refresh,

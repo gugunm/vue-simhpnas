@@ -65,6 +65,7 @@ export default {
         statusPostTl: responseData[key]["Status_post_tl"],
         memoKoreksiTl: responseData[key]["Memo_Koreksi_tl"],
         uploadFileTl: responseData[key]["Upload_file_TL"],
+        
       };
       tl.push(data);
     }
@@ -133,6 +134,7 @@ export default {
       memoKoreksiTl: responseData["Memo_Koreksi_tl"],
       isStored: responseData["is_stored"],
       uploadFileTl: responseData["Upload_file_TL"],
+      nilaiRekomendasi: responseData["Nilai_Rekomendasi"],
     };
 
     context.commit('setTindakLanjutById', data);

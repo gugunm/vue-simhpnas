@@ -74,9 +74,9 @@ const fields = [
   //   key: 'nilaiTl',
   //   label: 'Nilai TL',
   // },
-  {
-    key: 'statusTemuan',
-  },
+  // {
+  //   key: 'statusTemuan',
+  // },
   // {
   //   key: 'memoKoreksiTemuan',
   // },
@@ -173,9 +173,6 @@ export default {
           idLha: this.lha.id,
         });
         this.items = this.$store.getters['module_temuan/temuan'];
-
-        console.log('TEMUAN HEREE!!');
-        console.log(this.items);
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }

@@ -270,13 +270,7 @@ export default {
             if (responseData) {
               setTimeout(() => {
                 this.loading = false;
-                this.$router.push({
-                  path: '/penyebab',
-                  query: {
-                    filterlha: this.$route.query.idlha,
-                    filtertemuan: this.$route.query.idtemuan,
-                  },
-                });
+                this.$router.back();
                 this.toastSuccess(
                   'Berhasil menyimpan data dengan ID ' +
                     responseData.Nomor_Penyebab
@@ -296,13 +290,7 @@ export default {
             if (responseData) {
               setTimeout(() => {
                 this.loading = false;
-                this.$router.push({
-                  path: '/penyebab',
-                  query: {
-                    filterlha: this.editData.kodeLha,
-                    filtertemuan: this.editData.kodeTemuan,
-                  },
-                });
+                this.$router.back();
                 this.toastSuccess(
                   'Berhasil edit data dengan ID ' + responseData.Nomor_Penyebab
                 );

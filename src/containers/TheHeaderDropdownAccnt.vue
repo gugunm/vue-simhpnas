@@ -7,8 +7,9 @@
   >
     <template #toggler>
       <CHeaderNavLink>
-        <div class="c-avatar">
-          <img src="img/avatars/6.jpg" class="c-avatar-img" />
+        <div class="c-avatar bg-red-400">
+          <span class="text-white font-semibold text-xl">S</span>
+          <!-- <img src="img/avatars/6.jpg" class="c-avatar-img" /> -->
         </div>
       </CHeaderNavLink>
     </template>

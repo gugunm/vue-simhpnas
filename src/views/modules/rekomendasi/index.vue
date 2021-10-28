@@ -14,6 +14,7 @@
       @open-delete-modal="openDeleteModal"
       @on-select-lha="onSelectLha"
       @on-select-temuan="onSelectTemuan"
+      @on-add-temuan="onAddTemuan"
     />
     <confirm-modal
       v-model="isDeleteConfirm"
@@ -48,7 +49,7 @@ const fields = [
   // { key: 'flagPelaku' },
   { key: 'nilaiRekomendasi' },
   // { key: 'nilaiTL' },
-  { key: 'statusRekomendasi' },
+  // { key: 'statusRekomendasi' },
   // { key: 'memoKoreksiRek' },
   // { key: 'kodeUnitObrikTl' },
   { key: 'unitObrik' },
@@ -112,6 +113,17 @@ export default {
     openDeleteModal(id) {
       this.isDeleteConfirm = true;
       this.idToDelete = id;
+    },
+
+    onAddTemuan(lha) {
+      this.$router.push({
+        name: 'module-create-temuan',
+        query: {
+          idlha: lha.id,
+          nolha: lha.nomorLha,
+          tpk: lha.flagTpk,
+        },
+      });
     },
 
     onSelectLha(selectedLha) {

@@ -465,12 +465,7 @@ export default {
             if (responseData) {
               setTimeout(() => {
                 this.loading = false;
-                this.$router.push({
-                  path: '/temuan',
-                  query: {
-                    filterlha: this.$route.query.idlha,
-                  },
-                });
+                this.$router.back();
                 this.toastSuccess(
                   'Berhasil menyimpan data dengan ID ' +
                     responseData.Nomor_Temuan
@@ -491,12 +486,7 @@ export default {
             if (responseData) {
               setTimeout(() => {
                 this.loading = false;
-                this.$router.push({
-                  path: '/temuan',
-                  query: {
-                    filterlha: this.editData.idLha,
-                  },
-                });
+                this.$router.back();
                 this.toastSuccess(
                   'Berhasil edit data dengan ID ' + responseData.Nomor_Temuan
                 );

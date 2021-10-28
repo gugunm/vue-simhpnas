@@ -57,11 +57,28 @@
         </CCol>
       </CRow>
       <CCol>
-        <CButton class="px-4 mt-4" color="info" @click="openCreateModal">
+        <CButton
+          v-if="valueTemuan"
+          class="px-4 mt-4"
+          color="info"
+          @click="openCreateModal"
+        >
           <CIcon name="cil-plus" class="my-0 mb-1 mr-1" /> Tambah
         </CButton>
+        <div v-else class="text-center py-4">
+          <h5 class="h5 text-base pb-2 text-red-400">
+            LHA tidak memiliki temuan
+          </h5>
+          <CButton
+            class="px-4"
+            color="info"
+            @click="$emit('on-add-temuan', valueLha)"
+          >
+            Tambah Temuan
+          </CButton>
+        </div>
       </CCol>
-      <CCardBody>
+      <CCardBody v-if="valueTemuan">
         <CDataTable
           :items="items"
           :fields="fields"
@@ -286,41 +303,86 @@ export default {
     openDeleteModal(id) {
       this.$emit('open-delete-modal', id);
     },
+
+    /**
+     * Method ini dipanggil ketika component mounted
+     * * mounted dipanggil ketika beberapa kondisi
+     * * - Saat menu di click, tanpa ada query parameter
+     * * - Saat setelah create dan edit, dengan disertai parameter
+     */
     async selectLhaMounted() {
       await this.loadLha();
-      if (this.filterlha && this.filtertemuan) {
+
+      if (this.filterlha) {
+        /** execute ketika setelah create dan edit */
         this.valueLha = this.optionsLha.filter(
           (data) => data.id == this.filterlha
         )[0];
       } else {
+        /** execute ketika click */
         this.valueLha = this.optionsLha[0];
       }
+      /** lempar value lha ke parent */
       this.$emit('on-select-lha', this.valueLha);
 
       await this.loadTemuan({ id: this.valueLha.id });
-      if (this.filterlha && this.filtertemuan) {
+
+      if (this.optionsTemuan.length > 0 && this.filtertemuan) {
+        /** execute ketika lha punya temuan dan setelah create dan edit */
         this.valueTemuan = this.optionsTemuan.filter(
           (data) => data.id == this.filtertemuan
         )[0];
-      } else {
+        /** pilih temuan sesuai valuenya */
+        this.onSelectTemuan();
+      } else if (this.optionsTemuan.length > 0) {
+        /* execute ketika lha punya temuan, saat click menu */
         this.valueTemuan = this.optionsTemuan[0];
+        /* pilih temuan yang pertama di lha itu */
+        this.onSelectTemuan();
+      } else {
+        /* execute ketika lha tidak punya temuan */
+        this.valueTemuan = '';
+        /* lempar temuan ke parent */
+        this.$emit('on-select-temuan', 'empty');
       }
-
-      this.onSelectTemuan();
     },
+
+    /**
+     * Method ini dipanggil ketika user memilih LHA
+     */
     async onSelectLha(val) {
+      /* lempar value lha yang dipilih ke parent */
+      this.$emit('on-select-lha', val);
+
       await this.loadTemuan({ id: val.id });
 
-      this.valueTemuan = this.optionsTemuan[0];
-      this.$emit('on-select-lha', val);
-      this.onSelectTemuan();
+      if (this.optionsTemuan.length > 0) {
+        /* execute ketika lha memiliki temuan */
+        this.valueTemuan = this.optionsTemuan[0];
+        /* lempar value temuan ke parent */
+        this.$emit('on-select-temuan', this.valueTemuan);
+        this.onSelectTemuan();
+      } else {
+        /* execute ketika lha tidak memiliki temuan */
+        this.valueTemuan = '';
+        /* lempar value temuan ke parent */
+        this.$emit('on-select-temuan', 'empty');
+      }
     },
+
+    /**
+     * Method ini dipanggil ketika user select temuan setelah select lha
+     * atau dipanggil saat click menu dan setelah create & update
+     */
     onSelectTemuan(val) {
+      /* lempar value temuan ke parent, ini jika select temuan menggunakan select*/
       this.$emit('on-select-temuan', val);
+      /* execute ketika selectnya tidak menggunakan autocomplete */
       if (!val) {
         this.$emit('on-select-temuan', this.valueTemuan);
       }
     },
+
     viewSelectSearchLha({ id, nomorLha, bidangObrik }) {
       return `${nomorLha} - ${bidangObrik}`;
     },

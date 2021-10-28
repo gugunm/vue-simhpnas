@@ -6,7 +6,7 @@
           {{ topTitle }} {{ title }} {{ descTitle | descCamelCase }}
         </h4>
       </CCol>
-      <CCol v-if="isAddButton" class="px-0" lg="12" sm="12">
+      <CCol v-if="isAddButton && isLevelAccess" class="px-0" lg="12" sm="12">
         <CButton color="info" class="mb-4 px-4" @click="openCreateModal">
           <CIcon name="cil-plus" class="my-0 mb-1 mr-1" /> Tambah
         </CButton>
@@ -96,12 +96,123 @@
             </td>
           </template>
           <template #actions="{ item }">
-            <td class="text-center">
-              <div v-if="isLhaSent(item)">
-                <p>No Actions</p>
+            <td v-if="isLhaSent(item)" class="text-center">No Actions</td>
+            <td v-else>
+              <div class="flex flex-wrap justify-content-center">
+                <CButton
+                  v-c-tooltip="{
+                    content: 'Tambah Temuan',
+                    placement: 'top',
+                  }"
+                  color="info"
+                  variant="outline"
+                  size="sm"
+                  class="m-1 inline-block"
+                  @click="onAddTemuan(item)"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2h-1.528A6 6 0 004 9.528V4z"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      d="M8 10a4 4 0 00-3.446 6.032l-1.261 1.26a1 1 0 101.414 1.415l1.261-1.261A4 4 0 108 10zm-2 4a2 2 0 114 0 2 2 0 01-4 0z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </CButton>
+                <CButton
+                  v-c-tooltip="{
+                    content: 'Tambah Tim Audit',
+                    placement: 'top',
+                  }"
+                  color="success"
+                  variant="outline"
+                  size="sm"
+                  class="m-1 inline-block"
+                  @click="onAddTim(item)"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"
+                    />
+                  </svg>
+                </CButton>
+                <CButton
+                  v-if="isEditButton"
+                  v-c-tooltip="{
+                    content: 'Edit',
+                    placement: 'top',
+                  }"
+                  color="warning"
+                  variant="outline"
+                  square
+                  size="sm"
+                  class="m-1 inline-block"
+                  @click="openEditModal(item)"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </CButton>
+                <CButton
+                  v-if="isDeleteButton"
+                  v-c-tooltip="{
+                    content: 'Hapus',
+                    placement: 'top',
+                  }"
+                  color="danger"
+                  variant="outline"
+                  size="sm"
+                  class="m-1 inline-block"
+                  @click="openDeleteModal(item.id)"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </CButton>
               </div>
-              <div v-else>
-                <CDropdown color="link" size="lg" :caret="true" class="p-0">
+            </td>
+
+            <!-- </template> -->
+            <!-- <CDropdown
+                  color="link"
+                  size="lg"
+                  :caret="true"
+                  class="p-0"
+                  placement="top"
+                >
                   <template #toggler-content>
                     <font-awesome-icon icon="cog" />
                   </template>
@@ -117,9 +228,7 @@
                   <CDropdownItem @click="openDeleteModal(item.id)">
                     <p>Hapus LHA</p>
                   </CDropdownItem>
-                </CDropdown>
-              </div>
-            </td>
+                </CDropdown> -->
           </template>
 
           <template #memoDalnisDaltu="{ item }">
@@ -314,7 +423,13 @@ export default {
       isOpenReject: false,
       isOpenPosting: false,
       isOpenUnPost: false,
+      isLevelAccess: false,
     };
+  },
+  mounted() {
+    if (localStorage.level == 3 || localStorage.level == 4) {
+      this.isLevelAccess = true;
+    }
   },
   emits: [
     'clicked-row',

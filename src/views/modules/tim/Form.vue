@@ -279,13 +279,7 @@ export default {
             if (responseData) {
               setTimeout(() => {
                 this.loading = false;
-                // this.$router.push({
-                //   name: 'module-create-tim',
-                //   query: {
-                //     idlha: this.$route.query.idlha,
-                //     nolha: this.$route.query.nolha,
-                //   },
-                // });
+                this.$router.back();
                 this.$emit('on-load-tim');
                 this.toastSuccess(
                   'Berhasil menyimpan data dengan ID ' + responseData.Kode_Peran
@@ -308,12 +302,7 @@ export default {
             if (responseData) {
               setTimeout(() => {
                 this.loading = false;
-                this.$router.push({
-                  path: '/tim-audit',
-                  query: {
-                    filterlha: this.editData.kodeLha,
-                  },
-                });
+                this.$router.back();
                 this.toastSuccess(
                   'Berhasil edit data dengan ID ' + responseData.Kode_Peran
                 );

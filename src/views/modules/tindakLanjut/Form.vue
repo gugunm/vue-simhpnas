@@ -149,10 +149,12 @@
 
             <!-- ROW 5 -->
             <CRow>
-              <CCol v-if="mode == 'create'" lg="2">
+              <CCol lg="2">
                 <CInput
                   label="Nilai Rekomendasi"
-                  :value="$route.query.nilairekomendasi"
+                  :value="
+                    $route.query.nilairekomendasi || editData.nilaiRekomendasi
+                  "
                   :disabled="true"
                 />
               </CCol>
@@ -245,27 +247,6 @@
                 />
               </CCol>
             </CRow>
-
-            <!-- <embed
-              v-if="mode == 'view'"
-              :src="
-                'http://simhpnas.bpkp.go.id:8001/storage/' + form.uploadFileTl
-              "
-              type="application/pdf"
-              width="100%"
-              height="600px"
-            />
-            <embed
-              v-else-if="mode == 'edit'"
-              :src="
-                'http://simhpnas.bpkp.go.id:8001/storage/' +
-                editData.uploadFileTl
-              "
-              type="application/pdf"
-              width="100%"
-              height="600px"
-            />
-          </div> -->
 
             <div class="px-3">
               <CRow class="mb-2 view-form">
@@ -486,9 +467,7 @@ export default {
             if (responseData) {
               setTimeout(() => {
                 this.loading = false;
-                this.$router.push({
-                  path: '/tindak-lanjut',
-                });
+                this.$router.back();
                 this.toastSuccess('Berhasil menyimpan data TL');
               }, 500);
             }
@@ -506,9 +485,7 @@ export default {
             if (responseData) {
               setTimeout(() => {
                 this.loading = false;
-                this.$router.push({
-                  path: '/tindak-lanjut',
-                });
+                this.$router.back();
                 this.toastSuccess('Berhasil edit data TL');
               }, 500);
             }
