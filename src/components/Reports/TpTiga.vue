@@ -25,6 +25,25 @@ export default {
 
       const data = this.reportTpTiga;
 
+      const dataTim = this.reportTpTiga.dataTimAudit.map((data, index) => {
+        return [
+          {
+            text: index + 1,
+            alignment: 'center',
+          },
+          {
+            text: data.nip,
+            alignment: 'center',
+          },
+          {
+            text: data.nama,
+          },
+          {
+            text: data.peran,
+          },
+        ];
+      });
+
       const docDef = {
         pageSize: 'A4',
         // pageOrientation: 'landscape',
@@ -64,7 +83,7 @@ export default {
           {
             fontSize: 10,
             table: {
-              widths: [200, 50, 50, 100, 100],
+              widths: [200, 50, 50, 100, '*'],
               headerRows: 0,
               // keepWithHeaderRows: 1,
               body: [
@@ -194,7 +213,7 @@ export default {
           {
             fontSize: 10,
             table: {
-              widths: [85, 20, 40, 140, 125, 30, 50],
+              widths: [85, 20, 40, 140, 125, 30, '*'],
               headerRows: 0,
               // keepWithHeaderRows: 1,
               body: [
@@ -211,7 +230,7 @@ export default {
                   {},
                   {},
                   {
-                    text: '8. Tahun Anggaran',
+                    text: '7. Tahun Anggaran',
                   },
                   {
                     text: data.tahunAnggaran,
@@ -225,7 +244,7 @@ export default {
                   {},
                   {},
                   {
-                    text: '9. Nilai Anggaran',
+                    text: '8. Nilai Anggaran',
                   },
                   {
                     text: this.$func.convertToRupiah(data.rencanaAnggaran),
@@ -246,7 +265,7 @@ export default {
                     text: data.jenisObrik,
                   },
                   {
-                    text: '10. Realisasi Anggaran',
+                    text: '9. Realisasi Anggaran',
                   },
                   {
                     text: this.$func.convertToRupiah(data.realisasiAnggaran),
@@ -256,7 +275,7 @@ export default {
                 ],
                 [
                   {
-                    text: '4. Unit ',
+                    text: '3. Unit ',
                     rowSpan: 2,
                     border: [true, true, true, false],
                   },
@@ -271,7 +290,7 @@ export default {
                     rowSpan: 2,
                   },
                   {
-                    text: '11. Anggaran yang Diaudit',
+                    text: '10. Anggaran yang Diaudit',
                   },
                   {
                     text: this.$func.convertToRupiah(data.anggaranYangDiaudit),
@@ -285,7 +304,7 @@ export default {
                   {},
                   {},
                   {
-                    text: '12. Jenis Anggaran',
+                    text: '11. Jenis Anggaran',
                   },
                   {
                     text: data.kodeJenisAnggaran,
@@ -353,7 +372,7 @@ export default {
                 ],
                 [
                   {
-                    text: '5. Provinsi',
+                    text: '4. Provinsi',
                   },
                   {
                     text: data.kodeProvinsi,
@@ -370,7 +389,7 @@ export default {
                 ],
                 [
                   {
-                    text: '6. Kabupaten/Kota',
+                    text: '5. Kabupaten/Kota',
                   },
                   {
                     text: data.kodeKabkot,
@@ -387,7 +406,7 @@ export default {
                 ],
                 [
                   {
-                    text: '7. Kecamatan',
+                    text: '6. Kecamatan',
                   },
                   {
                     text: data.kodeKecamatan,
@@ -410,6 +429,161 @@ export default {
             fontSize: 12,
             bold: true,
             margin: [0, 15, 0, 10],
+          },
+          {
+            fontSize: 10,
+            pageBreak: 'after',
+            table: {
+              widths: [25, '*', '*', '*'],
+              // widths: [25, 130, 190, 170],
+              headerRows: 1,
+              body: [
+                [
+                  {
+                    text: 'No.',
+                    alignment: 'center',
+                  },
+                  {
+                    text: 'NIP',
+                    alignment: 'center',
+                  },
+                  {
+                    text: 'Nama',
+                    alignment: 'center',
+                  },
+                  {
+                    text: 'Jabatan',
+                    alignment: 'center',
+                  },
+                ],
+                ...dataTim,
+              ],
+            },
+          },
+          {
+            text: 'IV. RINCIAN TEMUAN PEMERIKSAAN SAMPAI DENGAN TINDAK LANJUT',
+            fontSize: 12,
+            bold: true,
+            margin: [0, 15, 0, 10],
+          },
+          {
+            fontSize: 10,
+            // pageBreak: 'after',
+            table: {
+              widths: [40, 35, '*', 100],
+              headerRows: 1,
+              body: [
+                [
+                  {
+                    text: 'Kode',
+                    alignment: 'center',
+                    bold: true,
+                  },
+                  {
+                    text: 'Uraian',
+                    bold: true,
+                    colSpan: 2,
+                  },
+                  {},
+                  {
+                    text: 'Nilai TP/Rek/TL',
+                    bold: true,
+                  },
+                ],
+                [
+                  {
+                    text: '0107',
+                    alignment: 'center',
+                    rowSpan: 2,
+                  },
+                  {
+                    text: 'Temuan',
+                    bold: true,
+                    colSpan: 2,
+                  },
+                  {},
+                  {},
+                ],
+                [
+                  {},
+                  {
+                    text: '1.',
+                  },
+                  {
+                    text: 'Terdapat tumpang tindih item pelaksanaan kegiatan pembangunan gedung workshop bidang pperhubungan kabupaten aceh barat daya',
+                  },
+                  {
+                    text: 'Rp. 26.000.000,00',
+                  },
+                ],
+                [
+                  {},
+                  {
+                    text: 'Penyebab',
+                    bold: true,
+                    colSpan: 2,
+                    margin: [10, 0, 0, 0],
+                  },
+                  {},
+                  {},
+                ],
+                [
+                  {},
+                  {
+                    text: '11',
+                    margin: [10, 0, 0, 0],
+                  },
+                  {
+                    text: 'Disebabkan oleh kelalaian pejabat pembuat komitmen (PPK) dalam menyusun',
+                  },
+                  {},
+                ],
+                [
+                  {},
+                  {
+                    text: 'Rekomendasi',
+                    bold: true,
+                    colSpan: 2,
+                    margin: [10, 0, 0, 0],
+                  },
+                  {},
+                  {},
+                ],
+                [
+                  {},
+                  {
+                    text: '11',
+                    margin: [10, 0, 0, 0],
+                  },
+                  {
+                    text: 'Disarankan untuk blablablabla',
+                  },
+                  {},
+                ],
+                [
+                  {},
+                  {
+                    text: 'Tindak Lanjut',
+                    bold: true,
+                    colSpan: 2,
+                    margin: [20, 0, 0, 0],
+                  },
+                  {},
+                  {},
+                ],
+                [
+                  {},
+                  {
+                    text: '11',
+                    margin: [20, 0, 0, 0],
+                  },
+                  {
+                    text: 'Disarankan untuk blablablabla',
+                  },
+                  {},
+                ],
+              ],
+            },
           },
         ],
         styles: {
