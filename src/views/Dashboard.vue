@@ -8,8 +8,8 @@
         </h6>
       </CCol>
     </CRow>
-    <WidgetsDropdown :data="dashData" />
-    <SamplePDF class="mb-4" />
+    <!-- <WidgetsDropdown :data="dashData" />
+    <SamplePDF class="mb-4" /> -->
     <TpTiga />
   </div>
 </template>
@@ -24,8 +24,8 @@ import axios from 'axios';
 export default {
   name: 'Dashboard',
   components: {
-    WidgetsDropdown,
-    SamplePDF,
+    // WidgetsDropdown,
+    // SamplePDF,
     TpTiga,
   },
   data() {

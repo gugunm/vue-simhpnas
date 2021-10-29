@@ -256,16 +256,20 @@ export default {
                 ],
                 [
                   {
-                    text: '3. Nomor Loan ',
+                    text: '4. Unit ',
                     rowSpan: 2,
+                    border: [true, true, true, false],
                   },
                   {
-                    text: '',
-                    colSpan: 3,
+                    text: data.kodeUnitObrik,
+                    colSpan: 2,
                     rowSpan: 2,
                   },
                   {},
-                  {},
+                  {
+                    text: data.unitObrik,
+                    rowSpan: 2,
+                  },
                   {
                     text: '11. Anggaran yang Diaudit',
                   },
@@ -289,24 +293,6 @@ export default {
                   {
                     text: data.jenisAnggaran,
                   },
-                ],
-                [
-                  {
-                    text: '4. Unit ',
-                    border: [true, true, true, false],
-                  },
-                  {
-                    text: data.kodeUnitObrik,
-                    colSpan: 2,
-                  },
-                  {},
-                  {
-                    text: data.unitObrik,
-                    colSpan: 4,
-                  },
-                  {},
-                  {},
-                  {},
                 ],
                 [
                   {
@@ -418,6 +404,12 @@ export default {
                 ],
               ],
             },
+          },
+          {
+            text: 'III. TIM AUDIT',
+            fontSize: 12,
+            bold: true,
+            margin: [0, 15, 0, 10],
           },
         ],
         styles: {
