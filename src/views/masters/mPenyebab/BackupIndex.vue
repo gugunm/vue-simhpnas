@@ -1,29 +1,13 @@
 <template>
   <div>
     <CRow class="px-3">
-      <CCol
-        class="px-0"
-        lg="6"
-        sm="12"
-      >
-        <h4 class="my-0 mt-1">
-          Master Penyebab
-        </h4>
+      <CCol class="px-0" lg="6" sm="12">
+        <h4 class="my-0 mt-1">Master Penyebab</h4>
       </CCol>
-      <CCol
-        class="px-0 text-right"
-        lg="6"
-        sm="12"
-      >
-        <CButton
-          color="primary"
-          class="mb-3"
-        >
-          <CIcon
-            name="cil-plus"
-            size="lg"
-            class="my-0 mb-1 mr-2"
-          />Tambah Penyebab
+      <CCol class="px-0 text-right" lg="6" sm="12">
+        <CButton color="primary" class="mb-3">
+          <CIcon name="cil-plus" size="lg" class="my-0 mb-1 mr-2" />Tambah
+          Penyebab
         </CButton>
       </CCol>
     </CRow>
@@ -50,16 +34,11 @@
                 size="sm"
                 class="mr-3"
               >
-                <font-awesome-icon :icon="['fas', 'pen']" />
+                <!-- <font-awesome-icon :icon="['fas', 'pen']" /> -->
                 <!-- <CIcon name="cil-pencil" /> -->
               </CButton>
-              <CButton
-                color="danger"
-                variant="outline"
-                square
-                size="sm"
-              >
-                <font-awesome-icon :icon="['fas', 'trash-alt']" />
+              <CButton color="danger" variant="outline" square size="sm">
+                <!-- <font-awesome-icon :icon="['fas', 'trash-alt']" /> -->
                 <!-- <CIcon name="cil-trash" /> -->
               </CButton>
             </td>

@@ -9,8 +9,8 @@
       </CCol>
     </CRow>
     <WidgetsDropdown :data="dashData" />
-    <SamplePDF class="mb-4" />
-    <TpTiga />
+    <!-- <SamplePDF class="mb-4" />
+    <TpTiga /> -->
   </div>
 </template>
 
@@ -25,8 +25,8 @@ export default {
   name: 'Dashboard',
   components: {
     WidgetsDropdown,
-    SamplePDF,
-    TpTiga,
+    // SamplePDF,
+    // TpTiga,
   },
   data() {
     return {
