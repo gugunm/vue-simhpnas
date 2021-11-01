@@ -11,7 +11,8 @@
           <CIcon name="cil-plus" class="my-0 mb-1 mr-1" /> Tambah
         </CButton>
       </CCol>
-      <CCol v-if="isAddButton && isLevelAccess" class="px-0 text-right" lg="6">
+      <CCol v-if="!isLevelAccess" class="px-0" lg="6" />
+      <CCol class="px-0 mb-4 text-right" lg="6">
         <ReportLevelOne />
       </CCol>
     </CRow>
