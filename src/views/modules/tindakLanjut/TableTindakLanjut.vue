@@ -540,11 +540,13 @@ export default {
       });
       if (response.status == 200) {
         this.isOpenSend = false;
-        this.toastSuccess('Berhasil mengirim laporan');
+        // this.toastSuccess('Berhasil mengirim laporan');
+        this.toastSuccess(response.data.message);
         this.selectedItem = null;
         this.$emit('on-load-tl');
       } else {
-        this.toastError('Terjadi kesalahan saat mengirim laporan');
+        // this.toastError('Terjadi kesalahan saat mengirim laporan');
+        this.toastError(response.data.message);
       }
     },
 

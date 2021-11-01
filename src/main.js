@@ -18,7 +18,10 @@ import 'vue-toast-notification/dist/theme-sugar.css';
 
 import {func} from './globalFunction'
 
-// Global Variable and Function 
+/**
+ * *Ini adalah global variable dan function yang dapat
+ * *dipanggil di component vue -> this.$apiAddress
+ */
 Vue.prototype.$apiAddress = API_URL
 Vue.prototype.$func = func
 

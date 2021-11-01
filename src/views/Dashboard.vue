@@ -9,23 +9,23 @@
       </CCol>
     </CRow>
     <WidgetsDropdown :data="dashData" />
-    <SamplePDF class="mb-4" />
-    <TpTiga />
+    <!-- <SamplePDF class="mb-4" /> -->
+    <!-- <TpTiga /> -->
   </div>
 </template>
 
 <script>
 import WidgetsDropdown from '@/components/Widgets/WidgetsDropdown.vue';
-import SamplePDF from '@/components/Reports/Sample.vue';
-import TpTiga from '@/components/Reports/TpTiga.vue';
+// import SamplePDF from '@/components/Reports/ReportLevel1.vue';
+// import TpTiga from '@/components/Reports/TpTiga.vue';
 import axios from 'axios';
 
 export default {
   name: 'Dashboard',
   components: {
     WidgetsDropdown,
-    SamplePDF,
-    TpTiga,
+    // SamplePDF,
+    // TpTiga,
   },
   data() {
     return {

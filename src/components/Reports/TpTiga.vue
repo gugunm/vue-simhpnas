@@ -1,7 +1,29 @@
 <template>
-  <div>
-    <CButton color="success" @click="downloadPDF"> Generate PDF TP 3 </CButton>
-  </div>
+  <CButton
+    v-c-tooltip="{
+      content: 'Print TP3',
+      placement: 'top',
+    }"
+    color="info"
+    variant="ghost"
+    size="sm"
+    @click="downloadPDF"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-6 w-6"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"
+      />
+    </svg>
+  </CButton>
 </template>
 
 <script>
@@ -10,18 +32,21 @@ import pdfFonts from 'pdfmake/build/vfs_fonts';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 export default {
+  props: ['idLha'],
   data() {
     return {
       reportTpTiga: null,
     };
   },
-  async mounted() {
-    await this.loadReportTpTiga();
-  },
+  // async mounted() {
+  //   await this.loadReportTpTiga();
+  // },
   methods: {
-    downloadPDF() {
-      console.log('TP TIGA HEREE!!');
-      console.log(this.reportTpTiga);
+    async downloadPDF() {
+      // console.log('TP TIGA HEREE!!');
+      // console.log(this.reportTpTiga);
+
+      await this.loadReportTpTiga();
 
       const data = this.reportTpTiga;
 
@@ -42,6 +67,191 @@ export default {
             text: data.peran,
           },
         ];
+      });
+
+      const dataTemuanToPdf = [];
+      this.reportTpTiga.dataTemuan.forEach((data) => {
+        // console.log('DATA TEMUAN HERE!');
+        // console.log(data);
+
+        data.dataPenyebab = data.dataPenyebab.map((dpenyebab) => {
+          return [
+            {
+              text: dpenyebab.kodePenyebab,
+              alignment: 'center',
+              fillColor: '#eeeeee',
+              margin: [0, 3],
+            },
+            {},
+            {
+              text: dpenyebab.nomorPenyebab,
+              alignment: 'center',
+              bold: true,
+              fillColor: '#dddddd',
+              margin: [0, 3],
+            },
+            {
+              text: dpenyebab.memoPenyebab,
+              colSpan: 2,
+            },
+            {},
+            {},
+          ];
+        });
+
+        const dataRekToPdf = [];
+        data.dataRekomendasi = data.dataRekomendasi.forEach((drek) => {
+          drek.dataTl = drek.dataTl.map((dtl) => {
+            return [
+              {
+                text: dtl.kodeSubKelompokTl,
+                alignment: 'center',
+                fillColor: '#dddddd',
+                margin: [0, 3],
+              },
+              {},
+              {},
+              {
+                text: dtl.nomorTl,
+                alignment: 'center',
+                bold: true,
+                fillColor: '#dddddd',
+                margin: [0, 3],
+              },
+              {
+                text: dtl.memoTl,
+              },
+              {
+                text: this.$func.convertToRupiah(dtl.nilaiTl),
+              },
+            ];
+          });
+
+          const dataRek = [
+            [
+              {
+                text: drek.kodeSubKelompokRekomendasi,
+                alignment: 'center',
+                fillColor: '#eeeeee',
+                margin: [0, 3],
+              },
+              {},
+              {
+                text: drek.nomorRekomendasi,
+                alignment: 'center',
+                bold: true,
+                fillColor: '#dddddd',
+                margin: [0, 3],
+              },
+              {
+                text: drek.memoRekomendasi,
+                colSpan: 2,
+              },
+              {},
+              {
+                text: this.$func.convertToRupiah(drek.nilaiRekomendasi),
+              },
+            ],
+            drek.dataTl.length > 0 && [
+              {},
+              {},
+              {},
+              {
+                text: 'TINDAK LANJUT',
+                colSpan: 2,
+                margin: [0, 7],
+                bold: true,
+              },
+              {},
+              {},
+            ],
+            ...drek.dataTl,
+            drek.dataTl.length > 0 && [
+              {
+                text: '',
+                colSpan: 6,
+                margin: [0, 5],
+              },
+              {},
+              {},
+              {},
+              {},
+              {},
+            ],
+          ].filter(Boolean);
+
+          dataRekToPdf.push(...dataRek);
+        });
+
+        const result = [
+          [
+            {},
+            {
+              text: 'TEMUAN',
+              colSpan: 4,
+              margin: [0, 7],
+              bold: true,
+            },
+            {},
+            {},
+            {},
+            {},
+          ],
+          [
+            {
+              text: data.kodeSubKelompokTemuan,
+              alignment: 'center',
+              fillColor: '#eeeeff',
+              margin: [0, 3],
+            },
+            {
+              text: data.nomorTemuan,
+              alignment: 'center',
+              bold: true,
+              fillColor: '#dddddd',
+              margin: [0, 3],
+            },
+            {
+              text: data.memoTemuan,
+              colSpan: 3,
+            },
+            {},
+            {},
+            {
+              text: this.$func.convertToRupiah(data.nilaiTemuan),
+            },
+          ],
+          data.dataPenyebab.length > 0 && [
+            {},
+            {},
+            {
+              text: 'PENYEBAB',
+              colSpan: 3,
+              margin: [0, 7],
+              bold: true,
+            },
+            {},
+            {},
+            {},
+          ],
+          ...data.dataPenyebab,
+          dataRekToPdf.length > 0 && [
+            {},
+            {},
+            {
+              text: 'REKOMENDASI',
+              colSpan: 3,
+              margin: [0, 7],
+              bold: true,
+            },
+            {},
+            {},
+            {},
+          ],
+          ...dataRekToPdf,
+        ].filter(Boolean);
+
+        dataTemuanToPdf.push(...result);
       });
 
       const docDef = {
@@ -467,122 +677,43 @@ export default {
             margin: [0, 15, 0, 10],
           },
           {
-            fontSize: 10,
+            fontSize: 9,
             // pageBreak: 'after',
             table: {
-              widths: [40, 35, '*', 100],
+              widths: [40, 20, 20, 20, '*', 80],
               headerRows: 1,
               body: [
                 [
                   {
-                    text: 'Kode',
+                    text: 'KODE',
                     alignment: 'center',
                     bold: true,
                   },
                   {
-                    text: 'Uraian',
-                    bold: true,
-                    colSpan: 2,
-                  },
-                  {},
-                  {
-                    text: 'Nilai TP/Rek/TL',
-                    bold: true,
-                  },
-                ],
-                [
-                  {
-                    text: '0107',
+                    text: 'URAIAN',
                     alignment: 'center',
-                    rowSpan: 2,
-                  },
-                  {
-                    text: 'Temuan',
                     bold: true,
-                    colSpan: 2,
+                    colSpan: 4,
                   },
                   {},
                   {},
-                ],
-                [
                   {},
                   {
-                    text: '1.',
-                  },
-                  {
-                    text: 'Terdapat tumpang tindih item pelaksanaan kegiatan pembangunan gedung workshop bidang pperhubungan kabupaten aceh barat daya',
-                  },
-                  {
-                    text: 'Rp. 26.000.000,00',
-                  },
-                ],
-                [
-                  {},
-                  {
-                    text: 'Penyebab',
+                    text: 'NILAI TP/REK/TL',
                     bold: true,
-                    colSpan: 2,
-                    margin: [10, 0, 0, 0],
                   },
-                  {},
-                  {},
                 ],
-                [
-                  {},
-                  {
-                    text: '11',
-                    margin: [10, 0, 0, 0],
-                  },
-                  {
-                    text: 'Disebabkan oleh kelalaian pejabat pembuat komitmen (PPK) dalam menyusun',
-                  },
-                  {},
-                ],
-                [
-                  {},
-                  {
-                    text: 'Rekomendasi',
-                    bold: true,
-                    colSpan: 2,
-                    margin: [10, 0, 0, 0],
-                  },
-                  {},
-                  {},
-                ],
-                [
-                  {},
-                  {
-                    text: '11',
-                    margin: [10, 0, 0, 0],
-                  },
-                  {
-                    text: 'Disarankan untuk blablablabla',
-                  },
-                  {},
-                ],
-                [
-                  {},
-                  {
-                    text: 'Tindak Lanjut',
-                    bold: true,
-                    colSpan: 2,
-                    margin: [20, 0, 0, 0],
-                  },
-                  {},
-                  {},
-                ],
-                [
-                  {},
-                  {
-                    text: '11',
-                    margin: [20, 0, 0, 0],
-                  },
-                  {
-                    text: 'Disarankan untuk blablablabla',
-                  },
-                  {},
-                ],
+                // ...dataTemuan,
+                ...dataTemuanToPdf,
               ],
+            },
+            layout: {
+              hLineWidth: function (i, node) {
+                return 0;
+              },
+              vLineWidth: function (i, node) {
+                return 0;
+              },
             },
           },
         ],
@@ -608,7 +739,7 @@ export default {
     async loadReportTpTiga() {
       try {
         await this.$store.dispatch('module_lha/loadDetailLhaById', {
-          idLha: 'YmnMjPGreV',
+          idLha: this.idLha,
         });
 
         this.reportTpTiga = this.$store.getters['module_lha/lhaById'];

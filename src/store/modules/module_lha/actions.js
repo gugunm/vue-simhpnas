@@ -254,6 +254,7 @@ export default {
         jenisTemuan: responseData["dataTemuan"][key]["Jenis_Temuan"],
         kelompokTemuan: responseData["dataTemuan"][key]["Kelompok_Temuan"],
         subKelompokTemuan: responseData["dataTemuan"][key]["Sub_Kelompok_Temuan"],
+        kodeSubKelompokTemuan: responseData["dataTemuan"][key]["Kode_Sub_Kelompok_Temuan"],
         memoTemuan: responseData["dataTemuan"][key]["Memo_Temuan"],
         flagTpk: responseData["dataTemuan"][key]["Flag_TPK"],
         posisiKasus: responseData["dataTemuan"][key]["Posisi_Kasus"],

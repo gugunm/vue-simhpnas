@@ -1,15 +1,18 @@
 <template>
   <div>
     <CRow class="px-3">
-      <CCol class="px-0" lg="12" sm="12">
+      <CCol class="px-0" lg="12">
         <h4 class="my-0 mt-1 mb-3 text-2xl font-semibold">
           {{ topTitle }} {{ title }} {{ descTitle | descCamelCase }}
         </h4>
       </CCol>
-      <CCol v-if="isAddButton && isLevelAccess" class="px-0" lg="12" sm="12">
+      <CCol v-if="isAddButton && isLevelAccess" class="px-0" lg="6">
         <CButton color="info" class="mb-4 px-4" @click="openCreateModal">
           <CIcon name="cil-plus" class="my-0 mb-1 mr-1" /> Tambah
         </CButton>
+      </CCol>
+      <CCol v-if="isAddButton && isLevelAccess" class="px-0 text-right" lg="6">
+        <ReportLevelOne />
       </CCol>
     </CRow>
     <CCard>
@@ -41,6 +44,12 @@
             </td>
             <td v-else>
               {{ item.nomorLha }}
+            </td>
+          </template>
+          <template #print="{ item }">
+            <td>
+              <TpTiga :id-lha="item.id" />
+              <!-- {{ $func.convertToRupiah(item.id) }} -->
             </td>
           </template>
           <template #bidangObrik="{ item }">
@@ -368,6 +377,8 @@
 import axios from 'axios';
 import mixin from './mixin';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
+import ReportLevelOne from '@/components/Reports/ReportLevel1.vue';
+import TpTiga from '@/components/Reports/TpTiga.vue';
 
 export default {
   name: 'TableLha',
@@ -382,6 +393,8 @@ export default {
   },
   components: {
     ConfirmModal,
+    ReportLevelOne,
+    TpTiga,
   },
   mixins: [mixin],
   props: {
