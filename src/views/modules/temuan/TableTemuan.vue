@@ -65,8 +65,8 @@
             <td class="py-2 flex flex-wrap justify-content-center">
               <CButton
                 v-c-tooltip="{
-                  content: '+ Penyebab',
-                  placement: 'top',
+                  content: 'Tambah Penyebab',
+                  placement: 'left',
                 }"
                 color="info"
                 variant="outline"
@@ -89,8 +89,8 @@
               </CButton>
               <CButton
                 v-c-tooltip="{
-                  content: '+ Rekomendasi',
-                  placement: 'top',
+                  content: 'Tambah Rekomendasi',
+                  placement: 'left',
                 }"
                 color="success"
                 variant="outline"
@@ -116,7 +116,7 @@
                 v-if="isEditButton"
                 v-c-tooltip="{
                   content: 'Edit',
-                  placement: 'top',
+                  placement: 'left',
                 }"
                 color="warning"
                 variant="outline"
@@ -145,7 +145,7 @@
                 v-if="isDeleteButton"
                 v-c-tooltip="{
                   content: 'Hapus',
-                  placement: 'top',
+                  placement: 'left',
                 }"
                 color="danger"
                 variant="outline"

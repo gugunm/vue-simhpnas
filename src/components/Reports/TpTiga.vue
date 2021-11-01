@@ -603,6 +603,7 @@ export default {
       };
 
       pdfMake.createPdf(docDef).open();
+      // pdfMake.createPdf(docDef).download(data.nomorLha);
     },
     async loadReportTpTiga() {
       try {
