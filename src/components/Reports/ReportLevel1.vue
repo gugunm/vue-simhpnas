@@ -73,7 +73,6 @@ export default {
       });
 
       const repDummy = [];
-
       for (let i = 0; i < 50; i++) {
         repDummy.push([
           {
@@ -111,7 +110,7 @@ export default {
         pageMargins: [17, 85, 17, 30],
         header: [
           {
-            text: 'INSPEKTORAT KAB. ACEH BARAT DAYA',
+            text: localStorage.namaUnit,
             fontSize: 14,
             bold: true,
             margin: [17, 20, 0, 3],
