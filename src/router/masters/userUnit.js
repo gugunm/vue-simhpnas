@@ -1,4 +1,9 @@
-const MasterUserUnitKerja = () => import('@/views/masters/mUserUnitKerja')
+// const MasterUserUnitKerja = () => import('@/views/masters/mUserUnitKerja')
+const MasterUserUnitKerja = resolve => {
+  require.ensure(['@/views/masters/mUserUnitKerja'], () => {
+      resolve(require('@/views/masters/mUserUnitKerja'));
+  });
+};
 
 
 const routeUserUnit = {

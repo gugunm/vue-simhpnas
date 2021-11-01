@@ -1,8 +1,28 @@
 // Views - Pages
-const Page404 = () => import('@/views/pages/Page404')
-const Page500 = () => import('@/views/pages/Page500')
-const Login = () => import('@/views/pages/Login')
-const Register = () => import('@/views/pages/Register')
+// const Page404 = () => import('@/views/pages/Page404')
+const Page404 = resolve => {
+  require.ensure(['@/views/pages/Page404'], () => {
+      resolve(require('@/views/pages/Page404'));
+  });
+};
+// const Page500 = () => import('@/views/pages/Page500')
+const Page500 = resolve => {
+  require.ensure(['@/views/pages/Page500'], () => {
+      resolve(require('@/views/pages/Page500'));
+  });
+};
+// const Login = () => import('@/views/pages/Login')
+const Login = resolve => {
+  require.ensure(['@/views/pages/Login'], () => {
+      resolve(require('@/views/pages/Login'));
+  });
+};
+// const Register = () => import('@/views/pages/Register')
+const Register = resolve => {
+  require.ensure(['@/views/pages/Register'], () => {
+      resolve(require('@/views/pages/Register'));
+  });
+};
 
 const pages = [
   {

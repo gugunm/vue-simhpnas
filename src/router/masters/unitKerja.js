@@ -1,8 +1,28 @@
 // UNIT KERJA
-const MasterUnitKerja = () => import('@/views/masters/mUnitKerja/index.vue')
-const MasterCreateUnitKerja = () => import('@/views/masters/mUnitKerja/Create.vue')
-const MasterDetailUnitKerja = () => import('@/views/masters/mUnitKerja/Detail.vue')
-const MasterEditUnitKerja = () => import('@/views/masters/mUnitKerja/Edit.vue')
+// const MasterUnitKerja = () => import('@/views/masters/mUnitKerja/index.vue')
+const MasterUnitKerja = resolve => {
+  require.ensure(['@/views/masters/mUnitKerja/index.vue'], () => {
+      resolve(require('@/views/masters/mUnitKerja/index.vue'));
+  });
+};
+// const MasterCreateUnitKerja = () => import('@/views/masters/mUnitKerja/Create.vue')
+const MasterCreateUnitKerja = resolve => {
+  require.ensure(['@/views/masters/mUnitKerja/Create.vue'], () => {
+      resolve(require('@/views/masters/mUnitKerja/Create.vue'));
+  });
+};
+// const MasterDetailUnitKerja = () => import('@/views/masters/mUnitKerja/Detail.vue')
+const MasterDetailUnitKerja = resolve => {
+  require.ensure(['@/views/masters/mUnitKerja/Detail.vue'], () => {
+      resolve(require('@/views/masters/mUnitKerja/Detail.vue'));
+  });
+};
+// const MasterEditUnitKerja = () => import('@/views/masters/mUnitKerja/Edit.vue')
+const MasterEditUnitKerja = resolve => {
+  require.ensure(['@/views/masters/mUnitKerja/Edit.vue'], () => {
+      resolve(require('@/views/masters/mUnitKerja/Edit.vue'));
+  });
+};
 
 const routeUnitKerja = {
   path: 'master-unit-kerja',

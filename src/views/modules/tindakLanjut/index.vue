@@ -119,6 +119,19 @@ export default {
       level: '',
     };
   },
+  watch: {
+    $route(to, before) {
+      if (
+        to.meta.reload == true &&
+        to.name == before.name &&
+        Object.keys(to.query).length == 0
+      ) {
+        this.$router.go();
+        // window.location.reload();
+      }
+    },
+  },
+
   async mounted() {
     await this.loadTindakLanjut();
     this.level = localStorage.level;

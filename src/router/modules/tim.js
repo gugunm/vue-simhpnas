@@ -1,7 +1,27 @@
-const Tim = () => import('@/views/modules/tim/index.vue')
-const TimCreate = () => import('@/views/modules/tim/Create.vue')
-const TimDetail = () => import('@/views/modules/tim/Detail.vue')
-const TimEdit = () => import('@/views/modules/tim/Edit.vue')
+// const Tim = () => import('@/views/modules/tim/index.vue')
+const Tim = resolve => {
+  require.ensure(['@/views/modules/tim/index.vue'], () => {
+      resolve(require('@/views/modules/tim/index.vue'));
+  });
+};
+// const TimCreate = () => import('@/views/modules/tim/Create.vue')
+const TimCreate = resolve => {
+  require.ensure(['@/views/modules/tim/Create.vue'], () => {
+      resolve(require('@/views/modules/tim/Create.vue'));
+  });
+};
+// const TimDetail = () => import('@/views/modules/tim/Detail.vue')
+const TimDetail = resolve => {
+  require.ensure(['@/views/modules/tim/Detail.vue'], () => {
+      resolve(require('@/views/modules/tim/Detail.vue'));
+  });
+};
+// const TimEdit = () => import('@/views/modules/tim/Edit.vue')
+const TimEdit = resolve => {
+  require.ensure(['@/views/modules/tim/Edit.vue'], () => {
+      resolve(require('@/views/modules/tim/Edit.vue'));
+  });
+};
 
 
 const routeModTim = {
@@ -15,7 +35,8 @@ const routeModTim = {
       name: 'module-tim',
       component: Tim,
       meta: {
-        requiresUser: true
+        requiresUser: true,
+        reload: true,
       },
     },
     {

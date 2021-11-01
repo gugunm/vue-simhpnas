@@ -1,12 +1,41 @@
 // REKOMENDASI
-const MasterRekomendasi = () => import('@/views/masters/mRekomendasi/rekomendasi/index.vue')
-const MasterCreateRekomendasi = () => import('@/views/masters/mRekomendasi/rekomendasi/Create.vue')
-const MasterEditRekomendasi = () => import('@/views/masters/mRekomendasi/rekomendasi/Edit.vue')
-
+// const MasterRekomendasi = () => import('@/views/masters/mRekomendasi/rekomendasi/index.vue')
+const MasterRekomendasi = resolve => {
+  require.ensure(['@/views/masters/mRekomendasi/rekomendasi/index.vue'], () => {
+      resolve(require('@/views/masters/mRekomendasi/rekomendasi/index.vue'));
+  });
+};
+// const MasterCreateRekomendasi = () => import('@/views/masters/mRekomendasi/rekomendasi/Create.vue')
+const MasterCreateRekomendasi = resolve => {
+  require.ensure(['@/views/masters/mRekomendasi/rekomendasi/Create.vue'], () => {
+      resolve(require('@/views/masters/mRekomendasi/rekomendasi/Create.vue'));
+  });
+};
+// const MasterEditRekomendasi = () => import('@/views/masters/mRekomendasi/rekomendasi/Edit.vue')
+const MasterEditRekomendasi = resolve => {
+  require.ensure(['@/views/masters/mRekomendasi/rekomendasi/Edit.vue'], () => {
+      resolve(require('@/views/masters/mRekomendasi/rekomendasi/Edit.vue'));
+  });
+};
 // SUB REKOMENDASI
-const MasterSubRekomendasi = () => import('@/views/masters/mRekomendasi/subRekomendasi/index.vue')
-const MasterCreateSubRekomendasi = () => import('@/views/masters/mRekomendasi/subRekomendasi/Create.vue')
-const MasterEditSubRekomendasi = () => import('@/views/masters/mRekomendasi/subRekomendasi/Edit.vue')
+// const MasterSubRekomendasi = () => import('@/views/masters/mRekomendasi/subRekomendasi/index.vue')
+const MasterSubRekomendasi = resolve => {
+  require.ensure(['@/views/masters/mRekomendasi/subRekomendasi/index.vue'], () => {
+      resolve(require('@/views/masters/mRekomendasi/subRekomendasi/index.vue'));
+  });
+};
+// const MasterCreateSubRekomendasi = () => import('@/views/masters/mRekomendasi/subRekomendasi/Create.vue')
+const MasterCreateSubRekomendasi = resolve => {
+  require.ensure(['@/views/masters/mRekomendasi/subRekomendasi/Create.vue'], () => {
+      resolve(require('@/views/masters/mRekomendasi/subRekomendasi/Create.vue'));
+  });
+};
+// const MasterEditSubRekomendasi = () => import('@/views/masters/mRekomendasi/subRekomendasi/Edit.vue')
+const MasterEditSubRekomendasi = resolve => {
+  require.ensure(['@/views/masters/mRekomendasi/subRekomendasi/Edit.vue'], () => {
+      resolve(require('@/views/masters/mRekomendasi/subRekomendasi/Edit.vue'));
+  });
+};
 
 
 const routeRekomendasi = {

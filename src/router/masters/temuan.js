@@ -1,17 +1,60 @@
 // TEMUAN
-const MasterTemuan = () => import('@/views/masters/mTemuan/jenisTemuan/index.vue')
-const MasterCreateTemuan = () => import('@/views/masters/mTemuan/jenisTemuan/Create.vue')
-const MasterEditTemuan = () => import('@/views/masters/mTemuan/jenisTemuan/Edit.vue')
-
+// const MasterTemuan = () => import('@/views/masters/mTemuan/jenisTemuan/index.vue')
+const MasterTemuan = resolve => {
+  require.ensure(['@/views/masters/mTemuan/jenisTemuan/index.vue'], () => {
+      resolve(require('@/views/masters/mTemuan/jenisTemuan/index.vue'));
+  });
+};
+// const MasterCreateTemuan = () => import('@/views/masters/mTemuan/jenisTemuan/Create.vue')
+const MasterCreateTemuan = resolve => {
+  require.ensure(['@/views/masters/mTemuan/jenisTemuan/Create.vue'], () => {
+      resolve(require('@/views/masters/mTemuan/jenisTemuan/Create.vue'));
+  });
+};
+// const MasterEditTemuan = () => import('@/views/masters/mTemuan/jenisTemuan/Edit.vue')
+const MasterEditTemuan = resolve => {
+  require.ensure(['@/views/masters/mTemuan/jenisTemuan/Edit.vue'], () => {
+      resolve(require('@/views/masters/mTemuan/jenisTemuan/Edit.vue'));
+  });
+};
 // KLP TEMUAN
-const MasterKlpTemuan = () => import('@/views/masters/mTemuan/klpTemuan/index.vue')
-const MasterCreateKlpTemuan = () => import('@/views/masters/mTemuan/klpTemuan/Create.vue')
-const MasterEditKlpTemuan = () => import('@/views/masters/mTemuan/klpTemuan/Edit.vue')
-
+// const MasterKlpTemuan = () => import('@/views/masters/mTemuan/klpTemuan/index.vue')
+const MasterKlpTemuan = resolve => {
+  require.ensure(['@/views/masters/mTemuan/klpTemuan/index.vue'], () => {
+      resolve(require('@/views/masters/mTemuan/klpTemuan/index.vue'));
+  });
+};
+// const MasterCreateKlpTemuan = () => import('@/views/masters/mTemuan/klpTemuan/Create.vue')
+const MasterCreateKlpTemuan = resolve => {
+  require.ensure(['@/views/masters/mTemuan/klpTemuan/Create.vue'], () => {
+      resolve(require('@/views/masters/mTemuan/klpTemuan/Create.vue'));
+  });
+};
+// const MasterEditKlpTemuan = () => import('@/views/masters/mTemuan/klpTemuan/Edit.vue')
+const MasterEditKlpTemuan = resolve => {
+  require.ensure(['@/views/masters/mTemuan/klpTemuan/Edit.vue'], () => {
+      resolve(require('@/views/masters/mTemuan/klpTemuan/Edit.vue'));
+  });
+};
 // SUB KLP TEMUAN
-const MasterSubKlpTemuan = () => import('@/views/masters/mTemuan/subKlpTemuan/index.vue')
-const MasterCreateSubKlpTemuan = () => import('@/views/masters/mTemuan/subKlpTemuan/Create.vue')
-const MasterEditSubKlpTemuan = () => import('@/views/masters/mTemuan/subKlpTemuan/Edit.vue')
+// const MasterSubKlpTemuan = () => import('@/views/masters/mTemuan/subKlpTemuan/index.vue')
+const MasterSubKlpTemuan = resolve => {
+  require.ensure(['@/views/masters/mTemuan/subKlpTemuan/index.vue'], () => {
+      resolve(require('@/views/masters/mTemuan/subKlpTemuan/index.vue'));
+  });
+};
+// const MasterCreateSubKlpTemuan = () => import('@/views/masters/mTemuan/subKlpTemuan/Create.vue')
+const MasterCreateSubKlpTemuan = resolve => {
+  require.ensure(['@/views/masters/mTemuan/subKlpTemuan/Create.vue'], () => {
+      resolve(require('@/views/masters/mTemuan/subKlpTemuan/Create.vue'));
+  });
+};
+// const MasterEditSubKlpTemuan = () => import('@/views/masters/mTemuan/subKlpTemuan/Edit.vue')
+const MasterEditSubKlpTemuan = resolve => {
+  require.ensure(['@/views/masters/mTemuan/subKlpTemuan/Edit.vue'], () => {
+      resolve(require('@/views/masters/mTemuan/subKlpTemuan/Edit.vue'));
+  });
+};
 
 
 const routeRootTemuan = {

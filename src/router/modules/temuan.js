@@ -1,7 +1,27 @@
-const Temuan = () => import('@/views/modules/temuan/index.vue')
-const TemuanCreate = () => import('@/views/modules/temuan/Create.vue')
-const TemuanDetail = () => import('@/views/modules/temuan/Detail.vue')
-const TemuanEdit = () => import('@/views/modules/temuan/Edit.vue')
+// const Temuan = () => import('@/views/modules/temuan/index.vue')
+const Temuan = resolve => {
+  require.ensure(['@/views/modules/temuan/index.vue'], () => {
+      resolve(require('@/views/modules/temuan/index.vue'));
+  });
+};
+// const TemuanCreate = () => import('@/views/modules/temuan/Create.vue')
+const TemuanCreate = resolve => {
+  require.ensure(['@/views/modules/temuan/Create.vue'], () => {
+      resolve(require('@/views/modules/temuan/Create.vue'));
+  });
+};
+// const TemuanDetail = () => import('@/views/modules/temuan/Detail.vue')
+const TemuanDetail = resolve => {
+  require.ensure(['@/views/modules/temuan/Detail.vue'], () => {
+      resolve(require('@/views/modules/temuan/Detail.vue'));
+  });
+};
+// const TemuanEdit = () => import('@/views/modules/temuan/Edit.vue')
+const TemuanEdit = resolve => {
+  require.ensure(['@/views/modules/temuan/Edit.vue'], () => {
+      resolve(require('@/views/modules/temuan/Edit.vue'));
+  });
+};
 
 const routeModTemuan = {
   path: 'temuan',
@@ -14,7 +34,8 @@ const routeModTemuan = {
       name: 'module-temuan',
       component: Temuan,
       meta: {
-        requiresUser: true
+        requiresUser: true,
+        reload: true,
       },
     },
     {

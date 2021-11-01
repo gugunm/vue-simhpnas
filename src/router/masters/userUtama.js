@@ -1,4 +1,9 @@
-const MasterUserUtama = () => import('@/views/masters/mUserUtama')
+// const MasterUserUtama = () => import('@/views/masters/mUserUtama')
+const MasterUserUtama = resolve => {
+  require.ensure(['@/views/masters/mUserUtama'], () => {
+      resolve(require('@/views/masters/mUserUtama'));
+  });
+};
 
 
 const routeUserUtama = {

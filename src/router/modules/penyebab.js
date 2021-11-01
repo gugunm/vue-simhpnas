@@ -1,7 +1,27 @@
-const Penyebab = () => import('@/views/modules/penyebab/index.vue')
-const PenyebabCreate = () => import('@/views/modules/penyebab/Create.vue')
-const PenyebabEdit = () => import('@/views/modules/penyebab/Edit.vue')
-const PenyebabDetail = () => import('@/views/modules/penyebab/Detail.vue')
+// const Penyebab = () => import('@/views/modules/penyebab/index.vue')
+const Penyebab = resolve => {
+  require.ensure(['@/views/modules/penyebab/index.vue'], () => {
+      resolve(require('@/views/modules/penyebab/index.vue'));
+  });
+};
+// const PenyebabCreate = () => import('@/views/modules/penyebab/Create.vue')
+const PenyebabCreate = resolve => {
+  require.ensure(['@/views/modules/penyebab/Create.vue'], () => {
+      resolve(require('@/views/modules/penyebab/Create.vue'));
+  });
+};
+// const PenyebabEdit = () => import('@/views/modules/penyebab/Edit.vue')
+const PenyebabEdit = resolve => {
+  require.ensure(['@/views/modules/penyebab/Edit.vue'], () => {
+      resolve(require('@/views/modules/penyebab/Edit.vue'));
+  });
+};
+// const PenyebabDetail = () => import('@/views/modules/penyebab/Detail.vue')
+const PenyebabDetail = resolve => {
+  require.ensure(['@/views/modules/penyebab/Detail.vue'], () => {
+      resolve(require('@/views/modules/penyebab/Detail.vue'));
+  });
+};
 
 
 const routeModPenyebab =  {
@@ -15,7 +35,8 @@ const routeModPenyebab =  {
       name: 'module-penyebab',
       component: Penyebab,
       meta: {
-        requiresUser: true
+        requiresUser: true,
+        reload: true,
       },
     },
     {

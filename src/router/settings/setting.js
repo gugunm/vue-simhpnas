@@ -1,55 +1,240 @@
-const Dashboard = () => import('@/views/Dashboard')
+// const Dashboard = () => import('@/views/Dashboard')
+const Dashboard = resolve => {
+  require.ensure(['@/views/Dashboard'], () => {
+      resolve(require('@/views/Dashboard'));
+  });
+};
 
 // Users
-const Users = () => import('@/views/users/Users')
-const User = () => import('@/views/users/User')
-const EditUser = () => import('@/views/users/EditUser')
+// const Users = () => import('@/views/users/Users')
+const Users = resolve => {
+  require.ensure(['@/views/users/Users'], () => {
+      resolve(require('@/views/users/Users'));
+  }, 'user');
+};
+// const User = () => import('@/views/users/User')
+const User = resolve => {
+  require.ensure(['@/views/users/User'], () => {
+      resolve(require('@/views/users/User'));
+  }, 'user');
+};
+// const EditUser = () => import('@/views/users/EditUser')
+const EditUser = resolve => {
+  require.ensure(['@/views/users/EditUser'], () => {
+      resolve(require('@/views/users/EditUser'));
+  }, 'user');
+};
 
 //Notes
-const Notes = () => import('@/views/notes/Notes')
-const Note = () => import('@/views/notes/Note')
-const EditNote = () => import('@/views/notes/EditNote')
-const CreateNote = () => import('@/views/notes/CreateNote')
+// const Notes = () => import('@/views/notes/Notes')
+const Notes = resolve => {
+  require.ensure(['@/views/notes/Notes'], () => {
+      resolve(require('@/views/notes/Notes'));
+  }, 'note');
+};
+// const Note = () => import('@/views/notes/Note')
+const Note = resolve => {
+  require.ensure(['@/views/notes/Note'], () => {
+      resolve(require('@/views/notes/Note'));
+  }, 'note');
+};
+// const EditNote = () => import('@/views/notes/EditNote')
+const EditNote = resolve => {
+  require.ensure(['@/views/notes/EditNote'], () => {
+      resolve(require('@/views/notes/EditNote'));
+  }, 'note');
+};
+// const CreateNote = () => import('@/views/notes/CreateNote')
+const CreateNote = resolve => {
+  require.ensure(['@/views/notes/CreateNote'], () => {
+      resolve(require('@/views/notes/CreateNote'));
+  }, 'note');
+};
 
 //Roles
-const Roles = () => import('@/views/roles/Roles')
-const Role = () => import('@/views/roles/Role')
-const EditRole = () => import('@/views/roles/EditRole')
-const CreateRole = () => import('@/views/roles/CreateRole')
+// const Roles = () => import('@/views/roles/Roles')
+const Roles = resolve => {
+  require.ensure(['@/views/roles/Roles'], () => {
+      resolve(require('@/views/roles/Roles'));
+  }, 'role');
+};
+// const Role = () => import('@/views/roles/Role')
+const Role = resolve => {
+  require.ensure(['@/views/roles/Role'], () => {
+      resolve(require('@/views/roles/Role'));
+  }, 'role');
+};
+// const EditRole = () => import('@/views/roles/EditRole')
+const EditRole = resolve => {
+  require.ensure(['@/views/roles/EditRole'], () => {
+      resolve(require('@/views/roles/EditRole'));
+  }, 'role');
+};
+// const CreateRole = () => import('@/views/roles/CreateRole')
+const CreateRole = resolve => {
+  require.ensure(['@/views/roles/CreateRole'], () => {
+      resolve(require('@/views/roles/CreateRole'));
+  }, 'role');
+};
 
 //Bread
-const Breads = () => import('@/views/bread/Breads')
-const Bread = () => import('@/views/bread/Bread')
-const EditBread = () => import('@/views/bread/EditBread')
-const CreateBread = () => import('@/views/bread/CreateBread')
-const DeleteBread = () => import('@/views/bread/DeleteBread')
+// const Breads = () => import('@/views/bread/Breads')
+const Breads = resolve => {
+  require.ensure(['@/views/bread/Breads'], () => {
+      resolve(require('@/views/bread/Breads'));
+  }, 'bread');
+};
+// const Bread = () => import('@/views/bread/Bread')
+const Bread = resolve => {
+  require.ensure(['@/views/bread/Bread'], () => {
+      resolve(require('@/views/bread/Bread'));
+  }, 'bread');
+};
+// const EditBread = () => import('@/views/bread/EditBread')
+const EditBread = resolve => {
+  require.ensure(['@/views/bread/EditBread'], () => {
+      resolve(require('@/views/bread/EditBread'));
+  }, 'bread');
+};
+// const CreateBread = () => import('@/views/bread/CreateBread')
+const CreateBread = resolve => {
+  require.ensure(['@/views/bread/CreateBread'], () => {
+      resolve(require('@/views/bread/CreateBread'));
+  }, 'bread');
+};
+// const DeleteBread = () => import('@/views/bread/DeleteBread')
+const DeleteBread = resolve => {
+  require.ensure(['@/views/bread/DeleteBread'], () => {
+      resolve(require('@/views/bread/DeleteBread'));
+  }, 'bread');
+};
 
 //Resources
-const Resources = () => import('@/views/resources/Resources')
-const CreateResource = () => import('@/views/resources/CreateResources')
-const Resource = () => import('@/views/resources/Resource')
-const EditResource = () => import('@/views/resources/EditResource')
-const DeleteResource = () => import('@/views/resources/DeleteResource')
+// const Resources = () => import('@/views/resources/Resources')
+const Resources = resolve => {
+  require.ensure(['@/views/resources/Resources'], () => {
+      resolve(require('@/views/resources/Resources'));
+  }, 'resource');
+};
+// const CreateResource = () => import('@/views/resources/CreateResources')
+const CreateResource = resolve => {
+  require.ensure(['@/views/resources/CreateResources'], () => {
+      resolve(require('@/views/resources/CreateResources'));
+  }, 'resource');
+};
+// const Resource = () => import('@/views/resources/Resource')
+const Resource = resolve => {
+  require.ensure(['@/views/resources/Resource'], () => {
+      resolve(require('@/views/resources/Resource'));
+  }, 'resource');
+};
+// const EditResource = () => import('@/views/resources/EditResource')
+const EditResource = resolve => {
+  require.ensure(['@/views/resources/EditResource'], () => {
+      resolve(require('@/views/resources/EditResource'));
+  }, 'resource');
+};
+// const DeleteResource = () => import('@/views/resources/DeleteResource')
+const DeleteResource = resolve => {
+  require.ensure(['@/views/resources/DeleteResource'], () => {
+      resolve(require('@/views/resources/DeleteResource'));
+  }, 'resource');
+};
 
 //Email
-const Emails = () => import('@/views/email/Emails')
-const CreateEmail = () => import('@/views/email/CreateEmail')
-const EditEmail = () => import('@/views/email/EditEmail')
-const ShowEmail = () => import('@/views/email/ShowEmail')
-const SendEmail = () => import('@/views/email/SendEmail')
+// const Emails = () => import('@/views/email/Emails')
+const Emails = resolve => {
+  require.ensure(['@/views/email/Emails'], () => {
+      resolve(require('@/views/email/Emails'));
+  }, 'role');
+};
+// const CreateEmail = () => import('@/views/email/CreateEmail')
+const CreateEmail = resolve => {
+  require.ensure(['@/views/email/CreateEmail'], () => {
+      resolve(require('@/views/email/CreateEmail'));
+  }, 'email');
+};
+// const EditEmail = () => import('@/views/email/EditEmail')
+const EditEmail = resolve => {
+  require.ensure(['@/views/email/EditEmail'], () => {
+      resolve(require('@/views/email/EditEmail'));
+  }, 'email');
+};
+// const ShowEmail = () => import('@/views/email/ShowEmail')
+const ShowEmail = resolve => {
+  require.ensure(['@/views/email/ShowEmail'], () => {
+      resolve(require('@/views/email/ShowEmail'));
+  }, 'email');
+};
+// const SendEmail = () => import('@/views/email/SendEmail')
+const SendEmail = resolve => {
+  require.ensure(['@/views/email/SendEmail'], () => {
+      resolve(require('@/views/email/SendEmail'));
+  }, 'email');
+};
 
-const Menus = () => import('@/views/menu/MenuIndex')
-const CreateMenu = () => import('@/views/menu/CreateMenu')
-const EditMenu = () => import('@/views/menu/EditMenu')
-const DeleteMenu = () => import('@/views/menu/DeleteMenu')
+// const Menus = () => import('@/views/menu/MenuIndex')
+const Menus = resolve => {
+  require.ensure(['@/views/menu/MenuIndex'], () => {
+      resolve(require('@/views/menu/MenuIndex'));
+  }, 'menu');
+};
+// const CreateMenu = () => import('@/views/menu/CreateMenu')
+const CreateMenu = resolve => {
+  require.ensure(['@/views/menu/CreateMenu'], () => {
+      resolve(require('@/views/menu/CreateMenu'));
+  }, 'menu');
+};
+// const EditMenu = () => import('@/views/menu/EditMenu')
+const EditMenu = resolve => {
+  require.ensure(['@/views/menu/EditMenu'], () => {
+      resolve(require('@/views/menu/EditMenu'));
+  }, 'menu');
+};
+// const DeleteMenu = () => import('@/views/menu/DeleteMenu')
+const DeleteMenu = resolve => {
+  require.ensure(['@/views/menu/DeleteMenu'], () => {
+      resolve(require('@/views/menu/DeleteMenu'));
+  }, 'menu');
+};
 
-const MenuElements = () => import('@/views/menuElements/ElementsIndex')
-const CreateMenuElement = () => import('@/views/menuElements/CreateMenuElement')
-const EditMenuElement = () => import('@/views/menuElements/EditMenuElement')
-const ShowMenuElement = () => import('@/views/menuElements/ShowMenuElement')
-const DeleteMenuElement = () => import('@/views/menuElements/DeleteMenuElement')
+// const MenuElements = () => import('@/views/menuElements/ElementsIndex')
+const MenuElements = resolve => {
+  require.ensure(['@/views/menuElements/ElementsIndex'], () => {
+      resolve(require('@/views/menuElements/ElementsIndex'));
+  }, 'menu');
+};
+// const CreateMenuElement = () => import('@/views/menuElements/CreateMenuElement')
+const CreateMenuElement = resolve => {
+  require.ensure(['@/views/menuElements/CreateMenuElement'], () => {
+      resolve(require('@/views/menuElements/CreateMenuElement'));
+  }, 'menu');
+};
+// const EditMenuElement = () => import('@/views/menuElements/EditMenuElement')
+const EditMenuElement = resolve => {
+  require.ensure(['@/views/menuElements/EditMenuElement'], () => {
+      resolve(require('@/views/menuElements/EditMenuElement'));
+  }, 'menu');
+};
+// const ShowMenuElement = () => import('@/views/menuElements/ShowMenuElement')
+const ShowMenuElement = resolve => {
+  require.ensure(['@/views/menuElements/ShowMenuElement'], () => {
+      resolve(require('@/views/menuElements/ShowMenuElement'));
+  }, 'menu');
+};
+// const DeleteMenuElement = () => import('@/views/menuElements/DeleteMenuElement')
+const DeleteMenuElement = resolve => {
+  require.ensure(['@/views/menuElements/DeleteMenuElement'], () => {
+      resolve(require('@/views/menuElements/DeleteMenuElement'));
+  }, 'menu');
+};
 
-const Media = () => import('@/views/media/Media')
+// const Media = () => import('@/views/media/Media')
+const Media = resolve => {
+  require.ensure(['@/views/media/Media'], () => {
+      resolve(require('@/views/media/Media'));
+  }, 'media');
+};
 
 
 const routeCoreUiSetting = [

@@ -1,7 +1,27 @@
-const Rekomendasi = () => import('@/views/modules/rekomendasi/index.vue')
-const RekomendasiCreate = () => import('@/views/modules/rekomendasi/Create.vue')
-const RekomendasiDetail = () => import('@/views/modules/rekomendasi/Detail.vue')
-const RekomendasiEdit = () => import('@/views/modules/rekomendasi/Edit.vue')
+// const Rekomendasi = () => import('@/views/modules/rekomendasi/index.vue')
+const Rekomendasi = resolve => {
+  require.ensure(['@/views/modules/rekomendasi/index.vue'], () => {
+      resolve(require('@/views/modules/rekomendasi/index.vue'));
+  });
+};
+// const RekomendasiCreate = () => import('@/views/modules/rekomendasi/Create.vue')
+const RekomendasiCreate = resolve => {
+  require.ensure(['@/views/modules/rekomendasi/Create.vue'], () => {
+      resolve(require('@/views/modules/rekomendasi/Create.vue'));
+  });
+};
+// const RekomendasiDetail = () => import('@/views/modules/rekomendasi/Detail.vue')
+const RekomendasiDetail = resolve => {
+  require.ensure(['@/views/modules/rekomendasi/Detail.vue'], () => {
+      resolve(require('@/views/modules/rekomendasi/Detail.vue'));
+  });
+};
+// const RekomendasiEdit = () => import('@/views/modules/rekomendasi/Edit.vue')
+const RekomendasiEdit = resolve => {
+  require.ensure(['@/views/modules/rekomendasi/Edit.vue'], () => {
+      resolve(require('@/views/modules/rekomendasi/Edit.vue'));
+  });
+};
 
 
 const routeModRekomendasi = {
@@ -15,7 +35,8 @@ const routeModRekomendasi = {
       name: 'module-rekomendasi',
       component: Rekomendasi,
       meta: {
-        requiresUser: true
+        requiresUser: true,
+        reload: true,
       },
     },
     {

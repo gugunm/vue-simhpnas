@@ -1,7 +1,27 @@
-const Lha = () => import('@/views/modules/lha/index.vue')
-const LhaCreate = () => import('@/views/modules/lha/Create.vue')
-const LhaEdit = () => import('@/views/modules/lha/Edit.vue')
-const LhaDetail = () => import('@/views/modules/lha/Detail.vue')
+// const Lha = () => import('@/views/modules/lha/index.vue')
+const Lha = resolve => {
+  require.ensure(['@/views/modules/lha/index.vue'], () => {
+      resolve(require('@/views/modules/lha/index.vue'));
+  });
+};
+// const LhaCreate = () => import('@/views/modules/lha/Create.vue')
+const LhaCreate = resolve => {
+  require.ensure(['@/views/modules/lha/Create.vue'], () => {
+      resolve(require('@/views/modules/lha/Create.vue'));
+  });
+};
+// const LhaEdit = () => import('@/views/modules/lha/Edit.vue')
+const LhaEdit = resolve => {
+  require.ensure(['@/views/modules/lha/Edit.vue'], () => {
+      resolve(require('@/views/modules/lha/Edit.vue'));
+  });
+};
+// const LhaDetail = () => import('@/views/modules/lha/Detail.vue')
+const LhaDetail = resolve => {
+  require.ensure(['@/views/modules/lha/Detail.vue'], () => {
+      resolve(require('@/views/modules/lha/Detail.vue'));
+  });
+};
 
 
 const routeModLha = {
@@ -15,7 +35,8 @@ const routeModLha = {
       name: 'module-lha',
       component: Lha,
       meta: {
-        requiresUser: true
+        requiresUser: true,
+        reload: true,
       },
     },
     {

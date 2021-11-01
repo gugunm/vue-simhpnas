@@ -1,12 +1,41 @@
 // TINDAK LANJUT
-const MasterTindakLanjut = () => import('@/views/masters/mTindakLanjut/tindakLanjut')
-const MasterCreateTindakLanjut = () => import('@/views/masters/mTindakLanjut/tindakLanjut/Create.vue')
-const MasterEditTindakLanjut = () => import('@/views/masters/mTindakLanjut/tindakLanjut/Edit.vue')
-
+// const MasterTindakLanjut = () => import('@/views/masters/mTindakLanjut/tindakLanjut')
+const MasterTindakLanjut = resolve => {
+  require.ensure(['@/views/masters/mTindakLanjut/tindakLanjut'], () => {
+      resolve(require('@/views/masters/mTindakLanjut/tindakLanjut'));
+  });
+};
+// const MasterCreateTindakLanjut = () => import('@/views/masters/mTindakLanjut/tindakLanjut/Create.vue')
+const MasterCreateTindakLanjut = resolve => {
+  require.ensure(['@/views/masters/mTindakLanjut/tindakLanjut/Create.vue'], () => {
+      resolve(require('@/views/masters/mTindakLanjut/tindakLanjut/Create.vue'));
+  });
+};
+// const MasterEditTindakLanjut = () => import('@/views/masters/mTindakLanjut/tindakLanjut/Edit.vue')
+const MasterEditTindakLanjut = resolve => {
+  require.ensure(['@/views/masters/mTindakLanjut/tindakLanjut/Edit.vue'], () => {
+      resolve(require('@/views/masters/mTindakLanjut/tindakLanjut/Edit.vue'));
+  });
+};
 // SUB TINDAK LANJUT
-const MasterSubTindakLanjut = () => import('@/views/masters/mTindakLanjut/subTindakLanjut')
-const MasterCreateSubTindakLanjut = () => import('@/views/masters/mTindakLanjut/subTindakLanjut/Create.vue')
-const MasterEditSubTindakLanjut = () => import('@/views/masters/mTindakLanjut/subTindakLanjut/Edit.vue')
+// const MasterSubTindakLanjut = () => import('@/views/masters/mTindakLanjut/subTindakLanjut')
+const MasterSubTindakLanjut = resolve => {
+  require.ensure(['@/views/masters/mTindakLanjut/subTindakLanjut'], () => {
+      resolve(require('@/views/masters/mTindakLanjut/subTindakLanjut'));
+  });
+};
+// const MasterCreateSubTindakLanjut = () => import('@/views/masters/mTindakLanjut/subTindakLanjut/Create.vue')
+const MasterCreateSubTindakLanjut = resolve => {
+  require.ensure(['@/views/masters/mTindakLanjut/subTindakLanjut/Create.vue'], () => {
+      resolve(require('@/views/masters/mTindakLanjut/subTindakLanjut/Create.vue'));
+  });
+};
+// const MasterEditSubTindakLanjut = () => import('@/views/masters/mTindakLanjut/subTindakLanjut/Edit.vue')
+const MasterEditSubTindakLanjut = resolve => {
+  require.ensure(['@/views/masters/mTindakLanjut/subTindakLanjut/Edit.vue'], () => {
+      resolve(require('@/views/masters/mTindakLanjut/subTindakLanjut/Edit.vue'));
+  });
+};
 
 
 const routeTindakLanjut = {

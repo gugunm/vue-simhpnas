@@ -1,7 +1,27 @@
-const TindakLanjut = () => import('@/views/modules/tindakLanjut/index.vue')
-const TindakLanjutCreate = () => import('@/views/modules/tindakLanjut/Create.vue')
-const TindakLanjutDetail = () => import('@/views/modules/tindakLanjut/Detail.vue')
-const TindakLanjutEdit = () => import('@/views/modules/tindakLanjut/Edit.vue')
+// const TindakLanjut = () => import('@/views/modules/tindakLanjut/index.vue')
+const TindakLanjut = resolve => {
+  require.ensure(['@/views/modules/tindakLanjut/index.vue'], () => {
+      resolve(require('@/views/modules/tindakLanjut/index.vue'));
+  });
+};
+// const TindakLanjutCreate = () => import('@/views/modules/tindakLanjut/Create.vue')
+const TindakLanjutCreate = resolve => {
+  require.ensure(['@/views/modules/tindakLanjut/Create.vue'], () => {
+      resolve(require('@/views/modules/tindakLanjut/Create.vue'));
+  });
+};
+// const TindakLanjutDetail = () => import('@/views/modules/tindakLanjut/Detail.vue')
+const TindakLanjutDetail = resolve => {
+  require.ensure(['@/views/modules/tindakLanjut/Detail.vue'], () => {
+      resolve(require('@/views/modules/tindakLanjut/Detail.vue'));
+  });
+};
+// const TindakLanjutEdit = () => import('@/views/modules/tindakLanjut/Edit.vue')
+const TindakLanjutEdit = resolve => {
+  require.ensure(['@/views/modules/tindakLanjut/Edit.vue'], () => {
+      resolve(require('@/views/modules/tindakLanjut/Edit.vue'));
+  });
+};
 
 
 const routeModTindakLanjut = {
@@ -15,7 +35,8 @@ const routeModTindakLanjut = {
       name: 'module-tindak-lanjut',
       component: TindakLanjut,
       meta: {
-        requiresUser: true
+        requiresUser: true,
+        reload: true,
       },
     },
     {

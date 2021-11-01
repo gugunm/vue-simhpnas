@@ -1,12 +1,42 @@
 // GROUP LINGKUP AUDIT
-const MasterRefGroupLingkupAudit = () => import('@/views/masters/mReferensi/refLingkupAudit/groupLingkupAudit/index.vue')
-const MasterCreateRefGroupLingkupAudit = () => import('@/views/masters/mReferensi/refLingkupAudit/groupLingkupAudit/Create')
-const MasterEditRefGroupLingkupAudit = () => import('@/views/masters/mReferensi/refLingkupAudit/groupLingkupAudit/Edit.vue')
+// const MasterRefGroupLingkupAudit = () => import('@/views/masters/mReferensi/refLingkupAudit/groupLingkupAudit/index.vue')
+const MasterRefGroupLingkupAudit = resolve => {
+  require.ensure(['@/views/masters/mReferensi/refLingkupAudit/groupLingkupAudit/index.vue'], () => {
+      resolve(require('@/views/masters/mReferensi/refLingkupAudit/groupLingkupAudit/index.vue'));
+  });
+};
+// const MasterCreateRefGroupLingkupAudit = () => import('@/views/masters/mReferensi/refLingkupAudit/groupLingkupAudit/Create')
+const MasterCreateRefGroupLingkupAudit = resolve => {
+  require.ensure(['@/views/masters/mReferensi/refLingkupAudit/groupLingkupAudit/Create'], () => {
+      resolve(require('@/views/masters/mReferensi/refLingkupAudit/groupLingkupAudit/Create'));
+  });
+};
+// const MasterEditRefGroupLingkupAudit = () => import('@/views/masters/mReferensi/refLingkupAudit/groupLingkupAudit/Edit.vue')
+const MasterEditRefGroupLingkupAudit = resolve => {
+  require.ensure(['@/views/masters/mReferensi/refLingkupAudit/groupLingkupAudit/Edit.vue'], () => {
+      resolve(require('@/views/masters/mReferensi/refLingkupAudit/groupLingkupAudit/Edit.vue'));
+  });
+};
 
 // LINGKUP AUDIT
-const MasterRefLingkupAudit = () => import('@/views/masters/mReferensi/refLingkupAudit/lingkupAudit/index.vue')
-const MasterCreateRefLingkupAudit = () => import('@/views/masters/mReferensi/refLingkupAudit/lingkupAudit/Create.vue')
-const MasterEditRefLingkupAudit = () => import('@/views/masters/mReferensi/refLingkupAudit/lingkupAudit/Edit.vue')
+// const MasterRefLingkupAudit = () => import('@/views/masters/mReferensi/refLingkupAudit/lingkupAudit/index.vue')
+const MasterRefLingkupAudit = resolve => {
+  require.ensure(['@/views/masters/mReferensi/refLingkupAudit/lingkupAudit/index.vue'], () => {
+      resolve(require('@/views/masters/mReferensi/refLingkupAudit/lingkupAudit/index.vue'));
+  });
+};
+// const MasterCreateRefLingkupAudit = () => import('@/views/masters/mReferensi/refLingkupAudit/lingkupAudit/Create.vue')
+const MasterCreateRefLingkupAudit = resolve => {
+  require.ensure(['@/views/masters/mReferensi/refLingkupAudit/lingkupAudit/Create.vue'], () => {
+      resolve(require('@/views/masters/mReferensi/refLingkupAudit/lingkupAudit/Create.vue'));
+  });
+};
+// const MasterEditRefLingkupAudit = () => import('@/views/masters/mReferensi/refLingkupAudit/lingkupAudit/Edit.vue')
+const MasterEditRefLingkupAudit = resolve => {
+  require.ensure(['@/views/masters/mReferensi/refLingkupAudit/lingkupAudit/Edit.vue'], () => {
+      resolve(require('@/views/masters/mReferensi/refLingkupAudit/lingkupAudit/Edit.vue'));
+  });
+};
 
 const routeLingkupAudit = {
   path: 'lingkup-audit',

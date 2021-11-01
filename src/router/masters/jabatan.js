@@ -1,6 +1,21 @@
-const MasterRefJabatan = () => import('@/views/masters/mReferensi/refJabatan/index.vue')
-const MasterCreateRefJabatan = () => import('@/views/masters/mReferensi/refJabatan/Create.vue')
-const MasterEditRefJabatan = () => import('@/views/masters/mReferensi/refJabatan/Edit.vue')
+// const MasterRefJabatan = () => import('@/views/masters/mReferensi/refJabatan/index.vue')
+const MasterRefJabatan = resolve => {
+  require.ensure(['@/views/masters/mReferensi/refJabatan/index.vue'], () => {
+      resolve(require('@/views/masters/mReferensi/refJabatan/index.vue'));
+  });
+};
+// const MasterCreateRefJabatan = () => import('@/views/masters/mReferensi/refJabatan/Create.vue')
+const MasterCreateRefJabatan = resolve => {
+  require.ensure(['@/views/masters/mReferensi/refJabatan/Create.vue'], () => {
+      resolve(require('@/views/masters/mReferensi/refJabatan/Create.vue'));
+  });
+};
+// const MasterEditRefJabatan = () => import('@/views/masters/mReferensi/refJabatan/Edit.vue')
+const MasterEditRefJabatan = resolve => {
+  require.ensure(['@/views/masters/mReferensi/refJabatan/Edit.vue'], () => {
+      resolve(require('@/views/masters/mReferensi/refJabatan/Edit.vue'));
+  });
+};
 
 const routeJabatan = // MasterCreateRefJabatan
 // MasterEditRefJabatan

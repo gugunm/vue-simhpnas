@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 // +++++ ROUTE SETTINGS +++++
 import routeCoreUiSetting from './settings/setting'
+
 import routeUi from './settings/ui'
 // +++++ ROUTE MASTER +++++
 import routeObrik from './masters/obrik'

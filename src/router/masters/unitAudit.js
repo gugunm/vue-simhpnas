@@ -1,12 +1,42 @@
 // UNIT AUDIT
-const MasterRefUnitAudit = () => import('@/views/masters/mReferensi/refUnitAudit/unitAudit/index.vue')
-const MasterCreateRefUnitAudit = () => import('@/views/masters/mReferensi/refUnitAudit/unitAudit/Create.vue')
-const MasterEditRefUnitAudit = () => import('@/views/masters/mReferensi/refUnitAudit/unitAudit/Edit.vue')
+// const MasterRefUnitAudit = () => import('@/views/masters/mReferensi/refUnitAudit/unitAudit/index.vue')
+const MasterRefUnitAudit = resolve => {
+  require.ensure(['@/views/masters/mReferensi/refUnitAudit/unitAudit/index.vue'], () => {
+      resolve(require('@/views/masters/mReferensi/refUnitAudit/unitAudit/index.vue'));
+  });
+};
+// const MasterCreateRefUnitAudit = () => import('@/views/masters/mReferensi/refUnitAudit/unitAudit/Create.vue')
+const MasterCreateRefUnitAudit = resolve => {
+  require.ensure(['@/views/masters/mReferensi/refUnitAudit/unitAudit/Create.vue'], () => {
+      resolve(require('@/views/masters/mReferensi/refUnitAudit/unitAudit/Create.vue'));
+  });
+};
+// const MasterEditRefUnitAudit = () => import('@/views/masters/mReferensi/refUnitAudit/unitAudit/Edit.vue')
+const MasterEditRefUnitAudit = resolve => {
+  require.ensure(['@/views/masters/mReferensi/refUnitAudit/unitAudit/Edit.vue'], () => {
+      resolve(require('@/views/masters/mReferensi/refUnitAudit/unitAudit/Edit.vue'));
+  });
+};
 
 // SUB UNIT AUDIT
-const MasterRefSubUnitAudit = () => import('@/views/masters/mReferensi/refUnitAudit/subUnitAudit/index.vue')
-const MasterCreateRefSubUnitAudit = () => import('@/views/masters/mReferensi/refUnitAudit/subUnitAudit/Create.vue')
-const MasterEditRefSubUnitAudit = () => import('@/views/masters/mReferensi/refUnitAudit/subUnitAudit/Edit.vue')
+// const MasterRefSubUnitAudit = () => import('@/views/masters/mReferensi/refUnitAudit/subUnitAudit/index.vue')
+const MasterRefSubUnitAudit = resolve => {
+  require.ensure(['@/views/masters/mReferensi/refUnitAudit/subUnitAudit/index.vue'], () => {
+      resolve(require('@/views/masters/mReferensi/refUnitAudit/subUnitAudit/index.vue'));
+  });
+};
+// const MasterCreateRefSubUnitAudit = () => import('@/views/masters/mReferensi/refUnitAudit/subUnitAudit/Create.vue')
+const MasterCreateRefSubUnitAudit = resolve => {
+  require.ensure(['@/views/masters/mReferensi/refUnitAudit/subUnitAudit/Create.vue'], () => {
+      resolve(require('@/views/masters/mReferensi/refUnitAudit/subUnitAudit/Create.vue'));
+  });
+};
+// const MasterEditRefSubUnitAudit = () => import('@/views/masters/mReferensi/refUnitAudit/subUnitAudit/Edit.vue')
+const MasterEditRefSubUnitAudit = resolve => {
+  require.ensure(['@/views/masters/mReferensi/refUnitAudit/subUnitAudit/Edit.vue'], () => {
+      resolve(require('@/views/masters/mReferensi/refUnitAudit/subUnitAudit/Edit.vue'));
+  });
+};
 
 
 const routeUnitAudit = {

@@ -1,71 +1,288 @@
-const Colors = () => import('@/views/theme/Colors')
-const Typography = () => import('@/views/theme/Typography')
-
-const Charts = () => import('@/views/charts/Charts')
-const Widgets = () => import('@/views/widgets/Widgets')
-
-const Tables = () => import('@/views/tables/Tables')
-const AdvancedTables = () => import('@/views/tables/AdvancedTables')
-const LazyLoadingTables = () => import('@/views/tables/LazyLoadingTables')
-const LazyLoadingTablesScroll = () => import('@/views/tables/LazyLoadingTablesScroll')
-
+// const Colors = () => import('@/views/theme/Colors')
+const Colors = resolve => {
+  require.ensure(['@/views/theme/Colors'], () => {
+      resolve(require('@/views/theme/Colors'));
+  });
+};
+// const Typography = () => import('@/views/theme/Typography')
+const Typography = resolve => {
+  require.ensure(['@/views/theme/Typography'], () => {
+      resolve(require('@/views/theme/Typography'));
+  });
+};
+// const Charts = () => import('@/views/charts/Charts')
+const Charts = resolve => {
+  require.ensure(['@/views/charts/Charts'], () => {
+      resolve(require('@/views/charts/Charts'));
+  });
+};
+// const Widgets = () => import('@/views/widgets/Widgets')
+const Widgets = resolve => {
+  require.ensure(['@/views/widgets/Widgets'], () => {
+      resolve(require('@/views/widgets/Widgets'));
+  });
+};
+// const Tables = () => import('@/views/tables/Tables')
+const Tables = resolve => {
+  require.ensure(['@/views/tables/Tables'], () => {
+      resolve(require('@/views/tables/Tables'));
+  });
+};
+// const AdvancedTables = () => import('@/views/tables/AdvancedTables')
+const AdvancedTables = resolve => {
+  require.ensure(['@/views/tables/AdvancedTables'], () => {
+      resolve(require('@/views/tables/AdvancedTables'));
+  });
+};
+// const LazyLoadingTables = () => import('@/views/tables/LazyLoadingTables')
+const LazyLoadingTables = resolve => {
+  require.ensure(['@/views/tables/LazyLoadingTables'], () => {
+      resolve(require('@/views/tables/LazyLoadingTables'));
+  });
+};
+// const LazyLoadingTablesScroll = () => import('@/views/tables/LazyLoadingTablesScroll')
+const LazyLoadingTablesScroll = resolve => {
+  require.ensure(['@/views/tables/LazyLoadingTablesScroll'], () => {
+      resolve(require('@/views/tables/LazyLoadingTablesScroll'));
+  });
+};
 // Views - Components
-const Cards = () => import('@/views/base/Cards')
-const Switches = () => import('@/views/base/Switches')
-const Tabs = () => import('@/views/base/Tabs')
-const Breadcrumbs = () => import('@/views/base/Breadcrumbs')
-const Carousels = () => import('@/views/base/Carousels')
-const Collapses = () => import('@/views/base/Collapses')
-const Jumbotrons = () => import('@/views/base/Jumbotrons')
-const ListGroups = () => import('@/views/base/ListGroups')
-const Navs = () => import('@/views/base/Navs')
-const Navbars = () => import('@/views/base/Navbars')
-const Paginations = () => import('@/views/base/Paginations')
-const Popovers = () => import('@/views/base/Popovers')
-const ProgressBars = () => import('@/views/base/ProgressBars')
-
-
-const Tooltips = () => import('@/views/base/Tooltips')
-
+// const Cards = () => import('@/views/base/Cards')
+const Cards = resolve => {
+  require.ensure(['@/views/base/Cards'], () => {
+      resolve(require('@/views/base/Cards'));
+  });
+};
+// const Switches = () => import('@/views/base/Switches')
+const Switches = resolve => {
+  require.ensure(['@/views/base/Switches'], () => {
+      resolve(require('@/views/base/Switches'));
+  });
+};
+// const Tabs = () => import('@/views/base/Tabs')
+const Tabs = resolve => {
+  require.ensure(['@/views/base/Tabs'], () => {
+      resolve(require('@/views/base/Tabs'));
+  });
+};
+// const Breadcrumbs = () => import('@/views/base/Breadcrumbs')
+const Breadcrumbs = resolve => {
+  require.ensure(['@/views/base/Breadcrumbs'], () => {
+      resolve(require('@/views/base/Breadcrumbs'));
+  });
+};
+// const Carousels = () => import('@/views/base/Carousels')
+const Carousels = resolve => {
+  require.ensure(['@/views/base/Carousels'], () => {
+      resolve(require('@/views/base/Carousels'));
+  });
+};
+// const Collapses = () => import('@/views/base/Collapses')
+const Collapses = resolve => {
+  require.ensure(['@/views/base/Collapses'], () => {
+      resolve(require('@/views/base/Collapses'));
+  });
+};
+// const Jumbotrons = () => import('@/views/base/Jumbotrons')
+const Jumbotrons = resolve => {
+  require.ensure(['@/views/base/Jumbotrons'], () => {
+      resolve(require('@/views/base/Jumbotrons'));
+  });
+};
+// const ListGroups = () => import('@/views/base/ListGroups')
+const ListGroups = resolve => {
+  require.ensure(['@/views/base/ListGroups'], () => {
+      resolve(require('@/views/base/ListGroups'));
+  });
+};
+// const Navs = () => import('@/views/base/Navs')
+const Navs = resolve => {
+  require.ensure(['@/views/base/Navs'], () => {
+      resolve(require('@/views/base/Navs'));
+  });
+};
+// const Navbars = () => import('@/views/base/Navbars')
+const Navbars = resolve => {
+  require.ensure(['@/views/base/Navbars'], () => {
+      resolve(require('@/views/base/Navbars'));
+  });
+};
+// const Paginations = () => import('@/views/base/Paginations')
+const Paginations = resolve => {
+  require.ensure(['@/views/base/Paginations'], () => {
+      resolve(require('@/views/base/Paginations'));
+  });
+};
+// const Popovers = () => import('@/views/base/Popovers')
+const Popovers = resolve => {
+  require.ensure(['@/views/base/Popovers'], () => {
+      resolve(require('@/views/base/Popovers'));
+  });
+};
+// const ProgressBars = () => import('@/views/base/ProgressBars')
+const ProgressBars = resolve => {
+  require.ensure(['@/views/base/ProgressBars'], () => {
+      resolve(require('@/views/base/ProgressBars'));
+  });
+};
+// const Tooltips = () => import('@/views/base/Tooltips')
+const Tooltips = resolve => {
+  require.ensure(['@/views/base/Tooltips'], () => {
+      resolve(require('@/views/base/Tooltips'));
+  });
+};
 // Views - Buttons
-const StandardButtons = () => import('@/views/buttons/StandardButtons')
-const ButtonGroups = () => import('@/views/buttons/ButtonGroups')
-const Dropdowns = () => import('@/views/buttons/Dropdowns')
-const BrandButtons = () => import('@/views/buttons/BrandButtons')
-
+// const StandardButtons = () => import('@/views/buttons/StandardButtons')
+const StandardButtons = resolve => {
+  require.ensure(['@/views/buttons/StandardButtons'], () => {
+      resolve(require('@/views/buttons/StandardButtons'));
+  });
+};
+// const ButtonGroups = () => import('@/views/buttons/ButtonGroups')
+const ButtonGroups = resolve => {
+  require.ensure(['@/views/buttons/ButtonGroups'], () => {
+      resolve(require('@/views/buttons/ButtonGroups'));
+  });
+};
+// const Dropdowns = () => import('@/views/buttons/Dropdowns')
+const Dropdowns = resolve => {
+  require.ensure(['@/views/buttons/Dropdowns'], () => {
+      resolve(require('@/views/buttons/Dropdowns'));
+  });
+};
+// const BrandButtons = () => import('@/views/buttons/BrandButtons')
+const BrandButtons = resolve => {
+  require.ensure(['@/views/buttons/BrandButtons'], () => {
+      resolve(require('@/views/buttons/BrandButtons'));
+  });
+};
 // Views - Editors
-const TextEditors = () => import('@/views/editors/TextEditors')
-const CodeEditors = () => import('@/views/editors/CodeEditors')
-
+// const TextEditors = () => import('@/views/editors/TextEditors')
+const TextEditors = resolve => {
+  require.ensure(['@/views/editors/TextEditors'], () => {
+      resolve(require('@/views/editors/TextEditors'));
+  });
+};
+// const CodeEditors = () => import('@/views/editors/CodeEditors')
+const CodeEditors = resolve => {
+  require.ensure(['@/views/editors/CodeEditors'], () => {
+      resolve(require('@/views/editors/CodeEditors'));
+  });
+};
 // Views - Forms
-const BasicForms = () => import('@/views/forms/Forms')
-const AdvancedForms = () => import('@/views/forms/AdvancedForms')
-const ValidationForms = () => import('@/views/forms/ValidationForms')
-
+// const BasicForms = () => import('@/views/forms/Forms')
+const BasicForms = resolve => {
+  require.ensure(['@/views/forms/Forms'], () => {
+      resolve(require('@/views/forms/Forms'));
+  });
+};
+// const AdvancedForms = () => import('@/views/forms/AdvancedForms')
+const AdvancedForms = resolve => {
+  require.ensure(['@/views/forms/AdvancedForms'], () => {
+      resolve(require('@/views/forms/AdvancedForms'));
+  });
+};
+// const ValidationForms = () => import('@/views/forms/ValidationForms')
+const ValidationForms = resolve => {
+  require.ensure(['@/views/forms/ValidationForms'], () => {
+      resolve(require('@/views/forms/ValidationForms'));
+  });
+};
 // Views GoogleMaps
-const GoogleMaps = () => import('@/views/GoogleMaps')
-
+// const GoogleMaps = () => import('@/views/GoogleMaps')
+const GoogleMaps = resolve => {
+  require.ensure(['@/views/GoogleMaps'], () => {
+      resolve(require('@/views/GoogleMaps'));
+  });
+};
 // Views - Icons
-const CoreUIIcons = () => import('@/views/icons/CoreUIIcons')
-const Brands = () => import('@/views/icons/Brands')
-const Flags = () => import('@/views/icons/Flags')
-
+// const CoreUIIcons = () => import('@/views/icons/CoreUIIcons')
+const CoreUIIcons = resolve => {
+  require.ensure(['@/views/icons/CoreUIIcons'], () => {
+      resolve(require('@/views/icons/CoreUIIcons'));
+  });
+};
+// const Brands = () => import('@/views/icons/Brands')
+const Brands = resolve => {
+  require.ensure(['@/views/icons/Brands'], () => {
+      resolve(require('@/views/icons/Brands'));
+  });
+};
+// const Flags = () => import('@/views/icons/Flags')
+const Flags = resolve => {
+  require.ensure(['@/views/icons/Flags'], () => {
+      resolve(require('@/views/icons/Flags'));
+  });
+};
 // Views - Notifications
-const Alerts = () => import('@/views/notifications/Alerts')
-const Badges = () => import('@/views/notifications/Badges')
-const Modals = () => import('@/views/notifications/Modals')
-const Toaster = () => import('@/views/notifications/Toaster')
-
+// const Alerts = () => import('@/views/notifications/Alerts')
+const Alerts = resolve => {
+  require.ensure(['@/views/notifications/Alerts'], () => {
+      resolve(require('@/views/notifications/Alerts'));
+  });
+};
+// const Badges = () => import('@/views/notifications/Badges')
+const Badges = resolve => {
+  require.ensure(['@/views/notifications/Badges'], () => {
+      resolve(require('@/views/notifications/Badges'));
+  });
+};
+// const Modals = () => import('@/views/notifications/Modals')
+const Modals = resolve => {
+  require.ensure(['@/views/notifications/Modals'], () => {
+      resolve(require('@/views/notifications/Modals'));
+  });
+};
+// const Toaster = () => import('@/views/notifications/Toaster')
+const Toaster = resolve => {
+  require.ensure(['@/views/notifications/Toaster'], () => {
+      resolve(require('@/views/notifications/Toaster'));
+  });
+};
 // Plugins
-const Draggable = () => import('@/views/plugins/Draggable')
-const Calendar = () => import('@/views/plugins/Calendar')
-const Spinners = () => import('@/views/plugins/Spinners')
-
+// const Draggable = () => import('@/views/plugins/Draggable')
+const Draggable = resolve => {
+  require.ensure(['@/views/plugins/Draggable'], () => {
+      resolve(require('@/views/plugins/Draggable'));
+  });
+};
+// const Calendar = () => import('@/views/plugins/Calendar')
+const Calendar = resolve => {
+  require.ensure(['@/views/plugins/Calendar'], () => {
+      resolve(require('@/views/plugins/Calendar'));
+  });
+};
+// const Spinners = () => import('@/views/plugins/Spinners')
+const Spinners = resolve => {
+  require.ensure(['@/views/plugins/Spinners'], () => {
+      resolve(require('@/views/plugins/Spinners'));
+  });
+};
 // Views - UI Kits
-const Invoice = () => import('@/views/apps/invoicing/Invoice')
-const Compose = () => import('@/views/apps/email/Compose')
-const Inbox = () => import('@/views/apps/email/Inbox')
-const Message = () => import('@/views/apps/email/Message')
+// const Invoice = () => import('@/views/apps/invoicing/Invoice')
+const Invoice = resolve => {
+  require.ensure(['@/views/apps/invoicing/Invoice'], () => {
+      resolve(require('@/views/apps/invoicing/Invoice'));
+  });
+};
+// const Compose = () => import('@/views/apps/email/Compose')
+const Compose = resolve => {
+  require.ensure(['@/views/apps/email/Compose'], () => {
+      resolve(require('@/views/apps/email/Compose'));
+  });
+};
+// const Inbox = () => import('@/views/apps/email/Inbox')
+const Inbox = resolve => {
+  require.ensure(['@/views/apps/email/Inbox'], () => {
+      resolve(require('@/views/apps/email/Inbox'));
+  });
+};
+// const Message = () => import('@/views/apps/email/Message')
+const Message = resolve => {
+  require.ensure(['@/views/apps/email/Message'], () => {
+      resolve(require('@/views/apps/email/Message'));
+  });
+};
 
 
 const routeUi = [

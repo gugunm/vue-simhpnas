@@ -1,8 +1,23 @@
 
 // JENIS OBRIK
-const MasterRefJenisObrik = () => import('@/views/masters/mReferensi/refJenisObrik/index.vue')
-const MasterCreateRefJenisObrik = () => import('@/views/masters/mReferensi/refJenisObrik/Create.vue')
-const MasterEditRefJenisObrik = () => import('@/views/masters/mReferensi/refJenisObrik/Edit.vue')
+// const MasterRefJenisObrik = () => import('@/views/masters/mReferensi/refJenisObrik/index.vue')
+const MasterRefJenisObrik = resolve => {
+  require.ensure(['@/views/masters/mReferensi/refJenisObrik/index.vue'], () => {
+      resolve(require('@/views/masters/mReferensi/refJenisObrik/index.vue'));
+  });
+};
+// const MasterCreateRefJenisObrik = () => import('@/views/masters/mReferensi/refJenisObrik/Create.vue')
+const MasterCreateRefJenisObrik = resolve => {
+  require.ensure(['@/views/masters/mReferensi/refJenisObrik/Create.vue'], () => {
+      resolve(require('@/views/masters/mReferensi/refJenisObrik/Create.vue'));
+  });
+};
+// const MasterEditRefJenisObrik = () => import('@/views/masters/mReferensi/refJenisObrik/Edit.vue')
+const MasterEditRefJenisObrik = resolve => {
+  require.ensure(['@/views/masters/mReferensi/refJenisObrik/Edit.vue'], () => {
+      resolve(require('@/views/masters/mReferensi/refJenisObrik/Edit.vue'));
+  });
+};
 
 const routeJenisObrik = {
   path: 'jenis-obrik',

@@ -102,6 +102,19 @@ export default {
       lha: {},
     };
   },
+
+  watch: {
+    $route(to, before) {
+      if (
+        to.meta.reload == true &&
+        to.name == before.name &&
+        Object.keys(to.query).length == 0
+      ) {
+        this.$router.go();
+      }
+    },
+  },
+
   async mounted() {
     // await this.loadTemuan();
   },
