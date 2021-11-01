@@ -5,10 +5,10 @@
         <CCardHeader>
           Lazy loading functionality presentation
           <div class="card-header-actions">
-            <a 
-              href="https://coreui.io/vue/docs/3.0/components/Table" 
-              class="card-header-action" 
-              rel="noreferrer noopener" 
+            <a
+              href="https://coreui.io/vue/docs/3.0/components/Table"
+              class="card-header-action"
+              rel="noreferrer noopener"
               target="_blank"
             >
               <small class="text-muted">docs</small>
@@ -33,43 +33,40 @@
             :loading="loading"
             @pagination-change="changeItemsLimit"
           >
-            <template #author="{item}">
+            <template #author="{ item }">
               <td>
                 <strong>{{ item.author }}</strong>
               </td>
             </template>
-            <template #title="{item}">
+            <template #title="{ item }">
               <td>
                 <strong>{{ item.title }}</strong>
               </td>
             </template>
-            <template #content="{item}">
+            <template #content="{ item }">
               <td>
                 {{ item.content }}
-              </td>  
+              </td>
             </template>
-            <template #applies_to_date="{item}">
+            <template #applies_to_date="{ item }">
               <td>
                 {{ item.applies_to_date }}
               </td>
             </template>
-            <template #status="{item}">
+            <template #status="{ item }">
               <td>
                 <CBadge :color="item.status_class">
                   {{ item.status }}
                 </CBadge>
               </td>
             </template>
-            <template #note_type="{item}">
+            <template #note_type="{ item }">
               <td>
                 <strong>{{ item.note_type }}</strong>
               </td>
             </template>
           </CDataTable>
-          <CPagination
-            :pages="maxPages"
-            :active-page.sync="activePage"
-          />
+          <CPagination :pages="maxPages" :active-page.sync="activePage" />
         </CCardBody>
       </CCard>
     </CCol>
@@ -77,84 +74,91 @@
 </template>
 
 <style>
-  .lazyTable{
-    display: block;
-    height: 450px;
-    overflow-y: scroll;
-  }
+.lazyTable {
+  display: block;
+  height: 450px;
+  overflow-y: scroll;
+}
 
-  .lazyTable tr{
-    height:50px;
-  }
+.lazyTable tr {
+  height: 50px;
+}
 </style>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
 
 export default {
   name: 'AdvancedTables',
-  data () {
+  data() {
     return {
-      lazyTableFields: ['author', 'title', 'content', 'applies_to_date', 'status', 'note_type'],
+      lazyTableFields: [
+        'author',
+        'title',
+        'content',
+        'applies_to_date',
+        'status',
+        'note_type',
+      ],
       items: [],
       activePage: 1,
       maxPages: 1,
-      sorter: {column: '', asc: false},
+      sorter: { column: '', asc: false },
       tableFilter: '',
       columnFilter: {},
       itemsLimit: 10,
-      loading: false
-    }
+      loading: false,
+    };
   },
   watch: {
-    activePage(){
+    activePage() {
       this.getNotes();
     },
-  	sorter: {
-    	handler(){
-      	this.getNotes();
+    sorter: {
+      handler() {
+        this.getNotes();
       },
-      deep: true
+      deep: true,
     },
-    tableFilter(){
+    tableFilter() {
       this.getNotes();
     },
-    columnFilter(){
+    columnFilter() {
       this.getNotes();
-    }
-  }, 
-  mounted: function(){
+    },
+  },
+  mounted: function () {
     this.getNotes();
   },
   methods: {
-    changeItemsLimit( val ){
+    changeItemsLimit(val) {
       this.itemsLimit = val;
       this.getNotes();
     },
-    getNotes (){
-      this.loading = true
+    getNotes() {
+      this.loading = true;
       let self = this;
       this.items = [];
-      axios.post( this.$apiAdress + '/api/lazyTable?page=' + self.activePage, 
-        {
-          sorter:       self.sorter,
-          tableFilter:  self.tableFilter,
+      axios
+        .post(this.$apiAddress + '/api/lazyTable?page=' + self.activePage, {
+          sorter: self.sorter,
+          tableFilter: self.tableFilter,
           columnFilter: self.columnFilter,
-          itemsLimit:   self.itemsLimit
-        }
-       )
-      .then(function (response) {
-        self.items = self.items.concat(response.data.data);
-        self.maxPages = response.data.last_page;
-        self.loading = false
-      }).catch(function (error) {
-        self.loading = false
-        console.log(error);
-      });
+          itemsLimit: self.itemsLimit,
+        })
+        .then(function (response) {
+          self.items = self.items.concat(response.data.data);
+          self.maxPages = response.data.last_page;
+          self.loading = false;
+        })
+        .catch(function (error) {
+          self.loading = false;
+          console.log(error);
+        });
     },
-    makeFilter(){
+    makeFilter() {
       this.getNotes();
     },
   },
-}
+};
 </script>

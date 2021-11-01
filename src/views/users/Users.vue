@@ -1,20 +1,11 @@
 <template>
   <CRow>
-    <CCol
-      col="12"
-      xl="12"
-    >
+    <CCol col="12" xl="12">
       <transition name="slide">
         <CCard>
-          <CCardHeader>
-            Users
-          </CCardHeader>
+          <CCardHeader> Users </CCardHeader>
           <CCardBody>
-            <CAlert
-              :show.sync="dismissCountDown"
-              color="primary"
-              fade
-            >
+            <CAlert :show.sync="dismissCountDown" color="primary" fade>
               ({{ dismissCountDown }}) {{ message }}
             </CAlert>
             <CDataTable
@@ -23,39 +14,33 @@
               :items-per-page="10"
               pagination
             >
-              <template #status="{item}">
+              <template #status="{ item }">
                 <td>
                   <CBadge :color="getBadge(item.status)">
                     {{ item.status }}
                   </CBadge>
                 </td>
               </template>
-              <template #show="{item}">
+              <template #show="{ item }">
                 <td>
-                  <CButton
-                    color="primary"
-                    @click="showUser( item.id )"
-                  >
+                  <CButton color="primary" @click="showUser(item.id)">
                     Show
                   </CButton>
                 </td>
               </template>
-              <template #edit="{item}">
+              <template #edit="{ item }">
                 <td>
-                  <CButton
-                    color="primary"
-                    @click="editUser( item.id )"
-                  >
+                  <CButton color="primary" @click="editUser(item.id)">
                     Edit
                   </CButton>
                 </td>
               </template>
-              <template #delete="{item}">
+              <template #delete="{ item }">
                 <td>
                   <CButton
-                    v-if="you!=item.id"
+                    v-if="you != item.id"
                     color="danger"
-                    @click="deleteUser( item.id )"
+                    @click="deleteUser(item.id)"
                   >
                     Delete
                   </CButton>
@@ -70,14 +55,23 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
 
 export default {
   name: 'Users',
   data: () => {
     return {
       items: [],
-      fields: ['id', 'name', 'registered', 'roles', 'status', 'show', 'edit', 'delete'],
+      fields: [
+        'id',
+        'name',
+        'registered',
+        'roles',
+        'status',
+        'show',
+        'edit',
+        'delete',
+      ],
       currentPage: 1,
       perPage: 5,
       totalRows: 0,
@@ -86,71 +80,91 @@ export default {
       showMessage: false,
       dismissSecs: 7,
       dismissCountDown: 0,
-      showDismissibleAlert: false
-    }
+      showDismissibleAlert: false,
+    };
   },
   paginationProps: {
     align: 'center',
     doubleArrows: false,
     previousButtonHtml: 'prev',
-    nextButtonHtml: 'next'
+    nextButtonHtml: 'next',
   },
-  mounted: function(){
+  mounted: function () {
     this.getUsers();
   },
   methods: {
-    getBadge (status) {
-      return status === 'Active' ? 'success'
-        : status === 'Inactive' ? 'secondary'
-          : status === 'Pending' ? 'warning'
-            : status === 'Banned' ? 'danger' : 'primary'
+    getBadge(status) {
+      return status === 'Active'
+        ? 'success'
+        : status === 'Inactive'
+        ? 'secondary'
+        : status === 'Pending'
+        ? 'warning'
+        : status === 'Banned'
+        ? 'danger'
+        : 'primary';
     },
-    userLink (id) {
-      return `users/${id.toString()}`
+    userLink(id) {
+      return `users/${id.toString()}`;
     },
-    editLink (id) {
-      return `users/${id.toString()}/edit`
+    editLink(id) {
+      return `users/${id.toString()}/edit`;
     },
-    showUser ( id ) {
-      const userLink = this.userLink( id );
-      this.$router.push({path: userLink});
+    showUser(id) {
+      const userLink = this.userLink(id);
+      this.$router.push({ path: userLink });
     },
-    editUser ( id ) {
-      const editLink = this.editLink( id );
-      this.$router.push({path: editLink});
+    editUser(id) {
+      const editLink = this.editLink(id);
+      this.$router.push({ path: editLink });
     },
-    deleteUser ( id ) {
+    deleteUser(id) {
       let self = this;
       // let userId = id;
-      axios.post( this.$apiAdress + '/api/users/' + id + '?token=' + localStorage.getItem("api_token"), {
-        _method: 'DELETE'
-      })
-      .then(function () {
+      axios
+        .post(
+          this.$apiAddress +
+            '/api/users/' +
+            id +
+            '?token=' +
+            localStorage.getItem('api_token'),
+          {
+            _method: 'DELETE',
+          }
+        )
+        .then(function () {
           self.message = 'Successfully deleted user.';
           self.showAlert();
           self.getUsers();
-      }).catch(function (error) {
-        console.log(error);
-        self.$router.push({ path: '/login' });
-      });
+        })
+        .catch(function (error) {
+          console.log(error);
+          self.$router.push({ path: '/login' });
+        });
     },
-    countDownChanged (dismissCountDown) {
-      this.dismissCountDown = dismissCountDown
+    countDownChanged(dismissCountDown) {
+      this.dismissCountDown = dismissCountDown;
     },
-    showAlert () {
-      this.dismissCountDown = this.dismissSecs
+    showAlert() {
+      this.dismissCountDown = this.dismissSecs;
     },
-    getUsers (){
+    getUsers() {
       let self = this;
-      axios.get( this.$apiAdress + '/api/users?token=' + localStorage.getItem("api_token"))
-      .then(function (response) {
-        self.items = response.data.users;
-        self.you = response.data.you;
-      }).catch(function (error) {
-        console.log(error);
-        self.$router.push({ path: '/login' });
-      });
-    }
-  }
-}
+      axios
+        .get(
+          this.$apiAddress +
+            '/api/users?token=' +
+            localStorage.getItem('api_token')
+        )
+        .then(function (response) {
+          self.items = response.data.users;
+          self.you = response.data.you;
+        })
+        .catch(function (error) {
+          console.log(error);
+          self.$router.push({ path: '/login' });
+        });
+    },
+  },
+};
 </script>

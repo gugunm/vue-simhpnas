@@ -1,23 +1,13 @@
 <template>
   <CRow>
-    <CCol
-      col="12"
-      xl="12"
-    >
+    <CCol col="12" xl="12">
       <transition name="slide">
         <CCard>
           <CCardBody>
-            <CButton
-              color="primary"
-              @click="createNote()"
-            >
+            <CButton color="primary" @click="createNote()">
               Create Note
             </CButton>
-            <CAlert
-              :show.sync="dismissCountDown"
-              color="primary"
-              fade
-            >
+            <CAlert :show.sync="dismissCountDown" color="primary" fade>
               ({{ dismissCountDown }}) {{ message }}
             </CAlert>
             <CDataTable
@@ -27,71 +17,65 @@
               :items-per-page="10"
               pagination
             >
-              <template #author="{item}">
+              <template #author="{ item }">
                 <td>
                   <strong>{{ item.author }}</strong>
                 </td>
               </template>
-              <template #title="{item}">
+              <template #title="{ item }">
                 <td>
                   <strong>{{ item.title }}</strong>
                 </td>
               </template>
-              <template #content="{item}">
+              <template #content="{ item }">
                 <td>
                   {{ item.content }}
-                </td>  
+                </td>
               </template>
-              <template #applies_to_date="{item}">
+              <template #applies_to_date="{ item }">
                 <td>
                   {{ item.applies_to_date }}
                 </td>
               </template>
-              <template #status="{item}">
+              <template #status="{ item }">
                 <td>
                   <CBadge :color="item.status_class">
                     {{ item.status }}
                   </CBadge>
                 </td>
               </template>
-              <template #note_type="{item}">
+              <template #note_type="{ item }">
                 <td>
                   <strong>{{ item.note_type }}</strong>
                 </td>
               </template>
-              <template #show="{item}">
+              <template #show="{ item }">
                 <td>
-                  <CButton
-                    color="primary"
-                    @click="showNote( item.id )"
-                  >
+                  <CButton color="primary" @click="showNote(item.id)">
                     Show
                   </CButton>
                 </td>
               </template>
-              <template #edit="{item}">
+              <template #edit="{ item }">
                 <td>
-                  <CButton
-                    color="primary"
-                    @click="editNote( item.id )"
-                  >
+                  <CButton color="primary" @click="editNote(item.id)">
                     Edit
                   </CButton>
                 </td>
               </template>
-              <template #delete="{item}">
+              <template #delete="{ item }">
                 <td>
                   <CButton
-                    v-if="you!=item.id"
+                    v-if="you != item.id"
                     color="danger"
-                    @click="deleteNote( item.id )"
+                    @click="deleteNote(item.id)"
                   >
                     Delete
                   </CButton>
                 </td>
               </template>
             </CDataTable>
-          </CCardBody>  
+          </CCardBody>
         </CCard>
       </transition>
     </CCol>
@@ -99,7 +83,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
 
 export default {
   name: 'Notes',
@@ -119,7 +103,17 @@ export default {
         {key: 'delete'}
       ],
       */
-      fields: ['author', 'title', 'content', 'applies_to_date', 'status', 'note_type', 'show', 'edit', 'delete'],
+      fields: [
+        'author',
+        'title',
+        'content',
+        'applies_to_date',
+        'status',
+        'note_type',
+        'show',
+        'edit',
+        'delete',
+      ],
       currentPage: 1,
       perPage: 5,
       totalRows: 0,
@@ -128,68 +122,82 @@ export default {
       showMessage: false,
       dismissSecs: 7,
       dismissCountDown: 0,
-      showDismissibleAlert: false
-    }
+      showDismissibleAlert: false,
+    };
   },
-  computed: {
-  },
-  mounted: function(){
+  computed: {},
+  mounted: function () {
     this.getNotes();
   },
   methods: {
-    getRowCount (items) {
-      return items.length
+    getRowCount(items) {
+      return items.length;
     },
-    noteLink (id) {
-      return `notes/${id.toString()}`
+    noteLink(id) {
+      return `notes/${id.toString()}`;
     },
-    editLink (id) {
-      return `notes/${id.toString()}/edit`
+    editLink(id) {
+      return `notes/${id.toString()}/edit`;
     },
-    showNote ( id ) {
-      const noteLink = this.noteLink( id );
-      this.$router.push({path: noteLink});
+    showNote(id) {
+      const noteLink = this.noteLink(id);
+      this.$router.push({ path: noteLink });
     },
-    editNote ( id ) {
-      const editLink = this.editLink( id );
-      this.$router.push({path: editLink});
+    editNote(id) {
+      const editLink = this.editLink(id);
+      this.$router.push({ path: editLink });
     },
-    deleteNote ( id ) {
+    deleteNote(id) {
       let self = this;
       let noteId = id;
-      axios.post( this.$apiAdress + '/api/notes/' + id + '?token=' + localStorage.getItem("api_token"), {
-        _method: 'DELETE'
-      })
-      .then(function (response) {
+      axios
+        .post(
+          this.$apiAddress +
+            '/api/notes/' +
+            id +
+            '?token=' +
+            localStorage.getItem('api_token'),
+          {
+            _method: 'DELETE',
+          }
+        )
+        .then(function (response) {
           self.message = 'Successfully deleted note.';
           self.showAlert();
           self.getNotes();
-      }).catch(function (error) {
-        console.log(error);
-        self.$router.push({ path: '/login' });
-      });
+        })
+        .catch(function (error) {
+          console.log(error);
+          self.$router.push({ path: '/login' });
+        });
     },
-    createNote () {
-      this.$router.push({path: 'notes/create'});
+    createNote() {
+      this.$router.push({ path: 'notes/create' });
     },
-    countDownChanged (dismissCountDown) {
-      this.dismissCountDown = dismissCountDown
+    countDownChanged(dismissCountDown) {
+      this.dismissCountDown = dismissCountDown;
     },
-    showAlert () {
-      this.dismissCountDown = this.dismissSecs
+    showAlert() {
+      this.dismissCountDown = this.dismissSecs;
     },
-    getNotes (){
+    getNotes() {
       let self = this;
-      axios.get( this.$apiAdress + '/api/notes?token=' + localStorage.getItem("api_token") )
-      .then(function (response) {
-        self.items = response.data;
-      }).catch(function (error) {
-        console.log(error);
-        self.$router.push({ path: '/login' });
-      });
-    }
-  }
-}
+      axios
+        .get(
+          this.$apiAddress +
+            '/api/notes?token=' +
+            localStorage.getItem('api_token')
+        )
+        .then(function (response) {
+          self.items = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+          self.$router.push({ path: '/login' });
+        });
+    },
+  },
+};
 </script>
 
 <style scoped>

@@ -262,7 +262,6 @@
 
 <script>
 import axios from 'axios';
-import { API_URL } from '@/utils/api.js';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 import Multiselect from 'vue-multiselect';
 import mixin from './mixin';
@@ -533,7 +532,7 @@ export default {
     async actionSend() {
       const response = await axios({
         method: 'PATCH',
-        baseURL: API_URL,
+        baseURL: this.$apiAddress,
         url: `/api/kirimtl/${this.selectedItem.id}`,
         params: {
           token: localStorage.getItem('api_token'),
@@ -570,7 +569,7 @@ export default {
     async actionPostingTl() {
       const response = await axios({
         method: 'PATCH',
-        baseURL: API_URL,
+        baseURL: this.$apiAddress,
         url: `/api/adminactionacctl/${this.selectedItem.id}`,
         params: {
           token: localStorage.getItem('api_token'),
@@ -589,7 +588,7 @@ export default {
     async actionUnPostTl() {
       const response = await axios({
         method: 'PATCH',
-        baseURL: API_URL,
+        baseURL: this.$apiAddress,
         url: `/api/adminactionunpostingtl/${this.selectedItem.id}`,
         params: {
           token: localStorage.getItem('api_token'),

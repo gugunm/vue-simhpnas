@@ -1,19 +1,10 @@
 <template>
   <CRow>
-    <CCol
-      col="12"
-      lg="6"
-    >
+    <CCol col="12" lg="6">
       <CCard>
         <CCardBody>
-          <h3>
-            Edit Role id:  {{ $route.params.id }}
-          </h3>
-          <CAlert
-            :show.sync="dismissCountDown"
-            color="primary"
-            fade
-          >
+          <h3>Edit Role id: {{ $route.params.id }}</h3>
+          <CAlert :show.sync="dismissCountDown" color="primary" fade>
             ({{ dismissCountDown }}) {{ message }}
           </CAlert>
           <CInput
@@ -22,18 +13,8 @@
             type="text"
             placeholder="Name"
           />
-          <CButton
-            color="primary"
-            @click="update()"
-          >
-            Save
-          </CButton>
-          <CButton
-            color="primary"
-            @click="goBack"
-          >
-            Back
-          </CButton>
+          <CButton color="primary" @click="update()"> Save </CButton>
+          <CButton color="primary" @click="goBack"> Back </CButton>
         </CCardBody>
       </CCard>
     </CCol>
@@ -41,7 +22,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
 export default {
   name: 'EditRole',
   /*
@@ -54,59 +35,75 @@ export default {
   */
   data: () => {
     return {
-        role: {
-          id: null,
-          name: '',
-        },
-        message: '',
-        dismissSecs: 7,
-        dismissCountDown: 0,
-    }
+      role: {
+        id: null,
+        name: '',
+      },
+      message: '',
+      dismissSecs: 7,
+      dismissCountDown: 0,
+    };
   },
-  mounted: function(){
+  mounted: function () {
     let self = this;
-    axios.get(   this.$apiAdress + '/api/roles/' + self.$route.params.id + '/edit?token=' + localStorage.getItem("api_token"))
-    .then(function (response) {
+    axios
+      .get(
+        this.$apiAddress +
+          '/api/roles/' +
+          self.$route.params.id +
+          '/edit?token=' +
+          localStorage.getItem('api_token')
+      )
+      .then(function (response) {
         self.role = response.data;
-    }).catch(function (error) {
+      })
+      .catch(function (error) {
         console.log(error);
         self.$router.push({ path: '/login' });
-    });
+      });
   },
   methods: {
     goBack() {
-      this.$router.go(-1)
+      this.$router.go(-1);
     },
     update() {
-        let self = this;
-        axios.post(   this.$apiAdress + '/api/roles/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"),
-        {
+      let self = this;
+      axios
+        .post(
+          this.$apiAddress +
+            '/api/roles/' +
+            self.$route.params.id +
+            '?token=' +
+            localStorage.getItem('api_token'),
+          {
             _method: 'PUT',
-            name:  self.role.name
-        })
+            name: self.role.name,
+          }
+        )
         .then(function (response) {
-            self.message = 'Successfully updated role.';
-            self.showAlert();
-        }).catch(function (error) {
-            if(error.response.data.message == 'The given data was invalid.'){
-              self.message = '';
-              for (let key in error.response.data.errors) {
-                if (error.response.data.errors.hasOwnProperty(key)) {
-                  self.message += error.response.data.errors[key][0] + '  ';
-                }
+          self.message = 'Successfully updated role.';
+          self.showAlert();
+        })
+        .catch(function (error) {
+          if (error.response.data.message == 'The given data was invalid.') {
+            self.message = '';
+            for (let key in error.response.data.errors) {
+              if (error.response.data.errors.hasOwnProperty(key)) {
+                self.message += error.response.data.errors[key][0] + '  ';
               }
-              self.showAlert();
-            }else{
-              console.log(error); 
-              self.$router.push({ path: '/login' }); 
             }
+            self.showAlert();
+          } else {
+            console.log(error);
+            self.$router.push({ path: '/login' });
+          }
         });
     },
-    showAlert () {
-      this.dismissCountDown = this.dismissSecs
+    showAlert() {
+      this.dismissCountDown = this.dismissSecs;
     },
-  }
-}
+  },
+};
 
 /*
       items: (id) => {
@@ -115,5 +112,4 @@ export default {
         return userDetails.map(([key, value]) => {return {key: key, value: value}})
       },
 */
-
 </script>

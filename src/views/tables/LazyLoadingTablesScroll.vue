@@ -5,10 +5,10 @@
         <CCardHeader>
           Lazy loading functionality presentation
           <div class="card-header-actions">
-            <a 
-              href="https://coreui.io/vue/docs/3.0/components/Table" 
-              class="card-header-action" 
-              rel="noreferrer noopener" 
+            <a
+              href="https://coreui.io/vue/docs/3.0/components/Table"
+              class="card-header-action"
+              rel="noreferrer noopener"
               target="_blank"
             >
               <small class="text-muted">docs</small>
@@ -31,34 +31,34 @@
             :table-filter-value.sync="tableFilter"
             :add-table-classes="lazyTableClass"
           >
-            <template #author="{item}">
+            <template #author="{ item }">
               <td>
                 <strong>{{ item.author }}</strong>
               </td>
             </template>
-            <template #title="{item}">
+            <template #title="{ item }">
               <td>
                 <strong>{{ item.title }}</strong>
               </td>
             </template>
-            <template #content="{item}">
+            <template #content="{ item }">
               <td>
                 {{ item.content }}
-              </td>  
+              </td>
             </template>
-            <template #applies_to_date="{item}">
+            <template #applies_to_date="{ item }">
               <td>
                 {{ item.applies_to_date }}
               </td>
             </template>
-            <template #status="{item}">
+            <template #status="{ item }">
               <td>
                 <CBadge :color="item.status_class">
                   {{ item.status }}
                 </CBadge>
               </td>
             </template>
-            <template #note_type="{item}">
+            <template #note_type="{ item }">
               <td>
                 <strong>{{ item.note_type }}</strong>
               </td>
@@ -71,37 +71,37 @@
 </template>
 
 <style>
-  .lazyTable{
-    display: block;
-    height: 450px;
-    overflow-y: scroll;
-  }
+.lazyTable {
+  display: block;
+  height: 450px;
+  overflow-y: scroll;
+}
 
-  .lazyTable tr{
-    height:50px;
-  }
+.lazyTable tr {
+  height: 50px;
+}
 </style>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
 
 const fields = [
-  { key: 'username', _style:'width:40%' },
+  { key: 'username', _style: 'width:40%' },
   'registered',
-  { key: 'role', _style:'width:20%;' },
-  { key: 'status', _style:'width:20%;' },
-  { 
-    key: 'show_details', 
-    label: '', 
-    _style: 'width:1%', 
-    sortable: false, 
-    filterable: false
-  }
-]
+  { key: 'role', _style: 'width:20%;' },
+  { key: 'status', _style: 'width:20%;' },
+  {
+    key: 'show_details',
+    label: '',
+    _style: 'width:1%',
+    sortable: false,
+    filterable: false,
+  },
+];
 
 export default {
   name: 'AdvancedTables',
-  data () {
+  data() {
     return {
       fields,
       filter: {
@@ -109,88 +109,93 @@ export default {
         title: '',
         content: '',
         status: '',
-        note_type: ''
+        note_type: '',
       },
-      lazyTableFields: ['author', 'title', 'content', 'applies_to_date', 'status', 'note_type'],
+      lazyTableFields: [
+        'author',
+        'title',
+        'content',
+        'applies_to_date',
+        'status',
+        'note_type',
+      ],
       scrolledElement: null,
-      lazyTableClass: "lazyTable",
+      lazyTableClass: 'lazyTable',
       items: [],
       page: 1,
       scrollHist: 0,
       scrollConst: 500,
       scrollBlockFlag: false,
       activePage: 1,
-      sorter: {column: '', asc: false},
+      sorter: { column: '', asc: false },
       tableFilter: '',
       columnFilter: {},
       itemsLimit: 20,
-    }
+    };
   },
   watch: {
-    activePage(){
+    activePage() {
       this.items = [];
       this.getNotes();
     },
-  	sorter: {
-    	handler(){
+    sorter: {
+      handler() {
         this.items = [];
-      	this.getNotes();
+        this.getNotes();
       },
-      deep: true
+      deep: true,
     },
-    tableFilter(){
+    tableFilter() {
       this.items = [];
       this.getNotes();
     },
-    columnFilter(){
+    columnFilter() {
       this.items = [];
       this.getNotes();
-    }
-  }, 
-  mounted: function(){
-    this.scrolledElement = document.getElementsByClassName("lazyTable");
+    },
+  },
+  mounted: function () {
+    this.scrolledElement = document.getElementsByClassName('lazyTable');
     this.scrolledElement[0].onscroll = this.handleScroll;
     this.items = [];
     this.getNotes();
   },
-  destroyed () {
+  destroyed() {
     this.scrolledElement = null;
   },
   methods: {
-    handleScroll (e) {
-      if(this.scrollBlockFlag === false){
-          let self = this;
-          let scrl = e.target.scrollTop;
-          let elt = document.getElementsByClassName("lazyTable");
-          elt = elt[0];
-          if( elt.scrollHeight - this.scrollConst <= scrl ){
-            this.page++;
-            this.getNotes();
-            self.scrollBlockFlag = true;
-            setTimeout(function(){
-              self.scrollBlockFlag = false;
-            },1000);
-          }
+    handleScroll(e) {
+      if (this.scrollBlockFlag === false) {
+        let self = this;
+        let scrl = e.target.scrollTop;
+        let elt = document.getElementsByClassName('lazyTable');
+        elt = elt[0];
+        if (elt.scrollHeight - this.scrollConst <= scrl) {
+          this.page++;
+          this.getNotes();
+          self.scrollBlockFlag = true;
+          setTimeout(function () {
+            self.scrollBlockFlag = false;
+          }, 1000);
+        }
       }
     },
-    getNotes (){
+    getNotes() {
       let self = this;
-      axios.post( this.$apiAdress + '/api/lazyTable?page=' + self.page, 
-        {
-          sorter:       self.sorter,
-          tableFilter:  self.tableFilter,
+      axios
+        .post(this.$apiAddress + '/api/lazyTable?page=' + self.page, {
+          sorter: self.sorter,
+          tableFilter: self.tableFilter,
           columnFilter: self.columnFilter,
-          itemsLimit:   self.itemsLimit,
-        }
-       )
-      .then(function (response) {
-        self.items = self.items.concat(response.data.data);
-      }).catch(function (error) {
-        console.log(error);
-      });
+          itemsLimit: self.itemsLimit,
+        })
+        .then(function (response) {
+          self.items = self.items.concat(response.data.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
-  }
-
-
-}
+  },
+};
 </script>

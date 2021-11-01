@@ -1,19 +1,10 @@
 <template>
   <CRow>
-    <CCol
-      col="12"
-      lg="6"
-    >
+    <CCol col="12" lg="6">
       <CCard no-header>
         <CCardBody>
-          <h3>
-            Edit Menu Element
-          </h3>
-          <CAlert
-            :show.sync="dismissCountDown"
-            color="primary"
-            fade
-          >
+          <h3>Edit Menu Element</h3>
+          <CAlert :show.sync="dismissCountDown" color="primary" fade>
             ({{ dismissCountDown }}) {{ message }}
           </CAlert>
           <CSelect
@@ -45,7 +36,6 @@
             :placeholder="lang.name"
             @change="(state) => changeLang(state, lang.short_name)"
           />
-
 
           <CSelect
             label="Type"
@@ -79,25 +69,15 @@
             >
               CoreUI icons documentation
             </a>
-            <br>
+            <br />
             <CInput
               v-model="menuelement.icon"
               type="text"
               placeholder="CoreUI Icon class - example: cil-bell"
             />
           </div>
-          <CButton
-            color="primary"
-            @click="save()"
-          >
-            Save
-          </CButton>
-          <CButton
-            color="primary"
-            @click="goBack"
-          >
-            Back
-          </CButton>
+          <CButton color="primary" @click="save()"> Save </CButton>
+          <CButton color="primary" @click="goBack"> Back </CButton>
         </CCardBody>
       </CCard>
     </CCol>
@@ -105,179 +85,199 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
 export default {
   name: 'CreateMenuElement',
   data: () => {
     return {
-        fixlangs: [],
-        resultroles: [],
-        fixedmenuroles: [],
-        menuroles: [],
-        langs: [],
+      fixlangs: [],
+      resultroles: [],
+      fixedmenuroles: [],
+      menuroles: [],
+      langs: [],
+      role: [],
+      menulist: [],
+      parents: [],
+      types: [
+        { label: 'Link', value: 'link' },
+        { label: 'Title', value: 'title' },
+        { label: 'Dropdown', value: 'dropdown' },
+      ],
+      menuelement: {
+        menu: 0,
+        name: '',
         role: [],
-        menulist: [],
-        parents: [],
-        types: [
-          {label: 'Link', value: 'link'},
-          {label: 'Title', value: 'title'},
-          {label: 'Dropdown', value: 'dropdown'},
-        ],
-        menuelement:{
-          menu: 0,
-          name: '',
-          role: [],
-          slug: 'link',
-          href: '',
-          icon: '',
-          parent_id: null,
-        },
-        message: '',
-        dismissSecs: 7,
-        dismissCountDown: 0,
-        showDismissibleAlert: false,
-        divHref: false,
-        divDropdownParent: false,
-        divIcon: false,
-    }
+        slug: 'link',
+        href: '',
+        icon: '',
+        parent_id: null,
+      },
+      message: '',
+      dismissSecs: 7,
+      dismissCountDown: 0,
+      showDismissibleAlert: false,
+      divHref: false,
+      divDropdownParent: false,
+      divIcon: false,
+    };
   },
-  mounted: function(){
-    this.getData()
-    this.menuelement.menu = this.$route.params.menu
-    this.updateSelectParent()
+  mounted: function () {
+    this.getData();
+    this.menuelement.menu = this.$route.params.menu;
+    this.updateSelectParent();
   },
   methods: {
     goBack() {
-      this.$router.go(-1)
+      this.$router.go(-1);
       // this.$router.replace({path: '/users'})
     },
-    changeLang(value, lang){
+    changeLang(value, lang) {
       this.menuelement['lang_' + lang] = value;
     },
-    selectRadioSelectRole(role){
+    selectRadioSelectRole(role) {
       let temp = this.resultroles.indexOf(role);
       if (temp > -1) {
         this.resultroles.splice(temp, 1);
-      }else{
+      } else {
         this.resultroles.push(role);
       }
     },
-    changeType(){
-      let temp = this.menuelement.slug
-      if(temp == 'title'){
-        this.divHref = false
-        this.divDropdownParent = false
-        this.divIcon = false
-      }else if(temp == 'link'){
-        this.divHref = true
-        this.divDropdownParent = true
-        this.divIcon = true
-      }else{
-        this.divHref = false
-        this.divDropdownParent = true
-        this.divIcon = true
+    changeType() {
+      let temp = this.menuelement.slug;
+      if (temp == 'title') {
+        this.divHref = false;
+        this.divDropdownParent = false;
+        this.divIcon = false;
+      } else if (temp == 'link') {
+        this.divHref = true;
+        this.divDropdownParent = true;
+        this.divIcon = true;
+      } else {
+        this.divHref = false;
+        this.divDropdownParent = true;
+        this.divIcon = true;
       }
     },
-    updateSelectParent(){
-        let self = this;
-        axios.get(   this.$apiAdress + '/api/menu/element/get-parents?token=' + localStorage.getItem("api_token") + '&menu=' + self.menuelement.menu
+    updateSelectParent() {
+      let self = this;
+      axios
+        .get(
+          this.$apiAddress +
+            '/api/menu/element/get-parents?token=' +
+            localStorage.getItem('api_token') +
+            '&menu=' +
+            self.menuelement.menu
         )
         .then(function (response) {
-          self.parents = [{label: 'Has no parent', value: null}]
-          for(let i = 0; i<response.data.length; i++){
-            self.parents.push(response.data[i])
+          self.parents = [{ label: 'Has no parent', value: null }];
+          for (let i = 0; i < response.data.length; i++) {
+            self.parents.push(response.data[i]);
           }
-        }).catch(function (error) {
+        })
+        .catch(function (error) {
           console.log(error);
           self.$router.push({ path: 'login' });
         });
     },
     save() {
-        let self = this;
-        let data =           {
-            id:     self.$route.params.id,
-            menu:   self.menuelement.menu_id,
-            role:   self.resultroles,
-            type:   self.menuelement.slug,
-            icon:   self.menuelement.icon,
-            name:   self.menuelement.name,
-            href:   self.menuelement.href,
-            parent: self.menuelement.parent_id,
-        }
-        for(let i = 0; i<self.langs.length; i++){
-          data['lang_' + self.langs[i].short_name] = self.menuelement['lang_' + self.langs[i].short_name]
-        }
-        axios.post(   this.$apiAdress + '/api/menu/element/update?token=' + localStorage.getItem("api_token"),
+      let self = this;
+      let data = {
+        id: self.$route.params.id,
+        menu: self.menuelement.menu_id,
+        role: self.resultroles,
+        type: self.menuelement.slug,
+        icon: self.menuelement.icon,
+        name: self.menuelement.name,
+        href: self.menuelement.href,
+        parent: self.menuelement.parent_id,
+      };
+      for (let i = 0; i < self.langs.length; i++) {
+        data['lang_' + self.langs[i].short_name] =
+          self.menuelement['lang_' + self.langs[i].short_name];
+      }
+      axios
+        .post(
+          this.$apiAddress +
+            '/api/menu/element/update?token=' +
+            localStorage.getItem('api_token'),
           data
         )
         .then(function () {
-            self.name = '';
-            self.message = 'Successfully edited menu element.';
-            self.showAlert();
-        }).catch(function (error) {
-            if(error.response.data.message == 'The given data was invalid.'){
-              self.message = '';
-              for (let key in error.response.data.errors) {
-                if (error.response.data.errors.hasOwnProperty(key)) {
-                  self.message += error.response.data.errors[key][0] + '  ';
-                }
+          self.name = '';
+          self.message = 'Successfully edited menu element.';
+          self.showAlert();
+        })
+        .catch(function (error) {
+          if (error.response.data.message == 'The given data was invalid.') {
+            self.message = '';
+            for (let key in error.response.data.errors) {
+              if (error.response.data.errors.hasOwnProperty(key)) {
+                self.message += error.response.data.errors[key][0] + '  ';
               }
-              self.showAlert();
-            }else{
-              console.log(error);
-              self.$router.push({ path: 'login' });
             }
+            self.showAlert();
+          } else {
+            console.log(error);
+            self.$router.push({ path: 'login' });
+          }
         });
     },
-    countDownChanged (dismissCountDown) {
-      this.dismissCountDown = dismissCountDown
+    countDownChanged(dismissCountDown) {
+      this.dismissCountDown = dismissCountDown;
     },
-    showAlert () {
-      this.dismissCountDown = this.dismissSecs
+    showAlert() {
+      this.dismissCountDown = this.dismissSecs;
     },
     getData() {
       let self = this;
-      axios.get(   this.$apiAdress + '/api/menu/element/edit?token=' + localStorage.getItem("api_token") + '&id=' + self.$route.params.id )
-      .then(function (response) {
-        self.role = response.data.roles
-        self.menulist = response.data.menulist
-        self.menuelement = response.data.menuElement
-        self.menuroles = response.data.menuroles
-        let temp = false
-        for(let i = 0; i<self.role.length; i++){
-          temp = false
-          for(let j =0; j<self.menuroles.length; j++){
-            if(self.role[i] == self.menuroles[j].role_name){
-              temp = true;
-              self.resultroles.push(self.role[i])
-              break;
+      axios
+        .get(
+          this.$apiAddress +
+            '/api/menu/element/edit?token=' +
+            localStorage.getItem('api_token') +
+            '&id=' +
+            self.$route.params.id
+        )
+        .then(function (response) {
+          self.role = response.data.roles;
+          self.menulist = response.data.menulist;
+          self.menuelement = response.data.menuElement;
+          self.menuroles = response.data.menuroles;
+          let temp = false;
+          for (let i = 0; i < self.role.length; i++) {
+            temp = false;
+            for (let j = 0; j < self.menuroles.length; j++) {
+              if (self.role[i] == self.menuroles[j].role_name) {
+                temp = true;
+                self.resultroles.push(self.role[i]);
+                break;
+              }
             }
+            self.fixedmenuroles[self.role[i]] = temp;
           }
-          self.fixedmenuroles[self.role[i]] = temp
-        }
-        self.langs = response.data.langs
-        for(let i = 0; i<self.langs.length; i++){
-          temp = ''
-          for(let j=0; j<response.data.menuLangs.length; j++){
-            if(self.langs[i].short_name == response.data.menuLangs[j].lang){
-              temp = response.data.menuLangs[j].name
+          self.langs = response.data.langs;
+          for (let i = 0; i < self.langs.length; i++) {
+            temp = '';
+            for (let j = 0; j < response.data.menuLangs.length; j++) {
+              if (self.langs[i].short_name == response.data.menuLangs[j].lang) {
+                temp = response.data.menuLangs[j].name;
+              }
             }
+            self.menuelement['lang_' + self.langs[i].short_name] = temp;
+            self.fixlangs.push({
+              id: self.langs[i].id,
+              short_name: self.langs[i].short_name,
+              name: self.langs[i].name,
+              value: temp,
+            });
           }
-          self.menuelement['lang_' + self.langs[i].short_name] = temp
-          self.fixlangs.push({
-            id: self.langs[i].id,
-            short_name: self.langs[i].short_name,
-            name: self.langs[i].name,
-            value: temp,
-          });
-        }
-        self.changeType()
-      }).catch(function (error) {
-        console.log(error);
-        self.$router.push({ path: '/login' });
-      });
+          self.changeType();
+        })
+        .catch(function (error) {
+          console.log(error);
+          self.$router.push({ path: '/login' });
+        });
     },
-  }
-}
-
+  },
+};
 </script>

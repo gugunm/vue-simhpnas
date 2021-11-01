@@ -79,7 +79,7 @@ export default {
       let self = this;
       axios
         .get(
-          this.$apiAdress +
+          this.$apiAddress +
             '/api/menu/menu?token=' +
             localStorage.getItem('api_token')
         )

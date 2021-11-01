@@ -33,97 +33,99 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
 export default {
   name: 'Menu',
-  data () {
+  data() {
     return {
       //minimize: false,
       nav: [],
       //show: true,
       buffor: [],
-    }
+    };
   },
-  mounted () {
+  mounted() {
     let self = this;
     let locale = 'en';
-    if(typeof localStorage.locale !== 'undefined'){
-      locale = localStorage.getItem("locale")
+    if (typeof localStorage.locale !== 'undefined') {
+      locale = localStorage.getItem('locale');
     }
-    axios.get(    this.$apiAdress + '/api/menu?token=' + localStorage.getItem("api_token") + '&menu=' + 'top_menu' + '&locale=' + locale)
-    .then(function (response) {
-      self.nav = self.rebuildData(response.data);
-    }).catch(function (error) {
-      console.log(error);
-      self.$router.push({ path: '/login' });
-    });
+    axios
+      .get(
+        this.$apiAddress +
+          '/api/menu?token=' +
+          localStorage.getItem('api_token') +
+          '&menu=' +
+          'top_menu' +
+          '&locale=' +
+          locale
+      )
+      .then(function (response) {
+        self.nav = self.rebuildData(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+        self.$router.push({ path: '/login' });
+      });
   },
   methods: {
-    dropdown(data){
+    dropdown(data) {
       let result = {
-            _name: 'CSidebarNavDropdown',
-            name: data['name'],
-            route: data['href'],
-            icon: data['icon'],
-            _children: [],
-      }
-      for(let i=0; i<data['elements'].length; i++){
-        if(data['elements'][i]['slug'] == 'dropdown'){
-          result._children.push( this.dropdown(data['elements'][i]) );
-        }else{
-          result._children.push(
-            {
-                   _name:  'CSidebarNavItem',
-                   name:   data['elements'][i]['name'],
-                   to:     data['elements'][i]['href'],
-                   icon:   data['elements'][i]['icon']
-            }
-          );
+        _name: 'CSidebarNavDropdown',
+        name: data['name'],
+        route: data['href'],
+        icon: data['icon'],
+        _children: [],
+      };
+      for (let i = 0; i < data['elements'].length; i++) {
+        if (data['elements'][i]['slug'] == 'dropdown') {
+          result._children.push(this.dropdown(data['elements'][i]));
+        } else {
+          result._children.push({
+            _name: 'CSidebarNavItem',
+            name: data['elements'][i]['name'],
+            to: data['elements'][i]['href'],
+            icon: data['elements'][i]['icon'],
+          });
         }
       }
       return result;
     },
-    rebuildData(data){
+    rebuildData(data) {
       this.buffor = [];
-      for(let k=0; k<data.length; k++){
-        switch(data[k]['slug']){
+      for (let k = 0; k < data.length; k++) {
+        switch (data[k]['slug']) {
           case 'link':
-            if(data[k]['href'].indexOf('http') !== -1){
-              this.buffor.push(
-                  {
-                      _name: 'CSidebarNavItem',
-                      name: data[k]['name'],
-                      href: data[k]['href'],
-                      icon: data[k]['icon'],
-                      target: '_blank'
-                  }
-              );
-            }else{
-              this.buffor.push(
-                  {
-                      _name: 'CSidebarNavItem',
-                      name: data[k]['name'],
-                      to:   data[k]['href'],
-                      icon: data[k]['icon'],
-                  }
-              );
+            if (data[k]['href'].indexOf('http') !== -1) {
+              this.buffor.push({
+                _name: 'CSidebarNavItem',
+                name: data[k]['name'],
+                href: data[k]['href'],
+                icon: data[k]['icon'],
+                target: '_blank',
+              });
+            } else {
+              this.buffor.push({
+                _name: 'CSidebarNavItem',
+                name: data[k]['name'],
+                to: data[k]['href'],
+                icon: data[k]['icon'],
+              });
             }
-          break;
+            break;
           case 'title':
-            this.buffor.push(
-              {
-                _name: 'CSidebarNavTitle',
-                _children: [data[k]['name']]
-              }
-            );
-          break;
+            this.buffor.push({
+              _name: 'CSidebarNavTitle',
+              _children: [data[k]['name']],
+            });
+            break;
           case 'dropdown':
-            this.buffor.push( this.dropdown(data[k]) );
-          break;
+            this.buffor.push(this.dropdown(data[k]));
+            break;
         }
       }
       return this.buffor;
-    }
-  }
-}
+    },
+  },
+};
 </script>

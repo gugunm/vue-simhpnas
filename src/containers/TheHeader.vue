@@ -116,7 +116,7 @@ export default {
     }
     axios
       .get(
-        this.$apiAdress +
+        this.$apiAddress +
           '/api/langlist?token=' +
           localStorage.getItem('api_token')
       )

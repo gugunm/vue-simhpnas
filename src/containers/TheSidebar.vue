@@ -153,7 +153,7 @@ export default {
       }
       axios
         .get(
-          this.$apiAdress +
+          this.$apiAddress +
             '/api/menusimhp?token=' +
             localStorage.getItem('api_token')
           // +

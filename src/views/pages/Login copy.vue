@@ -5,23 +5,16 @@
         <CCardGroup>
           <CCard class="p-4">
             <CCardBody>
-              <CForm
-                method="POST"
-                @submit.prevent="submitForm"
-              >
+              <CForm method="POST" @submit.prevent="submitForm">
                 <h1>Login</h1>
-                <p class="text-muted">
-                  Sign In to your account
-                </p>
+                <p class="text-muted">Sign In to your account</p>
                 <CInput
                   v-model="email"
                   prepend-html="<i class='cui-user'></i>"
                   placeholder="Email"
                   autocomplete="email"
                 >
-                  <template #prepend-content>
-                    @
-                  </template>
+                  <template #prepend-content> @ </template>
                   <!-- <template #prepend-content><CIcon name="cil-user"/></template> -->
                 </CInput>
                 <CInput
@@ -36,22 +29,12 @@
                   </template>
                 </CInput>
                 <CRow>
-                  <CCol
-                    col="6"
-                    class="text-left"
-                  >
-                    <CButton
-                      type="submit"
-                      color="dark"
-                      class="px-4"
-                    >
+                  <CCol col="6" class="text-left">
+                    <CButton type="submit" color="dark" class="px-4">
                       Login
                     </CButton>
                   </CCol>
-                  <CCol
-                    col="6"
-                    class="text-right"
-                  >
+                  <CCol col="6" class="text-right">
                     <!-- <CButton color="link" class="px-0">Forgot password?</CButton> -->
                     <!-- <CButton color="link" class="d-md-none" @click="goRegister()">Register now!</CButton> -->
                   </CCol>
@@ -105,8 +88,7 @@
 </template>
 
 <script>
-
-import axios from "axios";
+import axios from 'axios';
 // import VueRecaptcha from 'vue-recaptcha';
 
 export default {
@@ -120,43 +102,44 @@ export default {
       message: '',
       currentAlertCounter: 0,
       mode: 'login',
-      error: null
-    }
+      error: null,
+    };
   },
   methods: {
-    goRegister(){
+    goRegister() {
       this.$router.push({ path: 'register' });
     },
     login() {
       let self = this;
       self.showMessage = false;
-      self.currentAlertCounter= 5;
+      self.currentAlertCounter = 5;
 
-      axios.post( this.$apiAdress + '/api/login', {
-        email: self.email,
-        password: self.password,
-      }).then(function (response) {
-        self.email = '';
-        self.password = '';
-        localStorage.setItem('api_token', response.data.access_token);
-        localStorage.setItem('roles', response.data.roles);
-        self.$router.push({ path: 'dashboard' });
-      })
-      .catch(function (error) {
-        self.message = 'E-mail atau password anda salah!';
-        self.showMessage = true;
-        console.log(error);
-      });
-
+      axios
+        .post(this.$apiAddress + '/api/login', {
+          email: self.email,
+          password: self.password,
+        })
+        .then(function (response) {
+          self.email = '';
+          self.password = '';
+          localStorage.setItem('api_token', response.data.access_token);
+          localStorage.setItem('roles', response.data.roles);
+          self.$router.push({ path: 'dashboard' });
+        })
+        .catch(function (error) {
+          self.message = 'E-mail atau password anda salah!';
+          self.showMessage = true;
+          console.log(error);
+        });
     },
     async submitForm() {
       let self = this;
       self.showMessage = false;
-      self.currentAlertCounter= 5;
+      self.currentAlertCounter = 5;
 
       const actionPayload = {
         email: self.email,
-        password: self.password
+        password: self.password,
       };
 
       try {
@@ -171,14 +154,13 @@ export default {
         console.log(error);
       }
     },
-  }
-}
-
+  },
+};
 </script>
 
 
 <style scoped>
-.login-container{
+.login-container {
   justify-content: center;
 }
 
@@ -187,21 +169,20 @@ export default {
 }
 
 .login-logo {
-  background-color: #303C50;
+  background-color: #303c50;
   width: inherit;
 }
 
 .b-grey {
-  background-color: #303C50
+  background-color: #303c50;
 }
 
 .c-grey {
-  color: #EAF6FF;
+  color: #eaf6ff;
 }
 
 .login-subtitle {
   width: 400px;
   margin-bottom: 1rem;
 }
-
 </style>

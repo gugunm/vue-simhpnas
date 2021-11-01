@@ -1,20 +1,11 @@
 <template>
   <CRow>
-    <CCol
-      col="12"
-      xl="6"
-    >
+    <CCol col="12" xl="6">
       <transition name="slide">
         <CCard>
           <CCardBody>
-            <h3>
-              Create {{ form.name }}
-            </h3>
-            <CAlert
-              :show.sync="dismissCountDown"
-              color="primary"
-              fade
-            >
+            <h3>Create {{ form.name }}</h3>
+            <CAlert :show.sync="dismissCountDown" color="primary" fade>
               ({{ dismissCountDown }}) {{ message }}
             </CAlert>
 
@@ -24,23 +15,14 @@
               :column="column"
               :relations="relations"
               :options="inputOptions"
-
               :get-data="getData"
               @sendData="receiveDataFormField"
             />
 
-            <CButton
-              class="mt-2"
-              color="primary"
-              @click="storeFirstStep()"
-            >
+            <CButton class="mt-2" color="primary" @click="storeFirstStep()">
               Create
             </CButton>
-            <CButton
-              class="mt-2"
-              color="primary"
-              @click="goBack"
-            >
+            <CButton class="mt-2" color="primary" @click="goBack">
               Back
             </CButton>
           </CCardBody>
@@ -51,13 +33,13 @@
 </template>
 
 <script>
-import CreateResourceField from './CreateResourceField'
-import axios from 'axios'
+import CreateResourceField from './CreateResourceField';
+import axios from 'axios';
 
 export default {
   name: 'CreateResources',
-  components:{
-     'CreateResourceField': CreateResourceField
+  components: {
+    CreateResourceField: CreateResourceField,
   },
   data: () => {
     return {
@@ -70,83 +52,98 @@ export default {
       inputOptions: [],
       receiveFormFields: [],
       getData: false,
-    }
+    };
   },
-  computed: {
-  },
+  computed: {},
   watch: {
-    activePage(){
+    activePage() {
       this.getResources();
     },
   },
-  mounted: function(){
+  mounted: function () {
     this.getFields();
   },
   methods: {
     goBack() {
-      this.$router.go(-1)
+      this.$router.go(-1);
     },
-    storeFirstStep(){
-      this.getData = true
+    storeFirstStep() {
+      this.getData = true;
     },
-    receiveDataFormField(data){
+    receiveDataFormField(data) {
       let self = this;
       self.receiveFormFields.push(data);
-      if(self.receiveFormFields.length == self.columns.length){
+      if (self.receiveFormFields.length == self.columns.length) {
         self.store();
       }
     },
-    preparePostDataForStore(){
+    preparePostDataForStore() {
       let formData = new FormData();
-      for(let i=0; i<this.receiveFormFields.length; i++){
-        formData.append(this.receiveFormFields[i].name, this.receiveFormFields[i].data)
+      for (let i = 0; i < this.receiveFormFields.length; i++) {
+        formData.append(
+          this.receiveFormFields[i].name,
+          this.receiveFormFields[i].data
+        );
       }
-      return formData
+      return formData;
     },
-    store(files, event){
+    store(files, event) {
       let self = this;
       let postData = self.preparePostDataForStore();
-      axios.post(    this.$apiAdress + '/api/resource/' + self.$route.params.bread + '/resource?token=' + localStorage.getItem("api_token"),
-        postData,
-        { headers: {
-            'Content-Type': 'multipart/form-data'
-        }}
-      ).then(function(){
-        self.$router.go(-1)
-        self.message = 'Successfully added to ' + self.form.name
-        self.showAlert();
-      })
-      .catch(function(error){
-        console.log(error)
-        self.$router.push({ path: '/login' })
-      });
+      axios
+        .post(
+          this.$apiAddress +
+            '/api/resource/' +
+            self.$route.params.bread +
+            '/resource?token=' +
+            localStorage.getItem('api_token'),
+          postData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          }
+        )
+        .then(function () {
+          self.$router.go(-1);
+          self.message = 'Successfully added to ' + self.form.name;
+          self.showAlert();
+        })
+        .catch(function (error) {
+          console.log(error);
+          self.$router.push({ path: '/login' });
+        });
     },
-    countDownChanged (dismissCountDown) {
-      this.dismissCountDown = dismissCountDown
+    countDownChanged(dismissCountDown) {
+      this.dismissCountDown = dismissCountDown;
     },
-    showAlert () {
-      this.dismissCountDown = this.dismissSecs
+    showAlert() {
+      this.dismissCountDown = this.dismissSecs;
     },
-    getFields (){
+    getFields() {
       let self = this;
-      axios.get(   this.$apiAdress + '/api/resource/' + self.$route.params.bread + '/resource/create?token=' + localStorage.getItem("api_token") )
-      .then(function (response) {
-        self.form = response.data.form
-        self.columns = response.data.columns
-        self.relations = response.data.relations
-        self.inputOptions = response.data.inputOptions
-
-
-
-      }).catch(function (error) {
-        console.log(error);
-        self.$router.push({ path: '/login' })
-      });
+      axios
+        .get(
+          this.$apiAddress +
+            '/api/resource/' +
+            self.$route.params.bread +
+            '/resource/create?token=' +
+            localStorage.getItem('api_token')
+        )
+        .then(function (response) {
+          self.form = response.data.form;
+          self.columns = response.data.columns;
+          self.relations = response.data.relations;
+          self.inputOptions = response.data.inputOptions;
+        })
+        .catch(function (error) {
+          console.log(error);
+          self.$router.push({ path: '/login' });
+        });
     },
-  }
-}
+  },
+};
 </script>
 
 <style scoped>
-
 </style>

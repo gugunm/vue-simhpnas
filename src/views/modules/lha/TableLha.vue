@@ -367,7 +367,6 @@
 <script>
 import axios from 'axios';
 import mixin from './mixin';
-import { API_URL } from '@/utils/api.js';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 
 export default {
@@ -448,7 +447,7 @@ export default {
     async onSaveMemo() {
       const response = await axios({
         method: 'PUT',
-        baseURL: API_URL,
+        baseURL: this.$apiAddress,
         url: `/api/dalnisaddmemo/${this.selectedItem.id}`,
         params: {
           Catatan_Dalnis: this.textMemo,
@@ -474,7 +473,7 @@ export default {
     async actionAccDalnis() {
       const response = await axios({
         method: 'PATCH',
-        baseURL: API_URL,
+        baseURL: this.$apiAddress,
         url: `/api/dalnisactionacc/${this.selectedItem.id}`,
         params: {
           token: localStorage.getItem('api_token'),
@@ -498,7 +497,7 @@ export default {
     async actionRejectDalnis() {
       const response = await axios({
         method: 'PATCH',
-        baseURL: API_URL,
+        baseURL: this.$apiAddress,
         url: `/api/dalnisactiontolak/${this.selectedItem.id}`,
         params: {
           token: localStorage.getItem('api_token'),
@@ -522,7 +521,7 @@ export default {
     async actionPostingLha() {
       const response = await axios({
         method: 'PATCH',
-        baseURL: API_URL,
+        baseURL: this.$apiAddress,
         url: `/api/adminactionacc/${this.selectedItem.id}`,
         params: {
           token: localStorage.getItem('api_token'),
@@ -546,7 +545,7 @@ export default {
     async actionUnPostLha() {
       const response = await axios({
         method: 'PATCH',
-        baseURL: API_URL,
+        baseURL: this.$apiAddress,
         url: `/api/adminactionunposting/${this.selectedItem.id}`,
         params: {
           token: localStorage.getItem('api_token'),

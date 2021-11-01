@@ -709,7 +709,6 @@
 <script>
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 import mixin from './mixin';
-import { API_URL } from '@/utils/api.js';
 
 export default {
   name: 'LhaForm',
@@ -756,7 +755,7 @@ export default {
       },
       isStoredLha: true,
       isOpenFile: false,
-      apiUrl: API_URL,
+      apiUrl: this.$apiAddress,
     };
   },
   async mounted() {

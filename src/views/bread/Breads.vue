@@ -1,24 +1,14 @@
 <template>
   <CRow>
-    <CCol
-      col="12"
-      xl="12"
-    >
+    <CCol col="12" xl="12">
       <transition name="slide">
         <CCard>
           <CCardBody>
             <h4>Breads</h4>
-            <CButton
-              color="primary"
-              @click="createBread()"
-            >
+            <CButton color="primary" @click="createBread()">
               Create Bread
             </CButton>
-            <CAlert
-              :show.sync="dismissCountDown"
-              color="primary"
-              fade
-            >
+            <CAlert :show.sync="dismissCountDown" color="primary" fade>
               ({{ dismissCountDown }}) {{ message }}
             </CAlert>
             <CDataTable
@@ -28,53 +18,41 @@
               :items-per-page="10"
               pagination
             >
-              <template #name="{item}">
+              <template #name="{ item }">
                 <td>
                   <strong>{{ item.name }}</strong>
                 </td>
               </template>
-              <template #goto="{item}">
+              <template #goto="{ item }">
                 <td>
-                  <CButton
-                    color="primary"
-                    @click="goto( item.id )"
-                  >
+                  <CButton color="primary" @click="goto(item.id)">
                     Go to resources
                   </CButton>
                 </td>
               </template>
-              <template #show="{item}">
+              <template #show="{ item }">
                 <td>
-                  <CButton
-                    color="primary"
-                    @click="showBread( item.id )"
-                  >
+                  <CButton color="primary" @click="showBread(item.id)">
                     Show
                   </CButton>
                 </td>
               </template>
-              <template #edit="{item}">
+              <template #edit="{ item }">
                 <td>
-                  <CButton
-                    color="primary"
-                    @click="editBread( item.id )"
-                  >
+                  <CButton color="primary" @click="editBread(item.id)">
                     Edit
                   </CButton>
                 </td>
               </template>
-              <template #delete="{item}">
+              <template #delete="{ item }">
                 <td>
-                  <CButton
-                    color="danger"
-                    @click="deleteBread( item.id )"
-                  >
+                  <CButton color="danger" @click="deleteBread(item.id)">
                     Delete
                   </CButton>
                 </td>
               </template>
             </CDataTable>
-          </CCardBody>  
+          </CCardBody>
         </CCard>
       </transition>
     </CCol>
@@ -82,7 +60,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
 
 export default {
   name: 'Breads',
@@ -97,57 +75,62 @@ export default {
       showMessage: false,
       dismissSecs: 7,
       dismissCountDown: 0,
-      showDismissibleAlert: false
-    }
+      showDismissibleAlert: false,
+    };
   },
-  computed: {
-  },
-  mounted: function(){
+  computed: {},
+  mounted: function () {
     this.getBreads();
   },
   methods: {
-    goto( id){
-      this.$router.push({path: `resource/${id.toString()}/resource`})
+    goto(id) {
+      this.$router.push({ path: `resource/${id.toString()}/resource` });
     },
-    breadLink (id) {
-      return `bread/${id.toString()}`
+    breadLink(id) {
+      return `bread/${id.toString()}`;
     },
-    editLink (id) {
-      return `bread/${id.toString()}/edit`
+    editLink(id) {
+      return `bread/${id.toString()}/edit`;
     },
-    showBread ( id ) {
-      const breadLink = this.breadLink( id )
-      this.$router.push({path: breadLink})
+    showBread(id) {
+      const breadLink = this.breadLink(id);
+      this.$router.push({ path: breadLink });
     },
-    editBread ( id ) {
-      const editLink = this.editLink( id )
-      this.$router.push({path: editLink})
+    editBread(id) {
+      const editLink = this.editLink(id);
+      this.$router.push({ path: editLink });
     },
-    deleteBread ( id ) {
-      const deleteLink = `bread/${id.toString()}/delete`
-      this.$router.push({path: deleteLink})
+    deleteBread(id) {
+      const deleteLink = `bread/${id.toString()}/delete`;
+      this.$router.push({ path: deleteLink });
     },
-    createBread () {
-      this.$router.push({path: 'bread/create'})
+    createBread() {
+      this.$router.push({ path: 'bread/create' });
     },
-    countDownChanged (dismissCountDown) {
-      this.dismissCountDown = dismissCountDown
+    countDownChanged(dismissCountDown) {
+      this.dismissCountDown = dismissCountDown;
     },
-    showAlert () {
-      this.dismissCountDown = this.dismissSecs
+    showAlert() {
+      this.dismissCountDown = this.dismissSecs;
     },
-    getBreads (){
+    getBreads() {
       let self = this;
-      axios.get(   this.$apiAdress + '/api/bread?token=' + localStorage.getItem("api_token") )
-      .then(function (response) {
-        self.items = response.data;
-      }).catch(function (error) {
-        console.log(error);
-        self.$router.push({ path: '/login' });
-      });
-    }
-  }
-}
+      axios
+        .get(
+          this.$apiAddress +
+            '/api/bread?token=' +
+            localStorage.getItem('api_token')
+        )
+        .then(function (response) {
+          self.items = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+          self.$router.push({ path: '/login' });
+        });
+    },
+  },
+};
 </script>
 
 <style scoped>

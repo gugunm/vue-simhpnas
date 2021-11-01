@@ -63,7 +63,7 @@ export default {
     let self = this;
     axios
       .get(
-        this.$apiAdress +
+        this.$apiAddress +
           '/api/menu/edit?token=' +
           localStorage.getItem('api_token')
       )
@@ -115,7 +115,7 @@ export default {
       // console.log(this.roleSelected);
       axios
         .get(
-          this.$apiAdress +
+          this.$apiAddress +
             '/api/menu/edit/selected?token=' +
             localStorage.getItem('api_token') +
             '&role=' +
@@ -135,7 +135,7 @@ export default {
       let self = this;
       axios
         .get(
-          this.$apiAdress +
+          this.$apiAddress +
             '/api/menu/edit/selected/switch?token=' +
             localStorage.getItem('api_token') +
             '&role=' +

@@ -26,7 +26,6 @@
 
 <script>
 import axios from 'axios';
-import { API_URL } from '@/utils/api.js';
 import MasterTable from './Table.vue';
 import BackButton from '@/components/BackButton';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
@@ -143,7 +142,7 @@ export default {
     async loadDescBidangObrik() {
       const response = await axios({
         method: 'GET',
-        baseURL: API_URL,
+        baseURL: this.$apiAddress,
         url: `/api/bidangobrik/${this.idBidangObrik}`,
         params: {
           token: localStorage.getItem('api_token'),

@@ -157,7 +157,7 @@ export default {
       let self = this;
       axios
         .get(
-          this.$apiAdress +
+          this.$apiAddress +
             '/api/menu/element/get-parents?token=' +
             localStorage.getItem('api_token') +
             '&menu=' +
@@ -179,7 +179,7 @@ export default {
       // console.log( self.menuelement )
       axios
         .post(
-          this.$apiAdress +
+          this.$apiAddress +
             '/api/menu/element/store?token=' +
             localStorage.getItem('api_token'),
           self.menuelement
@@ -214,7 +214,7 @@ export default {
       let self = this;
       axios
         .get(
-          this.$apiAdress +
+          this.$apiAddress +
             '/api/menu/element/create?token=' +
             localStorage.getItem('api_token') +
             '&id=' +

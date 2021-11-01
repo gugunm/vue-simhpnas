@@ -103,7 +103,7 @@ export default {
       let self = this;
       axios
         .post(
-          this.$apiAdress +
+          this.$apiAddress +
             '/api/logout?token=' +
             localStorage.getItem('api_token'),
           {}

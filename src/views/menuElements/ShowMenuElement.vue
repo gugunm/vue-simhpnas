@@ -1,19 +1,10 @@
 <template>
   <CRow>
-    <CCol
-      col="12"
-      lg="12"
-    >
+    <CCol col="12" lg="12">
       <CCard no-header>
         <CCardBody>
-          <h3>
-            Show Menu Element
-          </h3>
-          <CAlert
-            :show.sync="dismissCountDown"
-            color="primary"
-            fade
-          >
+          <h3>Show Menu Element</h3>
+          <CAlert :show.sync="dismissCountDown" color="primary" fade>
             ({{ dismissCountDown }}) {{ message }}
           </CAlert>
           <h4>Menu</h4>
@@ -21,10 +12,7 @@
           <h4>User Roles</h4>
           {{ roles }}
           <h4>Name</h4>
-          <p
-            v-for="lang in menuLangs"
-            :key="lang.id"
-          >
+          <p v-for="lang in menuLangs" :key="lang.id">
             {{ lang.lang }} - {{ lang.name }}
           </p>
           <h4>Type</h4>
@@ -35,13 +23,8 @@
           {{ menuelement.parent_name }}
           <h4>Icon</h4>
           {{ menuelement.icon }}
-          <br><br>
-          <CButton
-            color="primary"
-            @click="goBack"
-          >
-            Back
-          </CButton>
+          <br /><br />
+          <CButton color="primary" @click="goBack"> Back </CButton>
         </CCardBody>
       </CCard>
     </CCol>
@@ -49,49 +32,56 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
 export default {
   name: 'CreateMenuElement',
   data: () => {
     return {
-        menuLangs: [],
-        roles: '',
-        menuroles: [],
-        menuelement: [],
-        message: '',
-        dismissSecs: 7,
-        dismissCountDown: 0,
-        showDismissibleAlert: false,
-    }
+      menuLangs: [],
+      roles: '',
+      menuroles: [],
+      menuelement: [],
+      message: '',
+      dismissSecs: 7,
+      dismissCountDown: 0,
+      showDismissibleAlert: false,
+    };
   },
-  mounted: function(){
-    this.getData()
+  mounted: function () {
+    this.getData();
   },
   methods: {
     goBack() {
-      this.$router.go(-1)
+      this.$router.go(-1);
       // this.$router.replace({path: '/users'})
     },
     getData() {
       let self = this;
-      axios.get(   this.$apiAdress + '/api/menu/element/show?token=' + localStorage.getItem("api_token") + '&id=' + self.$route.params.id )
-      .then(function (response) {
-        self.menuelement = response.data.menuElement
-        self.menuroles = response.data.menuroles
-        self.roles = ''
-        for(let i = 0; i<self.menuroles.length; i++){
-          if(i > 0){
-            self.roles += ', '
+      axios
+        .get(
+          this.$apiAddress +
+            '/api/menu/element/show?token=' +
+            localStorage.getItem('api_token') +
+            '&id=' +
+            self.$route.params.id
+        )
+        .then(function (response) {
+          self.menuelement = response.data.menuElement;
+          self.menuroles = response.data.menuroles;
+          self.roles = '';
+          for (let i = 0; i < self.menuroles.length; i++) {
+            if (i > 0) {
+              self.roles += ', ';
+            }
+            self.roles += self.menuroles[i].role_name;
           }
-          self.roles += self.menuroles[i].role_name
-        }
-        self.menuLangs = response.data.menuLangs
-      }).catch(function (error) {
-        console.log(error);
-        self.$router.push({ path: '/login' });
-      });
+          self.menuLangs = response.data.menuLangs;
+        })
+        .catch(function (error) {
+          console.log(error);
+          self.$router.push({ path: '/login' });
+        });
     },
-  }
-}
-
+  },
+};
 </script>

@@ -16,7 +16,6 @@
 
 <script>
 import axios from 'axios';
-import { API_URL } from '@/utils/api.js';
 import MasterTable from '@/components/MasterTable';
 import BackButton from '@/components/BackButton';
 
@@ -93,7 +92,7 @@ export default {
     async loadDescProvinsi() {
       const response = await axios({
         method: 'GET',
-        baseURL: API_URL,
+        baseURL: this.$apiAddress,
         url: `/api/provinsi/${this.idProvinsi}`,
         params: {
           token: localStorage.getItem('api_token'),

@@ -22,7 +22,6 @@
 
 <script>
 import axios from 'axios';
-import { API_URL } from '@/utils/api.js';
 import MasterTable from '@/components/MasterTable';
 import BackButton from '@/components/BackButton';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
@@ -133,7 +132,7 @@ export default {
     async loadDescRekomendasi() {
       const response = await axios({
         method: 'GET',
-        baseURL: API_URL,
+        baseURL: this.$apiAddress,
         url: `/api/klprekomendasi/${this.idKlpRekomendasi}`,
         params: {
           token: localStorage.getItem('api_token'),

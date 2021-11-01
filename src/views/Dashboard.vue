@@ -9,8 +9,8 @@
       </CCol>
     </CRow>
     <WidgetsDropdown :data="dashData" />
-    <!-- <SamplePDF class="mb-4" />
-    <TpTiga /> -->
+    <SamplePDF class="mb-4" />
+    <TpTiga />
   </div>
 </template>
 
@@ -18,15 +18,14 @@
 import WidgetsDropdown from '@/components/Widgets/WidgetsDropdown.vue';
 import SamplePDF from '@/components/Reports/Sample.vue';
 import TpTiga from '@/components/Reports/TpTiga.vue';
-import { API_URL } from '@/utils/api.js';
 import axios from 'axios';
 
 export default {
   name: 'Dashboard',
   components: {
     WidgetsDropdown,
-    // SamplePDF,
-    // TpTiga,
+    SamplePDF,
+    TpTiga,
   },
   data() {
     return {
@@ -44,7 +43,7 @@ export default {
     async loadDashboardData() {
       const response = await axios({
         method: 'GET',
-        baseURL: API_URL,
+        baseURL: this.$apiAddress,
         url: '/api/dashboard',
         params: {
           token: localStorage.getItem('api_token'),

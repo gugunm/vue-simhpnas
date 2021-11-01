@@ -87,7 +87,7 @@ export default {
     register() {
       var self = this;
       axios
-        .post(this.$apiAdress + '/api/register', {
+        .post(this.$apiAddress + '/api/register', {
           name: self.name,
           email: self.email,
           password: self.password,

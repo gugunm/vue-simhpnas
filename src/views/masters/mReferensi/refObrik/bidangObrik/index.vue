@@ -25,7 +25,6 @@
 
 <script>
 import axios from 'axios';
-import { API_URL } from '@/utils/api.js';
 import MasterTable from './Table.vue';
 import BackButton from '@/components/BackButton';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
@@ -138,7 +137,7 @@ export default {
     async loadDescUnitObrik() {
       const response = await axios({
         method: 'GET',
-        baseURL: API_URL,
+        baseURL: this.$apiAddress,
         url: `/api/unitobrik/${this.idUnitObrik}`,
         params: {
           token: localStorage.getItem('api_token'),
