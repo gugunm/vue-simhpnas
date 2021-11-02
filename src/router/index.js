@@ -47,6 +47,7 @@ let router = new Router({
 
 router.beforeEach((to, from, next) => {
   let roles = localStorage.getItem("roles");
+
   if (roles != null) {
     roles = roles.split(',')
   }
@@ -56,16 +57,16 @@ router.beforeEach((to, from, next) => {
     } else {
       next({
         path: '/login',
-        // params: { nextUrl: to.fullPath }
+        params: { nextUrl: to.fullPath }
       })
     }
-  } else if (to.matched.some(record => record.meta.requiresUser)) {
+  } else if (to.matched.some(record => record.meta.requiresUser )){ 
     if (roles != null && roles.indexOf('user') >= 0) {
       next()
     } else {
       next({
         path: '/login',
-        // params: { nextUrl: to.fullPath }
+        params: { nextUrl: to.fullPath }
       })
     }
   } else {
@@ -73,7 +74,7 @@ router.beforeEach((to, from, next) => {
   }
 })
 
-export default router
+export default router;
 
 function configRoutes() {
   return [
@@ -83,7 +84,9 @@ function configRoutes() {
       name: 'Home',
       component: TheContainer,
       meta: {
-        requiresUser: true
+        requiresUser: true,
+        // requiresAdmin: true,
+        // allowedUser: [0, 1, 2, 3, 4, 5, 6]
       },
       children: [
         // SETTINGS

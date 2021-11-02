@@ -54,18 +54,22 @@
             </td>
           </template>
           <template #bidangObrik="{ item }">
-            <div style="width: 200px">
-              <td>{{ item.bidangObrik }}</td>
-            </div>
+            <td>
+              <div class="inline-block" style="width: 200px">
+                {{ item.bidangObrik }}
+              </div>
+            </td>
           </template>
-          <!-- <template #judulLaporan="{ item }">
-            <div style="width: 200px">
-              <td>{{ item.judulLaporan }}</td>
-            </div>
-          </template> -->
           <template #nilaiTemuan="{ item }">
             <td>
               {{ $func.convertToRupiah(item.nilaiTemuan) }}
+            </td>
+          </template>
+          <template #judulLaporan="{ item }">
+            <td>
+              <div style="width: 200px">
+                {{ item.judulLaporan }}
+              </div>
             </td>
           </template>
           <template #anggaranYangDiaudit="{ item }">
@@ -108,7 +112,7 @@
           <template #actions="{ item }">
             <td v-if="isLhaSent(item)" class="text-center">No Actions</td>
             <td v-else>
-              <div class="flex flex-wrap justify-content-center">
+              <div class="flex flex-wrap justify-content-center w-24">
                 <CButton
                   v-c-tooltip="{
                     content: 'Tambah Temuan',
@@ -518,7 +522,7 @@ export default {
         },
       });
       if (response.status == 200) {
-        this.isOpenAcc = false;
+        this.isOpenReject = false;
         this.toastSuccess('Berhasil menolak LHA');
         this.selectedItem = null;
         this.$emit('on-load-lha');

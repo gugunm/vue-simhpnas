@@ -19,6 +19,9 @@ import m_ref_jenis_anggaran from './modules/m_ref_jenis_anggaran';
 import m_ref_unit_audit from './modules/m_ref_unit_audit';
 import m_ref_peran from './modules/m_ref_peran';
 
+import m_user_utama from './modules/m_user_utama';
+import m_user_unit from './modules/m_user_unit';
+
 import module_lha from './modules/module_lha';
 import module_temuan from './modules/module_temuan';
 import module_tim from './modules/module_tim';
@@ -45,6 +48,8 @@ export default new Vuex.Store({
     m_ref_jenis_anggaran,
     m_ref_unit_audit,
     m_ref_peran,
+    m_user_utama,
+    m_user_unit,
     module_lha,
     module_temuan,
     module_tim,

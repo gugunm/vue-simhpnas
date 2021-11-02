@@ -24,6 +24,9 @@ const routeJenisObrik = {
   component: {
     render(c) { return c('router-view') }
   },
+  meta: {
+    allowedUser: [0, 1, 3, 4],
+  },
   children: [
     {
       path:'',

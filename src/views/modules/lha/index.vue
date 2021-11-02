@@ -81,23 +81,23 @@ const fields = [
     label: 'Tanggal',
   },
   {
+    key: 'judulLaporan',
+    _style: 'width: 50%',
+  },
+  {
     key: 'bidangObrik',
     label: 'Nama Obrik',
     // _style: 'width: 30%',
   },
-  {
-    key: 'judulLaporan',
-    // _style: 'width: 22%',
-  },
 
   {
     key: 'jenisAnggaran',
-    _style: 'width: 8%',
+    // _style: 'width: 8%',
   },
 
   {
     key: 'anggaranYangDiaudit',
-    _style: 'width: 15%',
+    // _style: 'width: 15%',
   },
   {
     key: 'jumlahTemuan',

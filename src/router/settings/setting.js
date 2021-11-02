@@ -251,8 +251,10 @@ const routeCoreUiSetting = [
     name: 'Dashboard',
     component: Dashboard,
     meta: {
-      requiresUser: true
-    }
+      requiresUser: true,
+      // requiresAdmin: true,
+      allowedUser: [0, 1, 3, 4]
+    },
   },
   {
     path: 'menu',

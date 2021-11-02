@@ -68,7 +68,7 @@ const pages = [
   {
     path: '*',
     name: '404',
-    component: Page404
+    component: Page404,
   }
 ]
 

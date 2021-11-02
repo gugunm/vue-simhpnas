@@ -11,7 +11,9 @@ const routeUserUnit = {
   name: 'Master User Unit Kerja',
   component: MasterUserUnitKerja,
   meta: {
-    requiresUser: true
+    requiresUser: true,
+    // requiresAdmin: true,
+    allowedUser: [0, 1],
   }
 }
 

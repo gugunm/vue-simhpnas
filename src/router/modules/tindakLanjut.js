@@ -29,6 +29,9 @@ const routeModTindakLanjut = {
   component: {
     render(c) { return c('router-view') }
   },
+  meta: {
+    allowedUser: [2, 3, 4, 5, 6],
+  },
   children: [
     {
       path: '',

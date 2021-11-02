@@ -11,7 +11,9 @@ const routeUserUtama = {
   name: 'Master User Utama',
   component: MasterUserUtama,
   meta: {
-    requiresUser: true
+    requiresUser: true,
+    // requiresAdmin: true,
+    allowedUser: [0, 1],
   }
 }
 

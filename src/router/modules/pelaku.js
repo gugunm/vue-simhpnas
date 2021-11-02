@@ -29,6 +29,9 @@ const routeModPelaku = {
   component: {
     render(c) { return c('router-view') }
   },
+  meta: {
+    allowedUser: [3, 4],
+  },
   children: [
     {
       path: '',

@@ -33,7 +33,7 @@ export default {
       this.loading = true;
       try {
         await this.$store.dispatch('module_rekomendasi/loadSearchRekomendasi', {
-          idTemuan: this.$route.query.idtemuan || this.editData.kodeTemuan,
+          idTemuan: this.$route.query.idtemuan ? this.$route.query.idtemuan : this.editData.kodeTemuan,
           forceRefresh: refresh,
         });
 

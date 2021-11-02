@@ -22,30 +22,25 @@ const routeAnggaran = {
   component: {
     render(c) { return c('router-view') }
   },
+  meta: {
+    requiresUser: true,
+    requiresAdmin: true,
+  },
   children: [
     {
       path: '',
       name: 'master-ref-jenis-anggaran',
       component: MasterRefJenisAnggaran,
-      meta: {
-        requiresUser: true
-      }
     },
     {
       path: 'create',
       name: 'master-create-ref-jenis-anggaran',
       component: MasterCreateRefJenisAnggaran,
-      meta: {
-        requiresUser: true
-      }
     },
     {
       path: ':idJenisAnggaran/edit',
       name: 'master-edit-ref-jenis-anggaran',
       component: MasterEditRefJenisAnggaran,
-      meta: {
-        requiresUser: true
-      },
       props: true
     }
   ]

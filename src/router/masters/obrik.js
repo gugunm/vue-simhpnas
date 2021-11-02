@@ -64,6 +64,9 @@ const routeObrik = {
   component: {
     render(c) { return c('router-view') }
   },
+  meta: {
+    allowedUser: [0, 1, 2, 3, 4, 5, 6],
+  },
   children: [
     // Master Ref Obrik
     {

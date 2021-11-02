@@ -279,10 +279,11 @@ export default {
             if (responseData) {
               setTimeout(() => {
                 this.loading = false;
-                this.$router.back();
+                // this.$router.back();
                 this.$emit('on-load-tim');
                 this.toastSuccess(
-                  'Berhasil menyimpan data dengan ID ' + responseData.Kode_Peran
+                  'Berhasil menyimpan data dengan kode ' +
+                    responseData.Kode_Peran
                 );
               }, 500);
               this.reset();
