@@ -11,7 +11,7 @@
       </CCol>
     </CRow>
     <table-user
-      top-title="Admin Unit"
+      top-title="Manajemen User"
       :items="items"
       :fields="fields"
       :clickable-rows="true"
@@ -92,13 +92,13 @@ export default {
   methods: {
     openCreate() {
       this.$router.push({
-        name: 'master-user-unit-create',
+        name: 'module-create-user-unit-kerja',
       });
     },
     openEdit(item) {
       this.$router.push({
-        name: 'master-user-unit-edit',
-        params: { idUserUnit: item.kodeUser },
+        name: 'module-edit-user-unit-kerja',
+        params: { idUserUnitKerja: item.kodeUser },
       });
     },
 
@@ -138,7 +138,7 @@ export default {
     async actionDelete() {
       try {
         const response = await this.$store.dispatch(
-          'm_user_unit/deleteUserUnit',
+          'm_user_unit/deleteUserUnitKerja',
           {
             idUser: this.idToDelete,
           }
@@ -168,6 +168,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>

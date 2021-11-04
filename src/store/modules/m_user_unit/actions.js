@@ -29,7 +29,7 @@ export default {
     const response = await axios({
       method: 'GET',
       baseURL: API_URL,
-      url: `/api/penggunaunitkerja/${payload.idUser}`,
+      url: `/api/pengguna/${payload.idUser}`,
       params: {
         token: localStorage.getItem('api_token')
       },
@@ -68,14 +68,14 @@ export default {
       throw error;
     }
     
-    return responseData
+    return response
   },
 
   async updateUserUnit(context, payload){
     const response = await axios({
-      method: 'PUT',
+      method: 'POST',
       headers: { "Content-Type": "application/json" },
-      data: payload,
+      data: payload.data,
       baseURL: API_URL,
       url: `/api/penggunaunitkerja/${payload.idUser}`,
       params: {
@@ -92,10 +92,33 @@ export default {
       throw error;
     }
 
-    return responseData
+    return response
   },
 
   async deleteUserUnit(context, payload){
+    const response = await axios({
+      method: 'DELETE',
+      headers: { "Content-Type": "application/json" },
+      baseURL: API_URL,
+      url: `/api/pengguna/${payload.idUser}`,
+      params: {
+        token: localStorage.getItem('api_token')
+      },
+    })
+
+    const responseData = await response.data;
+
+    if (response.statusText != "OK") {
+      const error = new Error(
+        responseData.message || 'Failed to delete data'
+      );
+      throw error;
+    }
+
+    return response
+  },
+
+  async deleteUserUnitKerja(context, payload){
     const response = await axios({
       method: 'DELETE',
       headers: { "Content-Type": "application/json" },
@@ -115,6 +138,6 @@ export default {
       throw error;
     }
 
-    return responseData
+    return response
   }
 };

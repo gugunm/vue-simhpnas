@@ -3,7 +3,7 @@
     <CRow>
       <CCol sm="12">
         <div class="text-2xl mb-4 font-semibold">
-          <h3>Edit User Utama</h3>
+          <h3>Edit Admin Unit</h3>
         </div>
       </CCol>
     </CRow>
@@ -38,28 +38,52 @@
                     invalid-feedback="email wajib diisi dengan format yang valid"
                   />
                 </CCol>
+              </CRow>
+              <CRow class="mb-4">
                 <CCol lg="6">
                   <div>
-                    <label>Level</label>
+                    <label>Unit Audit</label>
                     <multiselect
-                      v-if="optionsLevel"
-                      v-model="valueLevel"
+                      v-if="optionsUnitAudit"
+                      v-model="valueUnitAudit"
                       deselect-label="Can't remove this value"
-                      track-by="deskripsiLevel"
-                      label="deskripsiLevel"
-                      placeholder="Select level user"
-                      :options="optionsLevel"
-                      :searchable="false"
+                      track-by="deskripsi"
+                      label="deskripsi"
+                      placeholder="Select unit audit"
+                      :options="optionsUnitAudit"
+                      :searchable="true"
                       :allow-empty="false"
                     >
                       <template slot="singleLabel" slot-scope="{ option }">
                         <p>
-                          {{ option.deskripsiLevel }}
+                          {{ option.deskripsi }}
                         </p>
                       </template>
                     </multiselect>
                   </div>
                 </CCol>
+                <!-- <CCol lg="6">
+                  <div>
+                    <label>Sub Unit Audit</label>
+                    <multiselect
+                      v-if="optionsSubUnitAudit"
+                      v-model="valueSubUnitAudit"
+                      deselect-label="Can't remove this value"
+                      track-by="deskripsi"
+                      label="deskripsi"
+                      placeholder="Select unit audit"
+                      :options="optionsSubUnitAudit"
+                      :searchable="true"
+                      :allow-empty="false"
+                    >
+                      <template slot="singleLabel" slot-scope="{ option }">
+                        <p>
+                          {{ option.deskripsi }}
+                        </p>
+                      </template>
+                    </multiselect>
+                  </div>
+                </CCol> -->
               </CRow>
               <CInputCheckbox
                 :is-valid="checkIfValid('accept')"
@@ -130,14 +154,16 @@ export default {
     Multiselect,
   },
   mixins: [validationMixin, mixin],
-  props: ['idUserUtama'],
+  props: ['idUserUnit'],
   data() {
     return {
       form: this.getEmptyForm(),
       submitted: false,
       loading: false,
-      valueLevel: '',
-      optionsLevel: [],
+      valueUnitAudit: '',
+      optionsUnitAudit: [],
+      // valueSubUnitAudit: '',
+      // optionsSubUnitAudit: [],
     };
   },
   computed: {
@@ -152,18 +178,30 @@ export default {
     },
   },
   watch: {
-    valueLevel: function (val) {
-      this.$v.form.level.$model = val.kodeLevel;
+    valueUnitAudit: function (val) {
+      this.$v.form.kodeUnitAudit.$model = val.id;
+
+      // this.loadSubUnitAudit();
+      // this.valueSubUnitAudit = '';
+      // this.optionsSubUnitAudit = [];
     },
+    // valueSubUnitAudit: function (val) {
+    //   this.$v.form.kodeSubUnitAudit.$model = val.id;
+    // },
   },
   async mounted() {
-    await this.loadEditUserUtamaById();
+    await this.loadEditUserUnitById();
 
-    await this.loadLevelUser();
+    await this.loadUnitAudit();
 
-    this.valueLevel = this.optionsLevel.filter(
-      (data) => data.kodeLevel == this.form.level
+    this.valueUnitAudit = this.optionsUnitAudit.filter(
+      (data) => data.id == this.form.kodeUnitAudit
     )[0];
+
+    // await this.loadSubUnitAudit();
+    // this.valueSubUnitAudit = this.optionsSubUnitAudit.filter(
+    //   (data) => data.id == this.form.kodeSubUnitAudit
+    // )[0];
   },
   validations: {
     form: {
@@ -175,9 +213,12 @@ export default {
         required,
         email,
       },
-      level: {
+      kodeUnitAudit: {
         required,
       },
+      // kodeSubUnitAudit: {
+      //   required,
+      // },
       accept: {
         required,
         mustAccept: (val) => val,
@@ -207,10 +248,10 @@ export default {
           this.loading = true;
 
           const responseData = await this.$store.dispatch(
-            'm_user_utama/updateUserUtama',
+            'm_user_unit/updateUserUnit',
             {
               data: resultFormData,
-              idUser: this.idUserUtama,
+              idUser: this.idUserUnit,
             }
           );
 
@@ -244,7 +285,8 @@ export default {
       return {
         name: '',
         email: '',
-        level: '',
+        kodeUnitAudit: '',
+        // kodeSubUnitAudit: '',
         accept: false,
       };
     },
@@ -255,9 +297,8 @@ export default {
       fd.append('_method', 'PATCH');
       fd.append('name', this.$v.form.name.$model);
       fd.append('email', this.$v.form.email.$model);
-      fd.append('level', this.$v.form.level.$model);
-      // fd.append('kodeUnitAudit', this.editData.kodeUnitAudit);
-      // fd.append('kodeSubUnitAudit', this.editData.kodeSubUnitAudit);
+      fd.append('Kode_Unit_Audit', this.$v.form.kodeUnitAudit.$model);
+      // fd.append('Kode_Sub_Unit_Audit', this.$v.form.kodeSubUnitAudit.$model);
 
       return fd;
     },

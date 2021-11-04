@@ -3,7 +3,7 @@
     <CRow>
       <CCol sm="12">
         <div class="text-2xl mb-4 font-semibold">
-          <h3>Edit User Utama</h3>
+          <h3>Update Password User</h3>
         </div>
       </CCol>
     </CRow>
@@ -12,53 +12,35 @@
         <CRow>
           <CCol lg="12">
             <CForm>
-              <CRow>
-                <CCol lg="6">
+              <CRow class="mt-3">
+                <CCol md="6">
                   <CInput
-                    label="Nama User"
-                    :lazy="false"
-                    :value.sync="$v.form.name.$model"
-                    :is-valid="checkIfValid('name')"
-                    placeholder="Nama"
-                    autocomplete="name"
-                    invalid-feedback="nama wajib diisi"
+                    :is-valid="checkIfValid('oldPassword')"
+                    :value.sync="$v.form.oldPassword.$model"
+                    label="Password Lama"
+                    type="password"
+                    placeholder="********"
+                    autocomplete="old-password"
+                    invalid-feedback="password minimal terdiri dari 8 karakter"
                   />
-                </CCol>
-              </CRow>
-              <CRow class="mb-2">
-                <CCol lg="6">
                   <CInput
-                    label="Email"
-                    type="email"
-                    :lazy="false"
-                    :value.sync="$v.form.email.$model"
-                    :is-valid="checkIfValid('email')"
-                    placeholder="email@email.com"
-                    autocomplete="email"
-                    invalid-feedback="email wajib diisi dengan format yang valid"
+                    :is-valid="checkIfValid('newPassword')"
+                    :value.sync="$v.form.newPassword.$model"
+                    label="Password Baru"
+                    type="password"
+                    placeholder="********"
+                    autocomplete="new-password"
+                    invalid-feedback="password minimal terdiri dari: angka, huruf kapital dan non kapital, 8 karakter"
                   />
-                </CCol>
-                <CCol lg="6">
-                  <div>
-                    <label>Level</label>
-                    <multiselect
-                      v-if="optionsLevel"
-                      v-model="valueLevel"
-                      deselect-label="Can't remove this value"
-                      track-by="deskripsiLevel"
-                      label="deskripsiLevel"
-                      placeholder="Select level user"
-                      :options="optionsLevel"
-                      :searchable="false"
-                      :allow-empty="false"
-                    >
-                      <template slot="singleLabel" slot-scope="{ option }">
-                        <p>
-                          {{ option.deskripsiLevel }}
-                        </p>
-                      </template>
-                    </multiselect>
-                  </div>
+                  <CInput
+                    :is-valid="checkIfValid('confirmPassword')"
+                    :value.sync="$v.form.confirmPassword.$model"
+                    label="Confirm Password"
+                    type="password"
+                    placeholder="Password"
+                    autocomplete="new-password"
+                    invalid-feedback="konfirmasi password harus sama dengan password"
+                  />
                 </CCol>
               </CRow>
               <CInputCheckbox
@@ -120,15 +102,11 @@
 
 <script>
 import { validationMixin } from 'vuelidate';
-import { required, minLength, email } from 'vuelidate/lib/validators';
-import Multiselect from 'vue-multiselect';
+import { required, minLength, sameAs, helpers } from 'vuelidate/lib/validators';
 import mixin from './mixin';
 
 export default {
   name: 'ValidationForms',
-  components: {
-    Multiselect,
-  },
   mixins: [validationMixin, mixin],
   props: ['idUserUtama'],
   data() {
@@ -136,8 +114,6 @@ export default {
       form: this.getEmptyForm(),
       submitted: false,
       loading: false,
-      valueLevel: '',
-      optionsLevel: [],
     };
   },
   computed: {
@@ -151,32 +127,23 @@ export default {
       return this.$v.form.$anyDirty;
     },
   },
-  watch: {
-    valueLevel: function (val) {
-      this.$v.form.level.$model = val.kodeLevel;
-    },
-  },
-  async mounted() {
-    await this.loadEditUserUtamaById();
-
-    await this.loadLevelUser();
-
-    this.valueLevel = this.optionsLevel.filter(
-      (data) => data.kodeLevel == this.form.level
-    )[0];
-  },
   validations: {
     form: {
-      name: {
+      oldPassword: {
         required,
-        minLength: minLength(3),
+        minLength: minLength(8),
       },
-      email: {
+      newPassword: {
         required,
-        email,
+        minLength: minLength(8),
+        strongPass: helpers.regex(
+          'strongPass',
+          /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/
+        ),
       },
-      level: {
+      confirmPassword: {
         required,
+        sameAsPassword: sameAs('newPassword'),
       },
       accept: {
         required,
@@ -185,10 +152,6 @@ export default {
     },
   },
   methods: {
-    viewSelectSearch({ kodeLevel, deskripsiLevel }) {
-      return `${deskripsiLevel}`;
-    },
-
     checkIfValid(fieldName) {
       const field = this.$v.form[fieldName];
       if (!field.$dirty) {
@@ -201,32 +164,29 @@ export default {
       if (this.isValid) {
         this.submitted = true;
 
-        const resultFormData = this.appendToFormData();
+        // const resultFormData = this.appendToFormData();
 
-        try {
-          this.loading = true;
+        // try {
+        //   this.loading = true;
 
-          const responseData = await this.$store.dispatch(
-            'm_user_utama/updateUserUtama',
-            {
-              data: resultFormData,
-              idUser: this.idUserUtama,
-            }
-          );
+        //   const responseData = await this.$store.dispatch(
+        //     'm_user_utama/createUserUtama',
+        //     resultFormData
+        //   );
 
-          if (responseData) {
-            setTimeout(() => {
-              this.loading = false;
-              this.$router.back();
-              this.toastSuccess('Berhasil mengubah data user');
-            }, 500);
-          }
-        } catch (error) {
-          setTimeout(() => {
-            this.loading = false;
-            this.toastError('Terjadi kesalahan saat submit data');
-          }, 500);
-        }
+        //   if (responseData) {
+        //     setTimeout(() => {
+        //       this.loading = false;
+        //       this.$router.back();
+        //       this.toastSuccess('Berhasil menyimpan data user');
+        //     }, 500);
+        //   }
+        // } catch (error) {
+        //   setTimeout(() => {
+        //     this.loading = false;
+        //     this.toastError('Terjadi kesalahan saat submit data');
+        //   }, 500);
+        // }
       }
     },
 
@@ -242,9 +202,9 @@ export default {
 
     getEmptyForm() {
       return {
-        name: '',
-        email: '',
-        level: '',
+        oldPassword: '',
+        newPassword: '',
+        confirmPassword: '',
         accept: false,
       };
     },
@@ -253,11 +213,8 @@ export default {
       const fd = new FormData();
 
       fd.append('_method', 'PATCH');
-      fd.append('name', this.$v.form.name.$model);
-      fd.append('email', this.$v.form.email.$model);
-      fd.append('level', this.$v.form.level.$model);
-      // fd.append('kodeUnitAudit', this.editData.kodeUnitAudit);
-      // fd.append('kodeSubUnitAudit', this.editData.kodeSubUnitAudit);
+      fd.append('oldPassword', this.$v.form.oldPassword.$model);
+      fd.append('newPassword', this.$v.form.newPassword.$model);
 
       return fd;
     },
@@ -265,4 +222,3 @@ export default {
 };
 </script>
 
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

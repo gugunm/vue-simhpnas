@@ -73,9 +73,9 @@ export default {
 
   async updateUserUtama(context, payload){
     const response = await axios({
-      method: 'PUT',
+      method: 'POST',
       headers: { "Content-Type": "application/json" },
-      data: payload,
+      data: payload.data,
       baseURL: API_URL,
       url: `/api/pengguna/${payload.idUser}`,
       params: {
@@ -115,6 +115,29 @@ export default {
       throw error;
     }
 
-    return responseData
-  }
+    return response
+  },
+
+  async resetPasswordUserUtama(context, payload){
+    const response = await axios({
+      method: 'PATCH',
+      headers: { "Content-Type": "application/json" },
+      baseURL: API_URL,
+      url: `/api/resetpass/${payload.idUser}`,
+      params: {
+        token: localStorage.getItem('api_token')
+      },
+    })
+
+    const responseData = await response.data;
+
+    if (response.statusText != "OK") {
+      const error = new Error(
+        responseData.message || 'Failed to update data'
+      );
+      throw error;
+    }
+
+    return response
+  },
 };

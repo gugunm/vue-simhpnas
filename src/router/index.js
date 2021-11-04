@@ -2,9 +2,11 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 // +++++ ROUTE SETTINGS +++++
-import routeCoreUiSetting from './settings/setting'
+import routeCoreUiSetting from './settings/setting';
 
-import routeUi from './settings/ui'
+import routeUi from './settings/ui';
+import routeProfile from './settings/profile';
+
 // +++++ ROUTE MASTER +++++
 import routeObrik from './masters/obrik'
 import routePenyebab from './masters/penyebab'
@@ -28,6 +30,7 @@ import routeModPenyebab from './modules/penyebab'
 import routeModRekomendasi from './modules/rekomendasi'
 import routeModTindakLanjut from './modules/tindakLanjut'
 import routeModPelaku from './modules/pelaku'
+import routeModUserUnitKerja from './modules/userUnitKerja'
 // +++++ ROUTE PAGES +++++
 import pages from './pages/pages'
 
@@ -92,6 +95,7 @@ function configRoutes() {
         // SETTINGS
         ...routeCoreUiSetting,
         ...routeUi,
+        ...routeProfile,
         // +++++ MASTERS +++++
         {
           path: 'master-referensi',
@@ -130,6 +134,7 @@ function configRoutes() {
         routeModRekomendasi,
         routeModTindakLanjut,
         routeModPelaku,
+        routeModUserUnitKerja,
       ]
     },
     ...pages

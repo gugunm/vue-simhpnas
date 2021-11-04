@@ -58,7 +58,7 @@
                     :options="optionsPeran"
                     :custom-label="viewSelectSearch"
                     placeholder="Select peran"
-                    label="deskeripsi"
+                    label="deskripsi"
                     track-by="deskripsi"
                   />
                 </div>

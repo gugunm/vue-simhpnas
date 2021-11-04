@@ -15,7 +15,6 @@ import './assets/tailwind.css';
 import VueToast from 'vue-toast-notification';
 import 'vue-toast-notification/dist/theme-sugar.css';
 
-
 import {func} from './globalFunction'
 
 /**

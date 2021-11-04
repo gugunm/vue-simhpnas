@@ -3,7 +3,7 @@
     <CRow class="px-3">
       <CCol class="px-0" lg="12" sm="12">
         <h4 class="my-0 mt-1 mb-3 text-2xl font-semibold">
-          {{ topTitle }} {{ title }} {{ descTitle | descCamelCase }}
+          {{ topTitle }}
         </h4>
       </CCol>
       <CCol class="px-0 mb-4" lg="12" sm="12">
@@ -150,7 +150,6 @@ export default {
     'open-create-modal',
     'open-edit-modal',
     'open-delete-modal',
-    'open-reset-password',
   ],
   methods: {
     clickedRow(item) {

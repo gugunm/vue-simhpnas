@@ -35,7 +35,7 @@ const routeUnitKerja = {
   },
   children: [
     {
-      path: '/',
+      path: '',
       name: 'master-unit-kerja-index',
       component: MasterUnitKerja,
       meta: {

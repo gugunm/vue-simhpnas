@@ -492,7 +492,8 @@ const routeUi = [
         name: 'Standard Buttons',
         component: StandardButtons,
         meta: {
-          requiresAdmin: true
+          requiresAdmin: true,
+          // requiresUser: true
         }
       },
       {

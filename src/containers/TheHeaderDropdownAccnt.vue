@@ -7,60 +7,53 @@
   >
     <template #toggler>
       <CHeaderNavLink>
-        <div class="c-avatar bg-red-400">
-          <span class="text-white font-semibold text-xl">S</span>
+        <div class="c-avatar">
+          <!-- <span class="text-white font-semibold text-xl">S</span> -->
           <!-- <img src="img/avatars/6.jpg" class="c-avatar-img" /> -->
+          <img
+            :src="`https://avatars.dicebear.com/api/micah/${namaUser}.svg?background=%230000ff&mouth=smile`"
+            class="c-avatar-img"
+          />
         </div>
       </CHeaderNavLink>
     </template>
-    <!-- <CDropdownHeader
-      tag="div"
-      class="text-center"
-      color="light"
-    >
+    <CDropdownHeader tag="div" class="text-center" color="light">
       <strong>Account</strong>
     </CDropdownHeader>
-    <CDropdownItem>
+    <!-- <CDropdownItem>
       <CIcon name="cil-bell" /> Updates
-      <CBadge
-        color="info"
-        class="ml-auto"
-      >
+      <CBadge color="info" class="ml-auto">
         {{ itemsCount }}
       </CBadge>
     </CDropdownItem>
     <CDropdownItem>
       <CIcon name="cil-envelope-open" /> Messages
-      <CBadge
-        color="success"
-        class="ml-auto"
-      >
+      <CBadge color="success" class="ml-auto">
         {{ itemsCount }}
       </CBadge>
     </CDropdownItem>
     <CDropdownItem>
       <CIcon name="cil-task" /> Tasks
-      <CBadge
-        color="danger"
-        class="ml-auto"
-      >
+      <CBadge color="danger" class="ml-auto">
         {{ itemsCount }}
       </CBadge>
     </CDropdownItem>
     <CDropdownItem>
       <CIcon name="cil-comment-square" /> Comments
-      <CBadge
-        color="warning"
-        class="ml-auto"
-      >
+      <CBadge color="warning" class="ml-auto">
         {{ itemsCount }}
       </CBadge>
     </CDropdownItem> -->
+    <CDropdownItem
+      class="mt-2"
+      @click="$router.push({ name: 'profile-index' })"
+    >
+      <CIcon name="cil-user" /> Profile
+    </CDropdownItem>
     <!-- <CDropdownHeader tag="div" class="text-center" color="light">
       <strong>Settings</strong>
     </CDropdownHeader> -->
-    <CDropdownItem> <CIcon name="cil-user" /> Profile </CDropdownItem>
-    <CDropdownItem> <CIcon name="cil-settings" /> Settings </CDropdownItem>
+    <!-- <CDropdownItem> <CIcon name="cil-settings" /> Settings </CDropdownItem> -->
     <!-- <CDropdownItem>
       <CIcon name="cil-dollar" /> Payments
       <CBadge
@@ -96,6 +89,7 @@ export default {
   data() {
     return {
       itemsCount: 42,
+      namaUser: localStorage.getItem('name'),
     };
   },
   methods: {

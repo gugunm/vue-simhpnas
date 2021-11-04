@@ -3,7 +3,7 @@
     <CRow>
       <CCol sm="12">
         <div class="text-2xl mb-4 font-semibold">
-          <h3>Edit User Utama</h3>
+          <h3>Create User</h3>
         </div>
       </CCol>
     </CRow>
@@ -25,7 +25,7 @@
                   />
                 </CCol>
               </CRow>
-              <CRow class="mb-2">
+              <CRow>
                 <CCol lg="6">
                   <CInput
                     label="Email"
@@ -38,18 +38,20 @@
                     invalid-feedback="email wajib diisi dengan format yang valid"
                   />
                 </CCol>
+              </CRow>
+              <CRow>
                 <CCol lg="6">
                   <div>
-                    <label>Level</label>
+                    <label>Role</label>
                     <multiselect
                       v-if="optionsLevel"
                       v-model="valueLevel"
                       deselect-label="Can't remove this value"
                       track-by="deskripsiLevel"
                       label="deskripsiLevel"
-                      placeholder="Select level user"
+                      placeholder="Select role"
                       :options="optionsLevel"
-                      :searchable="false"
+                      :searchable="true"
                       :allow-empty="false"
                     >
                       <template slot="singleLabel" slot-scope="{ option }">
@@ -59,6 +61,52 @@
                       </template>
                     </multiselect>
                   </div>
+                </CCol>
+                <CCol lg="6">
+                  <div>
+                    <label>Sub Unit Audit</label>
+                    <multiselect
+                      v-if="optionsSubUnitAudit"
+                      v-model="valueSubUnitAudit"
+                      deselect-label="Can't remove this value"
+                      track-by="deskripsi"
+                      label="deskripsi"
+                      placeholder="Select unit audit"
+                      :options="optionsSubUnitAudit"
+                      :searchable="true"
+                      :allow-empty="false"
+                    >
+                      <template slot="singleLabel" slot-scope="{ option }">
+                        <p>
+                          {{ option.deskripsi }}
+                        </p>
+                      </template>
+                    </multiselect>
+                  </div>
+                </CCol>
+              </CRow>
+              <CRow class="mt-3">
+                <CCol md="6">
+                  <CInput
+                    :is-valid="checkIfValid('password')"
+                    :value.sync="$v.form.password.$model"
+                    label="Password"
+                    type="password"
+                    placeholder="Password"
+                    autocomplete="new-password"
+                    invalid-feedback="password minimal terdiri dari: angka, huruf kapital dan non kapital, 8 karakter"
+                  />
+                </CCol>
+                <CCol md="6">
+                  <CInput
+                    :is-valid="checkIfValid('confirmPassword')"
+                    :value.sync="$v.form.confirmPassword.$model"
+                    label="Confirm Password"
+                    type="password"
+                    placeholder="Password"
+                    autocomplete="new-password"
+                    invalid-feedback="konfirmasi password harus sama dengan password"
+                  />
                 </CCol>
               </CRow>
               <CInputCheckbox
@@ -100,7 +148,7 @@
                     type="submit"
                     color="primary"
                     class="px-4 ml-1"
-                    :disabled="!isValid || submitted"
+                    :disabled="!isValid"
                     @click="submit"
                   >
                     <div v-if="loading" class="px-8">
@@ -120,7 +168,13 @@
 
 <script>
 import { validationMixin } from 'vuelidate';
-import { required, minLength, email } from 'vuelidate/lib/validators';
+import {
+  required,
+  minLength,
+  email,
+  sameAs,
+  helpers,
+} from 'vuelidate/lib/validators';
 import Multiselect from 'vue-multiselect';
 import mixin from './mixin';
 
@@ -130,7 +184,6 @@ export default {
     Multiselect,
   },
   mixins: [validationMixin, mixin],
-  props: ['idUserUtama'],
   data() {
     return {
       form: this.getEmptyForm(),
@@ -138,6 +191,8 @@ export default {
       loading: false,
       valueLevel: '',
       optionsLevel: [],
+      valueSubUnitAudit: '',
+      optionsSubUnitAudit: [],
     };
   },
   computed: {
@@ -155,15 +210,13 @@ export default {
     valueLevel: function (val) {
       this.$v.form.level.$model = val.kodeLevel;
     },
+    valueSubUnitAudit: function (val) {
+      this.$v.form.kodeSubUnitAudit.$model = val.id;
+    },
   },
   async mounted() {
-    await this.loadEditUserUtamaById();
-
     await this.loadLevelUser();
-
-    this.valueLevel = this.optionsLevel.filter(
-      (data) => data.kodeLevel == this.form.level
-    )[0];
+    await this.loadSubUnitAudit();
   },
   validations: {
     form: {
@@ -178,6 +231,21 @@ export default {
       level: {
         required,
       },
+      kodeSubUnitAudit: {
+        required,
+      },
+      password: {
+        required,
+        minLength: minLength(8),
+        strongPass: helpers.regex(
+          'strongPass',
+          /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/
+        ),
+      },
+      confirmPassword: {
+        required,
+        sameAsPassword: sameAs('password'),
+      },
       accept: {
         required,
         mustAccept: (val) => val,
@@ -185,10 +253,6 @@ export default {
     },
   },
   methods: {
-    viewSelectSearch({ kodeLevel, deskripsiLevel }) {
-      return `${deskripsiLevel}`;
-    },
-
     checkIfValid(fieldName) {
       const field = this.$v.form[fieldName];
       if (!field.$dirty) {
@@ -206,20 +270,19 @@ export default {
         try {
           this.loading = true;
 
-          const responseData = await this.$store.dispatch(
-            'm_user_utama/updateUserUtama',
-            {
-              data: resultFormData,
-              idUser: this.idUserUtama,
-            }
+          const response = await this.$store.dispatch(
+            'm_user_unit/createUserUnit',
+            resultFormData
           );
 
-          if (responseData) {
+          if (response.status == 200) {
             setTimeout(() => {
               this.loading = false;
               this.$router.back();
-              this.toastSuccess('Berhasil mengubah data user');
+              this.toastSuccess(response.data.message);
             }, 500);
+          } else {
+            this.toastError(response.data.message);
           }
         } catch (error) {
           setTimeout(() => {
@@ -245,6 +308,9 @@ export default {
         name: '',
         email: '',
         level: '',
+        kodeSubUnitAudit: '',
+        password: '',
+        confirmPassword: '',
         accept: false,
       };
     },
@@ -252,12 +318,11 @@ export default {
     appendToFormData() {
       const fd = new FormData();
 
-      fd.append('_method', 'PATCH');
       fd.append('name', this.$v.form.name.$model);
       fd.append('email', this.$v.form.email.$model);
+      fd.append('Kode_Sub_Unit_Audit', this.$v.form.kodeSubUnitAudit.$model);
+      fd.append('password', this.$v.form.password.$model);
       fd.append('level', this.$v.form.level.$model);
-      // fd.append('kodeUnitAudit', this.editData.kodeUnitAudit);
-      // fd.append('kodeSubUnitAudit', this.editData.kodeSubUnitAudit);
 
       return fd;
     },
