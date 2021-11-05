@@ -1,14 +1,9 @@
 <template>
-  <CButton
-    v-c-tooltip="{
-      content: 'Print TP3',
+  <!-- v-c-tooltip="{
+      content: 'Print Form',
       placement: 'top',
-    }"
-    color="info"
-    variant="ghost"
-    size="sm"
-    @click="downloadPDF"
-  >
+    }" -->
+  <CButton color="info" variant="ghost" size="sm" @click="downloadPDF">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       class="h-6 w-6"

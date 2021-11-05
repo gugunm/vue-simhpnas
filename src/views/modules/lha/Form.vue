@@ -7,7 +7,7 @@
       </div>
       <CCard>
         <!-- <CCardBody> -->
-        <CForm class="form-lha">
+        <CForm class="form-lha" @submit.prevent="submit">
           <CCardBody>
             <!-- <masked-input
               v-model="rpRencana.$model"
@@ -177,6 +177,20 @@
                     custom
                     class="my-2 text-base ml-2 font-semibold lower"
                   />
+                </CCol>
+                <CCol v-if="mode == 'create'" lg="6">
+                  <label class="mb-3">Status Temuan</label>
+                  <div class="flex">
+                    <CSwitch
+                      class="mx-1 mr-3"
+                      color="warning"
+                      variant="3d"
+                      v-bind="labelIcon"
+                      :checked.sync="isTemuanNihil"
+                    />
+                    <span v-if="isTemuanNihil">Temuan nihil untuk LHA ini</span>
+                    <span v-else>LHA memiliki temuan</span>
+                  </div>
                 </CCol>
               </CRow>
             </div>
@@ -485,8 +499,8 @@
                       v-else
                       class="mb-4"
                       :lazy="false"
-                      placeholder="http://server-anda.com/file-tl.pdf"
                       :value.sync="fileLha"
+                      placeholder="http://server-anda.com/file-lha.pdf"
                     />
                   </div>
                 </CCol>
@@ -545,8 +559,7 @@
                     type="submit"
                     color="primary"
                     class="px-4 ml-1"
-                    :disabled="!isValid || submitted"
-                    @click="submit"
+                    :disabled="!isValid"
                   >
                     <div v-if="loading" class="px-8">
                       <CSpinner color="white" size="sm" class="mr-2" />
@@ -636,6 +649,7 @@ export default {
         labelOff: '\u2715',
       },
       isStoredLha: true,
+      isTemuanNihil: false,
       editData: {},
       numberMask: createNumberMask({
         // prefix: 'Rp. ',
@@ -819,6 +833,7 @@ export default {
 
       this.isLhaTpk = this.editData.flagTpk == 1 ? true : false;
       this.isStoredLha = this.editData.isStored == 1 ? true : false;
+      this.isTemuanNihil = this.editData.isTemuanNihil == 1 ? true : false;
 
       this.valueJenisObrik = this.optionsJenisObrik.filter(
         (data) => data.id == this.form.jenisObrik
@@ -845,9 +860,6 @@ export default {
       this.valueKelurahan = await this.loadKelurahanById();
 
       this.fileLha = this.editData.uploadFileLha;
-
-      console.log('LHA HEREE');
-      console.log(this.form);
     }
   },
 
@@ -1065,6 +1077,7 @@ export default {
 
       // OPSIONAL
       fd.append('is_stored', this.convertBoolean(this.isStoredLha));
+      fd.append('is_temuan_nihil', this.convertBoolean(this.isTemuanNihil));
 
       if (this.fileLha) {
         fd.append('Upload_file_LHA', this.fileLha);

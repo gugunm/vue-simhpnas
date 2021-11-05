@@ -8,7 +8,7 @@
       </div>
       <CCard>
         <!-- <CCardBody> -->
-        <CForm class="form-tl">
+        <CForm class="form-tl" @submit.prevent="submit">
           <div class="p-3" style="background: #f9fafb">
             <h5 class="text-base font-semibold">Data Tindak Lanjut</h5>
           </div>
@@ -26,25 +26,14 @@
                   :disabled="true"
                 />
               </CCol>
-              <CCol v-if="mode == 'view' && !editData.uploadFileTl" lg="6">
+              <CCol v-if="mode == 'view' && form.uploadFileTl" class="pt-2">
                 <CButton
                   shape="pill"
-                  class="px-3 my-3"
+                  class="px-3 mt-3"
                   color="info"
                   @click="onOpenFile"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
+                  Lihat File TL
                 </CButton>
               </CCol>
             </CRow>
@@ -153,7 +142,9 @@
                 <CInput
                   label="Nilai Rekomendasi"
                   :value="
-                    $route.query.nilairekomendasi || editData.nilaiRekomendasi
+                    $route.query.nilairekomendasi ||
+                    editData.nilaiRekomendasi ||
+                    form.nilaiRekomendasi
                   "
                   :disabled="true"
                 />
@@ -198,9 +189,7 @@
             >
               <CCol lg="6">
                 <div class="flex flex-col">
-                  <label for="file-tl" class="block mb-3"
-                    >Upload File Tindak Lanjut</label
-                  >
+                  <label class="block mb-3">Upload File Tindak Lanjut</label>
                   <div class="flex items-center mb-4">
                     <CSwitch
                       class="mx-1 mr-3"
@@ -218,19 +207,19 @@
                   </div>
                   <input
                     v-if="isStoredTl"
-                    id="file-tl"
                     type="file"
-                    name="file-tl"
                     class="mb-4"
                     @change="onUploadTl"
                   />
+                  <!-- id="file-tl" -->
+                  <!-- name="file-tl" -->
                   <CInput
                     v-else
                     class="mb-4"
                     :lazy="false"
-                    placeholder="http://server-anda.com/file-tl.pdf"
                     :value.sync="fileTl"
                   />
+                  <!-- placeholder="http://server-anda.com/file-tl.pdf" -->
                 </div>
               </CCol>
             </CRow>
@@ -286,9 +275,9 @@
                     type="submit"
                     color="primary"
                     class="px-4 ml-1"
-                    :disabled="!isValid || submitted"
-                    @click="submit"
+                    :disabled="!isValid"
                   >
+                    <!-- @click="submit" -->
                     <div v-if="loading" class="px-8">
                       <CSpinner color="white" size="sm" class="mr-2" />
                     </div>
@@ -302,6 +291,21 @@
         <!-- </CCardBody> -->
       </CCard>
     </CCol>
+    <CModal title="File LHA" color="info" :show.sync="isOpenFile" size="lg">
+      <embed
+        :src="
+          form.isStored == 1
+            ? $apiAddress + '/storage/' + form.uploadFileTl
+            : form.uploadFileTl
+        "
+        type="application/pdf"
+        width="100%"
+        height="550px"
+      />
+      <template #footer-wrapper>
+        <div />
+      </template>
+    </CModal>
     <confirm-modal
       v-model="isOpenConfirm"
       @close-modal="isOpenConfirm = false"
@@ -344,6 +348,7 @@ export default {
         labelOff: '\u2715',
       },
       isStoredTl: true,
+      isOpenFile: false,
     };
   },
   computed: {
@@ -420,6 +425,10 @@ export default {
     },
   },
   methods: {
+    onOpenFile() {
+      this.isOpenFile = true;
+    },
+
     onDeleteFileUpdate() {
       this.editData.uploadFileTl = '';
       this.fileTl = '';
@@ -459,17 +468,31 @@ export default {
         try {
           if (this.mode == 'create') {
             this.loading = true;
-            const responseData = await this.$store.dispatch(
+            const response = await this.$store.dispatch(
               'module_tindak_lanjut/createTindakLanjut',
               resultFormData
             );
 
-            if (responseData) {
+            // console.log('RESPONSE HERE');
+            // console.log(response);
+
+            if (response.status == 200) {
               setTimeout(() => {
                 this.loading = false;
-                this.$router.back();
-                this.toastSuccess('Berhasil menyimpan data TL');
+                // this.$router.back();
+                this.$router.push({
+                  name: 'module-tindak-lanjut',
+                  query: {
+                    filterlha: this.$route.query.idlha,
+                    filtertemuan: this.$route.query.idtemuan,
+                    filterrekomendasi: this.$route.query.idrekomendasi,
+                  },
+                });
+                this.toastSuccess(response.status == 200);
               }, 500);
+            } else {
+              this.loading = false;
+              this.toastError(response.data.message);
             }
           } else if (this.mode == 'edit') {
             this.loading = true;
@@ -485,7 +508,16 @@ export default {
             if (responseData) {
               setTimeout(() => {
                 this.loading = false;
-                this.$router.back();
+                // window.history.back();
+                // this.$router.back();
+                this.$router.push({
+                  name: 'module-tindak-lanjut',
+                  query: {
+                    filterlha: this.editData.kodeLha,
+                    filtertemuan: this.editData.kodeTemuan,
+                    filterrekomendasi: this.editData.kodeRekomendasi,
+                  },
+                });
                 this.toastSuccess('Berhasil edit data TL');
               }, 500);
             }
@@ -493,7 +525,7 @@ export default {
         } catch (error) {
           setTimeout(() => {
             this.loading = false;
-            this.toastError('Terjadi kesalahan saat submit data');
+            this.toastError(error.message);
           }, 500);
         }
       }

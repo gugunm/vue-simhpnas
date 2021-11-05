@@ -89,23 +89,31 @@
           </template>
           <template #send="{ item }">
             <td>
-              <div class="flex justify-content-center">
-                <CRow>
-                  <CCol>
-                    <CButton
-                      :color="isLhaSent(item) ? 'dark' : 'primary'"
-                      variant="outline"
-                      square
-                      size="sm"
-                      class="block"
-                      :disabled="isLhaSent(item)"
-                      @click="openSendModal(item.id)"
-                    >
-                      <p v-if="isLhaSent(item)">Terkirim</p>
-                      <p v-else class="px-2">Kirim</p>
-                    </CButton>
-                  </CCol>
-                </CRow>
+              <div class="flex flex-col justify-center w-24">
+                <CButton
+                  :color="isLhaSent(item) ? 'dark' : 'primary'"
+                  variant="outline"
+                  square
+                  size="sm"
+                  class="block mb-2"
+                  :disabled="isLhaSent(item)"
+                  @click="openSendModal(item.id)"
+                >
+                  <p v-if="isLhaSent(item)">Terkirim</p>
+                  <p v-else class="px-2">Kirim</p>
+                </CButton>
+                <!-- <p>{{ typeof item.catatanDalnis }}</p> -->
+                <CButton
+                  v-if="isCatatanDalnis(item)"
+                  color="warning"
+                  variant="fill"
+                  square
+                  size="sm"
+                  class="block"
+                  @click="onLihatCatatan(item)"
+                >
+                  <p>Lihat Catatan</p>
+                </CButton>
               </div>
             </td>
           </template>
@@ -218,31 +226,6 @@
                 </CButton>
               </div>
             </td>
-
-            <!-- </template> -->
-            <!-- <CDropdown
-                  color="link"
-                  size="lg"
-                  :caret="true"
-                  class="p-0"
-                  placement="top"
-                >
-                  <template #toggler-content>
-                    <font-awesome-icon icon="cog" />
-                  </template>
-                  <CDropdownItem @click="onAddTemuan(item)">
-                    <p>Tambah <b>Temuan</b></p>
-                  </CDropdownItem>
-                  <CDropdownItem @click="onAddTim(item)">
-                    <p>Tambah <b>Tim Audit</b></p>
-                  </CDropdownItem>
-                  <CDropdownItem @click="openEditModal(item)">
-                    <p>Edit LHA</p>
-                  </CDropdownItem>
-                  <CDropdownItem @click="openDeleteModal(item.id)">
-                    <p>Hapus LHA</p>
-                  </CDropdownItem>
-                </CDropdown> -->
           </template>
 
           <template #memoDalnisDaltu="{ item }">
@@ -268,7 +251,7 @@
           </template>
           <template #actionsDalnisDaltu="{ item }">
             <td>
-              <div class="flex flex-wrap justify-content-center">
+              <div class="flex flex-wrap justify-content-center w-24">
                 <CButton
                   color="success"
                   variant="fill"
@@ -286,8 +269,9 @@
                   size="sm"
                   class="m-1 w-full"
                   :disabled="statusDalnis(item)"
-                  @click="onRejectLha(item)"
+                  @click="onOpenMemoModal(item)"
                 >
+                  <!-- @click="onRejectLha(item)" -->
                   <span>Tolak</span>
                 </CButton>
               </div>
@@ -325,10 +309,10 @@
       </CCardBody>
     </CCard>
     <CModal
-      title="Tambah Memo"
+      :title="isLevelAccess ? 'Catatan Dalnis' : 'Tambah Memo'"
       :close-on-backdrop="false"
       size="lg"
-      color="primary"
+      :color="isLevelAccess ? 'warning' : 'danger'"
       :show.sync="memoModal"
     >
       <div class="text-right">
@@ -336,10 +320,16 @@
           rows="10"
           class="py-2"
           :value.sync="textMemo"
+          :disabled="isLevelAccess"
           placeholder="Tuliskan memo disini.."
         />
-        <CButton color="info" class="mb-2" @click="onSaveMemo">
-          Simpan Memo
+        <CButton
+          v-if="!isLevelAccess"
+          color="danger"
+          class="mb-2"
+          @click="onSaveMemoAndTolakLaporan"
+        >
+          Simpan Memo & Tolak Laporan
         </CButton>
       </div>
 
@@ -457,13 +447,40 @@ export default {
     'on-load-lha',
   ],
   methods: {
+    onLihatCatatan(item) {
+      this.memoModal = true;
+      this.textMemo = item.catatanDalnis;
+    },
+
+    async onSaveMemoAndTolakLaporan() {
+      try {
+        const responseMemo = await this.onSaveMemo();
+        const responseTolak = await this.actionRejectDalnis();
+
+        if (responseTolak.status == 200 && responseMemo.status == 200) {
+          this.memoModal = false;
+          this.selectedItem = null;
+          this.textMemo = '';
+          this.$emit('on-load-lha');
+          this.toastSuccess('Berhasil menyimpan memo');
+          this.toastSuccess('Berhasil menolak laporan memo');
+        } else {
+          this.toastError(
+            'Terjadi kesalahan saat simpan memo dan tolak laporan'
+          );
+        }
+      } catch (error) {
+        this.toastError('Terjadi kesalahan saat simpan memo dan tolak laporan');
+      }
+    },
+
     onOpenMemoModal(item) {
       this.memoModal = true;
       this.selectedItem = item;
     },
 
     async onSaveMemo() {
-      const response = await axios({
+      return await axios({
         method: 'PUT',
         baseURL: this.$apiAddress,
         url: `/api/dalnisaddmemo/${this.selectedItem.id}`,
@@ -472,15 +489,17 @@ export default {
           token: localStorage.getItem('api_token'),
         },
       });
+    },
 
-      if (response.status == 200) {
-        this.memoModal = false;
-        this.toastSuccess('Berhasil menyimpan memo');
-        this.selectedItem = null;
-        this.$emit('on-load-lha');
-      } else {
-        this.toastError('Terjadi kesalahan saat simpan memo');
-      }
+    async actionRejectDalnis() {
+      return await axios({
+        method: 'PATCH',
+        baseURL: this.$apiAddress,
+        url: `/api/dalnisactiontolak/${this.selectedItem.id}`,
+        params: {
+          token: localStorage.getItem('api_token'),
+        },
+      });
     },
 
     onAccLha(item) {
@@ -504,30 +523,6 @@ export default {
         this.$emit('on-load-lha');
       } else {
         this.toastError('Terjadi kesalahan saat acc laporan');
-      }
-    },
-
-    onRejectLha(item) {
-      this.isOpenReject = true;
-      this.selectedItem = item;
-    },
-
-    async actionRejectDalnis() {
-      const response = await axios({
-        method: 'PATCH',
-        baseURL: this.$apiAddress,
-        url: `/api/dalnisactiontolak/${this.selectedItem.id}`,
-        params: {
-          token: localStorage.getItem('api_token'),
-        },
-      });
-      if (response.status == 200) {
-        this.isOpenReject = false;
-        this.toastSuccess('Berhasil menolak LHA');
-        this.selectedItem = null;
-        this.$emit('on-load-lha');
-      } else {
-        this.toastError('Terjadi kesalahan saat tolak laporan');
       }
     },
 
@@ -581,6 +576,14 @@ export default {
 
     isLhaSent(item) {
       if (item.flagKirim % 2 == 0) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+
+    isCatatanDalnis(item) {
+      if (!item.catatanDalnis) {
         return false;
       } else {
         return true;

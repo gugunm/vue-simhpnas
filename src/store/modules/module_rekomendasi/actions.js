@@ -127,7 +127,7 @@ export default {
       throw error;
     }
     
-    return responseData
+    return response
   },
 
   async loadSearchRekomendasi(context, payload) {

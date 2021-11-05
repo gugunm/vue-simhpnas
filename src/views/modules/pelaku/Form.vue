@@ -8,7 +8,7 @@
       </div>
       <CCard>
         <!-- <CCardBody> -->
-        <CForm>
+        <CForm @submit.prevent="submit">
           <div class="p-3" style="background: #f9fafb">
             <h5 class="text-base font-semibold">
               Data Pelaku (Termasuk Pelaku untuk TPK)
@@ -186,8 +186,7 @@
                   type="submit"
                   color="primary"
                   class="px-4 ml-1"
-                  :disabled="!isValid || submitted"
-                  @click="submit"
+                  :disabled="!isValid"
                 >
                   <div v-if="loading" class="px-8">
                     <CSpinner color="white" size="sm" class="mr-2" />

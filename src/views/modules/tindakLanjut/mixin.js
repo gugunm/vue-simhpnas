@@ -107,6 +107,9 @@ export default {
 
         this.editData = data
 
+        // console.log("EDIT DATA HEREE!!");
+        // console.log(this.editData);
+
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }

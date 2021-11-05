@@ -54,6 +54,10 @@ export default {
         flagDalnis: responseData[key]["Flag_Dalnis"],
         flagDaltu: responseData[key]["Flag_Daltu"],
         flagAdmin: responseData[key]["Flag_Admin"],
+        isStored: responseData[key]["is_stored"],
+        isTemuanNihil: responseData[key]["is_temuan_nihil"],    
+        catatanDalnis: responseData[key]["Catatan_Dalnis"],    
+        catatanDaltu: responseData[key]["Catatan_Daltu"],    
       };
       lha.push(data);
     }
@@ -116,6 +120,7 @@ export default {
       uploadFileLha: responseData["Upload_file_LHA"],
 
       flagTpk: responseData["Flag_TPK"],
+      isTemuanNihil: responseData["is_temuan_nihil"]
     };
 
     context.commit('setLhaById', lha);
@@ -310,6 +315,7 @@ export default {
       tahunPkpt: responseData["Tahun_PKPT"],
       ringkasanLha: responseData["Ringkasan_LHA"],
       isStored: responseData["is_stored"],
+      isTemuanNihil: responseData["is_temuan_nihil"],
       uploadFileLha: responseData["Upload_file_LHA"],
       kodeProvinsi : responseData["Kode_Provinsi"],
       kodeKabkot : responseData["Kode_KabupatenKota"],

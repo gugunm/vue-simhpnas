@@ -1,162 +1,144 @@
 <template>
   <div class="flex lg:w-full h-screen justify-center">
-    <div class="flex-initial hidden lg:block lg:w-1/2 bg-blue-700">
-      <!-- Won't grow, but will shrink if needed -->
+    <div class="img-login hidden lg:block lg:w-2/6 bg-blue-700">
+      <div class="flex flex-col px-8 h-full text-white justify-center">
+        <!-- <h1 class="text-4xl text-center">SIMHPNAS</h1> -->
+        <div class="text-left px-4">
+          <CImg class="inline-block w-60 mb-3" src="/img/simhp/logo.svg" />
+          <p class="text-left text-lg">
+            Sistem Infomasi Manajemen Hasil Pengawasan Nasional
+          </p>
+        </div>
+      </div>
     </div>
     <div
-      class="
-        flex-initial
-        content-center
-        w-full
-        lg:w-1/2
-        bg-white
-        p-10
-        lg:py-14
-        lg:px-20
-      "
+      class="flex-initial content-center w-full lg:w-4/6 bg-white p-10 lg:py-14"
     >
-      <div class="flex flex-col text-left w-full">
-        <div class="flex justify-start content-center mb-4">
-          <CImg class="inline-block w-8 mr-2" src="img/simhp/logo-login.svg" />
-          <h3 class="text-2xl font-bold inline-block">SIMHPNAS</h3>
-        </div>
-        <h1 class="text-4xl font-bold mb-4 xl:mt-8">
-          Halo,<br />Selamat Datang!
-        </h1>
-        <form
-          method="POST"
-          class="flex flex-col lg:pr-20"
-          @submit.prevent="submitForm"
-        >
-          <p class="mb-2">Login to manage your account</p>
-          <div class="flex flex-wrap mb-2">
-            <div class="w-full">
-              <!-- <div class="inline-block relative w-full mb-2">
-                <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-3 pr-8 leading-tight focus:outline-none focus:shadow-outline">
-                  <option>User Unit</option>
-                  <option>User Pusat</option>
-                  <option>User Admin</option>
-                </select>
-                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                  <svg
-                    class="fill-current h-4 w-4"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                  </svg>
-                </div>
-              </div> -->
-              <input
-                v-model="email"
-                class="
-                  appearance-none
-                  block
-                  w-full
-                  text-gray-700
-                  border border-gray-200
-                  py-3
-                  px-4
-                  mb-2
-                  leading-tight
-                  focus:outline-none
-                  focus:bg-white
-                  focus:border-gray-500
-                "
-                type="text"
-                placeholder="email"
-              />
-              <input
-                v-model="password"
-                class="
-                  appearance-none
-                  block
-                  w-full
-                  text-gray-700
-                  border border-gray-200
-                  py-3
-                  px-4
-                  leading-tight
-                  focus:outline-none
-                  focus:bg-white
-                  focus:border-gray-500
-                "
-                type="password"
-                placeholder="password"
-              />
-            </div>
+      <div class="lg:w-1/2">
+        <div class="flex flex-col text-left w-full">
+          <div class="flex justify-start content-center mb-4 lg:hidden">
+            <!-- <CImg class="inline-block w-8 mr-2" src="/img/simhp/logo.svg" /> -->
+            <CImg class="inline-block h-12 mr-2" src="/img/simhp/logo.svg" />
+            <!-- <h3 class="text-2xl font-bold inline-block">SIMHPNAS</h3> -->
           </div>
-          <div class="text-right">
-            <router-link
-              to="/"
+          <h1 class="text-3xl font-medium mb-4">Halo,<br />Selamat Datang!</h1>
+          <form
+            method="POST"
+            class="flex flex-col"
+            @submit.prevent="submitForm"
+          >
+            <p class="mb-3">Silahkan login untuk melanjutkan</p>
+            <div class="flex flex-wrap mb-4">
+              <div class="w-full">
+                <input
+                  v-model="email"
+                  class="
+                    rounded-lg
+                    appearance-none
+                    block
+                    w-full
+                    text-gray-700
+                    border border-gray-200
+                    py-3
+                    px-4
+                    mb-3
+                    leading-tight
+                    focus:outline-none focus:bg-white focus:border-gray-500
+                  "
+                  type="text"
+                  placeholder="email"
+                />
+                <input
+                  v-model="password"
+                  class="
+                    rounded-lg
+                    appearance-none
+                    block
+                    w-full
+                    text-gray-700
+                    border border-gray-200
+                    py-3
+                    px-4
+                    leading-tight
+                    focus:outline-none focus:bg-white focus:border-gray-500
+                  "
+                  type="password"
+                  placeholder="password"
+                />
+              </div>
+            </div>
+            <!-- <div class="text-right">
+              <router-link
+                to="/"
+                class="
+                  text-right
+                  inline-block
+                  mt-1
+                  mb-3
+                  hover:no-underline hover:text-blue-700
+                "
+              >
+                Lupa password?
+              </router-link>
+            </div> -->
+            <button
               class="
-                text-right
+                rounded-lg
+                appearance-none
+                block
+                w-full
+                bg-blue-700
+                text-white
+                py-3
+                px-4
+                leading-tight
+                focus:border focus:bg-blue-800
+                hover:bg-blue-800
+                focus:border-gray-500
+              "
+              type="submit"
+              placeholder="password"
+            >
+              <template v-if="loading">
+                <CSpinner color="white" size="sm" class="mr-2" />
+                <!-- Loading... -->
+              </template>
+              <template v-else> Login </template>
+            </button>
+            <CAlert
+              v-if="showMessage"
+              class="mt-3"
+              color="danger"
+              :show.sync="currentAlertCounter"
+              close-button
+            >
+              {{ message }}
+              <CProgress
+                :max="5"
+                :value="currentAlertCounter"
+                height="3px"
+                color="danger"
+                animate
+              />
+            </CAlert>
+          </form>
+          <p class="mt-3">
+            Belum punya akun? silahkan
+            <a
+              href="mailto:pusinfowas@bpkp.go.id?subject=Permintaan Piloting SIMHPNAS"
+              target="_blank"
+              class="
                 inline-block
-                mt-1
-                mb-3
+                font-bold
                 hover:no-underline
-                hover:text-blue-700
+                text-blue-600
+                hover:text-blue-800
               "
             >
-              Lupa password?
-            </router-link>
-          </div>
-          <button
-            class="
-              appearance-none
-              block
-              w-full
-              bg-blue-700
-              text-white
-              py-3
-              px-4
-              leading-tight
-              focus:border
-              focus:bg-blue-800
-              hover:bg-blue-800
-              focus:border-gray-500
-            "
-            type="submit"
-            placeholder="password"
-          >
-            <template v-if="loading">
-              <CSpinner color="white" size="sm" class="mr-2" />
-              <!-- Loading... -->
-            </template>
-            <template v-else> Login </template>
-          </button>
-          <CAlert
-            v-if="showMessage"
-            class="mt-3"
-            color="danger"
-            :show.sync="currentAlertCounter"
-            close-button
-          >
-            {{ message }}
-            <CProgress
-              :max="5"
-              :value="currentAlertCounter"
-              height="3px"
-              color="danger"
-              animate
-            />
-          </CAlert>
-        </form>
-        <p class="mt-3">
-          Belum punya akun?
-          <router-link
-            to="/"
-            class="
-              inline-block
-              font-bold
-              hover:no-underline
-              text-blue-600
-              hover:text-blue-800
-            "
-          >
-            Hubungi Tim Kami
-          </router-link>
-        </p>
+              Hubungi Tim Kami
+            </a>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -164,6 +146,8 @@
 
 <script>
 import axios from 'axios';
+
+// import CoverImg from '../../assets/img/cover.jpg';
 
 export default {
   name: 'Login',
@@ -239,5 +223,19 @@ export default {
 .login-subtitle {
   width: 400px;
   margin-bottom: 1rem;
+}
+
+.img-login {
+  background-image: url('/img/simhp/bg-login.jpg');
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  /* background-position: left; */
+  /* margin-right: 100px; */
+  /* background-position: right; */
+  background-position-x: 80%;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 </style>

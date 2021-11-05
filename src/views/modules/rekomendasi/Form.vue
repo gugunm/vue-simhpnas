@@ -8,7 +8,7 @@
       </div>
       <CCard>
         <!-- <CCardBody> -->
-        <CForm>
+        <CForm @submit.prevent="submit">
           <div class="p-3" style="background: #f9fafb">
             <h5 class="text-base font-semibold">
               Data Rekomendasi (Termasuk untuk TPK)
@@ -218,8 +218,7 @@
                   type="submit"
                   color="primary"
                   class="px-4 ml-1"
-                  :disabled="!isValid || submitted"
-                  @click="submit"
+                  :disabled="!isValid"
                 >
                   <div v-if="loading" class="px-8">
                     <CSpinner color="white" size="sm" class="mr-2" />
@@ -371,47 +370,48 @@ export default {
         try {
           if (this.mode == 'create') {
             this.loading = true;
-            const responseData = await this.$store.dispatch(
+            const response = await this.$store.dispatch(
               'module_rekomendasi/createRekomendasi',
               resultFormData
             );
 
-            if (responseData) {
+            if (response.status == 200) {
               setTimeout(() => {
                 this.loading = false;
                 this.$router.back();
-                this.toastSuccess(
-                  'Berhasil menyimpan data dengan ID ' +
-                    responseData.Nomor_Rekomendasi
-                );
+                this.toastSuccess(response.data.message);
               }, 500);
+            } else {
+              this.loading = false;
+              this.toastError(response.data.message);
             }
           } else if (this.mode == 'edit') {
             this.loading = true;
 
-            const responseData = await this.$store.dispatch(
+            const response = await this.$store.dispatch(
               'module_rekomendasi/updateRekomendasiById',
               {
-                idRekomendasi: this.editData.id,
+                // idRekomendasi: this.editData.id,
+                idRekomendasi: this.idRekomendasi,
                 data: resultFormData,
               }
             );
 
-            if (responseData) {
+            if (response.status == 200) {
               setTimeout(() => {
                 this.loading = false;
                 this.$router.back();
-                this.toastSuccess(
-                  'Berhasil edit data dengan ID ' +
-                    responseData.Nomor_Rekomendasi
-                );
+                // this.toastSuccess(response.data.message);
+                this.toastSuccess('Berhasil merubah data');
               }, 500);
+            } else {
+              this.toastError(response.data.message);
             }
           }
         } catch (error) {
           setTimeout(() => {
             this.loading = false;
-            this.toastError('Terjadi kesalahan saat submit data');
+            this.toastError(error.message);
           }, 500);
         }
       }

@@ -23,7 +23,7 @@
                 >
                   <!-- src="img/avatars/6.jpg" -->
                   <img
-                    :src="`https://avatars.dicebear.com/api/micah/${profile.name}.svg?background=%230000ff&mouth=smile`"
+                    :src="`https://avatars.dicebear.com/api/micah/${profile.name}.svg?background=%2300bbff&mouth=smile`"
                     class="c-avatar-img w-full h-full"
                   />
                 </div>
@@ -81,11 +81,9 @@
                 </CRow>
                 <CRow class="mt-5">
                   <CCol md="12">
-                    <h3
-                      class="px-3 py-2 bg-gray-100 mb-2 text-base font-semibold"
-                    >
+                    <p class="py-2 mb-2 text-base font-medium border-b">
                       Ubah Password
-                    </h3>
+                    </p>
                   </CCol>
                   <CCol md="12">
                     <change-password />

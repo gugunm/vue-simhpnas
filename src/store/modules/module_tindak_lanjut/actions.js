@@ -161,7 +161,7 @@ export default {
       throw error;
     }
     
-    return responseData
+    return response
   },
 
   async deleteTindakLanjutById(context, payload) {

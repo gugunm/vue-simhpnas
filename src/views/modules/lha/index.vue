@@ -128,7 +128,7 @@ const fieldsKtOperator = [
   },
   {
     key: 'print',
-    label: '',
+    label: 'Print',
   },
   {
     key: 'actions',
@@ -149,11 +149,11 @@ const fieldsDalnisDaltu = [
   {
     key: 'print',
   },
-  {
-    key: 'memoDalnisDaltu',
-    label: 'Memo',
-    _style: 'width: 10%',
-  },
+  // {
+  //   key: 'memoDalnisDaltu',
+  //   label: 'Memo',
+  //   _style: 'width: 10%',
+  // },
   {
     key: 'actionsDalnisDaltu',
     label: 'Aksi',

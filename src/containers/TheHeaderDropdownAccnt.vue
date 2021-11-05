@@ -11,7 +11,7 @@
           <!-- <span class="text-white font-semibold text-xl">S</span> -->
           <!-- <img src="img/avatars/6.jpg" class="c-avatar-img" /> -->
           <img
-            :src="`https://avatars.dicebear.com/api/micah/${namaUser}.svg?background=%230000ff&mouth=smile`"
+            :src="`https://avatars.dicebear.com/api/micah/${namaUser}.svg?background=%2300bbff&mouth=smile`"
             class="c-avatar-img"
           />
         </div>
