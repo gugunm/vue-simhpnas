@@ -7,11 +7,11 @@
   >
     <template #toggler>
       <CHeaderNavLink>
-        <div class="c-avatar">
+        <div class="c-avatar border-2 border-blue-500">
           <!-- <span class="text-white font-semibold text-xl">S</span> -->
           <!-- <img src="img/avatars/6.jpg" class="c-avatar-img" /> -->
           <img
-            :src="`https://avatars.dicebear.com/api/micah/${namaUser}.svg?background=%2300bbff&mouth=smile`"
+            :src="`https://avatars.dicebear.com/api/bottts/${namaUser}.svg?background=%23dbeafe&scale=80`"
             class="c-avatar-img"
           />
         </div>

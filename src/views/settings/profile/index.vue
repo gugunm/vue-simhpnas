@@ -19,11 +19,12 @@
                     flex
                     justify-center
                     items-center
+                    border-2 border-blue-500
                   "
                 >
                   <!-- src="img/avatars/6.jpg" -->
                   <img
-                    :src="`https://avatars.dicebear.com/api/micah/${profile.name}.svg?background=%2300bbff&mouth=smile`"
+                    :src="`https://avatars.dicebear.com/api/bottts/${profile.name}.svg?background=%23dbeafe&scale=80`"
                     class="c-avatar-img w-full h-full"
                   />
                 </div>

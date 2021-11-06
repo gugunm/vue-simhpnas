@@ -4,8 +4,11 @@
       <div class="flex flex-col px-8 h-full text-white justify-center">
         <!-- <h1 class="text-4xl text-center">SIMHPNAS</h1> -->
         <div class="text-left px-4">
-          <CImg class="inline-block w-60 mb-3" src="/img/simhp/logo.svg" />
-          <p class="text-left text-lg">
+          <CImg
+            class="inline-block w-52 lg:w-60 mb-3"
+            src="/img/simhp/logo.svg"
+          />
+          <p class="text-left text-base lg:text-lg tracking-wide">
             Sistem Infomasi Manajemen Hasil Pengawasan Nasional
           </p>
         </div>
@@ -14,20 +17,25 @@
     <div
       class="flex-initial content-center w-full lg:w-4/6 bg-white p-10 lg:py-14"
     >
-      <div class="lg:w-1/2">
+      <div class="w-full lg:max-w-xl">
         <div class="flex flex-col text-left w-full">
           <div class="flex justify-start content-center mb-4 lg:hidden">
             <!-- <CImg class="inline-block w-8 mr-2" src="/img/simhp/logo.svg" /> -->
             <CImg class="inline-block h-12 mr-2" src="/img/simhp/logo.svg" />
             <!-- <h3 class="text-2xl font-bold inline-block">SIMHPNAS</h3> -->
           </div>
-          <h1 class="text-3xl font-medium mb-4">Halo,<br />Selamat Datang!</h1>
+          <!-- <div>
+
+          </div> -->
+          <p class="text-3xl leading-normal tracking-wide font-medium mb-4">
+            Halo,<br />Selamat Datang!
+          </p>
           <form
             method="POST"
             class="flex flex-col"
             @submit.prevent="submitForm"
           >
-            <p class="mb-3">Silahkan login untuk melanjutkan</p>
+            <p class="mb-3 tracking-wide">Silahkan login untuk melanjutkan</p>
             <div class="flex flex-wrap mb-4">
               <div class="w-full">
                 <input
@@ -43,6 +51,7 @@
                     px-4
                     mb-3
                     leading-tight
+                    tracking-wide
                     focus:outline-none focus:bg-white focus:border-gray-500
                   "
                   type="text"
@@ -122,7 +131,7 @@
               />
             </CAlert>
           </form>
-          <p class="mt-3">
+          <p class="mt-3 tracking-wide">
             Belum punya akun? silahkan
             <a
               href="mailto:pusinfowas@bpkp.go.id?subject=Permintaan Piloting SIMHPNAS"
