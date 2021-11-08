@@ -6,7 +6,7 @@
         <div class="text-left px-4">
           <CImg
             class="inline-block w-52 lg:w-60 mb-3"
-            src="/img/simhp/logo.svg"
+            src="img/simhp/logo.svg"
           />
           <p class="text-left text-base lg:text-lg tracking-wide">
             Sistem Infomasi Manajemen Hasil Pengawasan Nasional
@@ -21,7 +21,7 @@
         <div class="flex flex-col text-left w-full">
           <div class="flex justify-start content-center mb-4 lg:hidden">
             <!-- <CImg class="inline-block w-8 mr-2" src="/img/simhp/logo.svg" /> -->
-            <CImg class="inline-block h-12 mr-2" src="/img/simhp/logo.svg" />
+            <CImg class="inline-block h-12 mr-2" src="img/simhp/logo.svg" />
             <!-- <h3 class="text-2xl font-bold inline-block">SIMHPNAS</h3> -->
           </div>
           <!-- <div>
