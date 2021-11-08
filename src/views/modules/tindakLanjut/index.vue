@@ -126,8 +126,8 @@ export default {
         to.name == before.name &&
         Object.keys(to.query).length == 0
       ) {
-        this.$router.go();
-        // window.location.reload();
+        // this.$router.go();
+        window.location.reload();
       }
     },
   },
