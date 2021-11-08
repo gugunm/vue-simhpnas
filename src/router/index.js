@@ -41,7 +41,8 @@ const TheContainer = () => import('@/containers/TheContainer')
 Vue.use(Router)
 
 let router = new Router({
-  mode: 'hash', // https://router.vuejs.org/api/#mode
+  // mode: 'hash', // https://router.vuejs.org/api/#mode
+  mode: 'history', // https://router.vuejs.org/api/#mode
   linkActiveClass: 'active',
   scrollBehavior: () => ({ y: 0 }),
   routes: configRoutes()
