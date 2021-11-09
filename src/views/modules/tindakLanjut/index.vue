@@ -20,6 +20,7 @@
       @on-add-temuan="onAddTemuan"
       @on-add-rekomendasi="onAddRekomendasi"
     />
+    <Loading :active.sync="loading" :is-full-page="true" />
     <confirm-modal
       v-model="isDeleteConfirm"
       title="Hapus data"
@@ -34,7 +35,7 @@
 import TableTindakLanjut from './TableTindakLanjut.vue';
 import mixin from './mixin';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
-
+import Loading from 'vue-loading-overlay';
 const fields = [
   {
     key: 'nomorTl',
@@ -105,6 +106,7 @@ export default {
   components: {
     TableTindakLanjut,
     ConfirmModal,
+    Loading,
   },
   mixins: [mixin],
   data() {

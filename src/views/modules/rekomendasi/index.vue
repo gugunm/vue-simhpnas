@@ -16,6 +16,7 @@
       @on-select-temuan="onSelectTemuan"
       @on-add-temuan="onAddTemuan"
     />
+    <Loading :active.sync="loading" :is-full-page="true" />
     <confirm-modal
       v-model="isDeleteConfirm"
       title="Hapus data"
@@ -30,6 +31,7 @@
 import TableRekomendasi from './TableRekomendasi.vue';
 import mixin from './mixin';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
+import Loading from 'vue-loading-overlay';
 
 const fields = [
   {
@@ -68,6 +70,7 @@ export default {
   components: {
     TableRekomendasi,
     ConfirmModal,
+    Loading,
   },
   mixins: [mixin],
   data() {

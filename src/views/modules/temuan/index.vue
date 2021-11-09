@@ -13,6 +13,7 @@
       @open-delete-modal="openDeleteModal"
       @on-select-lha="onSelectLha"
     />
+    <Loading :active.sync="loading" :is-full-page="true" />
     <confirm-modal
       v-model="isDeleteConfirm"
       title="Hapus data"
@@ -27,7 +28,7 @@
 import TableTemuan from './TableTemuan.vue';
 import mixin from './mixin';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
-
+import Loading from 'vue-loading-overlay';
 const fields = [
   {
     key: 'nomorTemuan',
@@ -91,6 +92,7 @@ export default {
   components: {
     TableTemuan,
     ConfirmModal,
+    Loading,
   },
   mixins: [mixin],
   data() {

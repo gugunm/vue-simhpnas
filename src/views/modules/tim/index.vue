@@ -7,13 +7,14 @@
       :clickable-rows="true"
       :is-edit-button="true"
       :filterlha="$route.query.filterlha"
+      :is-reviewed="lha.flagKirim"
       @clicked-row="openDetail"
       @open-create-modal="openCreate"
       @open-edit-modal="openEdit"
       @open-delete-modal="openDeleteModal"
       @on-select-lha="onSelectLha"
     />
-    <!-- :id-lha="idLha" -->
+    <Loading :active.sync="loading" :is-full-page="true" />
     <confirm-modal
       v-model="isDeleteConfirm"
       title="Hapus data"
@@ -28,6 +29,7 @@
 import TableTim from './TableTim.vue';
 import mixin from './mixin';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
+import Loading from 'vue-loading-overlay';
 
 const fields = [
   {
@@ -71,6 +73,7 @@ export default {
   components: {
     TableTim,
     ConfirmModal,
+    Loading,
   },
   mixins: [mixin],
   data() {
@@ -80,6 +83,7 @@ export default {
       isDeleteConfirm: false,
       idToDelete: null,
       lha: {},
+      loading: false,
     };
   },
 
@@ -96,6 +100,7 @@ export default {
   },
 
   async mounted() {},
+
   methods: {
     openDetail(item) {
       this.$router.push({

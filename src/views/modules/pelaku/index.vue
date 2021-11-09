@@ -9,6 +9,7 @@
       :filterlha="$route.query.filterlha"
       :filtertemuan="$route.query.filtertemuan"
       :filterrekomendasi="$route.query.filterrekomendasi"
+      :is-reviewed="lha.flagKirim"
       @clicked-row="openDetail"
       @open-create-modal="openCreate"
       @open-edit-modal="openEdit"
@@ -19,6 +20,7 @@
       @on-add-temuan="onAddTemuan"
       @on-add-rekomendasi="onAddRekomendasi"
     />
+    <Loading :active.sync="loading" :is-full-page="true" />
     <confirm-modal
       v-model="isDeleteConfirm"
       title="Hapus data"
@@ -33,6 +35,7 @@
 import TablePelaku from './TablePelaku.vue';
 import mixin from './mixin';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
+import Loading from 'vue-loading-overlay';
 
 const fields = [
   {
@@ -65,6 +68,7 @@ export default {
   components: {
     TablePelaku,
     ConfirmModal,
+    Loading,
   },
   mixins: [mixin],
   data() {
@@ -76,6 +80,7 @@ export default {
       lha: {},
       temuan: {},
       rekomendasi: {},
+      loading: false,
     };
   },
   watch: {

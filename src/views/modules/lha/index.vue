@@ -13,6 +13,7 @@
       @on-send-lha="onSendLha"
       @on-load-lha="onLoadLha"
     />
+    <Loading :active.sync="loading" :is-full-page="true" />
     <confirm-modal
       v-model="isDeleteConfirm"
       title="Hapus data"
@@ -35,42 +36,8 @@ import TableLha from './TableLha.vue';
 import mixin from './mixin';
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
 
-// {
-//   key: 'id',
-// },
-// {
-//   key: 'nomorST',
-//   label: 'Nomor ST',
-// },
-// {
-//   key: 'tglST',
-//   label: 'Tanggal ST',
-// },
-// {
-//   key: 'grupLingkupAudit',
-// },
-// {
-//   key: 'lingkupAudit',
-// },
-// {
-//   key: 'jenisObrik',
-// },
-// {
-//   key: 'tahunAnggaran',
-//   _style: 'width: 8%',
-// },
-// {
-//   key: 'namaPimpinan',
-// },
-// {
-//   key: 'nipPimpinan',
-// },
-// {
-//   key: 'rencanaAnggaran',
-// },
-// {
-//   key: 'realisasiAnggaran',
-// },
+import Loading from 'vue-loading-overlay';
+
 const fields = [
   {
     key: 'nomorLha',
@@ -178,6 +145,7 @@ export default {
   components: {
     TableLha,
     ConfirmModal,
+    Loading,
   },
   mixins: [mixin],
   data() {
@@ -189,6 +157,7 @@ export default {
       isSendLhaConfirm: false,
       idToSend: null,
       level: '',
+      loading: false,
     };
   },
   watch: {
@@ -204,6 +173,7 @@ export default {
   },
   async mounted() {
     await this.loadLha();
+
     this.level = localStorage.level;
     if (this.level == 2) {
       this.fields = [...fieldsAdmin, ...fields];

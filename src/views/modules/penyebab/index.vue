@@ -16,6 +16,7 @@
       @on-select-temuan="onSelectTemuan"
       @on-add-temuan="onAddTemuan"
     />
+    <Loading :active.sync="loading" :is-full-page="true" />
     <confirm-modal
       v-model="isDeleteConfirm"
       title="Hapus data"
@@ -28,10 +29,9 @@
 
 <script>
 import TablePenyebab from './TablePenyebab.vue';
-
 import mixin from './mixin';
-
 import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
+import Loading from 'vue-loading-overlay';
 
 const fields = [
   {
@@ -66,6 +66,7 @@ export default {
   components: {
     TablePenyebab,
     ConfirmModal,
+    Loading,
   },
   mixins: [mixin],
   data() {
@@ -178,7 +179,7 @@ export default {
     },
 
     async loadPenyebab(refresh = false) {
-      // this.loading = true;
+      this.loading = true;
       try {
         if (this.temuan != 'empty') {
           await this.$store.dispatch('module_penyebab/loadPenyebab', {
@@ -192,7 +193,7 @@ export default {
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
-      // this.loading = false;
+      this.loading = false;
     },
   },
 };

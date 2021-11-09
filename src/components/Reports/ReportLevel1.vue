@@ -25,7 +25,6 @@
 
 <script>
 import axios from 'axios';
-import { API_URL } from '@/utils/api.js';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -299,7 +298,7 @@ export default {
       try {
         const response = await axios({
           method: 'GET',
-          baseURL: API_URL,
+          baseURL: this.$apiAddress,
           url: `/api/reportlv1`,
           params: {
             token: localStorage.getItem('api_token'),
