@@ -896,8 +896,8 @@ export default {
               resultFormData
             );
 
-            console.log('FORM STATUS EDIT LHA');
-            console.log(response.status);
+            // console.log('FORM STATUS EDIT LHA');
+            // console.log(response.status);
 
             if (response.status == 200) {
               setTimeout(() => {
@@ -918,8 +918,8 @@ export default {
               }
             );
 
-            console.log('FORM STATUS EDIT LHA');
-            console.log(response.status);
+            // console.log('FORM STATUS EDIT LHA');
+            // console.log(response.status);
 
             if (response.status == 200) {
               setTimeout(() => {

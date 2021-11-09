@@ -91,7 +91,7 @@ export default {
 
     const responseData = await response.data;
     
-    if (response.statusText != "OK") {
+    if (response.status != 200) {
       const error = new Error(
         responseData.message || 'Failed to save data'
       );
@@ -114,7 +114,7 @@ export default {
 
     const responseData = await response.data;
 
-    if (response.statusText != "OK") {
+    if (response.status != 200) {
       const error = new Error(
         responseData.message || 'Failed to delete data'
       );
@@ -138,7 +138,7 @@ export default {
 
     const responseData = await response.data;
 
-    if (response.statusText != "OK") {
+    if (response.status != 200) {
       const error = new Error(
         responseData.message || 'Failed to update data'
       );
