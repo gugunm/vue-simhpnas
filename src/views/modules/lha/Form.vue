@@ -896,6 +896,9 @@ export default {
               resultFormData
             );
 
+            console.log('FORM STATUS EDIT LHA');
+            console.log(response.status);
+
             if (response.status == 200) {
               setTimeout(() => {
                 this.loading = false;
@@ -907,13 +910,16 @@ export default {
             }
           } else if (this.mode == 'edit') {
             this.loading = true;
-            const responseData = await this.$store.dispatch(
+            const response = await this.$store.dispatch(
               'module_lha/updateLhaById',
               {
                 idLha: this.idLha,
                 data: resultFormData,
               }
             );
+
+            console.log('FORM STATUS EDIT LHA');
+            console.log(response.status);
 
             if (response.status == 200) {
               setTimeout(() => {

@@ -345,6 +345,9 @@ export default {
     })
 
     const responseData = await response.data;
+
+    console.log("RESPONSE STATUS CREATE LHA");
+    console.log(response.status);
     
     if (response.statusText != "OK") {
       const error = new Error(
@@ -392,6 +395,9 @@ export default {
     })
 
     const responseData = await response.data;
+
+    console.log("RESPONSE STATUS EDIT LHA");
+    console.log(response.status);
 
     if (response.statusText != "OK") {
       const error = new Error(
