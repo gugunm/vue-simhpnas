@@ -5,8 +5,8 @@
         <!-- <h1 class="text-4xl text-center">SIMHPNAS</h1> -->
         <div class="text-left px-4">
           <CImg
-            class="inline-block w-52 lg:w-60 mb-3"
-            src="img/simhp/logo.svg"
+            class="inline-block w-52 lg:w-60 mb-2"
+            src="img/simhp/text-logo-white.svg"
           />
           <p class="text-left text-base lg:text-lg tracking-wide">
             Sistem Infomasi Manajemen Hasil Pengawasan Nasional
@@ -15,13 +15,16 @@
       </div>
     </div>
     <div
-      class="flex-initial content-center w-full lg:w-4/6 bg-white p-10 lg:py-14"
+      class="flex-initial content-center w-full lg:w-4/6 bg-white p-6 lg:py-14"
     >
       <div class="w-full lg:max-w-xl">
         <div class="flex flex-col text-left w-full">
           <div class="flex justify-start content-center mb-4 lg:hidden">
             <!-- <CImg class="inline-block w-8 mr-2" src="/img/simhp/logo.svg" /> -->
-            <CImg class="inline-block h-12 mr-2" src="img/simhp/logo.svg" />
+            <CImg
+              class="inline-block h-10 mr-2"
+              src="img/simhp/text-logo.svg"
+            />
             <!-- <h3 class="text-2xl font-bold inline-block">SIMHPNAS</h3> -->
           </div>
           <!-- <div>
@@ -96,14 +99,12 @@
                 appearance-none
                 block
                 w-full
-                bg-blue-700
+                bg-red-500
                 text-white
                 py-3
                 px-4
                 leading-tight
-                focus:border focus:bg-blue-800
-                hover:bg-blue-800
-                focus:border-gray-500
+                hover:bg-red-600
               "
               type="submit"
               placeholder="password"
@@ -140,8 +141,8 @@
                 inline-block
                 font-bold
                 hover:no-underline
-                text-blue-600
-                hover:text-blue-800
+                text-red-500
+                hover:text-red-600
               "
             >
               Hubungi Tim Kami

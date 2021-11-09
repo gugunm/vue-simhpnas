@@ -353,7 +353,7 @@ export default {
       throw error;
     }
     
-    return responseData
+    return response
   },
 
   async deleteLhaById(context, payload) {

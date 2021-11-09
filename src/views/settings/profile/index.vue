@@ -20,6 +20,8 @@
                     justify-center
                     items-center
                     border-2 border-blue-500
+                    mb-4
+                    lg:mb-0
                   "
                 >
                   <!-- src="img/avatars/6.jpg" -->

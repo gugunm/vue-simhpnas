@@ -32,9 +32,9 @@
     <CHeaderBrand class="mx-auto d-lg-none" to="/">
       <!-- <CIcon name="logo" height="48" alt="Logo"/> -->
       <CImg
-        class="sidebar-logo g-logo-expand h-10"
+        class="sidebar-logo g-logo-expand h-7"
         name="logo-expand"
-        src="img/simhp/logo2.svg"
+        src="img/simhp/text-logo.svg"
       />
     </CHeaderBrand>
 

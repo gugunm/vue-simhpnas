@@ -25,13 +25,13 @@
         v-if="!this.$store.state.ui.sidebarMinimize"
         class="sidebar-logo g-logo-expand"
         name="logo-expand"
-        src="img/simhp/logo.svg"
+        src="img/simhp/text-logo-white.svg"
       />
       <CImg
         v-if="this.$store.state.ui.sidebarMinimize"
         class="sidebar-logo-collapse g-logo-expand"
         name="logo-expand"
-        src="img/simhp/letter-logo.png"
+        src="img/simhp/icon-logo-white.svg"
       />
     </CSidebarBrand>
     <CRenderFunction flat :content-to-render="nav" />

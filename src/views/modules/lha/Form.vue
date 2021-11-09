@@ -891,12 +891,12 @@ export default {
         try {
           if (this.mode == 'create') {
             this.loading = true;
-            const responseData = await this.$store.dispatch(
+            const response = await this.$store.dispatch(
               'module_lha/createLha',
               resultFormData
             );
 
-            if (responseData) {
+            if (response.status == 200) {
               setTimeout(() => {
                 this.loading = false;
                 this.$router.push('/lha');
@@ -915,7 +915,7 @@ export default {
               }
             );
 
-            if (responseData) {
+            if (response.status == 200) {
               setTimeout(() => {
                 this.loading = false;
                 this.$router.push('/lha');
