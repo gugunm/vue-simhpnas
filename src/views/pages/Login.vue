@@ -1,6 +1,6 @@
 <template>
   <div class="flex lg:w-full h-screen justify-center">
-    <div class="img-login hidden lg:block lg:w-2/6 bg-blue-700">
+    <div class="img-login hidden lg:block lg:w-2/6 bg-red-500">
       <div class="flex flex-col px-8 h-full text-white justify-center">
         <!-- <h1 class="text-4xl text-center">SIMHPNAS</h1> -->
         <div class="text-left px-4">
