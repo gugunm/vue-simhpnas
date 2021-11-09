@@ -349,7 +349,7 @@ export default {
     console.log("RESPONSE STATUS CREATE LHA");
     console.log(response.status);
     
-    if (response.statusText != "OK") {
+    if (response.status != 200) {
       const error = new Error(
         responseData.message || 'Failed to save data'
       );
@@ -399,7 +399,7 @@ export default {
     console.log("RESPONSE STATUS EDIT LHA");
     console.log(response.status);
 
-    if (response.statusText != "OK") {
+    if (response.status != 200) {
       const error = new Error(
         responseData.message || 'Failed to update data'
       );
