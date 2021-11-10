@@ -72,6 +72,7 @@
               LHA tidak memiliki temuan
             </h5>
             <CButton
+              v-if="valueLha.isTemuanNihil == 0"
               class="px-4"
               color="info"
               @click="$emit('on-add-temuan', valueLha)"
