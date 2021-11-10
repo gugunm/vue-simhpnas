@@ -81,11 +81,11 @@ const fieldsKtOperator = [
 ];
 
 const fieldsDalnisDaltu = [
-  {
-    key: 'memoDalnisDaltu',
-    label: 'Memo',
-    _style: 'width: 10%',
-  },
+  // {
+  //   key: 'memoDalnisDaltu',
+  //   label: 'Memo',
+  //   _style: 'width: 10%',
+  // },
   {
     key: 'actionsDalnisDaltu',
     label: 'Aksi',

@@ -25,7 +25,7 @@
           </CCol>
         </CRow>
       </CCardHeader>
-      <CCol v-if="!valueLha.isTemuanNihil">
+      <CCol v-if="statusTemuan && !statusReview">
         <CButton class="px-4 mt-4" color="info" @click="openCreateModal">
           <CIcon name="cil-plus" class="my-0 mb-1 mr-1" /> Tambah
         </CButton>
@@ -62,7 +62,8 @@
           </template>
           <!-- <template #actions> -->
           <template #actions="{ item }">
-            <td class="py-2 flex flex-wrap justify-content-center">
+            <td v-if="statusReview">No Action</td>
+            <td v-else class="py-2 flex flex-wrap justify-content-center">
               <CButton
                 v-c-tooltip="{
                   content: 'Tambah Penyebab',
@@ -228,6 +229,14 @@ export default {
       valueLha: '',
       optionsLha: [],
     };
+  },
+  computed: {
+    statusReview: function () {
+      return Number(this.valueLha.flagKirim) % 2 == 0 ? false : true;
+    },
+    statusTemuan: function () {
+      return this.valueLha.isTemuanNihil == 0 ? true : false;
+    },
   },
   async mounted() {
     await this.loadLha();

@@ -57,14 +57,16 @@
         </CCol>
       </CRow>
       <CCol>
-        <CButton
-          v-if="valueTemuan"
-          class="px-4 mt-4"
-          color="info"
-          @click="openCreateModal"
-        >
-          <CIcon name="cil-plus" class="my-0 mb-1 mr-1" /> Tambah
-        </CButton>
+        <div v-if="valueTemuan">
+          <CButton
+            v-if="!statusReview"
+            class="px-4 mt-4"
+            color="info"
+            @click="openCreateModal"
+          >
+            <CIcon name="cil-plus" class="my-0 mb-1 mr-1" /> Tambah
+          </CButton>
+        </div>
         <div v-else class="text-center py-4">
           <h5 class="h5 text-base pb-2 text-red-400">
             LHA tidak memiliki temuan
@@ -110,7 +112,8 @@
           </template>
           <!-- <template #actions> -->
           <template #actions="{ item }">
-            <td class="py-2 flex flex-wrap justify-content-center">
+            <td v-if="statusReview">No Actions</td>
+            <td v-else class="py-2 flex flex-wrap justify-content-center">
               <CButton
                 v-if="item.flagPelaku == 1"
                 v-c-tooltip="{
@@ -277,6 +280,11 @@ export default {
       valueTemuan: '',
       optionsTemuan: [],
     };
+  },
+  computed: {
+    statusReview: function () {
+      return Number(this.valueLha.flagKirim) % 2 == 0 ? false : true;
+    },
   },
   async mounted() {
     await this.selectLhaMounted();

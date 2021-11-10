@@ -36,9 +36,13 @@ export default {
     }
 
     // expire login dalam 1 jam
-    const expiresIn = responseData.expires_in * 1000;
+    // const expiresIn = responseData.expires_in * 60 * 1000;
+    const expiresIn = 240 * 60 * 1000;
     // const expiresIn = 5000;
     const expirationDate = new Date().getTime() + expiresIn;
+
+    console.log("SESSION HERE");
+    // console.log(responseData.expires_in);
 
     localStorage.setItem('api_token', responseData.access_token);
     localStorage.setItem('roles', responseData.roles);

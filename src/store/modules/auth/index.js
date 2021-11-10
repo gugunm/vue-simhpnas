@@ -7,6 +7,7 @@ export default {
   state: () => ({
     token: null,
     roles: null,
+    didAutoLogout: false
   }),
   mutations,
   actions,

@@ -105,7 +105,7 @@
                 </CButton>
                 <!-- <p>{{ typeof item.catatanDalnis }}</p> -->
                 <CButton
-                  v-if="isCatatanDalnis(item)"
+                  v-if="item.catatanDalnis"
                   color="warning"
                   variant="fill"
                   square
@@ -229,12 +229,11 @@
             </td>
           </template>
 
-          <template #memoDalnisDaltu="{ item }">
+          <!-- <template #memoDalnisDaltu="{ item }">
             <td>
               <div class="flex justify-content-center">
                 <CRow>
                   <CCol>
-                    <!-- variant="outline" -->
                     <CButton
                       color="primary"
                       shape="pill"
@@ -249,7 +248,8 @@
                 </CRow>
               </div>
             </td>
-          </template>
+          </template> -->
+
           <template #actionsDalnisDaltu="{ item }">
             <td>
               <div class="flex flex-wrap justify-content-center w-24">
@@ -259,7 +259,10 @@
                   square
                   size="sm"
                   class="m-1 w-full"
-                  :disabled="statusDalnis(item)"
+                  :disabled="
+                    $func.isGenap(item.flagKirim) ||
+                    $func.isGanjil(item.flagDalnis)
+                  "
                   @click="onAccLha(item)"
                 >
                   <span>Setuju</span>
@@ -269,7 +272,10 @@
                   variant="outline"
                   size="sm"
                   class="m-1 w-full"
-                  :disabled="statusDalnis(item)"
+                  :disabled="
+                    $func.isGenap(item.flagKirim) ||
+                    $func.isGanjil(item.flagDalnis)
+                  "
                   @click="onOpenMemoModal(item)"
                 >
                   <!-- @click="onRejectLha(item)" -->
@@ -311,16 +317,16 @@
     </CCard>
     <CModal
       :title="isLevelAccess ? 'Catatan Dalnis' : 'Tambah Memo'"
-      :close-on-backdrop="false"
+      :close-on-backdrop="isLevelAccess"
       size="lg"
       :color="isLevelAccess ? 'warning' : 'danger'"
       :show.sync="memoModal"
     >
       <div class="text-right">
         <CTextarea
+          v-model="textMemo"
           rows="10"
           class="py-2"
-          :value.sync="textMemo"
           :disabled="isLevelAccess"
           placeholder="Tuliskan memo disini.."
         />
@@ -345,13 +351,13 @@
       @close-modal="isOpenAcc = false"
       @confirm-ok="actionAccDalnis"
     />
-    <confirm-modal
+    <!-- <confirm-modal
       v-model="isOpenReject"
       title="Tolak Laporan"
       msg="Apakah anda yakin akan menolak laporan ini?"
       @close-modal="isOpenReject = false"
       @confirm-ok="actionRejectDalnis"
-    />
+    /> -->
     <confirm-modal
       v-model="isOpenPosting"
       title="Posting LHA"
@@ -577,14 +583,6 @@ export default {
 
     isLhaSent(item) {
       if (item.flagKirim % 2 == 0) {
-        return false;
-      } else {
-        return true;
-      }
-    },
-
-    isCatatanDalnis(item) {
-      if (!item.catatanDalnis) {
         return false;
       } else {
         return true;

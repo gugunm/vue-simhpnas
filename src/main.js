@@ -20,6 +20,16 @@ import 'vue-loading-overlay/dist/vue-loading.css';
 
 import {func} from './globalFunction'
 
+import IdleVue from 'idle-vue'
+const eventsHub = new Vue()
+
+Vue.use(IdleVue, {
+  eventEmitter: eventsHub,
+  idleTime: 60 * 60 * 1000 // idle dalam 1 jam
+  // idleTime: 5000 
+})
+
+
 /**
  * *Ini adalah global variable dan function yang dapat
  * *dipanggil di component vue -> this.$apiAddress
@@ -51,6 +61,15 @@ new Vue({
   components: {
     App
   },
+  onIdle() {
+    if(this.$store.getters['auth/isAuthenticated']){
+      this.$store.dispatch('auth/logout');
+      this.$router.replace('/login');
+    }
+  },
+  // onActive() {
+  //   this.messageStr = 'Hello'
+  // },
   template: '<App/>'
 })
 

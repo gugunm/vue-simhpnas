@@ -96,6 +96,25 @@ export default {
 
         const dataRekToPdf = [];
         data.dataRekomendasi = data.dataRekomendasi.forEach((drek) => {
+          drek.dataPelaku = drek.dataPelaku.map((dpelaku) => {
+            return [
+              {},
+              {},
+              {},
+              {
+                text: dpelaku.nomorUrut,
+                alignment: 'center',
+                bold: true,
+                fillColor: '#dddddd',
+                margin: [0, 3],
+              },
+              {
+                text: dpelaku.nama + ' - ' + dpelaku.jabatan,
+              },
+              {},
+            ];
+          });
+
           drek.dataTl = drek.dataTl.map((dtl) => {
             return [
               {
@@ -147,6 +166,20 @@ export default {
                 text: this.$func.convertToRupiah(drek.nilaiRekomendasi),
               },
             ],
+            drek.dataPelaku.length > 0 && [
+              {},
+              {},
+              {},
+              {
+                text: 'PELAKU',
+                colSpan: 2,
+                margin: [0, 7],
+                bold: true,
+              },
+              {},
+              {},
+            ],
+            ...drek.dataPelaku,
             drek.dataTl.length > 0 && [
               {},
               {},
@@ -745,6 +778,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>

@@ -123,23 +123,30 @@
             </template>
             <template #send="{ item }">
               <td>
-                <div class="flex justify-content-center">
-                  <CRow>
-                    <CCol>
-                      <CButton
-                        :color="isTlSent(item) ? 'dark' : 'primary'"
-                        variant="outline"
-                        square
-                        size="sm"
-                        class="inline-block m-1"
-                        :disabled="isTlSent(item)"
-                        @click="onOpenSend(item)"
-                      >
-                        <span v-if="isTlSent(item)">Terkirim</span>
-                        <span v-else>Kirim</span>
-                      </CButton>
-                    </CCol>
-                  </CRow>
+                <div class="flex flex-col justify-center w-24">
+                  <CButton
+                    :color="isTlSent(item) ? 'dark' : 'primary'"
+                    variant="outline"
+                    square
+                    size="sm"
+                    class="block mb-2"
+                    :disabled="isTlSent(item)"
+                    @click="onOpenSend(item)"
+                  >
+                    <span v-if="isTlSent(item)">Terkirim</span>
+                    <span v-else>Kirim</span>
+                  </CButton>
+                  <CButton
+                    v-if="item.catatanDalnis"
+                    color="warning"
+                    variant="fill"
+                    square
+                    size="sm"
+                    class="block"
+                    @click="onLihatCatatan(item)"
+                  >
+                    <p>Lihat Catatan</p>
+                  </CButton>
                 </div>
               </td>
             </template>
@@ -204,6 +211,48 @@
                 </CButton>
               </td>
             </template>
+
+            <template #memoDalnisDaltu="{ item }">
+              <td>
+                {{ item.catatanDalnis }}
+              </td>
+            </template>
+
+            <template #actionsDalnisDaltu="{ item }">
+              <td>
+                <div class="flex flex-wrap justify-content-center w-24">
+                  <CButton
+                    color="success"
+                    variant="fill"
+                    square
+                    size="sm"
+                    class="m-1 w-full"
+                    :disabled="
+                      $func.isGenap(item.flagKirim) ||
+                      $func.isGanjil(item.flagDalnis)
+                    "
+                    @click="onAccTl(item)"
+                  >
+                    <span>Setuju</span>
+                  </CButton>
+                  <CButton
+                    color="danger"
+                    variant="outline"
+                    size="sm"
+                    class="m-1 w-full"
+                    :disabled="
+                      $func.isGenap(item.flagKirim) ||
+                      $func.isGanjil(item.flagDalnis)
+                    "
+                    @click="onOpenMemoModal(item)"
+                  >
+                    <!-- :disabled="statusDalnis(item)" -->
+                    <span>Tolak</span>
+                  </CButton>
+                </div>
+              </td>
+            </template>
+
             <template #actionsAdmin="{ item }">
               <td>
                 <div class="flex flex-wrap justify-content-center">
@@ -213,7 +262,7 @@
                     square
                     size="sm"
                     class="m-1 w-full"
-                    :disabled="statusAdmin(item)"
+                    :disabled="$func.isGanjil(item.flagAdmin)"
                     @click="onPostingTl(item)"
                   >
                     <span>Posting</span>
@@ -224,7 +273,7 @@
                     square
                     size="sm"
                     class="m-1 w-full"
-                    :disabled="!statusAdmin(item)"
+                    :disabled="$func.isGenap(item.flagAdmin)"
                     @click="onUnPostTl(item)"
                   >
                     <span>Unlock</span>
@@ -236,6 +285,42 @@
         </CCardBody>
       </div>
     </CCard>
+    <CModal
+      :title="isLevelAccess ? 'Catatan Dalnis' : 'Tambah Memo'"
+      :close-on-backdrop="isLevelAccess"
+      size="lg"
+      :color="isLevelAccess ? 'warning' : 'danger'"
+      :show.sync="memoModal"
+    >
+      <div class="text-right">
+        <CTextarea
+          v-model="textMemo"
+          rows="10"
+          class="py-2"
+          :disabled="isLevelAccess"
+          placeholder="Tuliskan memo disini.."
+        />
+        <CButton
+          v-if="!isLevelAccess"
+          color="danger"
+          class="mb-2"
+          @click="onSaveMemoAndTolakLaporan"
+        >
+          Simpan Memo & Tolak Laporan
+        </CButton>
+      </div>
+
+      <template #footer-wrapper>
+        <div />
+      </template>
+    </CModal>
+    <confirm-modal
+      v-model="isOpenAcc"
+      title="ACC Laporan"
+      msg="Apakah anda yakin akan menyetujui laporan ini?"
+      @close-modal="isOpenAcc = false"
+      @confirm-ok="actionAccDalnis"
+    />
     <confirm-modal
       v-model="isOpenSend"
       title="Kirim Laporan"
@@ -339,6 +424,10 @@ export default {
       isOpenPosting: false,
       isOpenUnPost: false,
       isLevelAccess: false,
+      memoModal: false,
+      selectedItem: null,
+      textMemo: null,
+      isOpenAcc: false,
     };
   },
   async mounted() {
@@ -369,6 +458,90 @@ export default {
     },
     openDeleteModal(id) {
       this.$emit('open-delete-modal', id);
+    },
+
+    onLihatCatatan(item) {
+      this.memoModal = true;
+      this.textMemo = item.catatanDalnis;
+    },
+
+    async onSaveMemoAndTolakLaporan() {
+      try {
+        const responseMemo = await this.onSaveMemo();
+        const responseTolak = await this.actionRejectDalnis();
+
+        if (responseMemo.status == 200 && responseTolak.status == 200) {
+          this.memoModal = false;
+          this.selectedItem = null;
+          this.textMemo = '';
+          this.$emit('on-load-tl');
+          this.toastSuccess('Berhasil menyimpan memo');
+          this.toastSuccess('Berhasil menolak laporan');
+        } else {
+          this.toastError(
+            'Terjadi kesalahan saat simpan memo dan tolak laporan'
+          );
+        }
+      } catch (error) {
+        this.toastError('Terjadi kesalahan saat simpan memo dan tolak laporan');
+      }
+    },
+
+    onOpenMemoModal(item) {
+      this.memoModal = true;
+      this.selectedItem = item;
+    },
+
+    async onSaveMemo() {
+      return await axios({
+        method: 'POST',
+        baseURL: this.$apiAddress,
+        data: {
+          _method: 'PATCH',
+          Catatan_Dalnis: this.textMemo,
+        },
+        url: `/api/dalnisaddmemotl/${this.selectedItem.id}`,
+        params: {
+          // _method: 'PATCH',
+          // Catatan_Dalnis: this.textMemo,
+          token: localStorage.getItem('api_token'),
+        },
+      });
+    },
+
+    async actionRejectDalnis() {
+      return await axios({
+        method: 'PATCH',
+        baseURL: this.$apiAddress,
+        url: `/api/dalnisactiontolaktl/${this.selectedItem.id}`,
+        params: {
+          token: localStorage.getItem('api_token'),
+        },
+      });
+    },
+
+    onAccTl(item) {
+      this.isOpenAcc = true;
+      this.selectedItem = item;
+    },
+
+    async actionAccDalnis() {
+      const response = await axios({
+        method: 'PATCH',
+        baseURL: this.$apiAddress,
+        url: `/api/dalnisactionacctl/${this.selectedItem.id}`,
+        params: {
+          token: localStorage.getItem('api_token'),
+        },
+      });
+      if (response.status == 200) {
+        this.isOpenAcc = false;
+        this.toastSuccess('Berhasil menyetujui Tindak Lanjut');
+        this.selectedItem = null;
+        this.$emit('on-load-tl');
+      } else {
+        this.toastError('Terjadi kesalahan saat acc laporan');
+      }
     },
 
     /**
@@ -547,6 +720,22 @@ export default {
       } else {
         // this.toastError('Terjadi kesalahan saat mengirim laporan');
         this.toastError(response.data.message);
+      }
+    },
+
+    isCatatanDalnis(item) {
+      if (!item.catatanDalnis) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+
+    statusDalnis(item) {
+      if (item.flagDalnis % 2 == 0) {
+        return false;
+      } else {
+        return true;
       }
     },
 

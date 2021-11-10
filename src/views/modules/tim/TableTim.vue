@@ -25,7 +25,7 @@
           </CCol>
         </CRow>
       </CCardHeader>
-      <CCol v-if="Number(isReviewed) < 2">
+      <CCol v-if="!statusReview">
         <CButton class="px-4 mt-4" color="info" @click="openCreateModal">
           <CIcon name="cil-plus" class="my-0 mb-1 mr-1" /> Tambah
         </CButton>
@@ -58,7 +58,8 @@
           </template>
           <!-- <template #actions> -->
           <template #actions="{ item }">
-            <td class="py-2 d-flex justify-content-center">
+            <td v-if="statusReview">No Actions</td>
+            <td v-else class="py-2 d-flex justify-content-center">
               <CButton
                 v-if="isEditButton"
                 v-c-tooltip="{
@@ -170,13 +171,17 @@ export default {
     },
     // idLha: String,
     filterlha: String,
-    isReviewed: String,
   },
   data() {
     return {
       valueLha: '',
       optionsLha: [],
     };
+  },
+  computed: {
+    statusReview: function () {
+      return Number(this.valueLha.flagKirim) % 2 == 0 ? false : true;
+    },
   },
   async mounted() {
     await this.loadLha();

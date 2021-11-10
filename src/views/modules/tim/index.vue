@@ -7,7 +7,6 @@
       :clickable-rows="true"
       :is-edit-button="true"
       :filterlha="$route.query.filterlha"
-      :is-reviewed="lha.flagKirim"
       @clicked-row="openDetail"
       @open-create-modal="openCreate"
       @open-edit-modal="openEdit"

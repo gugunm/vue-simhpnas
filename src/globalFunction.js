@@ -18,5 +18,14 @@ export const func = {
 
   rupiahToNumber: (payload) => {
     return  Number(payload.replace(/[^0-9.-]+/g,""));
-  }
+  },
+
+  isGanjil(value) {
+    return value % 2 == 1 ? true : false;
+  },
+
+  isGenap(value) {
+    return value % 2 == 0 ? true : false;
+  },
+
 }

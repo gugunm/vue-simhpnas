@@ -155,8 +155,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 // import CoverImg from '../../assets/img/cover.jpg';
 
 export default {
