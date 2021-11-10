@@ -123,6 +123,7 @@
             <td v-else>
               <div class="flex flex-wrap justify-content-center w-24">
                 <CButton
+                  v-if="item.isTemuanNihil == 0"
                   v-c-tooltip="{
                     content: 'Tambah Temuan',
                     placement: 'top',
