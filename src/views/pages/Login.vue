@@ -5,8 +5,8 @@
         <!-- <h1 class="text-4xl text-center">SIMHPNAS</h1> -->
         <div class="text-left px-4">
           <CImg
-            class="inline-block w-52 lg:w-60 mb-2"
-            src="img/simhp/text-logo-white.svg"
+            class="inline-block w-52 lg:w-64 mb-2"
+            src="img/simhp/logo-white-login.svg"
           />
           <p class="text-left text-base lg:text-lg tracking-wide">
             Sistem Infomasi Manajemen Hasil Pengawasan Nasional
@@ -17,13 +17,13 @@
     <div
       class="flex-initial content-center w-full lg:w-4/6 bg-white p-6 lg:py-14"
     >
-      <div class="w-full lg:max-w-xl">
-        <div class="flex flex-col text-left w-full">
+      <div class="w-full h-full lg:max-w-xl">
+        <div class="flex h-5/6 flex-col justify-center text-left w-full">
           <div class="flex justify-start content-center mb-4 lg:hidden">
             <!-- <CImg class="inline-block w-8 mr-2" src="/img/simhp/logo.svg" /> -->
             <CImg
-              class="inline-block h-10 mr-2"
-              src="img/simhp/text-logo.svg"
+              class="inline-block h-12 mr-2"
+              src="img/simhp/logo-color-login.svg"
             />
             <!-- <h3 class="text-2xl font-bold inline-block">SIMHPNAS</h3> -->
           </div>
@@ -135,7 +135,7 @@
           <p class="mt-3 tracking-wide">
             Belum punya akun? silahkan
             <a
-              href="mailto:pusinfowas@bpkp.go.id?subject=Permintaan Piloting SIMHPNAS"
+              href="mailto:simhpnas@bpkp.go.id?subject=Permintaan Piloting SIMHPNAS"
               target="_blank"
               class="
                 inline-block
@@ -148,6 +148,17 @@
               Hubungi Tim Kami
             </a>
           </p>
+        </div>
+        <div class="text-left h-1/6 flex flex-col justify-end">
+          <div class="pb-10">
+            <CImg
+              class="inline-block w-6 lg:w-5"
+              src="img/simhp/v_avocado.svg"
+            />
+            <span class="text-sm font-medium ml-2 tracking-wide"
+              >Versi Alpukat</span
+            >
+          </div>
         </div>
       </div>
     </div>

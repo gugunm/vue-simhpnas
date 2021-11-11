@@ -25,7 +25,7 @@
         v-if="!this.$store.state.ui.sidebarMinimize"
         class="sidebar-logo g-logo-expand"
         name="logo-expand"
-        src="img/simhp/text-logo-white.svg"
+        src="img/simhp/logo-white-login.svg"
       />
       <CImg
         v-if="this.$store.state.ui.sidebarMinimize"
