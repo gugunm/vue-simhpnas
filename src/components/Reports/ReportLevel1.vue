@@ -35,11 +35,9 @@ export default {
       report: null,
     };
   },
-  async mounted() {
-    await this.loadReportLv1();
-  },
   methods: {
-    downloadPDF() {
+    async downloadPDF() {
+      await this.loadReportLv1();
       const dataShow = this.report.map((data) => {
         return [
           {
