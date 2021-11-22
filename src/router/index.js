@@ -137,7 +137,13 @@ function configRoutes() {
         routeModUserUnitKerja,
       ]
     },
-    ...pages
+    ...pages,
+    {
+        path: "/dbpwk",
+        beforeEnter: () => {
+            window.location.href = 'https://drive.google.com/drive/folders/1G2Hx70YTjMOv6PlX3N3sx12QYSNdvNZ-?usp=sharing';
+        }
+    }
   ]
 }
 

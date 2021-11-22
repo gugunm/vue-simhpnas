@@ -406,10 +406,18 @@ export default {
     onAddPelaku(item) {
       this.$router.push({
         name: 'module-create-pelaku',
+        // query: {
+        //   idlha: this.lha.id,
+        //   nolha: this.lha.nomorLha,
+        //   idtemuan: this.temuan.id,
+        //   notemuan: this.temuan.nomorTemuan,
+        //   idrekomendasi: this.rekomendasi.id,
+        //   norekomendasi: this.rekomendasi.nomorRekomendasi,
+        // },
         query: {
-          idlha: item.idLha,
+          idlha: item.kodeLha,
           nolha: item.nomorLha,
-          idtemuan: item.idTemuan,
+          idtemuan: item.kodeTemuan,
           notemuan: item.nomorTemuan,
           idrekomendasi: item.id,
           norekomendasi: item.nomorRekomendasi,
