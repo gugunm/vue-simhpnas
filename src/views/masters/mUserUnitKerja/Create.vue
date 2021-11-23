@@ -278,7 +278,7 @@ export default {
           this.loading = true;
 
           const responseData = await this.$store.dispatch(
-            'm_user_utama/createUserUtama',
+            'm_user_unit/createUserUnit',
             resultFormData
           );
 
