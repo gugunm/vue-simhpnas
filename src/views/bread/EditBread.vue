@@ -1,10 +1,17 @@
 <template>
   <CRow>
-    <CCol col="6" lg="6">
+    <CCol
+      col="6"
+      lg="6"
+    >
       <CCard>
         <CCardBody>
           <h3>Edit Bread</h3>
-          <CAlert :show.sync="dismissCountDown" color="primary" fade>
+          <CAlert
+            :show.sync="dismissCountDown"
+            color="primary"
+            fade
+          >
             ({{ dismissCountDown }}) {{ message }}
           </CAlert>
 
@@ -50,7 +57,10 @@
         </CCardBody>
       </CCard>
     </CCol>
-    <CCol col="6" lg="6">
+    <CCol
+      col="6"
+      lg="6"
+    >
       <CCard>
         <CCardBody>
           <h4>Assign to roles:</h4>
@@ -65,7 +75,10 @@
         </CCardBody>
       </CCard>
     </CCol>
-    <CCol col="6" lg="6">
+    <CCol
+      col="6"
+      lg="6"
+    >
       <CCard>
         <CCardBody>
           <EditBreadFieldCard
@@ -77,12 +90,26 @@
             @sendData="receiveDataFormField"
           />
 
-          <CAlert :show.sync="dismissCountDown" color="primary" fade>
+          <CAlert
+            :show.sync="dismissCountDown"
+            color="primary"
+            fade
+          >
             ({{ dismissCountDown }}) {{ message }}
           </CAlert>
 
-          <CButton color="primary" @click="updateFirstStep()"> Save </CButton>
-          <CButton color="primary" @click="goBack"> Back </CButton>
+          <CButton
+            color="primary"
+            @click="updateFirstStep()"
+          >
+            Save
+          </CButton>
+          <CButton
+            color="primary"
+            @click="goBack"
+          >
+            Back
+          </CButton>
         </CCardBody>
       </CCard>
     </CCol>

@@ -2,17 +2,36 @@
   <CRow class="mb-4">
     <CCol sm="12">
       <div class="text-2xl mb-4 font-semibold">
-        <h3 v-if="mode == 'create'">Create Temuan</h3>
-        <h3 v-else-if="mode == 'view'">Detail Temuan</h3>
-        <h3 v-else>Edit Temuan</h3>
+        <h3 v-if="mode == 'create'">
+          Create Temuan
+        </h3>
+        <h3 v-else-if="mode == 'view'">
+          Detail Temuan
+        </h3>
+        <h3 v-else>
+          Edit Temuan
+        </h3>
       </div>
       <CCard>
         <!-- <CCardBody> -->
-        <CForm class="form-temuan" @submit.prevent="submit">
-          <div v-if="!isAuditTpk" class="p-3" style="background: #f9fafb">
-            <h5 class="text-base font-semibold">Data Temuan</h5>
+        <CForm
+          class="form-temuan"
+          @submit.prevent="submit"
+        >
+          <div
+            v-if="!isAuditTpk"
+            class="p-3"
+            style="background: #f9fafb"
+          >
+            <h5 class="text-base font-semibold">
+              Data Temuan
+            </h5>
           </div>
-          <div v-else class="p-3" style="background: #f9fafb">
+          <div
+            v-else
+            class="p-3"
+            style="background: #f9fafb"
+          >
             <h5 class="text-base font-semibold text-red-500">
               Data Temuan Investigatif
             </h5>
@@ -49,7 +68,10 @@
               </CCol>
             </CRow>
 
-            <CRow v-if="mode == 'view'" class="mb-3">
+            <CRow
+              v-if="mode == 'view'"
+              class="mb-3"
+            >
               <CCol lg="12">
                 <CInput
                   v-if="mode == 'view'"
@@ -77,7 +99,10 @@
             </CRow>
 
             <!-- ROW 3 -->
-            <CRow v-else class="mb-3">
+            <CRow
+              v-else
+              class="mb-3"
+            >
               <CCol lg="4">
                 <div>
                   <label class="typo__label">Jenis Temuan</label>
@@ -243,7 +268,11 @@
 
           <div class="px-3">
             <CRow class="mb-2 view-form">
-              <CCol sm="12" lg="6" class="mb-3">
+              <CCol
+                sm="12"
+                lg="6"
+                class="mb-3"
+              >
                 <CButton
                   v-if="mode != 'view'"
                   variant="outline"
@@ -281,10 +310,19 @@
                   class="px-4 ml-1"
                   :disabled="!isValid"
                 >
-                  <div v-if="loading" class="px-8">
-                    <CSpinner color="white" size="sm" class="mr-2" />
+                  <div
+                    v-if="loading"
+                    class="px-8"
+                  >
+                    <CSpinner
+                      color="white"
+                      size="sm"
+                      class="mr-2"
+                    />
                   </div>
-                  <template v-else> Submit Data </template>
+                  <template v-else>
+                    Submit Data
+                  </template>
                 </CButton>
               </CCol>
             </CRow>

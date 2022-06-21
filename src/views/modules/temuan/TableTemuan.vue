@@ -1,16 +1,22 @@
 <template>
   <div>
-    <CRow class="px-3">
-      <CCol class="px-0" lg="12" sm="12">
+    <!-- <CRow class="px-3">
+      <CCol
+        class="px-0"
+        lg="12"
+        sm="12"
+      >
         <h4 class="my-0 mt-1 mb-3 text-2xl font-semibold">
           {{ topTitle }} {{ title }} {{ descTitle | descCamelCase }}
         </h4>
       </CCol>
-    </CRow>
+    </CRow> -->
     <CCard>
       <CCardHeader style="background: #f9fafb; border-bottom: none">
         <CRow class="py-3">
-          <CCol lg="2" class="py-2 text-base"> Laporan Hasil Audit </CCol>
+          <CCol lg="2" class="py-2 text-base">
+            Laporan Hasil Audit
+          </CCol>
           <CCol lg="8">
             <multiselect
               v-if="optionsLha"
@@ -62,12 +68,14 @@
           </template>
           <!-- <template #actions> -->
           <template #actions="{ item }">
-            <td v-if="statusReview">No Action</td>
+            <td v-if="statusReview">
+              No Action
+            </td>
             <td v-else class="py-2 flex flex-wrap justify-content-center">
               <CButton
                 v-c-tooltip="{
                   content: 'Tambah Penyebab',
-                  placement: 'left',
+                  placement: 'left'
                 }"
                 color="info"
                 variant="outline"
@@ -91,7 +99,7 @@
               <CButton
                 v-c-tooltip="{
                   content: 'Tambah Rekomendasi',
-                  placement: 'left',
+                  placement: 'left'
                 }"
                 color="success"
                 variant="outline"
@@ -117,7 +125,7 @@
                 v-if="isEditButton"
                 v-c-tooltip="{
                   content: 'Edit',
-                  placement: 'left',
+                  placement: 'left'
                 }"
                 color="warning"
                 variant="outline"
@@ -146,7 +154,7 @@
                 v-if="isDeleteButton"
                 v-c-tooltip="{
                   content: 'Hapus',
-                  placement: 'left',
+                  placement: 'left'
                 }"
                 color="danger"
                 variant="outline"
@@ -176,73 +184,74 @@
 </template>
 
 <script>
-import Multiselect from 'vue-multiselect';
-import mixin from './mixin';
+import Multiselect from "vue-multiselect";
+import mixin from "./mixin";
 
 export default {
-  name: 'TableTemuan',
+  name: "TableTemuan",
   components: {
-    Multiselect,
+    Multiselect
   },
   filters: {
     descCamelCase(val) {
-      if (!val) return '';
+      if (!val) return "";
       return val
-        .split(' ')
-        .map((w) => w[0].toUpperCase() + w.substr(1).toLowerCase())
-        .join(' ');
-    },
+        .split(" ")
+        .map(w => w[0].toUpperCase() + w.substr(1).toLowerCase())
+        .join(" ");
+    }
   },
   mixins: [mixin],
   props: {
     topTitle: {
       type: String,
-      default: '',
+      default: ""
     },
     title: {
       type: String,
-      default: '',
+      default: ""
     },
     descTitle: {
       type: String,
-      default: '',
+      default: ""
     },
     items: Object,
     fields: Object,
     clickableRows: Boolean,
     isEditButton: {
       type: Boolean,
-      default: true,
+      default: true
     },
     isDeleteButton: {
       type: Boolean,
-      default: true,
+      default: true
     },
     isAddButton: {
       type: Boolean,
-      default: true,
+      default: true
     },
-    filterlha: String,
+    filterlha: String
   },
   data() {
     return {
-      valueLha: '',
-      optionsLha: [],
+      valueLha: "",
+      optionsLha: []
     };
   },
   computed: {
-    statusReview: function () {
+    statusReview: function() {
       return Number(this.valueLha.flagKirim) % 2 == 0 ? false : true;
     },
-    statusTemuan: function () {
+    statusTemuan: function() {
       return this.valueLha.isTemuanNihil == 0 ? true : false;
-    },
+    }
   },
   async mounted() {
+    this.$store.commit("ui/setTitleHeader", `${this.topTitle}`);
     await this.loadLha();
     if (this.filterlha) {
       this.valueLha = this.optionsLha.filter(
-        (data) => data.id == this.filterlha
+        data => data.id == this.filterlha
       )[0];
     } else {
       this.valueLha = this.optionsLha[0];
@@ -250,31 +259,31 @@ export default {
     this.onSelectLha();
   },
   emits: [
-    'clicked-row',
-    'open-create-modal',
-    'open-edit-modal',
-    'open-delete-modal',
-    'on-select-lha',
+    "clicked-row",
+    "open-create-modal",
+    "open-edit-modal",
+    "open-delete-modal",
+    "on-select-lha"
   ],
   methods: {
     clickedRow(item) {
-      this.$emit('clicked-row', item);
+      this.$emit("clicked-row", item);
     },
     openCreateModal() {
-      this.$emit('open-create-modal');
+      this.$emit("open-create-modal");
     },
     openEditModal(item) {
-      this.$emit('open-edit-modal', item);
+      this.$emit("open-edit-modal", item);
     },
     openDeleteModal(id) {
-      this.$emit('open-delete-modal', id);
+      this.$emit("open-delete-modal", id);
     },
 
     onSelectLha(val) {
       if (val) {
         this.valueLha = val;
       }
-      this.$emit('on-select-lha', this.valueLha);
+      this.$emit("on-select-lha", this.valueLha);
     },
 
     viewSelectSearch({ id, nomorLha, bidangObrik }) {
@@ -283,28 +292,28 @@ export default {
 
     onAddPenyebab(item) {
       this.$router.push({
-        name: 'module-create-penyebab',
+        name: "module-create-penyebab",
         query: {
           idlha: item.idLha,
           nolha: item.nomorLha,
           idtemuan: item.id,
-          notemuan: item.nomorTemuan,
-        },
+          notemuan: item.nomorTemuan
+        }
       });
     },
     onAddRekomendasi(item) {
       this.$router.push({
-        name: 'module-create-rekomendasi',
+        name: "module-create-rekomendasi",
         query: {
           idlha: item.idLha,
           nolha: item.nomorLha,
           idtemuan: item.id,
           notemuan: item.nomorTemuan,
-          nilaitemuan: item.nilaiTemuan,
-        },
+          nilaitemuan: item.nilaiTemuan
+        }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 

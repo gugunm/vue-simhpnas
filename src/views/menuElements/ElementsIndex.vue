@@ -1,11 +1,18 @@
 <template>
   <CRow>
-    <CCol col="12" xl="12">
+    <CCol
+      col="12"
+      xl="12"
+    >
       <transition name="slide">
         <CCard>
           <CCardBody>
             <!-- <h4>Menus</h4> -->
-            <CButton color="primary" class="mb-3" @click="addElementToMenu()">
+            <CButton
+              color="primary"
+              class="mb-3"
+              @click="addElementToMenu()"
+            >
               Add Element to Menu
             </CButton>
             <CDataTable
@@ -17,7 +24,10 @@
             >
               <template #dropdown="{ item }">
                 <td>
-                  <CIcon v-if="item.dropdown" :content="$options.arrowIcon" />
+                  <CIcon
+                    v-if="item.dropdown"
+                    :content="$options.arrowIcon"
+                  />
                 </td>
               </template>
               <template #name="{ item }">
@@ -27,35 +37,50 @@
               </template>
               <template #up="{ item }">
                 <td>
-                  <CButton color="primary" @click="moveUp(item.id)">
+                  <CButton
+                    color="primary"
+                    @click="moveUp(item.id)"
+                  >
                     Move Up
                   </CButton>
                 </td>
               </template>
               <template #down="{ item }">
                 <td>
-                  <CButton color="primary" @click="moveDown(item.id)">
+                  <CButton
+                    color="primary"
+                    @click="moveDown(item.id)"
+                  >
                     Move Down
                   </CButton>
                 </td>
               </template>
               <template #show="{ item }">
                 <td>
-                  <CButton color="primary" @click="showMenu(item.id)">
+                  <CButton
+                    color="primary"
+                    @click="showMenu(item.id)"
+                  >
                     Show
                   </CButton>
                 </td>
               </template>
               <template #edit="{ item }">
                 <td>
-                  <CButton color="primary" @click="editMenu(item.id)">
+                  <CButton
+                    color="primary"
+                    @click="editMenu(item.id)"
+                  >
                     Edit
                   </CButton>
                 </td>
               </template>
               <template #delete="{ item }">
                 <td>
-                  <CButton color="danger" @click="deleteMenu(item.id)">
+                  <CButton
+                    color="danger"
+                    @click="deleteMenu(item.id)"
+                  >
                     Delete
                   </CButton>
                 </td>

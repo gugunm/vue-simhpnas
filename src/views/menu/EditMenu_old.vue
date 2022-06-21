@@ -1,6 +1,9 @@
 <template>
   <CRow>
-    <CCol col="12" xl="6">
+    <CCol
+      col="12"
+      xl="6"
+    >
       <transition name="slide">
         <CCard>
           <CCardBody>
@@ -10,18 +13,33 @@
                 :options="roles"
                 label="Select role assigned to menu"
               />
-              <CButton color="primary" @click="selectRole()"> Edit </CButton>
+              <CButton
+                color="primary"
+                @click="selectRole()"
+              >
+                Edit
+              </CButton>
             </div>
             <div v-else>
-              <CDataTable hover :items="tableData" :fields="fields">
+              <CDataTable
+                hover
+                :items="tableData"
+                :fields="fields"
+              >
                 <template #assigned="{ item }">
                   <td v-if="item.assigned">
-                    <CButton color="primary" @click="toggleElement(item.id)">
+                    <CButton
+                      color="primary"
+                      @click="toggleElement(item.id)"
+                    >
                       Hide
                     </CButton>
                   </td>
                   <td v-else>
-                    <CButton color="danger" @click="toggleElement(item.id)">
+                    <CButton
+                      color="danger"
+                      @click="toggleElement(item.id)"
+                    >
                       Show
                     </CButton>
                   </td>

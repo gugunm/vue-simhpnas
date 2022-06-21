@@ -3,7 +3,7 @@
     <master-table
       top-title="Master"
       title="Bidang Obrik"
-      :desc-title="descUnitObrik"
+      :desc-title="'Bidang Obrik - ' + descUnitObrik"
       :items="items"
       :fields="fields"
       :clickable-rows="true"
@@ -24,25 +24,25 @@
 </template>
 
 <script>
-import axios from 'axios';
-import MasterTable from './Table.vue';
-import BackButton from '@/components/BackButton';
-import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
-import mixin from './mixin';
+import axios from "axios";
+import MasterTable from "./Table.vue";
+import BackButton from "@/components/BackButton";
+import ConfirmModal from "@/components/Confirm/ConfirmModal.vue";
+import mixin from "./mixin";
 
 export default {
-  name: 'AdvancedTables',
+  name: "AdvancedTables",
   components: {
     MasterTable,
     BackButton,
-    ConfirmModal,
+    ConfirmModal
   },
   mixins: [mixin],
   props: {
     idUnitObrik: {
       type: String,
-      default: '0',
-    },
+      default: "0"
+    }
   },
   data() {
     return {
@@ -50,7 +50,7 @@ export default {
       items: null,
       descUnitObrik: null,
       idToDelete: null,
-      isDeleteConfirm: false,
+      isDeleteConfirm: false
     };
   },
   async mounted() {
@@ -58,38 +58,38 @@ export default {
     await this.loadDescUnitObrik();
     this.fields = [
       {
-        key: 'id',
-        label: 'Kode',
-        _style: 'width: 15%',
+        key: "id",
+        label: "Kode",
+        _style: "width: 15%"
       },
       {
-        key: 'deskripsi',
-        label: 'Deskripsi Bidang Obrik',
-        _style: 'width: 70%',
-      },
+        key: "deskripsi",
+        label: "Deskripsi Bidang Obrik",
+        _style: "width: 70%"
+      }
     ];
     if (localStorage.level != 5 || localStorage.level != 6) {
       this.fields = [
         ...this.fields,
         {
-          key: 'actions',
-          _style: 'width: 15%',
-        },
+          key: "actions",
+          _style: "width: 15%"
+        }
       ];
     }
   },
   methods: {
     openCreate() {
       this.$router.push({
-        name: 'master-create-ref-bidang-obrik',
-        params: { idUnitObrik: this.idUnitObrik },
+        name: "master-create-ref-bidang-obrik",
+        params: { idUnitObrik: this.idUnitObrik }
       });
     },
 
     openEdit(item) {
       this.$router.push({
-        name: 'master-edit-ref-bidang-obrik',
-        params: { idBidangObrik: item.id, idUnitObrik: this.idUnitObrik },
+        name: "master-edit-ref-bidang-obrik",
+        params: { idBidangObrik: item.id, idUnitObrik: this.idUnitObrik }
       });
     },
 
@@ -100,8 +100,8 @@ export default {
 
     async actionDelete() {
       try {
-        await this.$store.dispatch('m_ref_unit_obrik/deleteBidangObrikById', {
-          idBidangObrik: this.idToDelete,
+        await this.$store.dispatch("m_ref_unit_obrik/deleteBidangObrikById", {
+          idBidangObrik: this.idToDelete
         });
         this.isDeleteConfirm = false;
         this.toastSuccess(
@@ -116,42 +116,41 @@ export default {
     async loadRefBidangObrik(refresh = false) {
       this.loading = true;
       try {
-        await this.$store.dispatch('m_ref_unit_obrik/loadRefBidangObrik', {
+        await this.$store.dispatch("m_ref_unit_obrik/loadRefBidangObrik", {
           idUnitObrik: this.idUnitObrik,
-          forceRefresh: refresh,
+          forceRefresh: refresh
         });
-        this.items = this.$store.getters['m_ref_unit_obrik/refBidangObrik'];
+        this.items = this.$store.getters["m_ref_unit_obrik/refBidangObrik"];
       } catch (error) {
-        this.error = error.message || 'Something went wrong!';
+        this.error = error.message || "Something went wrong!";
       }
       this.loading = false;
     },
 
     showDetailBidangObrik(item) {
       this.$router.push({
-        name: 'master-ref-sub-bidang-obrik',
-        params: { idBidangObrik: item.id, deskripsi: item.deskripsi },
+        name: "master-ref-sub-bidang-obrik",
+        params: { idBidangObrik: item.id, deskripsi: item.deskripsi }
       });
     },
 
     async loadDescUnitObrik() {
       const response = await axios({
-        method: 'GET',
+        method: "GET",
         baseURL: this.$apiAddress,
         url: `/api/unitobrik/${this.idUnitObrik}`,
         params: {
-          token: localStorage.getItem('api_token'),
-        },
+          token: localStorage.getItem("api_token")
+        }
       });
 
       if (response.status != 200) {
-        const error = new Error(responseData.message || 'Failed to fetch data');
+        const error = new Error(responseData.message || "Failed to fetch data");
         throw error;
       }
 
       this.descUnitObrik = await response.data.diskripsi;
-    },
-  },
+    }
+  }
 };
 </script>
-

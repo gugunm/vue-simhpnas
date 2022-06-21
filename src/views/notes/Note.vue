@@ -1,6 +1,9 @@
 <template>
   <CRow>
-    <CCol col="12" lg="6">
+    <CCol
+      col="12"
+      lg="6"
+    >
       <CCard no-header>
         <CCardBody>
           <h3>Note id: {{ $route.params.id }}</h3>
@@ -22,7 +25,12 @@
           <h4>Note type:</h4>
           <p>{{ note.note_type }}</p>
 
-          <CButton color="primary" @click="goBack"> Back </CButton>
+          <CButton
+            color="primary"
+            @click="goBack"
+          >
+            Back
+          </CButton>
         </CCardBody>
       </CCard>
     </CCol>

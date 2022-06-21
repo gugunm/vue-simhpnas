@@ -45,10 +45,19 @@
         :disabled="!isValid"
         @click="submit"
       >
-        <div v-if="loading" class="px-8">
-          <CSpinner color="white" size="sm" class="mr-2" />
+        <div
+          v-if="loading"
+          class="px-8"
+        >
+          <CSpinner
+            color="white"
+            size="sm"
+            class="mr-2"
+          />
         </div>
-        <template v-else> Ubah Password </template>
+        <template v-else>
+          Ubah Password
+        </template>
       </CButton>
     </div>
   </CForm>

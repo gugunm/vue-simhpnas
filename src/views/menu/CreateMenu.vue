@@ -1,17 +1,39 @@
 <template>
   <CRow>
-    <CCol col="12" lg="6">
+    <CCol
+      col="12"
+      lg="6"
+    >
       <CCard no-header>
         <CCardBody>
           <h3>Create Menu</h3>
-          <CAlert :show.sync="dismissCountDown" color="primary" fade>
+          <CAlert
+            :show.sync="dismissCountDown"
+            color="primary"
+            fade
+          >
             ({{ dismissCountDown }}) {{ message }}
           </CAlert>
 
-          <CInput v-model="name" label="Name" type="text" placeholder="Name" />
+          <CInput
+            v-model="name"
+            label="Name"
+            type="text"
+            placeholder="Name"
+          />
 
-          <CButton color="primary" @click="store()"> Create </CButton>
-          <CButton color="primary" @click="goBack"> Back </CButton>
+          <CButton
+            color="primary"
+            @click="store()"
+          >
+            Create
+          </CButton>
+          <CButton
+            color="primary"
+            @click="goBack"
+          >
+            Back
+          </CButton>
         </CCardBody>
       </CCard>
     </CCol>

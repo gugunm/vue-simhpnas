@@ -16,7 +16,10 @@
       @on-select-temuan="onSelectTemuan"
       @on-add-temuan="onAddTemuan"
     />
-    <Loading :active.sync="loading" :is-full-page="true" />
+    <Loading
+      :active.sync="loading"
+      :is-full-page="true"
+    />
     <confirm-modal
       v-model="isDeleteConfirm"
       title="Hapus data"

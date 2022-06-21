@@ -17,7 +17,10 @@
       @close-modal="isDeleteConfirm = false"
       @confirm-ok="actionDelete"
     />
-    <back-button title="Kembali" to="/master-referensi/unit-audit" />
+    <back-button
+      title="Kembali"
+      to="/master-referensi/unit-audit"
+    />
   </div>
 </template>
 

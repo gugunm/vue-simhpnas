@@ -1,16 +1,22 @@
 <template>
   <div>
-    <CRow class="px-3">
-      <CCol class="px-0" lg="12" sm="12">
+    <!-- <CRow class="px-3">
+      <CCol
+        class="px-0"
+        lg="12"
+        sm="12"
+      >
         <h4 class="my-0 mt-1 mb-3 text-2xl font-semibold">
           {{ topTitle }} {{ title }} {{ descTitle | descCamelCase }}
         </h4>
       </CCol>
-    </CRow>
+    </CRow> -->
     <CCard class="pt-0">
       <CCardHeader style="background: #f9fafb; border-bottom: none">
         <CRow class="py-2">
-          <CCol lg="2" class="py-2 text-base"> Laporan Hasil Audit </CCol>
+          <CCol lg="2" class="py-2 text-base">
+            Laporan Hasil Audit
+          </CCol>
           <CCol lg="8">
             <multiselect
               v-if="optionsLha"
@@ -58,13 +64,15 @@
           </template>
           <!-- <template #actions> -->
           <template #actions="{ item }">
-            <td v-if="statusReview">No Actions</td>
+            <td v-if="statusReview">
+              No Actions
+            </td>
             <td v-else class="py-2 d-flex justify-content-center">
               <CButton
                 v-if="isEditButton"
                 v-c-tooltip="{
                   content: 'Edit',
-                  placement: 'top',
+                  placement: 'top'
                 }"
                 color="warning"
                 variant="outline"
@@ -93,7 +101,7 @@
                 v-if="isDeleteButton"
                 v-c-tooltip="{
                   content: 'Hapus',
-                  placement: 'top',
+                  placement: 'top'
                 }"
                 color="danger"
                 variant="outline"
@@ -123,71 +131,72 @@
 </template>
 
 <script>
-import Multiselect from 'vue-multiselect';
-import mixin from './mixin';
+import Multiselect from "vue-multiselect";
+import mixin from "./mixin";
 
 export default {
-  name: 'TableTim',
+  name: "TableTim",
   components: {
-    Multiselect,
+    Multiselect
   },
   filters: {
     descCamelCase(val) {
-      if (!val) return '';
+      if (!val) return "";
       return val
-        .split(' ')
-        .map((w) => w[0].toUpperCase() + w.substr(1).toLowerCase())
-        .join(' ');
-    },
+        .split(" ")
+        .map(w => w[0].toUpperCase() + w.substr(1).toLowerCase())
+        .join(" ");
+    }
   },
   mixins: [mixin],
   props: {
     topTitle: {
       type: String,
-      default: '',
+      default: ""
     },
     title: {
       type: String,
-      default: '',
+      default: ""
     },
     descTitle: {
       type: String,
-      default: '',
+      default: ""
     },
     items: Object,
     fields: Object,
     clickableRows: Boolean,
     isEditButton: {
       type: Boolean,
-      default: true,
+      default: true
     },
     isDeleteButton: {
       type: Boolean,
-      default: true,
+      default: true
     },
     isAddButton: {
       type: Boolean,
-      default: true,
+      default: true
     },
     // idLha: String,
-    filterlha: String,
+    filterlha: String
   },
   data() {
     return {
-      valueLha: '',
-      optionsLha: [],
+      valueLha: "",
+      optionsLha: []
     };
   },
   computed: {
-    statusReview: function () {
+    statusReview: function() {
       return Number(this.valueLha.flagKirim) % 2 == 0 ? false : true;
-    },
+    }
   },
   async mounted() {
+    this.$store.commit("ui/setTitleHeader", `${this.topTitle}`);
     await this.loadLha();
     if (this.filterlha) {
       this.valueLha = this.optionsLha.filter(
-        (data) => data.id == this.filterlha
+        data => data.id == this.filterlha
       )[0];
     } else {
       this.valueLha = this.optionsLha[0];
@@ -195,35 +204,35 @@ export default {
     this.onSelectLha();
   },
   emits: [
-    'clicked-row',
-    'open-create-modal',
-    'open-edit-modal',
-    'open-delete-modal',
-    'on-select-lha',
+    "clicked-row",
+    "open-create-modal",
+    "open-edit-modal",
+    "open-delete-modal",
+    "on-select-lha"
   ],
   methods: {
     clickedRow(item) {
-      this.$emit('clicked-row', item);
+      this.$emit("clicked-row", item);
     },
     openCreateModal() {
-      this.$emit('open-create-modal');
+      this.$emit("open-create-modal");
     },
     openEditModal(item) {
-      this.$emit('open-edit-modal', item);
+      this.$emit("open-edit-modal", item);
     },
     openDeleteModal(id) {
-      this.$emit('open-delete-modal', id);
+      this.$emit("open-delete-modal", id);
     },
     onSelectLha(val) {
-      this.$emit('on-select-lha', val);
+      this.$emit("on-select-lha", val);
       if (!val) {
-        this.$emit('on-select-lha', this.valueLha);
+        this.$emit("on-select-lha", this.valueLha);
       }
     },
     viewSelectSearch({ id, nomorLha, bidangObrik }) {
       return `${nomorLha} - ${bidangObrik}`;
-    },
-  },
+    }
+  }
 };
 </script>
 

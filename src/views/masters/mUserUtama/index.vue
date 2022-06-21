@@ -2,7 +2,11 @@
   <div>
     <CRow>
       <CCol>
-        <CAlert color="success" close-button :show.sync="alertResetPass">
+        <CAlert
+          color="success"
+          close-button
+          :show.sync="alertResetPass"
+        >
           <span>
             Berhasil reset password dengan password :
             <b>{{ msgResetPass }}</b>

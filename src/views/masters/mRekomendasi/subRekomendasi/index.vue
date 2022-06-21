@@ -16,7 +16,10 @@
       @close-modal="isDeleteConfirm = false"
       @confirm-ok="actionDelete"
     />
-    <back-button title="Kembali" to="/master-rekomendasi/" />
+    <back-button
+      title="Kembali"
+      to="/master-rekomendasi/"
+    />
   </div>
 </template>
 

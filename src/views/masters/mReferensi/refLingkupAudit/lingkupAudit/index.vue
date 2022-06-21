@@ -17,7 +17,10 @@
       @close-modal="isDeleteConfirm = false"
       @confirm-ok="actionDelete"
     />
-    <back-button title="Kembali" to="/master-referensi/lingkup-audit" />
+    <back-button
+      title="Kembali"
+      to="/master-referensi/lingkup-audit"
+    />
   </div>
 </template>
 

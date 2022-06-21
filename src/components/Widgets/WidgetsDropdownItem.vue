@@ -1,5 +1,8 @@
 <template>
-  <CCol sm="12" lg="4">
+  <CCol
+    sm="12"
+    lg="4"
+  >
     <CWidgetProgress :class="`bg-${cardColor}-500 text-white`">
       <div class="h4 m-0">
         {{ nilai || 0 }}
@@ -17,7 +20,9 @@
       <p class="pt-2 pb-3">
         {{ title }}
       </p>
-      <p class="text-xs">{{ totalCount || 0 }} {{ subTitle }}</p>
+      <p class="text-xs">
+        {{ totalCount || 0 }} {{ subTitle }}
+      </p>
     </CWidgetProgress>
   </CCol>
 </template>

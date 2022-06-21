@@ -1,11 +1,18 @@
 <template>
   <CRow>
-    <CCol col="12" xl="12">
+    <CCol
+      col="12"
+      xl="12"
+    >
       <transition name="slide">
         <CCard>
           <CCardBody>
             <h4>Menus</h4>
-            <CButton color="primary" class="mb-3" @click="addMenu()">
+            <CButton
+              color="primary"
+              class="mb-3"
+              @click="addMenu()"
+            >
               Add Menu
             </CButton>
             <CDataTable
@@ -22,21 +29,30 @@
               </template>
               <template #menu_elements="{ item }">
                 <td>
-                  <CButton color="primary" @click="menuElements(item.id)">
+                  <CButton
+                    color="primary"
+                    @click="menuElements(item.id)"
+                  >
                     Menu Elements
                   </CButton>
                 </td>
               </template>
               <template #edit="{ item }">
                 <td>
-                  <CButton color="primary" @click="editMenu(item.id)">
+                  <CButton
+                    color="primary"
+                    @click="editMenu(item.id)"
+                  >
                     Edit
                   </CButton>
                 </td>
               </template>
               <template #delete="{ item }">
                 <td>
-                  <CButton color="danger" @click="deleteMenu(item.id)">
+                  <CButton
+                    color="danger"
+                    @click="deleteMenu(item.id)"
+                  >
                     Delete
                   </CButton>
                 </td>

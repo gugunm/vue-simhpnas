@@ -1,26 +1,46 @@
 <template>
   <CRow>
-    <CCol col="12" xl="12">
+    <CCol
+      col="12"
+      xl="12"
+    >
       <transition name="slide">
         <CCard>
           <CCardBody>
-            <CButton color="primary" @click="createResource()">
+            <CButton
+              color="primary"
+              @click="createResource()"
+            >
               Create
             </CButton>
-            <CAlert :show.sync="dismissCountDown" color="primary" fade>
+            <CAlert
+              :show.sync="dismissCountDown"
+              color="primary"
+              fade
+            >
               ({{ dismissCountDown }}) {{ message }}
             </CAlert>
-            <CDataTable hover :items="items" :fields="fields">
+            <CDataTable
+              hover
+              :items="items"
+              :fields="fields"
+            >
               <template #show="{ item }">
                 <td>
-                  <CButton color="primary" @click="showResource(item.id)">
+                  <CButton
+                    color="primary"
+                    @click="showResource(item.id)"
+                  >
                     Show
                   </CButton>
                 </td>
               </template>
               <template #edit="{ item }">
                 <td>
-                  <CButton color="primary" @click="editResource(item.id)">
+                  <CButton
+                    color="primary"
+                    @click="editResource(item.id)"
+                  >
                     Edit
                   </CButton>
                 </td>
@@ -37,7 +57,10 @@
                 </td>
               </template>
             </CDataTable>
-            <CPagination :pages="maxPages" :active-page.sync="activePage" />
+            <CPagination
+              :pages="maxPages"
+              :active-page.sync="activePage"
+            />
           </CCardBody>
         </CCard>
       </transition>

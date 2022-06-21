@@ -1,14 +1,24 @@
 <template>
   <CRow>
-    <CCol col="12" xl="12">
+    <CCol
+      col="12"
+      xl="12"
+    >
       <transition name="slide">
         <CCard>
           <CCardBody>
             <h4>Roles</h4>
-            <CButton color="primary" @click="createRole()">
+            <CButton
+              color="primary"
+              @click="createRole()"
+            >
               Create Role
             </CButton>
-            <CAlert :show.sync="dismissCountDown" color="primary" fade>
+            <CAlert
+              :show.sync="dismissCountDown"
+              color="primary"
+              fade
+            >
               ({{ dismissCountDown }}) {{ message }}
             </CAlert>
             <CDataTable
@@ -30,35 +40,50 @@
               </template>
               <template #move-up="{ item }">
                 <td>
-                  <CButton color="primary" @click="moveUp(item.id)">
+                  <CButton
+                    color="primary"
+                    @click="moveUp(item.id)"
+                  >
                     Move Up
                   </CButton>
                 </td>
               </template>
               <template #move-down="{ item }">
                 <td>
-                  <CButton color="primary" @click="moveDown(item.id)">
+                  <CButton
+                    color="primary"
+                    @click="moveDown(item.id)"
+                  >
                     Move Down
                   </CButton>
                 </td>
               </template>
               <template #show="{ item }">
                 <td>
-                  <CButton color="primary" @click="showRole(item.id)">
+                  <CButton
+                    color="primary"
+                    @click="showRole(item.id)"
+                  >
                     Show
                   </CButton>
                 </td>
               </template>
               <template #edit="{ item }">
                 <td>
-                  <CButton color="primary" @click="editRole(item.id)">
+                  <CButton
+                    color="primary"
+                    @click="editRole(item.id)"
+                  >
                     Edit
                   </CButton>
                 </td>
               </template>
               <template #delete="{ item }">
                 <td>
-                  <CButton color="danger" @click="deleteRole(item.id)">
+                  <CButton
+                    color="danger"
+                    @click="deleteRole(item.id)"
+                  >
                     Delete
                   </CButton>
                 </td>

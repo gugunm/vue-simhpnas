@@ -1,6 +1,9 @@
 <template>
   <div>
-    <Form mode="edit" :id-tim="idTim" />
+    <Form
+      mode="edit"
+      :id-tim="idTim"
+    />
   </div>
 </template>
 

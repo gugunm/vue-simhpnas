@@ -1,14 +1,25 @@
 <template>
   <CRow>
-    <CCol col="12" xl="12">
+    <CCol
+      col="12"
+      xl="12"
+    >
       <transition name="slide">
         <CCard>
           <CCardBody>
             <h4>Email Templates</h4>
-            <CButton class="m-3" color="primary" @click="createTemplate()">
+            <CButton
+              class="m-3"
+              color="primary"
+              @click="createTemplate()"
+            >
               Create Template
             </CButton>
-            <CAlert :show.sync="dismissCountDown" color="primary" fade>
+            <CAlert
+              :show.sync="dismissCountDown"
+              color="primary"
+              fade
+            >
               ({{ dismissCountDown }}) {{ message }}
             </CAlert>
             <CDataTable
@@ -30,28 +41,40 @@
               </template>
               <template #send="{ item }">
                 <td>
-                  <CButton color="warning" @click="sendEmail(item.id)">
+                  <CButton
+                    color="warning"
+                    @click="sendEmail(item.id)"
+                  >
                     Send
                   </CButton>
                 </td>
               </template>
               <template #show="{ item }">
                 <td>
-                  <CButton color="primary" @click="showEmail(item.id)">
+                  <CButton
+                    color="primary"
+                    @click="showEmail(item.id)"
+                  >
                     Show
                   </CButton>
                 </td>
               </template>
               <template #edit="{ item }">
                 <td>
-                  <CButton color="primary" @click="editEmail(item.id)">
+                  <CButton
+                    color="primary"
+                    @click="editEmail(item.id)"
+                  >
                     Edit
                   </CButton>
                 </td>
               </template>
               <template #delete="{ item }">
                 <td>
-                  <CButton color="danger" @click="deleteEmail(item.id)">
+                  <CButton
+                    color="danger"
+                    @click="deleteEmail(item.id)"
+                  >
                     Delete
                   </CButton>
                 </td>

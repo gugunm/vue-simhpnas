@@ -9,28 +9,49 @@
     <template #toggler>
       <CHeaderNavLink>
         <CIcon name="cil-bell" />
-        <CBadge shape="pill" color="danger">
+        <CBadge
+          shape="pill"
+          color="danger"
+        >
           {{ itemsCount }}
         </CBadge>
       </CHeaderNavLink>
     </template>
-    <CDropdownHeader tag="div" class="text-center bg-light">
+    <CDropdownHeader
+      tag="div"
+      class="text-center bg-light"
+    >
       <strong>You have {{ itemsCount }} notifications</strong>
     </CDropdownHeader>
     <CDropdownItem>
-      <CIcon name="cil-user-follow" class="text-success" /> New user registered
+      <CIcon
+        name="cil-user-follow"
+        class="text-success"
+      /> New user registered
     </CDropdownItem>
     <CDropdownItem>
-      <CIcon name="cil-user-unfollow" class="text-danger" /> User deleted
+      <CIcon
+        name="cil-user-unfollow"
+        class="text-danger"
+      /> User deleted
     </CDropdownItem>
     <CDropdownItem>
-      <CIcon name="cil-chart-pie" class="text-info" /> Sales report is ready
+      <CIcon
+        name="cil-chart-pie"
+        class="text-info"
+      /> Sales report is ready
     </CDropdownItem>
     <CDropdownItem>
-      <CIcon name="cil-basket" class="text-primary" /> New client
+      <CIcon
+        name="cil-basket"
+        class="text-primary"
+      /> New client
     </CDropdownItem>
     <CDropdownItem>
-      <CIcon name="cil-speedometer" class="text-warning" /> Server overloaded
+      <CIcon
+        name="cil-speedometer"
+        class="text-warning"
+      /> Server overloaded
     </CDropdownItem>
     <!-- <CDropdownHeader
       tag="div"

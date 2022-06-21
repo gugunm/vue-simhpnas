@@ -1,16 +1,22 @@
 <template>
   <div>
-    <CRow class="px-3">
-      <CCol class="px-0" lg="12" sm="12">
+    <!-- <CRow class="px-3">
+      <CCol
+        class="px-0"
+        lg="12"
+        sm="12"
+      >
         <h4 class="my-0 mt-1 mb-3 text-2xl font-semibold">
           {{ topTitle }} {{ title }} {{ descTitle | descCamelCase }}
         </h4>
       </CCol>
-    </CRow>
+    </CRow> -->
     <CCard>
       <CCardHeader style="background: #f9fafb; border-bottom: none">
         <CRow class="pt-3 pb-2">
-          <CCol lg="3" class="py-2 text-base"> Laporan Hasil Audit </CCol>
+          <CCol lg="3" class="py-2 text-base">
+            Laporan Hasil Audit
+          </CCol>
           <CCol lg="8">
             <multiselect
               v-if="optionsLha"
@@ -25,7 +31,9 @@
           </CCol>
         </CRow>
         <CRow class="pb-2 pt-2">
-          <CCol lg="3" class="py-2 text-base"> Nomor Temuan </CCol>
+          <CCol lg="3" class="py-2 text-base">
+            Nomor Temuan
+          </CCol>
           <CCol lg="8">
             <multiselect
               v-if="optionsTemuan"
@@ -40,7 +48,9 @@
           </CCol>
         </CRow>
         <CRow class="pb-3 pt-2">
-          <CCol lg="3" class="py-2 text-base"> Nomor Rekomendasi </CCol>
+          <CCol lg="3" class="py-2 text-base">
+            Nomor Rekomendasi
+          </CCol>
           <CCol lg="8">
             <multiselect
               v-if="optionsRekomendasi"
@@ -73,17 +83,23 @@
         <div v-else>
           <CRow class="px-3 pt-3">
             <CCol lg="2">
-              <p class="text-base mb-1">Nilai Rekomendasi</p>
+              <p class="text-base mb-1">
+                Nilai Rekomendasi
+              </p>
               <p>
                 {{ $func.convertToRupiah(valueRekomendasi.nilaiRekomendasi) }}
               </p>
             </CCol>
             <CCol lg="2" class="border-r">
-              <p class="text-base mb-1">Total Nilai TL</p>
+              <p class="text-base mb-1">
+                Total Nilai TL
+              </p>
               <p>{{ $func.convertToRupiah(valueRekomendasi.nilaiTL) }}</p>
             </CCol>
             <CCol lg="8">
-              <p class="text-base mb-1">Memo Rekomendasi</p>
+              <p class="text-base mb-1">
+                Memo Rekomendasi
+              </p>
               <p class="break-words">
                 {{ valueRekomendasi.memoRekomendasi }}
               </p>
@@ -167,7 +183,7 @@
                     v-if="isEditButton"
                     v-c-tooltip="{
                       content: 'Edit',
-                      placement: 'top',
+                      placement: 'top'
                     }"
                     color="warning"
                     variant="outline"
@@ -196,7 +212,7 @@
                     v-if="isDeleteButton"
                     v-c-tooltip="{
                       content: 'Hapus',
-                      placement: 'top',
+                      placement: 'top'
                     }"
                     color="danger"
                     variant="outline"
@@ -237,7 +253,7 @@
                       class="m-1 w-full"
                       :disabled="
                         $func.isGenap(item.flagKirim) ||
-                        $func.isGanjil(item.flagDalnis)
+                          $func.isGanjil(item.flagDalnis)
                       "
                       @click="onAccTl(item)"
                     >
@@ -250,7 +266,7 @@
                       class="m-1 w-full"
                       :disabled="
                         $func.isGenap(item.flagKirim) ||
-                        $func.isGanjil(item.flagDalnis)
+                          $func.isGanjil(item.flagDalnis)
                       "
                       @click="onOpenMemoModal(item)"
                     >
@@ -355,79 +371,79 @@
 </template>
 
 <script>
-import axios from 'axios';
-import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
-import Multiselect from 'vue-multiselect';
-import mixin from './mixin';
+import axios from "axios";
+import ConfirmModal from "@/components/Confirm/ConfirmModal.vue";
+import Multiselect from "vue-multiselect";
+import mixin from "./mixin";
 
 export default {
-  name: 'TableTindakLanjut',
+  name: "TableTindakLanjut",
   components: {
     Multiselect,
-    ConfirmModal,
+    ConfirmModal
   },
   filters: {
     descCamelCase(val) {
-      if (!val) return '';
+      if (!val) return "";
       return val
-        .split(' ')
-        .map((w) => w[0].toUpperCase() + w.substr(1).toLowerCase())
-        .join(' ');
-    },
+        .split(" ")
+        .map(w => w[0].toUpperCase() + w.substr(1).toLowerCase())
+        .join(" ");
+    }
   },
   mixins: [mixin],
   props: {
     topTitle: {
       type: String,
-      default: '',
+      default: ""
     },
     title: {
       type: String,
-      default: '',
+      default: ""
     },
     descTitle: {
       type: String,
-      default: '',
+      default: ""
     },
     items: Object,
     fields: Object,
     clickableRows: Boolean,
     isEditButton: {
       type: Boolean,
-      default: true,
+      default: true
     },
     isDeleteButton: {
       type: Boolean,
-      default: true,
+      default: true
     },
     isAddButton: {
       type: Boolean,
-      default: true,
+      default: true
     },
     /* props ini dapat dari query params parent */
     filterlha: {
       type: String,
-      default: null,
+      default: null
     },
     /* props ini dapat dari query params */
     filtertemuan: {
       type: String,
-      default: null,
+      default: null
     },
 
     /* props ini dapat dari query params */
     filterrekomendasi: {
       type: String,
-      default: null,
-    },
+      default: null
+    }
   },
   data() {
     return {
-      valueLha: '',
+      valueLha: "",
       optionsLha: [],
-      valueTemuan: '',
+      valueTemuan: "",
       optionsTemuan: [],
-      valueRekomendasi: '',
+      valueRekomendasi: "",
       optionsRekomendasi: [],
       isOpenSend: false,
       isOpenPosting: false,
@@ -436,37 +452,38 @@ export default {
       memoModal: false,
       selectedItem: null,
       textMemo: null,
-      isOpenAcc: false,
+      isOpenAcc: false
     };
   },
   async mounted() {
+    this.$store.commit("ui/setTitleHeader", `${this.topTitle}`);
     if (localStorage.level == 3 || localStorage.level == 4) {
       this.isLevelAccess = true;
     }
     await this.selectLhaMounted();
   },
   emits: [
-    'clicked-row',
-    'open-create-modal',
-    'open-edit-modal',
-    'open-delete-modal',
-    'on-select-lha',
-    'on-select-temuan',
-    'on-select-rekomendasi',
-    'on-load-tl',
+    "clicked-row",
+    "open-create-modal",
+    "open-edit-modal",
+    "open-delete-modal",
+    "on-select-lha",
+    "on-select-temuan",
+    "on-select-rekomendasi",
+    "on-load-tl"
   ],
   methods: {
     clickedRow(item) {
-      this.$emit('clicked-row', item);
+      this.$emit("clicked-row", item);
     },
     openCreateModal() {
-      this.$emit('open-create-modal');
+      this.$emit("open-create-modal");
     },
     openEditModal(item) {
-      this.$emit('open-edit-modal', item);
+      this.$emit("open-edit-modal", item);
     },
     openDeleteModal(id) {
-      this.$emit('open-delete-modal', id);
+      this.$emit("open-delete-modal", id);
     },
 
     onLihatCatatan(item) {
@@ -482,17 +499,17 @@ export default {
         if (responseMemo.status == 200 && responseTolak.status == 200) {
           this.memoModal = false;
           this.selectedItem = null;
-          this.textMemo = '';
-          this.$emit('on-load-tl');
-          this.toastSuccess('Berhasil menyimpan memo');
-          this.toastSuccess('Berhasil menolak laporan');
+          this.textMemo = "";
+          this.$emit("on-load-tl");
+          this.toastSuccess("Berhasil menyimpan memo");
+          this.toastSuccess("Berhasil menolak laporan");
         } else {
           this.toastError(
-            'Terjadi kesalahan saat simpan memo dan tolak laporan'
+            "Terjadi kesalahan saat simpan memo dan tolak laporan"
           );
         }
       } catch (error) {
-        this.toastError('Terjadi kesalahan saat simpan memo dan tolak laporan');
+        this.toastError("Terjadi kesalahan saat simpan memo dan tolak laporan");
       }
     },
 
@@ -503,29 +520,29 @@ export default {
 
     async onSaveMemo() {
       return await axios({
-        method: 'POST',
+        method: "POST",
         baseURL: this.$apiAddress,
         data: {
-          _method: 'PATCH',
-          Catatan_Dalnis: this.textMemo,
+          _method: "PATCH",
+          Catatan_Dalnis: this.textMemo
         },
         url: `/api/dalnisaddmemotl/${this.selectedItem.id}`,
         params: {
           // _method: 'PATCH',
           // Catatan_Dalnis: this.textMemo,
-          token: localStorage.getItem('api_token'),
-        },
+          token: localStorage.getItem("api_token")
+        }
       });
     },
 
     async actionRejectDalnis() {
       return await axios({
-        method: 'PATCH',
+        method: "PATCH",
         baseURL: this.$apiAddress,
         url: `/api/dalnisactiontolaktl/${this.selectedItem.id}`,
         params: {
-          token: localStorage.getItem('api_token'),
-        },
+          token: localStorage.getItem("api_token")
+        }
       });
     },
 
@@ -536,20 +553,20 @@ export default {
 
     async actionAccDalnis() {
       const response = await axios({
-        method: 'PATCH',
+        method: "PATCH",
         baseURL: this.$apiAddress,
         url: `/api/dalnisactionacctl/${this.selectedItem.id}`,
         params: {
-          token: localStorage.getItem('api_token'),
-        },
+          token: localStorage.getItem("api_token")
+        }
       });
       if (response.status == 200) {
         this.isOpenAcc = false;
-        this.toastSuccess('Berhasil menyetujui Tindak Lanjut');
+        this.toastSuccess("Berhasil menyetujui Tindak Lanjut");
         this.selectedItem = null;
-        this.$emit('on-load-tl');
+        this.$emit("on-load-tl");
       } else {
-        this.toastError('Terjadi kesalahan saat acc laporan');
+        this.toastError("Terjadi kesalahan saat acc laporan");
       }
     },
 
@@ -565,21 +582,21 @@ export default {
       if (this.filterlha) {
         /** execute ketika setelah create dan edit */
         this.valueLha = this.optionsLha.filter(
-          (data) => data.id == this.filterlha
+          data => data.id == this.filterlha
         )[0];
       } else {
         /** execute ketika click */
         this.valueLha = this.optionsLha[0];
       }
       /** lempar value lha ke parent */
-      this.$emit('on-select-lha', this.valueLha);
+      this.$emit("on-select-lha", this.valueLha);
 
       await this.loadTemuan({ id: this.valueLha.id });
 
       if (this.optionsTemuan.length > 0 && this.filtertemuan) {
         /** execute ketika lha punya temuan dan setelah create dan edit */
         this.valueTemuan = this.optionsTemuan.filter(
-          (data) => data.id == this.filtertemuan
+          data => data.id == this.filtertemuan
         )[0];
         /** pilih temuan sesuai valuenya */
         this.onSelectTemuan();
@@ -590,9 +607,9 @@ export default {
         this.onSelectTemuan();
       } else {
         /* execute ketika lha tidak punya temuan */
-        this.valueTemuan = '';
+        this.valueTemuan = "";
         /* lempar temuan ke parent */
-        this.$emit('on-select-temuan', 'empty');
+        this.$emit("on-select-temuan", "empty");
       }
 
       await this.loadRekomendasi({ id: this.valueTemuan.id });
@@ -600,7 +617,7 @@ export default {
       if (this.optionsRekomendasi.length > 0 && this.filterrekomendasi) {
         /** execute ketika temuan punya rek dan setelah create dan edit */
         this.valueRekomendasi = this.optionsRekomendasi.filter(
-          (data) => data.id == this.filterrekomendasi
+          data => data.id == this.filterrekomendasi
         )[0];
         /** pilih rek sesuai valuenya */
         this.onSelectRekomendasi();
@@ -611,9 +628,9 @@ export default {
         this.onSelectRekomendasi();
       } else {
         /* execute ketika temuan tidak punya rek */
-        this.valueRekomendasi = '';
+        this.valueRekomendasi = "";
         /* lempar rek ke parent */
-        this.$emit('on-select-rekomendasi', 'empty');
+        this.$emit("on-select-rekomendasi", "empty");
       }
     },
 
@@ -622,7 +639,7 @@ export default {
      */
     async onSelectLha(val) {
       /* lempar value lha yang dipilih ke parent */
-      this.$emit('on-select-lha', val);
+      this.$emit("on-select-lha", val);
 
       await this.loadTemuan({ id: val.id });
 
@@ -633,12 +650,12 @@ export default {
         this.onSelectTemuan();
       } else {
         /* execute ketika lha tidak memiliki temuan */
-        this.valueTemuan = '';
+        this.valueTemuan = "";
         /* lempar value temuan ke parent */
-        this.$emit('on-select-temuan', 'empty');
-        this.valueRekomendasi = '';
+        this.$emit("on-select-temuan", "empty");
+        this.valueRekomendasi = "";
         /* lempar value rek ke parent */
-        this.$emit('on-select-rekomendasi', 'empty');
+        this.$emit("on-select-rekomendasi", "empty");
       }
     },
 
@@ -646,10 +663,10 @@ export default {
       /* lempar value temuan ke parent, ini jika select temuan menggunakan select*/
       if (val) {
         this.valueTemuan = val;
-        this.$emit('on-select-temuan', this.valueTemuan);
+        this.$emit("on-select-temuan", this.valueTemuan);
       } else {
         /* execute ketika selectnya tidak menggunakan autocomplete */
-        this.$emit('on-select-temuan', this.valueTemuan);
+        this.$emit("on-select-temuan", this.valueTemuan);
       }
 
       await this.loadRekomendasi({ id: this.valueTemuan.id });
@@ -661,18 +678,18 @@ export default {
         this.onSelectRekomendasi();
       } else {
         /* execute ketika temuan tidak punya rek */
-        this.valueRekomendasi = '';
+        this.valueRekomendasi = "";
         /* lempar rek ke parent */
-        this.$emit('on-select-rekomendasi', 'empty');
+        this.$emit("on-select-rekomendasi", "empty");
       }
     },
 
     onSelectRekomendasi(val) {
       if (val) {
         this.valueRekomendasi = val;
-        this.$emit('on-select-rekomendasi', this.valueRekomendasi);
+        this.$emit("on-select-rekomendasi", this.valueRekomendasi);
       } else {
-        this.$emit('on-select-rekomendasi', this.valueRekomendasi);
+        this.$emit("on-select-rekomendasi", this.valueRekomendasi);
       }
     },
 
@@ -684,7 +701,7 @@ export default {
       id,
       nomorTemuan,
       subKelompokTemuan,
-      kodeSubKelompokTemuan,
+      kodeSubKelompokTemuan
     }) {
       return `${nomorTemuan} - (${kodeSubKelompokTemuan}) ${subKelompokTemuan} `;
     },
@@ -693,7 +710,7 @@ export default {
       id,
       nomorRekomendasi,
       kodeSubKelompokRekomendasi,
-      subKelompokRekomendasi,
+      subKelompokRekomendasi
     }) {
       return `${nomorRekomendasi} - (${kodeSubKelompokRekomendasi}) ${subKelompokRekomendasi}`;
     },
@@ -713,19 +730,19 @@ export default {
 
     async actionSend() {
       const response = await axios({
-        method: 'PATCH',
+        method: "PATCH",
         baseURL: this.$apiAddress,
         url: `/api/kirimtl/${this.selectedItem.id}`,
         params: {
-          token: localStorage.getItem('api_token'),
-        },
+          token: localStorage.getItem("api_token")
+        }
       });
       if (response.status == 200) {
         this.isOpenSend = false;
         // this.toastSuccess('Berhasil mengirim laporan');
         this.toastSuccess(response.data.message);
         this.selectedItem = null;
-        this.$emit('on-load-tl');
+        this.$emit("on-load-tl");
       } else {
         // this.toastError('Terjadi kesalahan saat mengirim laporan');
         this.toastError(response.data.message);
@@ -768,42 +785,42 @@ export default {
 
     async actionPostingTl() {
       const response = await axios({
-        method: 'PATCH',
+        method: "PATCH",
         baseURL: this.$apiAddress,
         url: `/api/adminactionacctl/${this.selectedItem.id}`,
         params: {
-          token: localStorage.getItem('api_token'),
-        },
+          token: localStorage.getItem("api_token")
+        }
       });
       if (response.status == 200) {
         this.isOpenPosting = false;
-        this.toastSuccess('Berhasil memposting TL');
+        this.toastSuccess("Berhasil memposting TL");
         this.selectedItem = null;
-        this.$emit('on-load-tl');
+        this.$emit("on-load-tl");
       } else {
-        this.toastError('Terjadi kesalahan saat posting laporan');
+        this.toastError("Terjadi kesalahan saat posting laporan");
       }
     },
 
     async actionUnPostTl() {
       const response = await axios({
-        method: 'PATCH',
+        method: "PATCH",
         baseURL: this.$apiAddress,
         url: `/api/adminactionunpostingtl/${this.selectedItem.id}`,
         params: {
-          token: localStorage.getItem('api_token'),
-        },
+          token: localStorage.getItem("api_token")
+        }
       });
       if (response.status == 200) {
         this.isOpenUnPost = false;
-        this.toastSuccess('Berhasil membuka TL');
+        this.toastSuccess("Berhasil membuka TL");
         this.selectedItem = null;
-        this.$emit('on-load-tl');
+        this.$emit("on-load-tl");
       } else {
-        this.toastError('Terjadi kesalahan saat membuka laporan');
+        this.toastError("Terjadi kesalahan saat membuka laporan");
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -1,17 +1,34 @@
 <template>
   <CRow>
-    <CCol col="12" lg="6">
+    <CCol
+      col="12"
+      lg="6"
+    >
       <CCard>
         <CCardHeader> User id: {{ $route.params.id }} </CCardHeader>
         <CCardBody>
-          <CDataTable striped small fixed :items="items" :fields="fields">
-            <template slot="value" slot-scope="data">
+          <CDataTable
+            striped
+            small
+            fixed
+            :items="items"
+            :fields="fields"
+          >
+            <template
+              slot="value"
+              slot-scope="data"
+            >
               <strong>{{ data.item.value }}</strong>
             </template>
           </CDataTable>
         </CCardBody>
         <CCardFooter>
-          <CButton color="primary" @click="goBack"> Back </CButton>
+          <CButton
+            color="primary"
+            @click="goBack"
+          >
+            Back
+          </CButton>
         </CCardFooter>
       </CCard>
     </CCol>

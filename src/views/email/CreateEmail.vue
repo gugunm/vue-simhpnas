@@ -1,10 +1,17 @@
 <template>
   <CRow>
-    <CCol col="12" lg="6">
+    <CCol
+      col="12"
+      lg="6"
+    >
       <CCard no-header>
         <CCardBody>
           <h4>Create Email Template</h4>
-          <CAlert :show.sync="dismissCountDown" color="primary" fade>
+          <CAlert
+            :show.sync="dismissCountDown"
+            color="primary"
+            fade
+          >
             ({{ dismissCountDown }}) {{ message }}
           </CAlert>
 
@@ -30,8 +37,18 @@
             placeholder="Content.."
           />
 
-          <CButton color="primary" @click="store()"> Create </CButton>
-          <CButton color="primary" @click="goBack"> Back </CButton>
+          <CButton
+            color="primary"
+            @click="store()"
+          >
+            Create
+          </CButton>
+          <CButton
+            color="primary"
+            @click="goBack"
+          >
+            Back
+          </CButton>
         </CCardBody>
       </CCard>
     </CCol>

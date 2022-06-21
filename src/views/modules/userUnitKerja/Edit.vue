@@ -54,7 +54,10 @@
                       :searchable="true"
                       :allow-empty="false"
                     >
-                      <template slot="singleLabel" slot-scope="{ option }">
+                      <template
+                        slot="singleLabel"
+                        slot-scope="{ option }"
+                      >
                         <p>
                           {{ option.deskripsiLevel }}
                         </p>
@@ -76,7 +79,10 @@
                       :searchable="true"
                       :allow-empty="false"
                     >
-                      <template slot="singleLabel" slot-scope="{ option }">
+                      <template
+                        slot="singleLabel"
+                        slot-scope="{ option }"
+                      >
                         <p>
                           {{ option.deskripsi }}
                         </p>
@@ -94,7 +100,10 @@
                 class="my-4"
               />
               <CRow class="mt-10 view-form">
-                <CCol sm="12" lg="6">
+                <CCol
+                  sm="12"
+                  lg="6"
+                >
                   <CButton
                     variant="outline"
                     color="dark"
@@ -103,7 +112,11 @@
                     Kembali
                   </CButton>
                 </CCol>
-                <CCol sm="12" md="6" class="content-center justify-end pr-3">
+                <CCol
+                  sm="12"
+                  md="6"
+                  class="content-center justify-end pr-3"
+                >
                   <CButton
                     class="ml-1"
                     color="danger"
@@ -127,10 +140,19 @@
                     :disabled="!isValid"
                     @click="submit"
                   >
-                    <div v-if="loading" class="px-8">
-                      <CSpinner color="white" size="sm" class="mr-2" />
+                    <div
+                      v-if="loading"
+                      class="px-8"
+                    >
+                      <CSpinner
+                        color="white"
+                        size="sm"
+                        class="mr-2"
+                      />
                     </div>
-                    <template v-else> Submit Data </template>
+                    <template v-else>
+                      Submit Data
+                    </template>
                   </CButton>
                 </CCol>
               </CRow>

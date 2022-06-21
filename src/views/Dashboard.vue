@@ -36,6 +36,7 @@ export default {
     };
   },
   async mounted() {
+    this.$store.commit("ui/setTitleHeader", "Dashboard");
     await this.loadDashboardData();
 
     const result = localStorage.getItem("namaUnit");

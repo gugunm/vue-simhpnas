@@ -30,7 +30,10 @@
         </div>
       </slot>
     </CToggler> -->
-    <CHeaderBrand class="mx-auto d-lg-none" to="/">
+    <CHeaderBrand
+      class="mx-auto d-lg-none"
+      to="/"
+    >
       <!-- <CIcon name="logo" height="48" alt="Logo" /> -->
       <CImg
         class="sidebar-logo g-logo-expand h-7"

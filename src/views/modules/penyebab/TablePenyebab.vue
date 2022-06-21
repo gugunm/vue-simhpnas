@@ -1,16 +1,18 @@
 <template>
   <div>
-    <CRow class="px-3">
+    <!-- <CRow class="px-3">
       <CCol class="px-0" lg="12" sm="12">
         <h4 class="my-0 mt-1 mb-3 text-2xl font-semibold">
           {{ topTitle }} {{ title }} {{ descTitle | descCamelCase }}
         </h4>
       </CCol>
-    </CRow>
+    </CRow> -->
     <CCard>
       <CCardHeader style="background: #f9fafb; border-bottom: none">
         <CRow class="pt-3 pb-2">
-          <CCol lg="2" class="py-2 text-base"> Laporan Hasil Audit </CCol>
+          <CCol lg="2" class="py-2 text-base">
+            Laporan Hasil Audit
+          </CCol>
           <CCol lg="8">
             <multiselect
               v-if="optionsLha"
@@ -25,7 +27,9 @@
           </CCol>
         </CRow>
         <CRow class="pb-3 pt-2">
-          <CCol lg="2" class="py-2 text-base"> Nomor Temuan </CCol>
+          <CCol lg="2" class="py-2 text-base">
+            Nomor Temuan
+          </CCol>
           <CCol lg="8">
             <multiselect
               v-if="optionsTemuan"
@@ -42,11 +46,15 @@
       </CCardHeader>
       <CRow v-if="valueTemuan" class="px-3 pt-3">
         <CCol lg="2" class="border-r">
-          <p class="text-base mb-1">Nilai Temuan</p>
+          <p class="text-base mb-1">
+            Nilai Temuan
+          </p>
           <p>{{ $func.convertToRupiah(valueTemuan.nilaiTemuan) }}</p>
         </CCol>
         <CCol lg="10">
-          <p class="text-base mb-1">Memo Temuan</p>
+          <p class="text-base mb-1">
+            Memo Temuan
+          </p>
           <p class="break-words">
             {{ valueTemuan.memoTemuan }}
           </p>
@@ -104,13 +112,15 @@
           </template>
 
           <template #actions="{ item }">
-            <td v-if="statusReview">No Actions</td>
+            <td v-if="statusReview">
+              No Actions
+            </td>
             <td v-else class="py-2 d-flex justify-content-center">
               <CButton
                 v-if="isEditButton"
                 v-c-tooltip="{
                   content: 'Edit',
-                  placement: 'top',
+                  placement: 'top'
                 }"
                 color="warning"
                 variant="outline"
@@ -139,7 +149,7 @@
                 v-if="isDeleteButton"
                 v-c-tooltip="{
                   content: 'Hapus',
-                  placement: 'top',
+                  placement: 'top'
                 }"
                 color="danger"
                 variant="outline"
@@ -169,99 +179,100 @@
 </template>
 
 <script>
-import Multiselect from 'vue-multiselect';
-import mixin from './mixin';
+import Multiselect from "vue-multiselect";
+import mixin from "./mixin";
 
 export default {
-  name: 'TablePenyebab',
+  name: "TablePenyebab",
   components: {
-    Multiselect,
+    Multiselect
   },
   filters: {
     descCamelCase(val) {
-      if (!val) return '';
+      if (!val) return "";
       return val
-        .split(' ')
-        .map((w) => w[0].toUpperCase() + w.substr(1).toLowerCase())
-        .join(' ');
-    },
+        .split(" ")
+        .map(w => w[0].toUpperCase() + w.substr(1).toLowerCase())
+        .join(" ");
+    }
   },
   mixins: [mixin],
   props: {
     topTitle: {
       type: String,
-      default: '',
+      default: ""
     },
     title: {
       type: String,
-      default: '',
+      default: ""
     },
     descTitle: {
       type: String,
-      default: '',
+      default: ""
     },
     items: Object,
     fields: Object,
     clickableRows: Boolean,
     isEditButton: {
       type: Boolean,
-      default: true,
+      default: true
     },
     isDeleteButton: {
       type: Boolean,
-      default: true,
+      default: true
     },
     isAddButton: {
       type: Boolean,
-      default: true,
+      default: true
     },
     /* props ini dapat dari query params parent */
     filterlha: {
       type: String,
-      default: null,
+      default: null
     },
     /* props ini dapat dari query params */
     filtertemuan: {
       type: String,
-      default: null,
-    },
+      default: null
+    }
   },
   data() {
     return {
-      valueLha: '',
+      valueLha: "",
       optionsLha: [],
-      valueTemuan: '',
-      optionsTemuan: [],
+      valueTemuan: "",
+      optionsTemuan: []
     };
   },
   computed: {
-    statusReview: function () {
+    statusReview: function() {
       return Number(this.valueLha.flagKirim) % 2 == 0 ? false : true;
-    },
+    }
   },
   async mounted() {
+    this.$store.commit("ui/setTitleHeader", `${this.topTitle}`);
     await this.selectLhaMounted();
   },
   emits: [
-    'clicked-row',
-    'open-create-modal',
-    'open-edit-modal',
-    'open-delete-modal',
-    'on-select-lha',
-    'on-select-temuan',
+    "clicked-row",
+    "open-create-modal",
+    "open-edit-modal",
+    "open-delete-modal",
+    "on-select-lha",
+    "on-select-temuan"
   ],
   methods: {
     clickedRow(item) {
-      this.$emit('clicked-row', item);
+      this.$emit("clicked-row", item);
     },
     openCreateModal() {
-      this.$emit('open-create-modal');
+      this.$emit("open-create-modal");
     },
     openEditModal(item) {
-      this.$emit('open-edit-modal', item);
+      this.$emit("open-edit-modal", item);
     },
     openDeleteModal(id) {
-      this.$emit('open-delete-modal', id);
+      this.$emit("open-delete-modal", id);
     },
 
     /**
@@ -276,21 +287,21 @@ export default {
       if (this.filterlha) {
         /** execute ketika setelah create dan edit */
         this.valueLha = this.optionsLha.filter(
-          (data) => data.id == this.filterlha
+          data => data.id == this.filterlha
         )[0];
       } else {
         /** execute ketika click */
         this.valueLha = this.optionsLha[0];
       }
       /** lempar value lha ke parent */
-      this.$emit('on-select-lha', this.valueLha);
+      this.$emit("on-select-lha", this.valueLha);
 
       await this.loadTemuan({ id: this.valueLha.id });
 
       if (this.optionsTemuan.length > 0 && this.filtertemuan) {
         /** execute ketika lha punya temuan dan setelah create dan edit */
         this.valueTemuan = this.optionsTemuan.filter(
-          (data) => data.id == this.filtertemuan
+          data => data.id == this.filtertemuan
         )[0];
         /** pilih temuan sesuai valuenya */
         this.onSelectTemuan();
@@ -301,9 +312,9 @@ export default {
         this.onSelectTemuan();
       } else {
         /* execute ketika lha tidak punya temuan */
-        this.valueTemuan = '';
+        this.valueTemuan = "";
         /* lempar temuan ke parent */
-        this.$emit('on-select-temuan', 'empty');
+        this.$emit("on-select-temuan", "empty");
       }
     },
 
@@ -312,7 +323,7 @@ export default {
      */
     async onSelectLha(val) {
       /* lempar value lha yang dipilih ke parent */
-      this.$emit('on-select-lha', val);
+      this.$emit("on-select-lha", val);
 
       await this.loadTemuan({ id: val.id });
 
@@ -323,9 +334,9 @@ export default {
         this.onSelectTemuan();
       } else {
         /* execute ketika lha tidak memiliki temuan */
-        this.valueTemuan = '';
+        this.valueTemuan = "";
         /* lempar value temuan ke parent */
-        this.$emit('on-select-temuan', 'empty');
+        this.$emit("on-select-temuan", "empty");
       }
     },
 
@@ -336,10 +347,10 @@ export default {
     onSelectTemuan(val) {
       if (val) {
         /* lempar value temuan ke parent, ini jika select temuan menggunakan select*/
-        this.$emit('on-select-temuan', val);
+        this.$emit("on-select-temuan", val);
       } else {
         /* execute ketika selectnya tidak menggunakan autocomplete */
-        this.$emit('on-select-temuan', this.valueTemuan);
+        this.$emit("on-select-temuan", this.valueTemuan);
       }
     },
 
@@ -350,11 +361,11 @@ export default {
       id,
       nomorTemuan,
       subKelompokTemuan,
-      kodeSubKelompokTemuan,
+      kodeSubKelompokTemuan
     }) {
       return `${nomorTemuan} - (${kodeSubKelompokTemuan}) ${subKelompokTemuan} `;
-    },
-  },
+    }
+  }
 };
 </script>
 

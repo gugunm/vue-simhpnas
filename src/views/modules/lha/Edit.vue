@@ -1,5 +1,8 @@
 <template>
-  <Form mode="edit" :id-lha="idLha" />
+  <Form
+    mode="edit"
+    :id-lha="idLha"
+  />
 </template>
 
 <script>

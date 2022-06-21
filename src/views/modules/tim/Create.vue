@@ -1,6 +1,10 @@
 <template>
   <div>
-    <Form mode="create" :items="items" @on-load-tim="loadTim" />
+    <Form
+      mode="create"
+      :items="items"
+      @on-load-tim="loadTim"
+    />
   </div>
 </template>
 

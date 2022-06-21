@@ -1,11 +1,18 @@
 <template>
   <div>
     <CRow v-if="marker">
-      <CCol col="6" lg="6">
+      <CCol
+        col="6"
+        lg="6"
+      >
         <CCard no-header>
           <CCardBody>
             <h3>Create Bread</h3>
-            <CAlert :show.sync="dismissCountDown" color="primary" fade>
+            <CAlert
+              :show.sync="dismissCountDown"
+              color="primary"
+              fade
+            >
               ({{ dismissCountDown }}) {{ message }}
             </CAlert>
             <div>
@@ -16,21 +23,36 @@
                 placeholder="Table name in database"
               />
 
-              <CButton color="primary" @click="choiceTableInDatabase()">
+              <CButton
+                color="primary"
+                @click="choiceTableInDatabase()"
+              >
                 Select
               </CButton>
-              <CButton color="primary" @click="goBack"> Back </CButton>
+              <CButton
+                color="primary"
+                @click="goBack"
+              >
+                Back
+              </CButton>
             </div>
           </CCardBody>
         </CCard>
       </CCol>
     </CRow>
     <CRow v-else>
-      <CCol col="6" lg="6">
+      <CCol
+        col="6"
+        lg="6"
+      >
         <CCard no-header>
           <CCardBody>
             <h3>Create Bread</h3>
-            <CAlert :show.sync="dismissCountDown" color="primary" fade>
+            <CAlert
+              :show.sync="dismissCountDown"
+              color="primary"
+              fade
+            >
               ({{ dismissCountDown }}) {{ message }}
             </CAlert>
             <CInput
@@ -75,7 +97,10 @@
           </CCardBody>
         </CCard>
       </CCol>
-      <CCol col="6" lg="6">
+      <CCol
+        col="6"
+        lg="6"
+      >
         <CCard no-header>
           <CCardBody>
             <h4>Assign to roles:</h4>
@@ -90,7 +115,10 @@
           </CCardBody>
         </CCard>
       </CCol>
-      <CCol col="6" lg="6">
+      <CCol
+        col="6"
+        lg="6"
+      >
         <CCard no-header>
           <CCardBody>
             <CreateBreadFieldCard
@@ -103,10 +131,18 @@
               @sendData="receiveDataFormField"
             />
 
-            <CButton class="mt-2" color="primary" @click="storeFirstStep()">
+            <CButton
+              class="mt-2"
+              color="primary"
+              @click="storeFirstStep()"
+            >
               Create
             </CButton>
-            <CButton class="mt-2" color="primary" @click="marker = true">
+            <CButton
+              class="mt-2"
+              color="primary"
+              @click="marker = true"
+            >
               Back
             </CButton>
           </CCardBody>

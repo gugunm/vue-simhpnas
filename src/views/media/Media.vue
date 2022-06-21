@@ -1,6 +1,9 @@
 <template>
   <CRow>
-    <CCol col="12" xl="6">
+    <CCol
+      col="12"
+      xl="6"
+    >
       <transition name="slide">
         <CCard>
           <CCardBody>
@@ -15,7 +18,10 @@
               Return
             </CButton>
 
-            <CButton color="primary" @click="addFolder()">
+            <CButton
+              color="primary"
+              @click="addFolder()"
+            >
               <CIcon :content="$options.plusIcon" />
               <CIcon :content="$options.folderIcon" />
               New folder
@@ -29,7 +35,11 @@
               @change="handleFileUpload"
             />
 
-            <CDataTable hover :items="items" :fields="fields">
+            <CDataTable
+              hover
+              :items="items"
+              :fields="fields"
+            >
               <template #name="{ item }">
                 <td
                   v-if="item.type == 'folder'"
@@ -66,7 +76,10 @@
                   </CButton>
                 </td>
                 <td v-if="item.type == 'file'">
-                  <CButton color="primary" @click="copyFile(item.id)">
+                  <CButton
+                    color="primary"
+                    @click="copyFile(item.id)"
+                  >
                     Copy
                   </CButton>
                 </td>
@@ -104,11 +117,17 @@
         </CCard>
       </transition>
     </CCol>
-    <CCol col="12" xl="6">
+    <CCol
+      col="12"
+      xl="6"
+    >
       <transition name="slide">
         <CCard v-if="rightCard == 'fileInfo'">
           <CCardBody>
-            <CDataTable :items="fileInfo" :fields="fileInfoHeader" />
+            <CDataTable
+              :items="fileInfo"
+              :fields="fileInfoHeader"
+            />
           </CCardBody>
         </CCard>
         <CCard v-if="rightCard == 'renameFolder'">
@@ -119,8 +138,16 @@
               label="New name"
               placeholder="Folder name"
             />
-            <CButton color="primary" @click="renameFolder()"> Save </CButton>
-            <CButton color="primary" @click="rightCard = 'fileInfo'">
+            <CButton
+              color="primary"
+              @click="renameFolder()"
+            >
+              Save
+            </CButton>
+            <CButton
+              color="primary"
+              @click="rightCard = 'fileInfo'"
+            >
               Cancel
             </CButton>
           </CCardBody>
@@ -133,8 +160,16 @@
               label="New name"
               placeholder="Folder name"
             />
-            <CButton color="primary" @click="renameFile()"> Save </CButton>
-            <CButton color="primary" @click="rightCard = 'fileInfo'">
+            <CButton
+              color="primary"
+              @click="renameFile()"
+            >
+              Save
+            </CButton>
+            <CButton
+              color="primary"
+              @click="rightCard = 'fileInfo'"
+            >
               Cancel
             </CButton>
           </CCardBody>
@@ -157,7 +192,11 @@
               name="selectFolderForFolder"
               @update:checked="selectFolderRadioInput(item.id)"
             />
-            <CButton color="primary" class="mt-4" @click="moveFolder()">
+            <CButton
+              color="primary"
+              class="mt-4"
+              @click="moveFolder()"
+            >
               Save
             </CButton>
             <CButton
@@ -187,7 +226,11 @@
               name="selectFolderForFolder"
               @update:checked="selectFolderRadioInput(item.id)"
             />
-            <CButton color="primary" class="mt-4" @click="moveFile()">
+            <CButton
+              color="primary"
+              class="mt-4"
+              @click="moveFile()"
+            >
               Save
             </CButton>
             <CButton
@@ -208,19 +251,39 @@
     >
       Are you sure to delete a folder named "{{ moveObjectName }}"?
       <template #footer>
-        <CButton color="primary" @click="deleteFolderModal = false">
+        <CButton
+          color="primary"
+          @click="deleteFolderModal = false"
+        >
           Cancel
         </CButton>
-        <CButton color="danger" @click="deleteFolder"> Delete </CButton>
+        <CButton
+          color="danger"
+          @click="deleteFolder"
+        >
+          Delete
+        </CButton>
       </template>
     </CModal>
-    <CModal :show.sync="deleteFileModal" :centered="true" title="Delete file">
+    <CModal
+      :show.sync="deleteFileModal"
+      :centered="true"
+      title="Delete file"
+    >
       Are you sure to delete a file named "{{ moveObjectName }}"?
       <template #footer>
-        <CButton color="primary" @click="deleteFileModal = false">
+        <CButton
+          color="primary"
+          @click="deleteFileModal = false"
+        >
           Cancel
         </CButton>
-        <CButton color="danger" @click="deleteFile"> Delete </CButton>
+        <CButton
+          color="danger"
+          @click="deleteFile"
+        >
+          Delete
+        </CButton>
       </template>
     </CModal>
 
@@ -230,10 +293,20 @@
       title="Cropp image"
       size="lg"
     >
-      <img id="cropp-img-img" />
+      <img id="cropp-img-img">
       <template #footer>
-        <CButton color="primary" @click="croppModal = false"> Cancel </CButton>
-        <CButton color="primary" @click="croppImage"> Cropp </CButton>
+        <CButton
+          color="primary"
+          @click="croppModal = false"
+        >
+          Cancel
+        </CButton>
+        <CButton
+          color="primary"
+          @click="croppImage"
+        >
+          Cropp
+        </CButton>
       </template>
     </CModal>
   </CRow>

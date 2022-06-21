@@ -12,7 +12,10 @@
           </CCardHeader>
           <CCardBody>
             <CRow>
-              <CCol md="2" class="flex justify-center">
+              <CCol
+                md="2"
+                class="flex justify-center"
+              >
                 <div
                   class="
                     w-32
@@ -32,7 +35,7 @@
                       `https://avatars.dicebear.com/api/bottts/${profile.name}.svg?background=%23dbeafe&scale=80`
                     "
                     class="c-avatar-img w-full h-full"
-                  />
+                  >
                 </div>
               </CCol>
               <CCol md="10">

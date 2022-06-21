@@ -66,7 +66,10 @@
               </td>
             </template>
           </CDataTable>
-          <CPagination :pages="maxPages" :active-page.sync="activePage" />
+          <CPagination
+            :pages="maxPages"
+            :active-page.sync="activePage"
+          />
         </CCardBody>
       </CCard>
     </CCol>

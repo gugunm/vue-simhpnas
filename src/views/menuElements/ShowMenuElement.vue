@@ -1,10 +1,17 @@
 <template>
   <CRow>
-    <CCol col="12" lg="12">
+    <CCol
+      col="12"
+      lg="12"
+    >
       <CCard no-header>
         <CCardBody>
           <h3>Show Menu Element</h3>
-          <CAlert :show.sync="dismissCountDown" color="primary" fade>
+          <CAlert
+            :show.sync="dismissCountDown"
+            color="primary"
+            fade
+          >
             ({{ dismissCountDown }}) {{ message }}
           </CAlert>
           <h4>Menu</h4>
@@ -12,7 +19,10 @@
           <h4>User Roles</h4>
           {{ roles }}
           <h4>Name</h4>
-          <p v-for="lang in menuLangs" :key="lang.id">
+          <p
+            v-for="lang in menuLangs"
+            :key="lang.id"
+          >
             {{ lang.lang }} - {{ lang.name }}
           </p>
           <h4>Type</h4>
@@ -23,8 +33,13 @@
           {{ menuelement.parent_name }}
           <h4>Icon</h4>
           {{ menuelement.icon }}
-          <br /><br />
-          <CButton color="primary" @click="goBack"> Back </CButton>
+          <br><br>
+          <CButton
+            color="primary"
+            @click="goBack"
+          >
+            Back
+          </CButton>
         </CCardBody>
       </CCard>
     </CCol>

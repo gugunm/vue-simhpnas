@@ -8,7 +8,10 @@
     @update:show="value => $store.commit('ui/set', ['sidebarShow', value])"
   >
     <!-- :fixed="true" -->
-    <CSidebarBrand class="d-md-down-none bg-sidebar py-4" to="/">
+    <CSidebarBrand
+      class="d-md-down-none bg-sidebar py-4"
+      to="/"
+    >
       <!-- <CIcon
         class="c-sidebar-brand-full"
         name="logo"
@@ -39,7 +42,10 @@
         src="img/simhp/icon-logo-white.svg"
       /> -->
     </CSidebarBrand>
-    <CRenderFunction flat :content-to-render="nav" />
+    <CRenderFunction
+      flat
+      :content-to-render="nav"
+    />
     <!-- <CSidebarMinimizer
       class="c-d-md-down-none bg-transparent border-0"
       @click.native="$store.commit('ui/toggle', 'sidebarMinimize')"

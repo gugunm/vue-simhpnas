@@ -5,16 +5,23 @@
         <CCardGroup>
           <CCard class="p-4">
             <CCardBody>
-              <CForm method="POST" @submit.prevent="submitForm">
+              <CForm
+                method="POST"
+                @submit.prevent="submitForm"
+              >
                 <h1>Login</h1>
-                <p class="text-muted">Sign In to your account</p>
+                <p class="text-muted">
+                  Sign In to your account
+                </p>
                 <CInput
                   v-model="email"
                   prepend-html="<i class='cui-user'></i>"
                   placeholder="Email"
                   autocomplete="email"
                 >
-                  <template #prepend-content> @ </template>
+                  <template #prepend-content>
+                    @
+                  </template>
                   <!-- <template #prepend-content><CIcon name="cil-user"/></template> -->
                 </CInput>
                 <CInput
@@ -29,12 +36,22 @@
                   </template>
                 </CInput>
                 <CRow>
-                  <CCol col="6" class="text-left">
-                    <CButton type="submit" color="dark" class="px-4">
+                  <CCol
+                    col="6"
+                    class="text-left"
+                  >
+                    <CButton
+                      type="submit"
+                      color="dark"
+                      class="px-4"
+                    >
                       Login
                     </CButton>
                   </CCol>
-                  <CCol col="6" class="text-right">
+                  <CCol
+                    col="6"
+                    class="text-right"
+                  >
                     <!-- <CButton color="link" class="px-0">Forgot password?</CButton> -->
                     <!-- <CButton color="link" class="d-md-none" @click="goRegister()">Register now!</CButton> -->
                   </CCol>

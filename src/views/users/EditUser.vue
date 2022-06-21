@@ -1,13 +1,20 @@
 <template>
   <CRow>
-    <CCol col="12" lg="6">
+    <CCol
+      col="12"
+      lg="6"
+    >
       <CCard no-header>
         <CCardBody>
           <CForm>
             <template slot="header">
               Edit User id: {{ $route.params.id }}
             </template>
-            <CAlert :show.sync="dismissCountDown" color="primary" fade>
+            <CAlert
+              :show.sync="dismissCountDown"
+              color="primary"
+              fade
+            >
               ({{ dismissCountDown }}) {{ message }}
             </CAlert>
             <CInput
@@ -24,8 +31,18 @@
               label="Email"
               placeholder="Email"
             />
-            <CButton color="primary" @click="update()"> Save </CButton>
-            <CButton color="primary" @click="goBack"> Back </CButton>
+            <CButton
+              color="primary"
+              @click="update()"
+            >
+              Save
+            </CButton>
+            <CButton
+              color="primary"
+              @click="goBack"
+            >
+              Back
+            </CButton>
           </CForm>
         </CCardBody>
       </CCard>

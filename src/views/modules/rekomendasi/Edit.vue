@@ -1,6 +1,9 @@
 <template>
   <div>
-    <Form mode="edit" :id-rekomendasi="idRekomendasi" />
+    <Form
+      mode="edit"
+      :id-rekomendasi="idRekomendasi"
+    />
   </div>
 </template>
 

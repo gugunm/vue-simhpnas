@@ -27,17 +27,17 @@
       </CWrapper>
     </div>
     <div v-else class="grid-wrapper">
-      <div class="flex justify-center items-center">
+      <div class="flex justify-center items-center border-b">
         <h1 class="title-gradient tracking-wide">
           SimhpNas
         </h1>
       </div>
-      <div class="">
-        <TheHeader
-          class="bg-body-primary text-blue-1 border-t-0 border-b-0"
-          @change-locale="changeLocale"
-        />
-      </div>
+      <!-- <div class="border-b"> -->
+      <TheHeader
+        class="bg-body-primary text-blue-1"
+        @change-locale="changeLocale"
+      />
+      <!-- </div> -->
       <div class="overflow-auto">
         <TheSidebar
           v-if="!mobileScreen"

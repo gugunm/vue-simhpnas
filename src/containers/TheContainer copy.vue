@@ -4,7 +4,10 @@
     :class="{ 'c-dark-theme': $store.state.ui.darkMode }"
   >
     <!-- <div> -->
-    <TheSidebar v-if="!!mobileScreen" :locale="locale" />
+    <TheSidebar
+      v-if="!!mobileScreen"
+      :locale="locale"
+    />
     <CWrapper>
       <TheHeader
         class="bg-body-primary text-blue-1 border-t-0 border-b-0 fixed"

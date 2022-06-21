@@ -22,14 +22,20 @@
                 </CButton>
               </div>
 
-              <div class="p-3" style="background: #f9fafb">
+              <div
+                class="p-3"
+                style="background: #f9fafb"
+              >
                 <h5
                   v-if="form.flagTpk == 1"
                   class="text-base font-semibold text-red-500"
                 >
                   Data Umum LHA Tindak Pidana Khusus
                 </h5>
-                <h5 v-else class="text-base font-semibold">
+                <h5
+                  v-else
+                  class="text-base font-semibold"
+                >
                   Data Umum LHA
                 </h5>
               </div>
@@ -139,7 +145,10 @@
               </div>
 
               <!-- DATA OBRIIK -->
-              <div class="p-3" style="background: #f9fafb">
+              <div
+                class="p-3"
+                style="background: #f9fafb"
+              >
                 <h5 class="text-base font-semibold">
                   Data Obrik
                 </h5>
@@ -210,7 +219,10 @@
               </div>
 
               <!-- DATA ANGGARAAN -->
-              <div class="p-3" style="background: #f9fafb">
+              <div
+                class="p-3"
+                style="background: #f9fafb"
+              >
                 <h5 class="text-base font-semibold">
                   Data Anggaran
                 </h5>
@@ -262,7 +274,10 @@
               </div>
 
               <!-- DATA WILAYAH -->
-              <div class="p-3" style="background: #f9fafb">
+              <div
+                class="p-3"
+                style="background: #f9fafb"
+              >
                 <h5 class="text-base font-semibold">
                   Data Wilayah
                 </h5>
@@ -368,9 +383,10 @@
                     <div class="p-3 mb-2 h5 bg-blue-200">
                       <span class="mr-2"> Temuan Nomor</span>
                       <span>{{ itemTemuan.nomorTemuan }} </span>
-                      <span v-if="itemTemuan.flagTpk == 1" class="text-red-500"
-                        >(Temuan Investigatif)</span
-                      >
+                      <span
+                        v-if="itemTemuan.flagTpk == 1"
+                        class="text-red-500"
+                      >(Temuan Investigatif)</span>
                     </div>
                     <CRow>
                       <CCol lg="6">
@@ -432,7 +448,10 @@
                             Memiliki Penyebab
                           </h5>
                         </div>
-                        <div v-else class="pt-4 pb-2">
+                        <div
+                          v-else
+                          class="pt-4 pb-2"
+                        >
                           <div
                             v-for="itemPenyebab in itemTemuan.dataPenyebab"
                             :key="itemPenyebab.nomorPenyebab"
@@ -486,7 +505,10 @@
                             Memiliki Rekomendasi
                           </h5>
                         </div>
-                        <div v-else class="pt-4 pb-2">
+                        <div
+                          v-else
+                          class="pt-4 pb-2"
+                        >
                           <div
                             v-for="itemRek in itemTemuan.dataRekomendasi"
                             :key="itemRek.nomorRekomendasi"
@@ -557,10 +579,13 @@
                                       Memiliki Pelaku
                                     </h5>
                                   </div>
-                                  <div v-else class="pt-2 pb-2">
+                                  <div
+                                    v-else
+                                    class="pt-2 pb-2"
+                                  >
                                     <div
                                       v-for="(itemPelaku,
-                                      index) in itemRek.dataPelaku"
+                                              index) in itemRek.dataPelaku"
                                       :key="itemPelaku.nip"
                                       class="px-4 mb-3"
                                     >
@@ -620,7 +645,10 @@
                                       Memiliki Tindak Lanjut
                                     </h5>
                                   </div>
-                                  <div v-else class="pt-2 pb-2">
+                                  <div
+                                    v-else
+                                    class="pt-2 pb-2"
+                                  >
                                     <div
                                       v-for="itemTl in itemRek.dataTl"
                                       :key="itemTl.id"
@@ -679,7 +707,7 @@
                     </CTabs>
                   </div>
                   <div v-if="index != form.dataTemuan.length - 1">
-                    <hr />
+                    <hr>
                   </div>
                 </div>
               </div>
@@ -688,7 +716,12 @@
         </CCardBody>
       </CCard>
     </CCol>
-    <CModal title="File LHA" color="info" :show.sync="isOpenFile" size="lg">
+    <CModal
+      title="File LHA"
+      color="info"
+      :show.sync="isOpenFile"
+      size="lg"
+    >
       <embed
         :src="
           form.isStored == 1
@@ -698,7 +731,7 @@
         type="application/pdf"
         width="100%"
         height="550px"
-      />
+      >
       <template #footer-wrapper>
         <div />
       </template>

@@ -1,10 +1,17 @@
 <template>
   <CRow>
-    <CCol col="12" lg="6">
+    <CCol
+      col="12"
+      lg="6"
+    >
       <CCard>
         <CCardBody>
           <h3>Edit Role id: {{ $route.params.id }}</h3>
-          <CAlert :show.sync="dismissCountDown" color="primary" fade>
+          <CAlert
+            :show.sync="dismissCountDown"
+            color="primary"
+            fade
+          >
             ({{ dismissCountDown }}) {{ message }}
           </CAlert>
           <CInput
@@ -13,8 +20,18 @@
             type="text"
             placeholder="Name"
           />
-          <CButton color="primary" @click="update()"> Save </CButton>
-          <CButton color="primary" @click="goBack"> Back </CButton>
+          <CButton
+            color="primary"
+            @click="update()"
+          >
+            Save
+          </CButton>
+          <CButton
+            color="primary"
+            @click="goBack"
+          >
+            Back
+          </CButton>
         </CCardBody>
       </CCard>
     </CCol>

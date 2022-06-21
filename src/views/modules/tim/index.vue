@@ -13,7 +13,10 @@
       @open-delete-modal="openDeleteModal"
       @on-select-lha="onSelectLha"
     />
-    <Loading :active.sync="loading" :is-full-page="true" />
+    <Loading
+      :active.sync="loading"
+      :is-full-page="true"
+    />
     <confirm-modal
       v-model="isDeleteConfirm"
       title="Hapus data"

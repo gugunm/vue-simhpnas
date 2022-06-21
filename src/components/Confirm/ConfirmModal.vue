@@ -28,7 +28,10 @@
               </p>
             </div>
           </div>
-          <div class="flex justify-end px-4 py-3" style="background: #f9fafb">
+          <div
+            class="flex justify-end px-4 py-3"
+            style="background: #f9fafb"
+          >
             <CButton
               class="mr-2"
               color="dark"
@@ -37,7 +40,10 @@
             >
               Oke
             </CButton>
-            <CButton color="info" @click="confirmCancel">
+            <CButton
+              color="info"
+              @click="confirmCancel"
+            >
               Cancel
             </CButton>
           </div>

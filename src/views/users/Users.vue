@@ -1,11 +1,18 @@
 <template>
   <CRow>
-    <CCol col="12" xl="12">
+    <CCol
+      col="12"
+      xl="12"
+    >
       <transition name="slide">
         <CCard>
           <CCardHeader> Users </CCardHeader>
           <CCardBody>
-            <CAlert :show.sync="dismissCountDown" color="primary" fade>
+            <CAlert
+              :show.sync="dismissCountDown"
+              color="primary"
+              fade
+            >
               ({{ dismissCountDown }}) {{ message }}
             </CAlert>
             <CDataTable
@@ -23,14 +30,20 @@
               </template>
               <template #show="{ item }">
                 <td>
-                  <CButton color="primary" @click="showUser(item.id)">
+                  <CButton
+                    color="primary"
+                    @click="showUser(item.id)"
+                  >
                     Show
                   </CButton>
                 </td>
               </template>
               <template #edit="{ item }">
                 <td>
-                  <CButton color="primary" @click="editUser(item.id)">
+                  <CButton
+                    color="primary"
+                    @click="editUser(item.id)"
+                  >
                     Edit
                   </CButton>
                 </td>

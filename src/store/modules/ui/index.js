@@ -10,7 +10,7 @@ export default {
       sidebarMinimize: false,
       asideShow: false,
       darkMode: false,
-      titleHeader: "Judul Menu"
+      titleHeader: "Dashboard"
     };
   },
   mutations,

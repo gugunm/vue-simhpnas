@@ -1,14 +1,29 @@
 <template>
   <div>
     <CRow class="px-3">
-      <CCol class="px-0" lg="12" sm="12">
+      <CCol
+        class="px-0"
+        lg="12"
+        sm="12"
+      >
         <h4 class="my-0 mt-1 mb-3 text-2xl font-semibold">
           {{ topTitle }} {{ title }} {{ descTitle | descCamelCase }}
         </h4>
       </CCol>
-      <CCol class="px-0 mb-4" lg="12" sm="12">
-        <CButton color="info" class="px-4" @click="openCreateModal">
-          <CIcon name="cil-plus" class="my-0 mb-1 mr-1" /> Tambah
+      <CCol
+        class="px-0 mb-4"
+        lg="12"
+        sm="12"
+      >
+        <CButton
+          color="info"
+          class="px-4"
+          @click="openCreateModal"
+        >
+          <CIcon
+            name="cil-plus"
+            class="my-0 mb-1 mr-1"
+          /> Tambah
         </CButton>
       </CCol>
     </CRow>

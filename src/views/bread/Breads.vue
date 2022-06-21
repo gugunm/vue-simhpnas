@@ -1,14 +1,24 @@
 <template>
   <CRow>
-    <CCol col="12" xl="12">
+    <CCol
+      col="12"
+      xl="12"
+    >
       <transition name="slide">
         <CCard>
           <CCardBody>
             <h4>Breads</h4>
-            <CButton color="primary" @click="createBread()">
+            <CButton
+              color="primary"
+              @click="createBread()"
+            >
               Create Bread
             </CButton>
-            <CAlert :show.sync="dismissCountDown" color="primary" fade>
+            <CAlert
+              :show.sync="dismissCountDown"
+              color="primary"
+              fade
+            >
               ({{ dismissCountDown }}) {{ message }}
             </CAlert>
             <CDataTable
@@ -25,28 +35,40 @@
               </template>
               <template #goto="{ item }">
                 <td>
-                  <CButton color="primary" @click="goto(item.id)">
+                  <CButton
+                    color="primary"
+                    @click="goto(item.id)"
+                  >
                     Go to resources
                   </CButton>
                 </td>
               </template>
               <template #show="{ item }">
                 <td>
-                  <CButton color="primary" @click="showBread(item.id)">
+                  <CButton
+                    color="primary"
+                    @click="showBread(item.id)"
+                  >
                     Show
                   </CButton>
                 </td>
               </template>
               <template #edit="{ item }">
                 <td>
-                  <CButton color="primary" @click="editBread(item.id)">
+                  <CButton
+                    color="primary"
+                    @click="editBread(item.id)"
+                  >
                     Edit
                   </CButton>
                 </td>
               </template>
               <template #delete="{ item }">
                 <td>
-                  <CButton color="danger" @click="deleteBread(item.id)">
+                  <CButton
+                    color="danger"
+                    @click="deleteBread(item.id)"
+                  >
                     Delete
                   </CButton>
                 </td>

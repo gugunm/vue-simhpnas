@@ -2,8 +2,9 @@
   <div>
     <CRow class="px-3">
       <CCol class="px-0" lg="12" sm="12">
-        <h4 class="my-0 mt-1 mb-3 text-2xl font-semibold">
-          {{ topTitle }} {{ title }} {{ descTitle | descCamelCase }}
+        <h4 class="my-0 mt-1 mb-3 text-lg ">
+          <!-- {{ topTitle }}  -->
+          {{ descTitle | descCamelCase }}
         </h4>
       </CCol>
       <CCol
@@ -125,6 +126,9 @@ export default {
     return {
       level: localStorage.level
     };
+  },
+  mounted() {
+    this.$store.commit("ui/setTitleHeader", `${this.topTitle}  ${this.title}`);
   },
   emits: [
     "clicked-row",

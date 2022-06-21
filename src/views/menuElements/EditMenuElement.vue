@@ -1,10 +1,17 @@
 <template>
   <CRow>
-    <CCol col="12" lg="6">
+    <CCol
+      col="12"
+      lg="6"
+    >
       <CCard no-header>
         <CCardBody>
           <h3>Edit Menu Element</h3>
-          <CAlert :show.sync="dismissCountDown" color="primary" fade>
+          <CAlert
+            :show.sync="dismissCountDown"
+            color="primary"
+            fade
+          >
             ({{ dismissCountDown }}) {{ message }}
           </CAlert>
           <CSelect
@@ -69,15 +76,25 @@
             >
               CoreUI icons documentation
             </a>
-            <br />
+            <br>
             <CInput
               v-model="menuelement.icon"
               type="text"
               placeholder="CoreUI Icon class - example: cil-bell"
             />
           </div>
-          <CButton color="primary" @click="save()"> Save </CButton>
-          <CButton color="primary" @click="goBack"> Back </CButton>
+          <CButton
+            color="primary"
+            @click="save()"
+          >
+            Save
+          </CButton>
+          <CButton
+            color="primary"
+            @click="goBack"
+          >
+            Back
+          </CButton>
         </CCardBody>
       </CCard>
     </CCol>

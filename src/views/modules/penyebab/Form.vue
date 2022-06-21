@@ -2,14 +2,23 @@
   <CRow>
     <CCol sm="12">
       <div class="text-2xl mb-4 font-semibold">
-        <h3 v-if="mode == 'create'">Create Penyebab</h3>
-        <h3 v-else-if="mode == 'view'">Detail Penyebab</h3>
-        <h3 v-else>Edit Penyebab</h3>
+        <h3 v-if="mode == 'create'">
+          Create Penyebab
+        </h3>
+        <h3 v-else-if="mode == 'view'">
+          Detail Penyebab
+        </h3>
+        <h3 v-else>
+          Edit Penyebab
+        </h3>
       </div>
       <CCard>
         <!-- <CCardBody> -->
         <CForm @submit.prevent="submit">
-          <div class="p-3" style="background: #f9fafb">
+          <div
+            class="p-3"
+            style="background: #f9fafb"
+          >
             <h5 class="text-base font-semibold">
               Data Penyebab (Termasuk untuk TPK)
             </h5>
@@ -109,7 +118,11 @@
           </div>
           <div class="px-3">
             <CRow class="mb-2 view-form">
-              <CCol sm="12" lg="6" class="mb-3">
+              <CCol
+                sm="12"
+                lg="6"
+                class="mb-3"
+              >
                 <CButton
                   v-if="mode != 'view'"
                   variant="outline"
@@ -147,10 +160,19 @@
                   class="px-4 ml-1"
                   :disabled="!isValid"
                 >
-                  <div v-if="loading" class="px-8">
-                    <CSpinner color="white" size="sm" class="mr-2" />
+                  <div
+                    v-if="loading"
+                    class="px-8"
+                  >
+                    <CSpinner
+                      color="white"
+                      size="sm"
+                      class="mr-2"
+                    />
                   </div>
-                  <template v-else> Submit Data </template>
+                  <template v-else>
+                    Submit Data
+                  </template>
                 </CButton>
               </CCol>
             </CRow>

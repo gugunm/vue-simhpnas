@@ -13,7 +13,10 @@
       @on-send-lha="onSendLha"
       @on-load-lha="onLoadLha"
     />
-    <Loading :active.sync="loading" :is-full-page="true" />
+    <Loading
+      :active.sync="loading"
+      :is-full-page="true"
+    />
     <confirm-modal
       v-model="isDeleteConfirm"
       title="Hapus data"

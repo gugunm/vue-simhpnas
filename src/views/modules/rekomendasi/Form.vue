@@ -2,14 +2,23 @@
   <CRow>
     <CCol sm="12">
       <div class="text-2xl mb-4 font-semibold">
-        <h3 v-if="mode == 'create'">Create Rekomendasi</h3>
-        <h3 v-else-if="mode == 'view'">Detail Rekomendasi</h3>
-        <h3 v-else>Edit Rekomendasi</h3>
+        <h3 v-if="mode == 'create'">
+          Create Rekomendasi
+        </h3>
+        <h3 v-else-if="mode == 'view'">
+          Detail Rekomendasi
+        </h3>
+        <h3 v-else>
+          Edit Rekomendasi
+        </h3>
       </div>
       <CCard>
         <!-- <CCardBody> -->
         <CForm @submit.prevent="submit">
-          <div class="p-3" style="background: #f9fafb">
+          <div
+            class="p-3"
+            style="background: #f9fafb"
+          >
             <h5 class="text-base font-semibold">
               Data Rekomendasi (Termasuk untuk TPK)
             </h5>
@@ -57,7 +66,10 @@
               </CCol>
             </CRow>
 
-            <CRow v-if="mode == 'view'" class="mb-3">
+            <CRow
+              v-if="mode == 'view'"
+              class="mb-3"
+            >
               <CCol lg="12">
                 <CInput
                   v-if="mode == 'view'"
@@ -77,7 +89,10 @@
             </CRow>
 
             <!-- ROW 3 -->
-            <CRow v-else class="mb-3">
+            <CRow
+              v-else
+              class="mb-3"
+            >
               <CCol lg="6">
                 <div>
                   <label class="typo__label">Kode Rekomendasi</label>
@@ -182,7 +197,11 @@
           </div>
           <div class="px-3">
             <CRow class="mb-2 view-form">
-              <CCol sm="12" lg="6" class="mb-3">
+              <CCol
+                sm="12"
+                lg="6"
+                class="mb-3"
+              >
                 <CButton
                   v-if="mode != 'view'"
                   variant="outline"
@@ -220,10 +239,19 @@
                   class="px-4 ml-1"
                   :disabled="!isValid"
                 >
-                  <div v-if="loading" class="px-8">
-                    <CSpinner color="white" size="sm" class="mr-2" />
+                  <div
+                    v-if="loading"
+                    class="px-8"
+                  >
+                    <CSpinner
+                      color="white"
+                      size="sm"
+                      class="mr-2"
+                    />
                   </div>
-                  <template v-else> Submit Data </template>
+                  <template v-else>
+                    Submit Data
+                  </template>
                 </CButton>
               </CCol>
             </CRow>

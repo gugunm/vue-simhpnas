@@ -1,11 +1,11 @@
 <template>
   <div>
     <CRow class="px-3">
-      <CCol class="px-0" lg="12">
+      <!-- <CCol class="px-0" lg="12">
         <h4 class="my-0 mt-1 mb-3 text-2xl font-semibold">
           {{ topTitle }} {{ title }} {{ descTitle | descCamelCase }}
         </h4>
-      </CCol>
+      </CCol> -->
       <CCol v-if="isAddButton && isLevelAccess" class="px-0" lg="6">
         <CButton color="info" class="mb-4 px-4" @click="openCreateModal">
           <CIcon name="cil-plus" class="my-0 mb-1 mr-1" /> Tambah
@@ -448,6 +448,8 @@ export default {
     };
   },
   mounted() {
+    //  ${this.title} ${this.descTitle | this.descCamelCase}
+    this.$store.commit("ui/setTitleHeader", `${this.topTitle}`);
     if (localStorage.level == 3 || localStorage.level == 4) {
       this.isLevelAccess = true;
     }

@@ -2,15 +2,29 @@
   <CRow>
     <CCol sm="12">
       <div class="text-2xl mb-4 font-semibold">
-        <h3 v-if="mode == 'create'">Create Tindak Lanjut</h3>
-        <h3 v-else-if="mode == 'view'">Detail Tindak Lanjut</h3>
-        <h3 v-else>Edit Tindak Lanjut</h3>
+        <h3 v-if="mode == 'create'">
+          Create Tindak Lanjut
+        </h3>
+        <h3 v-else-if="mode == 'view'">
+          Detail Tindak Lanjut
+        </h3>
+        <h3 v-else>
+          Edit Tindak Lanjut
+        </h3>
       </div>
       <CCard>
         <!-- <CCardBody> -->
-        <CForm class="form-tl" @submit.prevent="submit">
-          <div class="p-3" style="background: #f9fafb">
-            <h5 class="text-base font-semibold">Data Tindak Lanjut</h5>
+        <CForm
+          class="form-tl"
+          @submit.prevent="submit"
+        >
+          <div
+            class="p-3"
+            style="background: #f9fafb"
+          >
+            <h5 class="text-base font-semibold">
+              Data Tindak Lanjut
+            </h5>
           </div>
           <div class="p-3">
             <!-- ROW 1 -->
@@ -26,7 +40,10 @@
                   :disabled="true"
                 />
               </CCol>
-              <CCol v-if="mode == 'view' && form.uploadFileTl" class="pt-2">
+              <CCol
+                v-if="mode == 'view' && form.uploadFileTl"
+                class="pt-2"
+              >
                 <CButton
                   shape="pill"
                   class="px-3 mt-3"
@@ -143,8 +160,8 @@
                   label="Nilai Rekomendasi"
                   :value="
                     $route.query.nilairekomendasi ||
-                    editData.nilaiRekomendasi ||
-                    form.nilaiRekomendasi
+                      editData.nilaiRekomendasi ||
+                      form.nilaiRekomendasi
                   "
                   :disabled="true"
                 />
@@ -198,9 +215,9 @@
                       v-bind="labelIcon"
                       :checked.sync="isStoredTl"
                     />
-                    <span v-if="isStoredTl"
-                      >Upload File Tindak Lanjut di Server SIMHPNAS</span
-                    >
+                    <span
+                      v-if="isStoredTl"
+                    >Upload File Tindak Lanjut di Server SIMHPNAS</span>
                     <span v-else>
                       Upload File Tindak Lanjut di Server Internal
                     </span>
@@ -210,7 +227,7 @@
                     type="file"
                     class="mb-4"
                     @change="onUploadTl"
-                  />
+                  >
                   <!-- id="file-tl" -->
                   <!-- name="file-tl" -->
                   <CInput
@@ -239,7 +256,11 @@
 
             <div class="px-3">
               <CRow class="mb-2 view-form">
-                <CCol sm="12" lg="6" class="mb-3">
+                <CCol
+                  sm="12"
+                  lg="6"
+                  class="mb-3"
+                >
                   <CButton
                     v-if="mode != 'view'"
                     variant="outline"
@@ -278,10 +299,19 @@
                     :disabled="!isValid"
                   >
                     <!-- @click="submit" -->
-                    <div v-if="loading" class="px-8">
-                      <CSpinner color="white" size="sm" class="mr-2" />
+                    <div
+                      v-if="loading"
+                      class="px-8"
+                    >
+                      <CSpinner
+                        color="white"
+                        size="sm"
+                        class="mr-2"
+                      />
                     </div>
-                    <template v-else> Submit Data </template>
+                    <template v-else>
+                      Submit Data
+                    </template>
                   </CButton>
                 </CCol>
               </CRow>
@@ -291,7 +321,12 @@
         <!-- </CCardBody> -->
       </CCard>
     </CCol>
-    <CModal title="File LHA" color="info" :show.sync="isOpenFile" size="lg">
+    <CModal
+      title="File LHA"
+      color="info"
+      :show.sync="isOpenFile"
+      size="lg"
+    >
       <embed
         :src="
           form.isStored == 1
@@ -301,7 +336,7 @@
         type="application/pdf"
         width="100%"
         height="550px"
-      />
+      >
       <template #footer-wrapper>
         <div />
       </template>

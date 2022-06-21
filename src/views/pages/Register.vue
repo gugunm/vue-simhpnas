@@ -5,9 +5,14 @@
         <CCol md="6">
           <CCard class="mx-4 mb-0">
             <CCardBody class="p-4">
-              <CForm method="POST" @submit.prevent="register">
+              <CForm
+                method="POST"
+                @submit.prevent="register"
+              >
                 <h1>Register</h1>
-                <p class="text-muted">Create your account</p>
+                <p class="text-muted">
+                  Create your account
+                </p>
                 <CInput
                   v-model="name"
                   placeholder="Username"
@@ -46,7 +51,11 @@
                     <CIcon name="cil-lock-locked" />
                   </template>
                 </CInput>
-                <CButton type="submit" color="success" block>
+                <CButton
+                  type="submit"
+                  color="success"
+                  block
+                >
                   Create Account
                 </CButton>
               </CForm>

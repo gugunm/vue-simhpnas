@@ -2,21 +2,36 @@
   <CRow>
     <CCol sm="12">
       <div class="text-2xl mb-4 font-semibold">
-        <h3 v-if="mode == 'create'">Create Tim Audit</h3>
-        <h3 v-else-if="mode == 'view'">Detail Tim Audit</h3>
-        <h3 v-else>Edit Tim Audit</h3>
+        <h3 v-if="mode == 'create'">
+          Create Tim Audit
+        </h3>
+        <h3 v-else-if="mode == 'view'">
+          Detail Tim Audit
+        </h3>
+        <h3 v-else>
+          Edit Tim Audit
+        </h3>
       </div>
-      <div v-if="mode == 'create'" class="mb-4">
+      <div
+        v-if="mode == 'create'"
+        class="mb-4"
+      >
         <CAlert
           v-if="items.length > 0"
           color="info"
           close-button
           :show.sync="alertMembers"
         >
-          <p class="text-sm font-semibold">Tim audit yang telah di entry</p>
+          <p class="text-sm font-semibold">
+            Tim audit yang telah di entry
+          </p>
           <div class="pl-4 pt-2">
             <ol class="list-decimal text-sm">
-              <li v-for="item in items" :key="item.id" class="leading-loose">
+              <li
+                v-for="item in items"
+                :key="item.id"
+                class="leading-loose"
+              >
                 {{ item.nama }} - ({{ item.kodePeran }}) {{ item.peran }}
               </li>
             </ol>
@@ -26,8 +41,13 @@
       <CCard>
         <!-- <CCardBody> -->
         <CForm @submit.prevent="submit">
-          <div class="p-3" style="background: #f9fafb">
-            <h5 class="text-base font-semibold">Data Tim Audit</h5>
+          <div
+            class="p-3"
+            style="background: #f9fafb"
+          >
+            <h5 class="text-base font-semibold">
+              Data Tim Audit
+            </h5>
           </div>
           <div class="p-3">
             <!-- ROW 1 -->
@@ -108,7 +128,11 @@
 
           <div class="px-3">
             <CRow class="mb-2 view-form">
-              <CCol sm="12" lg="6" class="mb-3">
+              <CCol
+                sm="12"
+                lg="6"
+                class="mb-3"
+              >
                 <CButton
                   v-if="mode != 'view'"
                   variant="outline"
@@ -147,10 +171,19 @@
                   class="px-4 ml-1"
                   :disabled="!isValid"
                 >
-                  <div v-if="loading" class="px-8">
-                    <CSpinner color="white" size="sm" class="mr-2" />
+                  <div
+                    v-if="loading"
+                    class="px-8"
+                  >
+                    <CSpinner
+                      color="white"
+                      size="sm"
+                      class="mr-2"
+                    />
                   </div>
-                  <template v-else> Submit Data </template>
+                  <template v-else>
+                    Submit Data
+                  </template>
                 </CButton>
               </CCol>
             </CRow>

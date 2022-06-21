@@ -1,9 +1,9 @@
 <template>
   <div>
     <master-table
-      top-title="Data"
+      top-title="Master"
       title="Sub Klp. Temuan"
-      :desc-title="'- ' + descKlpTemuan"
+      :desc-title="'Sub Klp. Temuan - ' + descKlpTemuan"
       :items="items"
       :fields="fields"
       @open-create-modal="openCreate"
@@ -25,29 +25,29 @@
 </template>
 
 <script>
-import axios from 'axios';
-import MasterTable from '@/components/MasterTable';
-import BackButton from '@/components/BackButton';
-import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
-import mixin from './mixin';
+import axios from "axios";
+import MasterTable from "@/components/MasterTable";
+import BackButton from "@/components/BackButton";
+import ConfirmModal from "@/components/Confirm/ConfirmModal.vue";
+import mixin from "./mixin";
 
 export default {
-  name: 'AdvancedTables',
+  name: "AdvancedTables",
   components: {
     MasterTable,
     BackButton,
-    ConfirmModal,
+    ConfirmModal
   },
   mixins: [mixin],
   props: {
     idKlpTemuan: {
       type: String,
-      default: '0',
+      default: "0"
     },
     idJenisTemuan: {
       type: String,
-      default: '0',
-    },
+      default: "0"
+    }
   },
   data() {
     return {
@@ -55,7 +55,7 @@ export default {
       items: null,
       descKlpTemuan: null,
       idToDelete: null,
-      isDeleteConfirm: false,
+      isDeleteConfirm: false
     };
   },
   async mounted() {
@@ -64,49 +64,49 @@ export default {
 
     this.fields = [
       {
-        key: 'id',
-        label: 'Kode',
-        _style: 'width: 15%',
+        key: "id",
+        label: "Kode",
+        _style: "width: 15%"
       },
       {
-        key: 'deskripsi',
-        label: 'Deskripsi Sub Kelompok Temuan',
-        _style: 'width: 55%',
+        key: "deskripsi",
+        label: "Deskripsi Sub Kelompok Temuan",
+        _style: "width: 55%"
       },
       {
-        key: 'saran',
-        label: 'Rekomendasi',
-        _style: 'width: 20%',
-      },
+        key: "saran",
+        label: "Rekomendasi",
+        _style: "width: 20%"
+      }
     ];
     if (localStorage.level == 0 || localStorage.level == 1) {
       this.fields = [
         ...this.fields,
         {
-          key: 'actions',
-          _style: 'width: 15%',
-        },
+          key: "actions",
+          _style: "width: 15%"
+        }
       ];
     }
   },
   methods: {
     openCreate() {
       this.$router.push({
-        name: 'master-create-sub-klp-temuan',
+        name: "master-create-sub-klp-temuan",
         params: {
           idKlpTemuan: this.idKlpTemuan,
-          idJenisTemuan: this.idJenisTemuan,
-        },
+          idJenisTemuan: this.idJenisTemuan
+        }
       });
     },
 
     openEdit(item) {
       this.$router.push({
-        name: 'master-edit-sub-klp-temuan',
+        name: "master-edit-sub-klp-temuan",
         params: {
           idSubKlpTemuan: item.id,
-          idKlpTemuan: this.idKlpTemuan,
-        },
+          idKlpTemuan: this.idKlpTemuan
+        }
       });
     },
 
@@ -117,8 +117,8 @@ export default {
 
     async actionDelete() {
       try {
-        await this.$store.dispatch('m_temuan/deleteSubKelompokTemuan', {
-          idSubKelompokTemuan: this.idToDelete,
+        await this.$store.dispatch("m_temuan/deleteSubKelompokTemuan", {
+          idSubKelompokTemuan: this.idToDelete
         });
         this.isDeleteConfirm = false;
         this.toastSuccess(
@@ -133,36 +133,36 @@ export default {
     async loadSubKelompokTemuan(refresh = false) {
       this.loading = true;
       try {
-        await this.$store.dispatch('m_temuan/loadSubKelompokTemuan', {
+        await this.$store.dispatch("m_temuan/loadSubKelompokTemuan", {
           idKlpTemuan: this.idKlpTemuan,
-          forceRefresh: refresh,
+          forceRefresh: refresh
         });
-        this.items = this.$store.getters['m_temuan/subKelompokTemuan'];
+        this.items = this.$store.getters["m_temuan/subKelompokTemuan"];
       } catch (error) {
-        this.error = error.message || 'Something went wrong!';
+        this.error = error.message || "Something went wrong!";
       }
       this.loading = false;
     },
     async loadDescKlpTemuan() {
       const response = await axios({
-        method: 'GET',
+        method: "GET",
         baseURL: this.$apiAddress,
         url: `/api/klptemuan/${this.idKlpTemuan}`,
         params: {
-          token: localStorage.getItem('api_token'),
-        },
+          token: localStorage.getItem("api_token")
+        }
       });
 
       if (response.status != 200) {
         const error = new Error(
-          responseData.message || 'Failed to fetch data unit kerja.'
+          responseData.message || "Failed to fetch data unit kerja."
         );
         throw error;
       }
 
       this.descKlpTemuan = await response.data.diskripsi;
-    },
-  },
+    }
+  }
 };
 </script>
 

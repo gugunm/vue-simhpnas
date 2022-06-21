@@ -1,6 +1,9 @@
 <template>
   <div>
-    <Form mode="edit" :id-tl="idTindakLanjut" />
+    <Form
+      mode="edit"
+      :id-tl="idTindakLanjut"
+    />
   </div>
 </template>
 

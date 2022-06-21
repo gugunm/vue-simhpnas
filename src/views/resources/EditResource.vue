@@ -1,11 +1,18 @@
 <template>
   <CRow>
-    <CCol col="12" xl="6">
+    <CCol
+      col="12"
+      xl="6"
+    >
       <transition name="slide">
         <CCard>
           <CCardBody>
             <h3>Edit {{ form.name }}</h3>
-            <CAlert :show.sync="dismissCountDown" color="primary" fade>
+            <CAlert
+              :show.sync="dismissCountDown"
+              color="primary"
+              fade
+            >
               ({{ dismissCountDown }}) {{ message }}
             </CAlert>
             <UpdateResourceField
@@ -18,10 +25,18 @@
               @sendData="receiveDataFormField"
             />
 
-            <CButton class="mt-2" color="primary" @click="updateFirstStep()">
+            <CButton
+              class="mt-2"
+              color="primary"
+              @click="updateFirstStep()"
+            >
               Edit
             </CButton>
-            <CButton class="mt-2" color="primary" @click="goBack">
+            <CButton
+              class="mt-2"
+              color="primary"
+              @click="goBack"
+            >
               Back
             </CButton>
           </CCardBody>

@@ -19,8 +19,8 @@
         <TheHeaderDropdownAccnt class="pr-4 list-none" />
       </CHeaderNav>
     </CHeader>
-    <div class="hidden lg:flex h-20 justify-between items-center ">
-      <p class="inline-block">
+    <div class="hidden lg:flex h-20 justify-between items-center border-b">
+      <p class="inline-block text-lg font-bold px-4">
         {{ $store.state.ui.titleHeader }}
       </p>
       <div class="flex justify-end items-center">

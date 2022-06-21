@@ -15,11 +15,15 @@
               `https://avatars.dicebear.com/api/bottts/${namaUser}.svg?background=%23dbeafe&scale=80`
             "
             class="c-avatar-img"
-          />
+          >
         </div>
       </CHeaderNavLink>
     </template>
-    <CDropdownHeader tag="div" class="text-center" color="light">
+    <CDropdownHeader
+      tag="div"
+      class="text-center"
+      color="light"
+    >
       <strong>Account</strong>
     </CDropdownHeader>
     <!-- <CDropdownItem>
