@@ -18,12 +18,12 @@
             <!-- <span>ICON WARNING</span> -->
             <div>
               <p class="text-lg font-semibold mb-2">
-                {{ title || 'Meninggalkan halaman' }}
+                {{ title || "Meninggalkan halaman" }}
               </p>
               <p>
                 {{
                   msg ||
-                  'Meniggalkan halaman tanpa melakukan submit data akan menghilangkan data yang telah diinput.'
+                    "Meniggalkan halaman tanpa melakukan submit data akan menghilangkan data yang telah diinput."
                 }}
               </p>
             </div>
@@ -37,7 +37,7 @@
             >
               Oke
             </CButton>
-            <CButton color="info" class="" @click="confirmCancel">
+            <CButton color="info" @click="confirmCancel">
               Cancel
             </CButton>
           </div>
@@ -53,8 +53,8 @@
 
 <script>
 export default {
-  props: ['value', 'title', 'msg'],
-  emits: ['close-modal', 'confirm-ok'],
+  props: ["value", "title", "msg"],
+  emits: ["close-modal", "confirm-ok"],
   data() {
     return {};
   },
@@ -64,15 +64,15 @@ export default {
       if (val == false) {
         this.confirmCancel();
       }
-    },
+    }
   },
   methods: {
     confirmCancel() {
-      this.$emit('close-modal', false);
+      this.$emit("close-modal", false);
     },
     confirmOk() {
-      this.$emit('confirm-ok');
-    },
-  },
+      this.$emit("confirm-ok");
+    }
+  }
 };
 </script>

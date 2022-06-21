@@ -1,70 +1,71 @@
 // Here you can add other styles
 .bg-color-navy-1 {
-    background-color: $color-navy-1;
+  background-color: $color-navy-1;
 }
 
 .color-white {
-    color: $color-white
+  color: $color-white;
 }
 
 .btn-close-modal {
-    background-color: $color-navy-1;
+  background-color: $color-navy-1;
 }
 
 .btn-close-modal:hover {
-    cursor: pointer;
-    background-color: $color-navy-2;
+  cursor: pointer;
+  background-color: $color-navy-2;
 }
 
-.select-lang-menu{
-    max-width:128px;
-    cursor:pointer;
+.select-lang-menu {
+  max-width: 128px;
+  cursor: pointer;
 }
 
 .card-header > .c-icon:first-child {
-    margin-right: 0.1rem;
-    margin-top: 0.1rem;
-    vertical-align: top;
-    width: 1.2rem;
-    height: 1.2rem;
-    font-size: 1.2rem;
-  }
-
-.click-file{
-    cursor:pointer;
+  margin-right: 0.1rem;
+  margin-top: 0.1rem;
+  vertical-align: top;
+  width: 1.2rem;
+  height: 1.2rem;
+  font-size: 1.2rem;
 }
 
-#cropp-img-img{
-    max-width:500px;
-    max-height:500px;
+.click-file {
+  cursor: pointer;
+}
+
+#cropp-img-img {
+  max-width: 500px;
+  max-height: 500px;
 }
 
 // MODAL MASTER
 .modal-master-detail {
+  color: $color-navy-1;
+  .modal-header {
+    background-color: $color-navy-1;
+    color: white;
+  }
+  .modal-body {
+    padding: 1.25rem;
+  }
+  .card-body {
+    padding: 0;
+  }
+  .form-control {
     color: $color-navy-1;
-    .modal-header{
-        background-color: $color-navy-1;
-        color: white;
+  }
+  .form-control[readonly] {
+    background-color: $color-blue-sky-1;
+    label {
+      color: $color-navy-1;
     }
-    .modal-body {
-        padding: 1.25rem;
-    }
-    .card-body {
-        padding: 0;
-    }
-    .form-control {
-        color: $color-navy-1;
-    }
-    .form-control[readonly] {
-        background-color: $color-blue-sky-1;
-        label {
-            color: $color-navy-1;
-        }
-    }
-    .vs__search, .vs__search:focus {
-        padding: 0.13rem 0.75rem;
-        color: $color-navy-1;
-    }
+  }
+  .vs__search,
+  .vs__search:focus {
+    padding: 0.13rem 0.75rem;
+    color: $color-navy-1;
+  }
 }
 
 .onScroll {
@@ -73,49 +74,84 @@
   background-color: rgba(255, 255, 255, 1);
 }
 
-.bg-sidebar, .c-sidebar .c-sidebar-brand {
-    background-color: #0B2555 !important;
-  }
-  
-  .bg-body-primary {
-    background-color: #F2F7FA;
-  }
-  
-  .text-blue-1 {
-    color: #0B2555;
-  }
-  
-  .text-blue-2 {
-    color: #A3AED0;
-  }
-  
-  /* Header */
-  .c-header .c-subheader {
-    border: none !important;
-  }
-  
-  /* text side bar menu */
-  .c-sidebar .c-sidebar-nav-link, .c-sidebar .c-sidebar-nav-dropdown-toggle, .c-sidebar .c-sidebar-nav-link .c-sidebar-nav-icon, .c-sidebar .c-sidebar-nav-dropdown-toggle .c-sidebar-nav-icon {
-    font-size: 14px;
-    color: #BCBFD2;
-  }
-  
-  /* text sidebar title */
-  .c-sidebar .c-sidebar-nav-title {
-    border-top: 1px solid #F4F7FE;
-    border-color: rgba(188, 191, 210, .2);
-    font-size: 14px;
-    color: #BCBFD2;
-    font-weight: bold;
-  }
-  
-  
-  .c-sidebar .c-sidebar-minimizer {
-    background-color: #fff;
-    border-top: 1px solid #F4F7FE;
-    /* border-color: rgba(244, 247, 254, 1); */
-  }
-  .c-sidebar .c-sidebar-minimizer:hover {
-    background-color: #F4F7FE;
-  }
+.bg-sidebar,
+.c-sidebar .c-sidebar-brand {
+  // background-color: #0B2555 !important;
+  background-color: $color-white !important;
+}
 
+.bg-body-primary {
+  background-color: $color-white;
+}
+
+.text-blue-1 {
+  color: #0b2555;
+}
+
+.text-blue-2 {
+  color: #a3aed0;
+}
+
+/* Header */
+.c-header .c-subheader {
+  border: none !important;
+}
+
+/* text side bar menu */
+.c-sidebar .c-sidebar-nav-link,
+.c-sidebar .c-sidebar-nav-dropdown-toggle,
+.c-sidebar .c-sidebar-nav-link .c-sidebar-nav-icon,
+.c-sidebar .c-sidebar-nav-dropdown-toggle .c-sidebar-nav-icon {
+  font-size: 14px;
+  // color: #bcbfd2;
+  color: #6a7380;
+}
+
+/* ganti warna bg nav master */
+li.c-sidebar-nav-item > a.c-sidebar-nav-link {
+  background-color: #ffffff !important;
+  color: #6a7380 !important;
+}
+
+/* ganti warna hover untuk dropdown menu */
+li.c-sidebar-nav-dropdown > a.c-sidebar-nav-dropdown-toggle:hover,
+/* ganti warna menu hover */
+li.c-sidebar-nav-item > a.c-sidebar-nav-link:hover {
+  background-color: #eff6ff !important;
+  color: #2864eb !important;
+  .c-sidebar-nav-icon {
+    fill: #2864eb !important;
+  }
+}
+
+/* merubah warna bg menu yang aktif */
+li.c-sidebar-nav-dropdown.c-show > a.c-sidebar-nav-dropdown-toggle,
+li.c-sidebar-nav-item > a.router-link-exact-active.c-active.c-sidebar-nav-link {
+  background-color: #eff3f6 !important;
+  color: #111827 !important;
+  .c-sidebar-nav-icon {
+    fill: #111827 !important;
+  }
+}
+
+/* text sidebar title */
+.c-sidebar .c-sidebar-nav-title {
+  // border-top: 1px solid #f4f7fe;
+  // border-color: rgba(188, 191, 210, 0.2);
+  font-size: 14px;
+  color: #111827;
+  font-weight: bold;
+}
+
+.c-sidebar .c-sidebar-minimizer {
+  background-color: #fff;
+  border-top: 1px solid #f4f7fe;
+  /* border-color: rgba(244, 247, 254, 1); */
+}
+.c-sidebar .c-sidebar-minimizer:hover {
+  background-color: #f4f7fe;
+}
+
+.c-sidebar .c-sidebar-nav-dropdown-toggle::after {
+  color: red !important;
+}

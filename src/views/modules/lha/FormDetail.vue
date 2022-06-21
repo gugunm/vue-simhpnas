@@ -29,7 +29,9 @@
                 >
                   Data Umum LHA Tindak Pidana Khusus
                 </h5>
-                <h5 v-else class="text-base font-semibold">Data Umum LHA</h5>
+                <h5 v-else class="text-base font-semibold">
+                  Data Umum LHA
+                </h5>
               </div>
 
               <div class="p-3">
@@ -138,7 +140,9 @@
 
               <!-- DATA OBRIIK -->
               <div class="p-3" style="background: #f9fafb">
-                <h5 class="text-base font-semibold">Data Obrik</h5>
+                <h5 class="text-base font-semibold">
+                  Data Obrik
+                </h5>
               </div>
 
               <div class="p-3">
@@ -207,7 +211,9 @@
 
               <!-- DATA ANGGARAAN -->
               <div class="p-3" style="background: #f9fafb">
-                <h5 class="text-base font-semibold">Data Anggaran</h5>
+                <h5 class="text-base font-semibold">
+                  Data Anggaran
+                </h5>
               </div>
 
               <div class="p-3">
@@ -257,7 +263,9 @@
 
               <!-- DATA WILAYAH -->
               <div class="p-3" style="background: #f9fafb">
-                <h5 class="text-base font-semibold">Data Wilayah</h5>
+                <h5 class="text-base font-semibold">
+                  Data Wilayah
+                </h5>
               </div>
 
               <div class="p-3">
@@ -444,8 +452,8 @@
                                     label="Nama Penyebab"
                                     :value="
                                       itemPenyebab.kodePenyebab +
-                                      ' - ' +
-                                      itemPenyebab.deskripsi
+                                        ' - ' +
+                                        itemPenyebab.deskripsi
                                     "
                                     :readonly="true"
                                   />
@@ -551,9 +559,8 @@
                                   </div>
                                   <div v-else class="pt-2 pb-2">
                                     <div
-                                      v-for="(
-                                        itemPelaku, index
-                                      ) in itemRek.dataPelaku"
+                                      v-for="(itemPelaku,
+                                      index) in itemRek.dataPelaku"
                                       :key="itemPelaku.nip"
                                       class="px-4 mb-3"
                                     >
@@ -704,72 +711,70 @@
   </CRow>
 </template>
 
-
-
 <script>
-import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
-import mixin from './mixin';
+import ConfirmModal from "@/components/Confirm/ConfirmModal.vue";
+import mixin from "./mixin";
 
 export default {
-  name: 'LhaForm',
+  name: "LhaForm",
   components: {
-    ConfirmModal,
+    ConfirmModal
   },
   mixins: [mixin],
-  props: ['mode', 'selectedItem', 'idLha'],
+  props: ["mode", "selectedItem", "idLha"],
   data() {
     return {
-      form: '',
+      form: "",
       submitted: false,
       loading: false,
       isOpenConfirm: false,
-      namaUnit: localStorage.getItem('namaUnit'),
-      namaSubUnit: localStorage.getItem('namaSubUnit'),
-      valueGroupLingkupAudit: '',
+      namaUnit: localStorage.getItem("namaUnit"),
+      namaSubUnit: localStorage.getItem("namaSubUnit"),
+      valueGroupLingkupAudit: "",
       optionsGroupLingkupAudit: [],
-      valueLingkupAudit: '',
+      valueLingkupAudit: "",
       optionsLingkupAudit: [],
-      valueJenisObrik: '',
+      valueJenisObrik: "",
       optionsJenisObrik: [],
-      valueUnitObrik: '',
+      valueUnitObrik: "",
       optionsUnitObrik: [],
-      valueBidangObrik: '',
+      valueBidangObrik: "",
       optionsBidangObrik: [],
-      valueSubBidangObrik: '',
+      valueSubBidangObrik: "",
       optionsSubBidangObrik: [],
-      valueJenisAnggaran: '',
+      valueJenisAnggaran: "",
       optionsJenisAnggaran: [],
-      valueKelurahan: '',
+      valueKelurahan: "",
       optionsKelurahan: [],
       isLoadingKelurahan: false,
-      valueKecamatan: '',
-      valueKabkot: '',
-      valueProvinsi: '',
+      valueKecamatan: "",
+      valueKabkot: "",
+      valueProvinsi: "",
       selectedDateSt: new Date(),
       selectedDateLha: new Date(),
       isLhaTpk: false,
-      fileLha: '',
+      fileLha: "",
       labelIcon: {
-        labelOn: '\u2713',
-        labelOff: '\u2715',
+        labelOn: "\u2713",
+        labelOff: "\u2715"
       },
       isStoredLha: true,
       isOpenFile: false,
-      apiUrl: this.$apiAddress,
+      apiUrl: this.$apiAddress
     };
   },
   async mounted() {
-    await this.$store.dispatch('module_lha/loadDetailLhaById', {
-      idLha: this.idLha,
+    await this.$store.dispatch("module_lha/loadDetailLhaById", {
+      idLha: this.idLha
     });
 
-    this.form = this.$store.getters['module_lha/lhaById'];
+    this.form = this.$store.getters["module_lha/lhaById"];
   },
   methods: {
     onOpenFile() {
       this.isOpenFile = true;
-    },
-  },
+    }
+  }
 };
 </script>
 

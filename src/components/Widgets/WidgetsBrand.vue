@@ -1,7 +1,10 @@
 <template>
   <CRow>
     <template v-if="!noCharts">
-      <CCol md="3" sm="6">
+      <CCol
+        md="3"
+        sm="6"
+      >
         <CWidgetBrand
           color="facebook"
           right-header="89k"
@@ -9,7 +12,11 @@
           left-header="459"
           left-footer="feeds"
         >
-          <CIcon name="cib-facebook" height="52" class="my-4" />
+          <CIcon
+            name="cib-facebook"
+            height="52"
+            class="my-4"
+          />
           <CChartLineSimple
             class="c-chart-brand"
             background-color="rgba(255,255,255,.1)"
@@ -19,7 +26,10 @@
           />
         </CWidgetBrand>
       </CCol>
-      <CCol md="3" sm="6">
+      <CCol
+        md="3"
+        sm="6"
+      >
         <CWidgetBrand
           color="twitter"
           right-header="973k"
@@ -27,7 +37,11 @@
           left-header="1.792"
           left-footer="tweets"
         >
-          <CIcon name="cib-twitter" height="52" class="my-4" />
+          <CIcon
+            name="cib-twitter"
+            height="52"
+            class="my-4"
+          />
           <CChartLineSimple
             class="c-chart-brand"
             background-color="rgba(255,255,255,.1)"
@@ -37,7 +51,10 @@
           />
         </CWidgetBrand>
       </CCol>
-      <CCol md="3" sm="6">
+      <CCol
+        md="3"
+        sm="6"
+      >
         <CWidgetBrand
           color="linkedin"
           right-header="500+"
@@ -45,7 +62,11 @@
           left-header="292"
           left-footer="feeds"
         >
-          <CIcon name="cib-linkedin" height="52" class="my-4" />
+          <CIcon
+            name="cib-linkedin"
+            height="52"
+            class="my-4"
+          />
           <CChartLineSimple
             class="c-chart-brand"
             background-color="rgba(255,255,255,.1)"
@@ -55,7 +76,10 @@
           />
         </CWidgetBrand>
       </CCol>
-      <CCol md="3" sm="6">
+      <CCol
+        md="3"
+        sm="6"
+      >
         <CWidgetBrand
           right-header="12"
           right-footer="events"
@@ -63,7 +87,11 @@
           left-footer="meetings"
           color="gradient-warning"
         >
-          <CIcon name="cil-calendar" height="52" class="my-4" />
+          <CIcon
+            name="cil-calendar"
+            height="52"
+            class="my-4"
+          />
           <CChartLineSimple
             class="c-chart-brand"
             background-color="rgba(255,255,255,.1)"
@@ -75,7 +103,10 @@
       </CCol>
     </template>
     <template v-else>
-      <CCol md="3" sm="6">
+      <CCol
+        md="3"
+        sm="6"
+      >
         <CWidgetBrand
           color="facebook"
           right-header="89k"
@@ -83,10 +114,17 @@
           left-header="459"
           left-footer="feeds"
         >
-          <CIcon name="cib-facebook" height="56" class="my-4" />
+          <CIcon
+            name="cib-facebook"
+            height="56"
+            class="my-4"
+          />
         </CWidgetBrand>
       </CCol>
-      <CCol md="3" sm="6">
+      <CCol
+        md="3"
+        sm="6"
+      >
         <CWidgetBrand
           color="twitter"
           right-header="973k"
@@ -94,10 +132,17 @@
           left-header="1.792"
           left-footer="tweets"
         >
-          <CIcon name="cib-twitter" height="56" class="my-4" />
+          <CIcon
+            name="cib-twitter"
+            height="56"
+            class="my-4"
+          />
         </CWidgetBrand>
       </CCol>
-      <CCol md="3" sm="6">
+      <CCol
+        md="3"
+        sm="6"
+      >
         <CWidgetBrand
           color="linkedin"
           right-header="500+"
@@ -105,10 +150,17 @@
           left-header="292"
           left-footer="feeds"
         >
-          <CIcon name="cib-linkedin" height="56" class="my-4" />
+          <CIcon
+            name="cib-linkedin"
+            height="56"
+            class="my-4"
+          />
         </CWidgetBrand>
       </CCol>
-      <CCol md="3" sm="6">
+      <CCol
+        md="3"
+        sm="6"
+      >
         <CWidgetBrand
           right-header="12"
           right-footer="events"
@@ -116,7 +168,11 @@
           left-footer="meetings"
           color="gradient-warning"
         >
-          <CIcon name="cil-calendar" height="56" class="my-4" />
+          <CIcon
+            name="cil-calendar"
+            height="56"
+            class="my-4"
+          />
         </CWidgetBrand>
       </CCol>
     </template>

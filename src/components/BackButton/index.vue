@@ -28,6 +28,6 @@
 
 <script>
 export default {
-  props: ['title', 'to'],
+  props: ["title", "to"]
 };
 </script>

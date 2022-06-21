@@ -32,14 +32,14 @@
 </template>
 
 <script>
-import TableTindakLanjut from './TableTindakLanjut.vue';
-import mixin from './mixin';
-import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
-import Loading from 'vue-loading-overlay';
+import TableTindakLanjut from "./TableTindakLanjut.vue";
+import mixin from "./mixin";
+import ConfirmModal from "@/components/Confirm/ConfirmModal.vue";
+import Loading from "vue-loading-overlay";
 const fields = [
   {
-    key: 'nomorTl',
-    label: 'Nomor TL',
+    key: "nomorTl",
+    label: "Nomor TL"
   },
   // {
   //   key: 'nomorLha',
@@ -54,30 +54,30 @@ const fields = [
   //   key: 'nomorTl',
   // },
   {
-    key: 'nilaiTl',
-    label: 'Nilai TL',
+    key: "nilaiTl",
+    label: "Nilai TL"
   },
   // {
   //   key: 'statusTl',
   //   label: 'Status TL',
   // },
   {
-    key: 'subKelompokTl',
-    label: 'Kelompok TL',
-  },
+    key: "subKelompokTl",
+    label: "Kelompok TL"
+  }
 ];
 
 const fieldsKtOperator = [
   {
-    key: 'send',
-    label: 'Kirim',
-    _style: 'width: 7%',
+    key: "send",
+    label: "Kirim",
+    _style: "width: 7%"
   },
   {
-    key: 'actions',
-    label: 'Aksi',
-    _style: 'width: 10%',
-  },
+    key: "actions",
+    label: "Aksi",
+    _style: "width: 10%"
+  }
 ];
 
 const fieldsDalnisDaltu = [
@@ -87,38 +87,38 @@ const fieldsDalnisDaltu = [
   //   _style: 'width: 10%',
   // },
   {
-    key: 'actionsDalnisDaltu',
-    label: 'Aksi',
-    _style: 'width: 10%',
-  },
+    key: "actionsDalnisDaltu",
+    label: "Aksi",
+    _style: "width: 10%"
+  }
 ];
 
 const fieldsAdmin = [
   {
-    key: 'actionsAdmin',
-    label: 'Aksi',
-    _style: 'width: 10%',
-  },
+    key: "actionsAdmin",
+    label: "Aksi",
+    _style: "width: 10%"
+  }
 ];
 
 export default {
-  name: 'TindakLanjut',
+  name: "TindakLanjut",
   components: {
     TableTindakLanjut,
     ConfirmModal,
-    Loading,
+    Loading
   },
   mixins: [mixin],
   data() {
     return {
-      items: '',
+      items: "",
       fields: [],
       isDeleteConfirm: false,
       idToDelete: null,
       lha: {},
       temuan: {},
       rekomendasi: {},
-      level: '',
+      level: ""
     };
   },
   watch: {
@@ -131,7 +131,7 @@ export default {
         // this.$router.go();
         window.location.reload();
       }
-    },
+    }
   },
 
   async mounted() {
@@ -150,13 +150,13 @@ export default {
   methods: {
     openDetail(item) {
       this.$router.push({
-        name: 'module-detail-tindak-lanjut',
-        params: { idTindakLanjut: item.id },
+        name: "module-detail-tindak-lanjut",
+        params: { idTindakLanjut: item.id }
       });
     },
     openCreate() {
       this.$router.push({
-        name: 'module-create-tindak-lanjut',
+        name: "module-create-tindak-lanjut",
         query: {
           idlha: this.lha.id,
           nolha: this.lha.nomorLha,
@@ -164,14 +164,14 @@ export default {
           notemuan: this.temuan.nomorTemuan,
           idrekomendasi: this.rekomendasi.id,
           norekomendasi: this.rekomendasi.nomorRekomendasi,
-          nilairekomendasi: this.rekomendasi.nilaiRekomendasi,
-        },
+          nilairekomendasi: this.rekomendasi.nilaiRekomendasi
+        }
       });
     },
     openEdit(item) {
       this.$router.push({
-        name: 'module-edit-tindak-lanjut',
-        params: { idTindakLanjut: item.id },
+        name: "module-edit-tindak-lanjut",
+        params: { idTindakLanjut: item.id }
       });
     },
     openDeleteModal(id) {
@@ -181,25 +181,25 @@ export default {
 
     onAddTemuan(lha) {
       this.$router.push({
-        name: 'module-create-temuan',
+        name: "module-create-temuan",
         query: {
           idlha: lha.id,
           nolha: lha.nomorLha,
-          tpk: lha.flagTpk,
-        },
+          tpk: lha.flagTpk
+        }
       });
     },
 
     onAddRekomendasi(temuan) {
       this.$router.push({
-        name: 'module-create-rekomendasi',
+        name: "module-create-rekomendasi",
         query: {
           idlha: temuan.idLha,
           nolha: temuan.nomorLha,
           idtemuan: temuan.id,
           notemuan: temuan.nomorTemuan,
-          nilaitemuan: temuan.nilaiTemuan,
-        },
+          nilaitemuan: temuan.nilaiTemuan
+        }
       });
     },
 
@@ -209,30 +209,39 @@ export default {
 
     async onSelectTemuan(selectedTemuan) {
       this.temuan = selectedTemuan;
-      if (this.temuan != 'empty') {
+      if (this.temuan != "empty") {
         await this.loadRekomendasi({ id: this.temuan.id });
       }
     },
 
     async onSelectRekomendasi(selectedRekomendasi) {
       this.rekomendasi = selectedRekomendasi;
-      this.$router.push({
-        path: '/tindak-lanjut',
-        query: {
-          filterlha: this.lha.id,
-          filtertemuan: this.temuan.id ? this.temuan.id : '',
-          filterrekomendasi: this.rekomendasi.id ? this.rekomendasi.id : '',
-        },
-      });
+      // this.$router.push({
+      //   path: '/tindak-lanjut',
+      //   query: {
+      //     filterlha: this.lha.id,
+      //     filtertemuan: this.temuan.id ? this.temuan.id : '',
+      //     filterrekomendasi: this.rekomendasi.id ? this.rekomendasi.id : '',
+      //   },
+      // });
+      history.pushState(
+        {},
+        null,
+        `/#${this.$route.path}?filterlha=${encodeURIComponent(
+          this.lha.id
+        )}&filtertemuan=${encodeURIComponent(
+          this.temuan.id
+        )}&filterrekomendasi=${encodeURIComponent(this.rekomendasi.id)}`
+      );
       await this.loadTindakLanjut();
     },
 
     async actionDelete() {
       try {
         const response = await this.$store.dispatch(
-          'module_tindak_lanjut/deleteTindakLanjutById',
+          "module_tindak_lanjut/deleteTindakLanjutById",
           {
-            idTl: this.idToDelete,
+            idTl: this.idToDelete
           }
         );
 
@@ -252,24 +261,24 @@ export default {
     async loadTindakLanjut(refresh = false) {
       this.loading = true;
       try {
-        if (this.rekomendasi != 'empty' || this.temuan != 'empty') {
-          await this.$store.dispatch('module_tindak_lanjut/loadTindakLanjut', {
+        if (this.rekomendasi != "empty" || this.temuan != "empty") {
+          await this.$store.dispatch("module_tindak_lanjut/loadTindakLanjut", {
             forceRefresh: refresh,
-            idRekomendasi: this.rekomendasi.id,
+            idRekomendasi: this.rekomendasi.id
           });
-          this.items = this.$store.getters['module_tindak_lanjut/tindakLanjut'];
+          this.items = this.$store.getters["module_tindak_lanjut/tindakLanjut"];
         } else {
           this.items = [];
         }
       } catch (error) {
-        this.error = error.message || 'Something went wrong!';
+        this.error = error.message || "Something went wrong!";
       }
       this.loading = false;
     },
 
     async onLoadTl() {
       await this.loadTindakLanjut();
-    },
-  },
+    }
+  }
 };
 </script>

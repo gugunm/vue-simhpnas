@@ -5,7 +5,9 @@
         <CCard>
           <CCardHeader>
             <div>
-              <h3 class="text-2xl">Profile</h3>
+              <h3 class="text-2xl">
+                Profile
+              </h3>
             </div>
           </CCardHeader>
           <CCardBody>
@@ -26,7 +28,9 @@
                 >
                   <!-- src="img/avatars/6.jpg" -->
                   <img
-                    :src="`https://avatars.dicebear.com/api/bottts/${profile.name}.svg?background=%23dbeafe&scale=80`"
+                    :src="
+                      `https://avatars.dicebear.com/api/bottts/${profile.name}.svg?background=%23dbeafe&scale=80`
+                    "
                     class="c-avatar-img w-full h-full"
                   />
                 </div>
@@ -107,16 +111,16 @@
 </template>
 
 <script>
-import axios from 'axios';
-import ChangePassword from './ChangePassword.vue';
+import axios from "axios";
+import ChangePassword from "./ChangePassword.vue";
 
 export default {
   components: {
-    ChangePassword,
+    ChangePassword
   },
   data() {
     return {
-      profile: {},
+      profile: {}
     };
   },
   async mounted() {
@@ -126,19 +130,19 @@ export default {
     async loadProfile() {
       try {
         const response = await axios({
-          method: 'GET',
+          method: "GET",
           baseURL: this.$apiAddress,
-          url: '/api/profile',
+          url: "/api/profile",
           params: {
-            token: localStorage.getItem('api_token'),
-          },
+            token: localStorage.getItem("api_token")
+          }
         });
 
         this.profile = await response.data;
       } catch (error) {
         console.log(error.message);
       }
-    },
-  },
+    }
+  }
 };
 </script>

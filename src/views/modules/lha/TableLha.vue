@@ -32,7 +32,7 @@
         >
           <template #nomor="{ item }">
             <td class="font-semibold">
-              {{ item.no + '/' + items.length }}
+              {{ item.no + "/" + items.length }}
             </td>
           </template>
           <template #nomorLha="{ item }">
@@ -100,8 +100,12 @@
                   :disabled="isLhaSent(item)"
                   @click="openSendModal(item.id)"
                 >
-                  <p v-if="isLhaSent(item)">Terkirim</p>
-                  <p v-else class="px-2">Kirim</p>
+                  <p v-if="isLhaSent(item)">
+                    Terkirim
+                  </p>
+                  <p v-else class="px-2">
+                    Kirim
+                  </p>
                 </CButton>
                 <!-- <p>{{ typeof item.catatanDalnis }}</p> -->
                 <CButton
@@ -119,14 +123,16 @@
             </td>
           </template>
           <template #actions="{ item }">
-            <td v-if="isLhaSent(item)" class="text-center">No Actions</td>
+            <td v-if="isLhaSent(item)" class="text-center">
+              No Actions
+            </td>
             <td v-else>
               <div class="flex flex-wrap justify-content-center w-24">
                 <CButton
                   v-if="item.isTemuanNihil == 0"
                   v-c-tooltip="{
                     content: 'Tambah Temuan',
-                    placement: 'top',
+                    placement: 'top'
                   }"
                   color="info"
                   variant="outline"
@@ -153,7 +159,7 @@
                 <CButton
                   v-c-tooltip="{
                     content: 'Tambah Tim Audit',
-                    placement: 'top',
+                    placement: 'top'
                   }"
                   color="success"
                   variant="outline"
@@ -176,7 +182,7 @@
                   v-if="isEditButton"
                   v-c-tooltip="{
                     content: 'Edit',
-                    placement: 'top',
+                    placement: 'top'
                   }"
                   color="warning"
                   variant="outline"
@@ -205,7 +211,7 @@
                   v-if="isDeleteButton"
                   v-c-tooltip="{
                     content: 'Hapus',
-                    placement: 'top',
+                    placement: 'top'
                   }"
                   color="danger"
                   variant="outline"
@@ -262,7 +268,7 @@
                   class="m-1 w-full"
                   :disabled="
                     $func.isGenap(item.flagKirim) ||
-                    $func.isGanjil(item.flagDalnis)
+                      $func.isGanjil(item.flagDalnis)
                   "
                   @click="onAccLha(item)"
                 >
@@ -275,7 +281,7 @@
                   class="m-1 w-full"
                   :disabled="
                     $func.isGenap(item.flagKirim) ||
-                    $func.isGanjil(item.flagDalnis)
+                      $func.isGanjil(item.flagDalnis)
                   "
                   @click="onOpenMemoModal(item)"
                 >
@@ -377,57 +383,57 @@
 </template>
 
 <script>
-import axios from 'axios';
-import mixin from './mixin';
-import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
-import ReportLevelOne from '@/components/Reports/ReportLevel1.vue';
-import TpTiga from '@/components/Reports/TpTiga.vue';
+import axios from "axios";
+import mixin from "./mixin";
+import ConfirmModal from "@/components/Confirm/ConfirmModal.vue";
+import ReportLevelOne from "@/components/Reports/ReportLevel1.vue";
+import TpTiga from "@/components/Reports/TpTiga.vue";
 
 export default {
-  name: 'TableLha',
+  name: "TableLha",
   filters: {
     descCamelCase(val) {
-      if (!val) return '';
+      if (!val) return "";
       return val
-        .split(' ')
-        .map((w) => w[0].toUpperCase() + w.substr(1).toLowerCase())
-        .join(' ');
-    },
+        .split(" ")
+        .map(w => w[0].toUpperCase() + w.substr(1).toLowerCase())
+        .join(" ");
+    }
   },
   components: {
     ConfirmModal,
     ReportLevelOne,
-    TpTiga,
+    TpTiga
   },
   mixins: [mixin],
   props: {
     topTitle: {
       type: String,
-      default: '',
+      default: ""
     },
     title: {
       type: String,
-      default: '',
+      default: ""
     },
     descTitle: {
       type: String,
-      default: '',
+      default: ""
     },
     items: Object,
     fields: Object,
     clickableRows: Boolean,
     isEditButton: {
       type: Boolean,
-      default: true,
+      default: true
     },
     isDeleteButton: {
       type: Boolean,
-      default: true,
+      default: true
     },
     isAddButton: {
       type: Boolean,
-      default: true,
-    },
+      default: true
+    }
   },
   data() {
     return {
@@ -438,7 +444,7 @@ export default {
       isOpenReject: false,
       isOpenPosting: false,
       isOpenUnPost: false,
-      isLevelAccess: false,
+      isLevelAccess: false
     };
   },
   mounted() {
@@ -447,12 +453,12 @@ export default {
     }
   },
   emits: [
-    'clicked-row',
-    'open-create-modal',
-    'open-edit-modal',
-    'open-delete-modal',
-    'on-send-lha',
-    'on-load-lha',
+    "clicked-row",
+    "open-create-modal",
+    "open-edit-modal",
+    "open-delete-modal",
+    "on-send-lha",
+    "on-load-lha"
   ],
   methods: {
     onLihatCatatan(item) {
@@ -468,17 +474,17 @@ export default {
         if (responseTolak.status == 200 && responseMemo.status == 200) {
           this.memoModal = false;
           this.selectedItem = null;
-          this.textMemo = '';
-          this.$emit('on-load-lha');
-          this.toastSuccess('Berhasil menyimpan memo');
-          this.toastSuccess('Berhasil menolak laporan memo');
+          this.textMemo = "";
+          this.$emit("on-load-lha");
+          this.toastSuccess("Berhasil menyimpan memo");
+          this.toastSuccess("Berhasil menolak laporan memo");
         } else {
           this.toastError(
-            'Terjadi kesalahan saat simpan memo dan tolak laporan'
+            "Terjadi kesalahan saat simpan memo dan tolak laporan"
           );
         }
       } catch (error) {
-        this.toastError('Terjadi kesalahan saat simpan memo dan tolak laporan');
+        this.toastError("Terjadi kesalahan saat simpan memo dan tolak laporan");
       }
     },
 
@@ -489,24 +495,24 @@ export default {
 
     async onSaveMemo() {
       return await axios({
-        method: 'PUT',
+        method: "PUT",
         baseURL: this.$apiAddress,
         url: `/api/dalnisaddmemo/${this.selectedItem.id}`,
         params: {
           Catatan_Dalnis: this.textMemo,
-          token: localStorage.getItem('api_token'),
-        },
+          token: localStorage.getItem("api_token")
+        }
       });
     },
 
     async actionRejectDalnis() {
       return await axios({
-        method: 'PATCH',
+        method: "PATCH",
         baseURL: this.$apiAddress,
         url: `/api/dalnisactiontolak/${this.selectedItem.id}`,
         params: {
-          token: localStorage.getItem('api_token'),
-        },
+          token: localStorage.getItem("api_token")
+        }
       });
     },
 
@@ -517,20 +523,20 @@ export default {
 
     async actionAccDalnis() {
       const response = await axios({
-        method: 'PATCH',
+        method: "PATCH",
         baseURL: this.$apiAddress,
         url: `/api/dalnisactionacc/${this.selectedItem.id}`,
         params: {
-          token: localStorage.getItem('api_token'),
-        },
+          token: localStorage.getItem("api_token")
+        }
       });
       if (response.status == 200) {
         this.isOpenAcc = false;
-        this.toastSuccess('Berhasil menyetujui LHA');
+        this.toastSuccess("Berhasil menyetujui LHA");
         this.selectedItem = null;
-        this.$emit('on-load-lha');
+        this.$emit("on-load-lha");
       } else {
-        this.toastError('Terjadi kesalahan saat acc laporan');
+        this.toastError("Terjadi kesalahan saat acc laporan");
       }
     },
 
@@ -541,20 +547,20 @@ export default {
 
     async actionPostingLha() {
       const response = await axios({
-        method: 'PATCH',
+        method: "PATCH",
         baseURL: this.$apiAddress,
         url: `/api/adminactionacc/${this.selectedItem.id}`,
         params: {
-          token: localStorage.getItem('api_token'),
-        },
+          token: localStorage.getItem("api_token")
+        }
       });
       if (response.status == 200) {
         this.isOpenPosting = false;
-        this.toastSuccess('Berhasil memposting LHA');
+        this.toastSuccess("Berhasil memposting LHA");
         this.selectedItem = null;
-        this.$emit('on-load-lha');
+        this.$emit("on-load-lha");
       } else {
-        this.toastError('Terjadi kesalahan saat posting laporan');
+        this.toastError("Terjadi kesalahan saat posting laporan");
       }
     },
 
@@ -565,20 +571,20 @@ export default {
 
     async actionUnPostLha() {
       const response = await axios({
-        method: 'PATCH',
+        method: "PATCH",
         baseURL: this.$apiAddress,
         url: `/api/adminactionunposting/${this.selectedItem.id}`,
         params: {
-          token: localStorage.getItem('api_token'),
-        },
+          token: localStorage.getItem("api_token")
+        }
       });
       if (response.status == 200) {
         this.isOpenUnPost = false;
-        this.toastSuccess('Berhasil membuka LHA');
+        this.toastSuccess("Berhasil membuka LHA");
         this.selectedItem = null;
-        this.$emit('on-load-lha');
+        this.$emit("on-load-lha");
       } else {
-        this.toastError('Terjadi kesalahan saat membuka laporan');
+        this.toastError("Terjadi kesalahan saat membuka laporan");
       }
     },
 
@@ -607,37 +613,37 @@ export default {
     },
 
     clickedRow(item) {
-      this.$emit('clicked-row', item);
+      this.$emit("clicked-row", item);
     },
     openCreateModal() {
-      this.$emit('open-create-modal');
+      this.$emit("open-create-modal");
     },
     openEditModal(item) {
-      this.$emit('open-edit-modal', item);
+      this.$emit("open-edit-modal", item);
     },
     openDeleteModal(id) {
-      this.$emit('open-delete-modal', id);
+      this.$emit("open-delete-modal", id);
     },
     openSendModal(id) {
-      this.$emit('on-send-lha', id);
+      this.$emit("on-send-lha", id);
     },
     onAddTemuan(item) {
       this.$router.push({
-        name: 'module-create-temuan',
+        name: "module-create-temuan",
         query: {
           idlha: item.id,
           nolha: item.nomorLha,
-          tpk: item.flagTpk,
-        },
+          tpk: item.flagTpk
+        }
       });
     },
     onAddTim(item) {
       this.$router.push({
-        name: 'module-create-tim',
-        query: { idlha: item.id, nolha: item.nomorLha },
+        name: "module-create-tim",
+        query: { idlha: item.id, nolha: item.nomorLha }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 

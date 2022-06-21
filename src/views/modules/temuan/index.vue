@@ -25,14 +25,14 @@
 </template>
 
 <script>
-import TableTemuan from './TableTemuan.vue';
-import mixin from './mixin';
-import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
-import Loading from 'vue-loading-overlay';
+import TableTemuan from "./TableTemuan.vue";
+import mixin from "./mixin";
+import ConfirmModal from "@/components/Confirm/ConfirmModal.vue";
+import Loading from "vue-loading-overlay";
 const fields = [
   {
-    key: 'nomorTemuan',
-    label: 'Nomor Temuan',
+    key: "nomorTemuan",
+    label: "Nomor Temuan"
   },
   // {
   //   key: 'nomorLha',
@@ -42,13 +42,13 @@ const fields = [
   //   key: 'nomorTemuan',
   // },
   {
-    key: 'jenisTemuan',
+    key: "jenisTemuan"
   },
   {
-    key: 'kelompokTemuan',
+    key: "kelompokTemuan"
   },
   {
-    key: 'subKelompokTemuan',
+    key: "subKelompokTemuan"
   },
   // {
   //   key: 'memoTemuan',
@@ -63,7 +63,7 @@ const fields = [
   //   key: 'modusOperandi',
   // },
   {
-    key: 'nilaiTemuan',
+    key: "nilaiTemuan"
   },
   // {
   //   key: 'jumlahRekomendasi',
@@ -82,26 +82,26 @@ const fields = [
   //   key: 'memoKoreksiTemuan',
   // },
   {
-    key: 'actions',
-    _style: 'width: 12%',
-  },
+    key: "actions",
+    _style: "width: 12%"
+  }
 ];
 
 export default {
-  name: 'Temuan',
+  name: "Temuan",
   components: {
     TableTemuan,
     ConfirmModal,
-    Loading,
+    Loading
   },
   mixins: [mixin],
   data() {
     return {
-      items: '',
+      items: "",
       fields,
       isDeleteConfirm: false,
       idToDelete: null,
-      lha: {},
+      lha: {}
     };
   },
 
@@ -114,7 +114,7 @@ export default {
       ) {
         this.$router.go();
       }
-    },
+    }
   },
 
   async mounted() {
@@ -123,24 +123,24 @@ export default {
   methods: {
     openDetail(item) {
       this.$router.push({
-        name: 'module-detail-temuan',
-        params: { idTemuan: item.id },
+        name: "module-detail-temuan",
+        params: { idTemuan: item.id }
       });
     },
     openCreate() {
       this.$router.push({
-        name: 'module-create-temuan',
+        name: "module-create-temuan",
         query: {
           idlha: this.lha.id,
           nolha: this.lha.nomorLha,
-          tpk: this.lha.flagTpk,
-        },
+          tpk: this.lha.flagTpk
+        }
       });
     },
     openEdit(item) {
       this.$router.push({
-        name: 'module-edit-temuan',
-        params: { idTemuan: item.id },
+        name: "module-edit-temuan",
+        params: { idTemuan: item.id }
       });
     },
     openDeleteModal(id) {
@@ -149,21 +149,26 @@ export default {
     },
     async onSelectLha(selectedLha) {
       this.lha = selectedLha;
-      this.$router.push({
-        path: '/temuan',
-        query: {
-          filterlha: this.lha.id,
-        },
-      });
+      // this.$router.push({
+      //   path: '/temuan',
+      //   query: {
+      //     filterlha: this.lha.id,
+      //   },
+      // });
       // this.$route.query.filterlha = this.lha.id;
+      history.pushState(
+        {},
+        null,
+        `/#${this.$route.path}?filterlha=${encodeURIComponent(this.lha.id)}`
+      );
       await this.loadTemuan();
     },
     async actionDelete() {
       try {
         const response = await this.$store.dispatch(
-          'module_temuan/deleteTemuanById',
+          "module_temuan/deleteTemuanById",
           {
-            idTemuan: this.idToDelete,
+            idTemuan: this.idToDelete
           }
         );
 
@@ -183,16 +188,16 @@ export default {
     async loadTemuan(refresh = false) {
       this.loading = true;
       try {
-        await this.$store.dispatch('module_temuan/loadTemuan', {
+        await this.$store.dispatch("module_temuan/loadTemuan", {
           forceRefresh: refresh,
-          idLha: this.lha.id,
+          idLha: this.lha.id
         });
-        this.items = this.$store.getters['module_temuan/temuan'];
+        this.items = this.$store.getters["module_temuan/temuan"];
       } catch (error) {
-        this.error = error.message || 'Something went wrong!';
+        this.error = error.message || "Something went wrong!";
       }
       this.loading = false;
-    },
-  },
+    }
+  }
 };
 </script>

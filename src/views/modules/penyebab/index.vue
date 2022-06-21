@@ -28,16 +28,16 @@
 </template>
 
 <script>
-import TablePenyebab from './TablePenyebab.vue';
-import mixin from './mixin';
-import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
-import Loading from 'vue-loading-overlay';
+import TablePenyebab from "./TablePenyebab.vue";
+import mixin from "./mixin";
+import ConfirmModal from "@/components/Confirm/ConfirmModal.vue";
+import Loading from "vue-loading-overlay";
 
 const fields = [
   {
-    key: 'nomorPenyebab',
-    label: 'Nomor Penyebab',
-    _style: 'width: 15%',
+    key: "nomorPenyebab",
+    label: "Nomor Penyebab",
+    _style: "width: 15%"
   },
   // {
   //   key: 'nomorTemuan',
@@ -49,34 +49,34 @@ const fields = [
   //   key: 'nomorPenyebab',
   // },
   {
-    key: 'deskripsi',
+    key: "deskripsi"
   },
   {
-    key: 'memoPenyebab',
+    key: "memoPenyebab"
   },
   {
-    key: 'actions',
-    label: 'Aksi',
-    _style: 'width: 12%',
-  },
+    key: "actions",
+    label: "Aksi",
+    _style: "width: 12%"
+  }
 ];
 
 export default {
-  name: 'PenyebabTemuan',
+  name: "PenyebabTemuan",
   components: {
     TablePenyebab,
     ConfirmModal,
-    Loading,
+    Loading
   },
   mixins: [mixin],
   data() {
     return {
-      items: '',
+      items: "",
       fields,
       isDeleteConfirm: false,
       idToDelete: null,
       lha: {},
-      temuan: {},
+      temuan: {}
     };
   },
 
@@ -89,7 +89,7 @@ export default {
       ) {
         this.$router.go();
       }
-    },
+    }
   },
 
   async mounted() {
@@ -99,27 +99,27 @@ export default {
   methods: {
     openDetail(item) {
       this.$router.push({
-        name: 'module-detail-penyebab',
-        params: { idPenyebab: item.id },
+        name: "module-detail-penyebab",
+        params: { idPenyebab: item.id }
       });
     },
 
     openCreate() {
       this.$router.push({
-        name: 'module-create-penyebab',
+        name: "module-create-penyebab",
         query: {
           idlha: this.lha.id,
           nolha: this.lha.nomorLha,
           idtemuan: this.temuan.id,
-          notemuan: this.temuan.nomorTemuan,
-        },
+          notemuan: this.temuan.nomorTemuan
+        }
       });
     },
 
     openEdit(item) {
       this.$router.push({
-        name: 'module-edit-penyebab',
-        params: { idPenyebab: item.id },
+        name: "module-edit-penyebab",
+        params: { idPenyebab: item.id }
       });
     },
 
@@ -130,12 +130,12 @@ export default {
 
     onAddTemuan(lha) {
       this.$router.push({
-        name: 'module-create-temuan',
+        name: "module-create-temuan",
         query: {
           idlha: lha.id,
           nolha: lha.nomorLha,
-          tpk: lha.flagTpk,
-        },
+          tpk: lha.flagTpk
+        }
       });
     },
 
@@ -145,22 +145,29 @@ export default {
 
     async onSelectTemuan(selectedTemuan) {
       this.temuan = selectedTemuan;
-      this.$router.push({
-        path: '/penyebab',
-        query: {
-          filterlha: this.lha.id,
-          filtertemuan: this.temuan.id ? this.temuan.id : '',
-        },
-      });
+      // this.$router.push({
+      //   path: '/penyebab',
+      //   query: {
+      //     filterlha: this.lha.id,
+      //     filtertemuan: this.temuan.id ? this.temuan.id : '',
+      //   },
+      // });
+      history.pushState(
+        {},
+        null,
+        `/#${this.$route.path}?filterlha=${encodeURIComponent(
+          this.lha.id
+        )}&filtertemuan=${encodeURIComponent(this.temuan.id)}`
+      );
       await this.loadPenyebab();
     },
 
     async actionDelete() {
       try {
         const response = await this.$store.dispatch(
-          'module_penyebab/deletePenyebabById',
+          "module_penyebab/deletePenyebabById",
           {
-            idPenyebab: this.idToDelete,
+            idPenyebab: this.idToDelete
           }
         );
 
@@ -181,20 +188,20 @@ export default {
     async loadPenyebab(refresh = false) {
       this.loading = true;
       try {
-        if (this.temuan != 'empty') {
-          await this.$store.dispatch('module_penyebab/loadPenyebab', {
+        if (this.temuan != "empty") {
+          await this.$store.dispatch("module_penyebab/loadPenyebab", {
             idTemuan: this.temuan.id,
-            forceRefresh: refresh,
+            forceRefresh: refresh
           });
-          this.items = this.$store.getters['module_penyebab/penyebab'];
+          this.items = this.$store.getters["module_penyebab/penyebab"];
         } else {
           this.items = [];
         }
       } catch (error) {
-        this.error = error.message || 'Something went wrong!';
+        this.error = error.message || "Something went wrong!";
       }
       this.loading = false;
-    },
-  },
+    }
+  }
 };
 </script>

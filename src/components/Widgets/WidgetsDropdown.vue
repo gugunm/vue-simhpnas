@@ -152,81 +152,45 @@
       </CWidgetDropdown>
     </CCol>
   </CRow> -->
+  
   <div>
     <CRow>
-      <CCol sm="12" lg="4">
-        <CWidgetProgress class="bg-green-500">
-          <div class="h4 m-0">
-            {{ data.TotalLHA || 0 }}
-          </div>
-          <div class="card-header-actions">
-            <router-link
-              to="/lha"
-              class="card-header-action position-absolute"
-              style="right: 5px; top: 5px"
-              rel="noreferrer noopener"
-            >
-              <small class="text-xs text-white">details</small>
-            </router-link>
-          </div>
-          <p class="pt-2 pb-3">Total LHA</p>
-          <p class="text-xs">{{ data.TotalObrik || 0 }} Obrik</p>
-        </CWidgetProgress>
-      </CCol>
-      <CCol sm="12" lg="4">
-        <CWidgetProgress class="bg-blue-500">
-          <div class="h4 m-0">
-            {{ $func.convertToRupiah(data.NilaiTemuan) }}
-          </div>
-          <div class="card-header-actions">
-            <router-link
-              to="/temuan"
-              class="card-header-action position-absolute"
-              style="right: 5px; top: 5px"
-              rel="noreferrer noopener"
-            >
-              <small class="text-xs text-white">details</small>
-            </router-link>
-          </div>
-          <p class="pt-2 pb-3">Nilai Temuan</p>
-          <p class="text-xs">{{ data.JumlahTemuan || 0 }} Temuan</p>
-        </CWidgetProgress>
-      </CCol>
-      <CCol sm="12" lg="4">
-        <CWidgetProgress class="bg-yellow-500">
-          <div class="h4 m-0">
-            {{ $func.convertToRupiah(data.NilaiTL) }}
-          </div>
-          <div class="card-header-actions">
-            <router-link
-              to="/tindak-lanjut"
-              class="card-header-action position-absolute"
-              style="right: 5px; top: 5px"
-              rel="noreferrer noopener"
-            >
-              <small class="text-xs text-white">details</small>
-            </router-link>
-          </div>
-          <p class="pt-2 pb-3">Nilai Tindak Lanjut</p>
-          <p class="text-xs">{{ data.JumlahTL || 0 }} Tindak Lanjut</p>
-        </CWidgetProgress>
-      </CCol>
-      <!-- <CCol sm="6" lg="3">
-        <CWidgetProgress
-          header="2 TB"
-          text="Lorem ipsum..."
-          footer="Lorem ipsum dolor sit amet enim."
-          color="gradient-danger"
-          :value="25"
-        />
-      </CCol> -->
+      <WidgetsDropdownItem
+        card-color="green"
+        title="Total LHA"
+        sub-title="Obrik"
+        :nilai="data.TotalLHA"
+        direct-link="/lha"
+        :total-count="data.TotalObrik"
+      />
+      <WidgetsDropdownItem
+        card-color="yellow"
+        title="Total Temuan"
+        sub-title="Temuan"
+        :nilai="$func.convertToRupiah(data.NilaiTemuan)"
+        direct-link="/temuan"
+        :total-count="data.JumlahTemuan"
+      />
+      <WidgetsDropdownItem
+        card-color="blue"
+        title="Total TL"
+        sub-title="Tindak Lanjut"
+        :nilai="$func.convertToRupiah(data.NilaiTL)"
+        direct-link="/tindak-lanjut"
+        :total-count="data.JumlahTL"
+      />
     </CRow>
   </div>
 </template>
 
 <script>
+import WidgetsDropdownItem from '@/components/Widgets/WidgetsDropdownItem.vue';
+
 export default {
   name: 'TopDashboard',
+  components: {
+    WidgetsDropdownItem,
+  },
   props: ['data'],
 };
 </script>

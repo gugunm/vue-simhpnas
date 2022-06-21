@@ -11,7 +11,9 @@
           <!-- <span class="text-white font-semibold text-xl">S</span> -->
           <!-- <img src="img/avatars/6.jpg" class="c-avatar-img" /> -->
           <img
-            :src="`https://avatars.dicebear.com/api/bottts/${namaUser}.svg?background=%23dbeafe&scale=80`"
+            :src="
+              `https://avatars.dicebear.com/api/bottts/${namaUser}.svg?background=%23dbeafe&scale=80`
+            "
             class="c-avatar-img"
           />
         </div>
@@ -83,13 +85,13 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 export default {
-  name: 'TheHeaderDropdownAccnt',
+  name: "TheHeaderDropdownAccnt",
   data() {
     return {
       itemsCount: 42,
-      namaUser: localStorage.getItem('name'),
+      namaUser: localStorage.getItem("name")
     };
   },
   methods: {
@@ -98,27 +100,27 @@ export default {
       axios
         .post(
           this.$apiAddress +
-            '/api/logout?token=' +
-            localStorage.getItem('api_token'),
+            "/api/logout?token=" +
+            localStorage.getItem("api_token"),
           {}
         )
-        .then(function (response) {
-          localStorage.removeItem('api_token');
-          localStorage.removeItem('tokenExpiration');
-          localStorage.removeItem('idUnitKerja');
-          localStorage.removeItem('level');
-          localStorage.removeItem('name');
-          localStorage.removeItem('roles');
-          localStorage.removeItem('namaUnit');
-          localStorage.removeItem('idSubUnitKerja');
-          localStorage.removeItem('namaSubUnit');
-          self.$router.push({ path: '/login' });
+        .then(function(response) {
+          localStorage.removeItem("api_token");
+          localStorage.removeItem("tokenExpiration");
+          localStorage.removeItem("idUnitKerja");
+          localStorage.removeItem("level");
+          localStorage.removeItem("name");
+          localStorage.removeItem("roles");
+          localStorage.removeItem("namaUnit");
+          localStorage.removeItem("idSubUnitKerja");
+          localStorage.removeItem("namaSubUnit");
+          self.$router.push({ path: "/login" });
         })
-        .catch(function (error) {
+        .catch(function(error) {
           console.log(error);
         });
-    },
-  },
+    }
+  }
 };
 </script>
 

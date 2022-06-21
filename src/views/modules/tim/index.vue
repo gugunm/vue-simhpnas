@@ -25,15 +25,15 @@
 </template>
 
 <script>
-import TableTim from './TableTim.vue';
-import mixin from './mixin';
-import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
-import Loading from 'vue-loading-overlay';
+import TableTim from "./TableTim.vue";
+import mixin from "./mixin";
+import ConfirmModal from "@/components/Confirm/ConfirmModal.vue";
+import Loading from "vue-loading-overlay";
 
 const fields = [
   {
-    key: 'nip',
-    label: 'NIP',
+    key: "nip",
+    label: "NIP"
   },
   // {
   //   key: 'nomorLha',
@@ -43,16 +43,16 @@ const fields = [
   //   key: 'nomorUrut',
   // },
   {
-    key: 'nama',
+    key: "nama"
   },
   // {
   //   key: 'nip',
   // },
   {
-    key: 'kodePeran',
+    key: "kodePeran"
   },
   {
-    key: 'peran',
+    key: "peran"
   },
   // {
   //   key: 'unitAudit',
@@ -61,28 +61,28 @@ const fields = [
   //   key: 'subUnitAudit',
   // },
   {
-    key: 'actions',
-    label: 'Aksi',
-    _style: 'width: 12%',
-  },
+    key: "actions",
+    label: "Aksi",
+    _style: "width: 12%"
+  }
 ];
 
 export default {
-  name: 'TimAudit',
+  name: "TimAudit",
   components: {
     TableTim,
     ConfirmModal,
-    Loading,
+    Loading
   },
   mixins: [mixin],
   data() {
     return {
-      items: '',
+      items: "",
       fields,
       isDeleteConfirm: false,
       idToDelete: null,
       lha: {},
-      loading: false,
+      loading: false
     };
   },
 
@@ -95,7 +95,7 @@ export default {
       ) {
         this.$router.go();
       }
-    },
+    }
   },
 
   async mounted() {},
@@ -103,20 +103,20 @@ export default {
   methods: {
     openDetail(item) {
       this.$router.push({
-        name: 'module-detail-tim',
-        params: { idTim: item.id },
+        name: "module-detail-tim",
+        params: { idTim: item.id }
       });
     },
     openCreate() {
       this.$router.push({
-        name: 'module-create-tim',
-        query: { idlha: this.lha.id, nolha: this.lha.nomorLha },
+        name: "module-create-tim",
+        query: { idlha: this.lha.id, nolha: this.lha.nomorLha }
       });
     },
     openEdit(item) {
       this.$router.push({
-        name: 'module-edit-tim',
-        params: { idTim: item.id },
+        name: "module-edit-tim",
+        params: { idTim: item.id }
       });
     },
     openDeleteModal(id) {
@@ -125,20 +125,25 @@ export default {
     },
     async onSelectLha(selectedLha) {
       this.lha = selectedLha;
-      this.$router.push({
-        path: '/tim-audit',
-        query: {
-          filterlha: this.lha.id,
-        },
-      });
+      // this.$router.push({
+      //   path: "/tim-audit",
+      //   query: {
+      //     filterlha: this.lha.id
+      //   }
+      // });
+      history.pushState(
+        {},
+        null,
+        `/#${this.$route.path}?filterlha=${encodeURIComponent(this.lha.id)}`
+      );
       await this.loadTim();
     },
     async actionDelete() {
       try {
         const response = await this.$store.dispatch(
-          'module_tim/deleteTimById',
+          "module_tim/deleteTimById",
           {
-            idTim: this.idToDelete,
+            idTim: this.idToDelete
           }
         );
 
@@ -154,7 +159,7 @@ export default {
       } catch (error) {
         this.toastError(error.message);
       }
-    },
+    }
     // async loadTim(refresh = false) {
     //   this.loading = true;
     //   try {
@@ -168,6 +173,6 @@ export default {
     //   }
     //   this.loading = false;
     // },
-  },
+  }
 };
 </script>

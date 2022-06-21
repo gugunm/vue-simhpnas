@@ -1,28 +1,28 @@
 <template>
-  <div class="tw-flex tw-lg:tw-w-full tw-h-screen tw-justify-center">
-    <div class="img-login tw-hidden lg:tw-block lg:tw-w-2/6 tw-bg-red-500">
-      <div class="tw-flex tw-flex-col tw-px-8 tw-h-full tw-text-white tw-justify-center">
+  <div class="flex lg:w-full h-screen justify-center">
+    <div class="img-login hidden lg:block lg:w-2/6 bg-red-500">
+      <div class="flex flex-col px-8 h-full text-white justify-center">
         <!-- <h1 class="text-4xl text-center">SIMHPNAS</h1> -->
-        <div class="tw-text-left tw-px-4">
+        <div class="text-left px-4">
           <CImg
-            class="tw-inline-block tw-w-52 lg:tw-w-64 tw-mb-2"
+            class="inline-block w-52 lg:w-64 mb-2"
             src="img/simhp/logo-white-login.svg"
           />
-          <p class="tw-text-left tw-text-base lg:tw-text-lg tw-tracking-wide">
+          <p class="text-left text-base lg:text-lg tracking-wide">
             Sistem Infomasi Manajemen Hasil Pengawasan Nasional
           </p>
         </div>
       </div>
     </div>
     <div
-      class="tw-flex-initial tw-content-center tw-w-full lg:tw-w-4/6 tw-bg-white tw-p-6 lg:py-14"
+      class="flex-initial content-center w-full lg:w-4/6 bg-white p-6 lg:py-14"
     >
-      <div class="tw-w-full tw-h-full tw-m-auto lg:tw-max-w-xl">
-        <div class="tw-flex tw-h-5/6 tw-flex-col tw-justify-center tw-text-left tw-w-full">
-          <div class="tw-flex tw-justify-start tw-content-center tw-mb-4 lg:tw-hidden">
+      <div class="w-full h-full m-auto lg:max-w-xl">
+        <div class="flex h-5/6 flex-col justify-center text-left w-full">
+          <div class="flex justify-start content-center mb-4 lg:hidden">
             <!-- <CImg class="inline-block w-8 mr-2" src="/img/simhp/logo.svg" /> -->
             <CImg
-              class="tw-inline-block tw-h-12 tw-mr-2"
+              class="inline-block h-12 mr-2"
               src="img/simhp/logo-color-login.svg"
             />
             <!-- <h3 class="text-2xl font-bold inline-block">SIMHPNAS</h3> -->
@@ -30,55 +30,55 @@
           <!-- <div>
 
           </div> -->
-          <p class="tw-text-3xl tw-leading-normal tw-tracking-wide tw-font-medium tw-mb-4">
-            Halo,<br>Selamat Datang!
+          <p class="text-3xl leading-normal tracking-wide font-medium mb-4">
+            Halo,<br />Selamat Datang!
           </p>
           <form
             method="POST"
-            class="tw-flex tw-flex-col"
+            class="flex flex-col"
             @submit.prevent="submitForm"
           >
-            <p class="tw-mb-3 tw-tracking-wide">
+            <p class="mb-3 tracking-wide">
               Silahkan login untuk melanjutkan
             </p>
-            <div class="tw-flex tw-flex-wrap mb-4">
-              <div class="tw-w-full">
+            <div class="flex flex-wrap mb-4">
+              <div class="w-full">
                 <input
                   v-model="email"
                   class="
-                    tw-rounded-lg
-                    tw-appearance-none
-                    tw-block
-                    tw-w-full
-                    tw-text-gray-700
-                    tw-border tw-border-gray-200
-                    tw-py-3
-                    tw-px-4
-                    tw-mb-3
-                    tw-leading-tight
-                    tw-tracking-wide
-                    focus:tw-outline-none focus:tw-bg-white focus:tw-border-gray-500
+                    rounded-lg
+                    appearance-none
+                    block
+                    w-full
+                    text-gray-700
+                    border border-gray-200
+                    py-3
+                    px-4
+                    mb-3
+                    leading-tight
+                    tracking-wide
+                    focus:outline-none focus:bg-white focus:border-gray-500
                   "
                   type="text"
                   placeholder="email"
-                >
+                />
                 <input
                   v-model="password"
                   class="
-                    tw-rounded-lg
-                    tw-appearance-none
-                    tw-block
-                    tw-w-full
-                    tw-text-gray-700
-                    tw-border tw-border-gray-200
-                    tw-py-3
-                    tw-px-4
-                    tw-leading-tight
-                    focus:tw-outline-none focus:tw-bg-white focus:tw-border-gray-500
+                    rounded-lg
+                    appearance-none
+                    block
+                    w-full
+                    text-gray-700
+                    border border-gray-200
+                    py-3
+                    px-4
+                    leading-tight
+                    focus:outline-none focus:bg-white focus:border-gray-500
                   "
                   type="password"
                   placeholder="password"
-                >
+                />
               </div>
             </div>
             <!-- <div class="text-right">
@@ -97,26 +97,22 @@
             </div> -->
             <button
               class="
-                tw-rounded-lg
-                tw-appearance-none
-                tw-block
-                tw-w-full
-                tw-bg-red-500
-                tw-text-white
-                tw-py-3
-                tw-px-4
-                tw-leading-tight
-                hover:tw-bg-red-600
+                rounded-lg
+                appearance-none
+                block
+                w-full
+                bg-red-500
+                text-white
+                py-3
+                px-4
+                leading-tight
+                hover:bg-red-600
               "
               type="submit"
               placeholder="password"
             >
               <template v-if="loading">
-                <CSpinner
-                  color="white"
-                  size="sm"
-                  class="tw-mr-2"
-                />
+                <CSpinner color="white" size="sm" class="mr-2" />
                 <!-- Loading... -->
               </template>
               <template v-else>
@@ -125,7 +121,7 @@
             </button>
             <CAlert
               v-if="showMessage"
-              class="tw-mt-3"
+              class="mt-3"
               color="danger"
               :show.sync="currentAlertCounter"
               close-button
@@ -140,32 +136,32 @@
               />
             </CAlert>
           </form>
-          <p class="tw-mt-3 tw-tracking-wide">
+          <p class="mt-3 tracking-wide">
             Belum punya akun? silahkan
             <a
               href="mailto:simhpnas@bpkp.go.id?subject=Permintaan Piloting SIMHPNAS"
               target="_blank"
               class="
-                tw-inline-block
-                tw-font-bold
-                hover:tw-no-underline
-                tw-text-red-500
-                hover:tw-text-red-600
+                inline-block
+                font-bold
+                hover:no-underline
+                text-red-500
+                hover:text-red-600
               "
             >
               Hubungi Tim Kami
             </a>
           </p>
         </div>
-        <div class="tw-text-left tw-h-1/6 tw-flex tw-flex-col tw-justify-end">
-          <div class="tw-pb-10">
+        <div class="text-left h-1/6 flex flex-col justify-end">
+          <div class="pb-10">
             <CImg
-              class="tw-inline-block tw-w-6 lg:tw-w-5"
+              class="inline-block w-6 lg:w-5"
               src="img/simhp/v_avocado.svg"
             />
-            <span
-              class="tw-text-sm tw-font-medium tw-ml-2 tw-tracking-wide"
-            >Versi Alpukat</span>
+            <span class="text-sm font-medium ml-2 tracking-wide"
+              >Versi Alpukat</span
+            >
           </div>
         </div>
       </div>
@@ -177,25 +173,25 @@
 // import CoverImg from '../../assets/img/cover.jpg';
 
 export default {
-  name: 'Login',
+  name: "Login",
   data() {
     return {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
       showMessage: false,
-      message: '',
+      message: "",
       currentAlertCounter: 0,
-      mode: 'login',
+      mode: "login",
       error: null,
-      loading: false,
+      loading: false
     };
   },
-  mounted() {
-    alert("Web SimaRen PKPT Terbaru di http://simarenpkpt.bpkp.go.id/ dan Web SimaRen PKAU Terbaru di http://simarenpkau.bpkp.go.id/ Terimakasih, Mohon maaf atas ketidaknyamanannya")
-  },
+  // mounted() {
+  //   alert("Web SimaRen PKPT Terbaru di http://simarenpkpt.bpkp.go.id/ dan Web SimaRen PKAU Terbaru di http://simarenpkau.bpkp.go.id/ Terimakasih, Mohon maaf atas ketidaknyamanannya")
+  // },
   methods: {
     goRegister() {
-      this.$router.push({ path: 'register' });
+      this.$router.push({ path: "register" });
     },
     async submitForm() {
       let self = this;
@@ -206,27 +202,26 @@ export default {
 
       const actionPayload = {
         email: self.email,
-        password: self.password,
+        password: self.password
       };
 
       try {
-        await this.$store.dispatch('auth/login', actionPayload);
-        self.email = '';
-        self.password = '';
+        await this.$store.dispatch("auth/login", actionPayload);
+        self.email = "";
+        self.password = "";
         self.loading = false;
-        this.$router.push({ path: 'dashboard' });
+        this.$router.push({ path: "dashboard" });
       } catch (err) {
         self.loading = false;
-        self.message = 'E-mail atau password anda salah!';
+        self.message = "E-mail atau password anda salah!";
         self.showMessage = true;
-        self.error = err.message || 'Failed to authenticate, try later.';
+        self.error = err.message || "Failed to authenticate, try later.";
         console.log(error);
       }
-    },
-  },
+    }
+  }
 };
 </script>
-
 
 <style scoped>
 .login-container {
@@ -256,7 +251,7 @@ export default {
 }
 
 .img-login {
-  background-image: url('/img/simhp/bg-login.jpg');
+  background-image: url("/img/simhp/bg-login.jpg");
   /* Full height */
   height: 100%;
 

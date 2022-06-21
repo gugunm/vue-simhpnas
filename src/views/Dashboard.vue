@@ -2,10 +2,12 @@
   <div>
     <CRow class="mb-4">
       <CCol>
-        <h3 class="h3">Halo, Selamat Datang</h3>
-        <h6 class="h5 capitalize">
+        <p class="text-2xl">
+          Halo, Selamat Datang
+        </p>
+        <p class="text-lg capitalize">
           {{ namaUnit }}
-        </h6>
+        </p>
       </CCol>
     </CRow>
     <WidgetsDropdown :data="dashData" />
@@ -15,47 +17,47 @@
 </template>
 
 <script>
-import WidgetsDropdown from '@/components/Widgets/WidgetsDropdown.vue';
+import WidgetsDropdown from "@/components/Widgets/WidgetsDropdown.vue";
 // import SamplePDF from '@/components/Reports/ReportLevel1.vue';
 // import TpTiga from '@/components/Reports/TpTiga.vue';
-import axios from 'axios';
+import axios from "axios";
 
 export default {
-  name: 'Dashboard',
+  name: "Dashboard",
   components: {
-    WidgetsDropdown,
+    WidgetsDropdown
     // SamplePDF,
     // TpTiga,
   },
   data() {
     return {
-      namaUnit: '',
-      dashData: '',
+      namaUnit: "",
+      dashData: ""
     };
   },
   async mounted() {
     await this.loadDashboardData();
 
-    const result = localStorage.getItem('namaUnit');
+    const result = localStorage.getItem("namaUnit");
     this.namaUnit = result.toLowerCase();
   },
   methods: {
     async loadDashboardData() {
       const response = await axios({
-        method: 'GET',
+        method: "GET",
         baseURL: this.$apiAddress,
-        url: '/api/dashboard',
+        url: "/api/dashboard",
         params: {
-          token: localStorage.getItem('api_token'),
-        },
+          token: localStorage.getItem("api_token")
+        }
       });
 
       if (response.status == 200) {
         this.dashData = await response.data;
       } else {
-        this.toastError('Gagal load data dashboard');
+        this.toastError("Gagal load data dashboard");
       }
-    },
-  },
+    }
+  }
 };
 </script>

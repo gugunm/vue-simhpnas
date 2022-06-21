@@ -3,13 +3,13 @@
     :minimize="minimize"
     unfoldable
     :show="show"
-    class="bg-sidebar shadow-none lg:w-full lg:h-full"
+    class="bg-sidebar shadow-none"
     :class="!mobileScreen ? 'relative-sidebar' : ''"
     @update:show="value => $store.commit('ui/set', ['sidebarShow', value])"
   >
     <!-- :fixed="true" -->
-    <!-- <CSidebarBrand class="d-md-down-none bg-sidebar py-4" to="/"> -->
-    <!-- <CIcon
+    <CSidebarBrand class="d-md-down-none bg-sidebar py-4" to="/">
+      <!-- <CIcon
         class="c-sidebar-brand-full"
         name="logo"
         size="custom-size"
@@ -23,10 +23,10 @@
         :height="35"
         view-box="0 0 110 134"
       /> -->
-    <!-- <h1 class="text-black">
+      <h1 class="text-black">
         SimhpNas
-      </h1> -->
-    <!-- <CImg
+      </h1>
+      <!-- <CImg
         v-if="!this.$store.state.ui.sidebarMinimize"
         class="sidebar-logo g-logo-expand"
         name="logo-expand"
@@ -38,7 +38,7 @@
         name="logo-expand"
         src="img/simhp/icon-logo-white.svg"
       /> -->
-    <!-- </CSidebarBrand> -->
+    </CSidebarBrand>
     <CRenderFunction flat :content-to-render="nav" />
     <!-- <CSidebarMinimizer
       class="c-d-md-down-none bg-transparent border-0"

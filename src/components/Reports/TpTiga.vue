@@ -22,15 +22,15 @@
 </template>
 
 <script>
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 export default {
-  props: ['idLha'],
+  props: ["idLha"],
   data() {
     return {
-      reportTpTiga: null,
+      reportTpTiga: null
     };
   },
   // async mounted() {
@@ -49,95 +49,95 @@ export default {
         return [
           {
             text: index + 1,
-            alignment: 'center',
+            alignment: "center"
           },
           {
             text: data.nip,
-            alignment: 'center',
+            alignment: "center"
           },
           {
-            text: data.nama,
+            text: data.nama
           },
           {
-            text: data.peran,
-          },
+            text: data.peran
+          }
         ];
       });
 
       const dataTemuanToPdf = [];
-      this.reportTpTiga.dataTemuan.forEach((data) => {
+      this.reportTpTiga.dataTemuan.forEach(data => {
         // console.log('DATA TEMUAN HERE!');
         // console.log(data);
 
-        data.dataPenyebab = data.dataPenyebab.map((dpenyebab) => {
+        data.dataPenyebab = data.dataPenyebab.map(dpenyebab => {
           return [
             {
               text: dpenyebab.kodePenyebab,
-              alignment: 'center',
-              fillColor: '#eeeeee',
-              margin: [0, 3],
+              alignment: "center",
+              fillColor: "#eeeeee",
+              margin: [0, 3]
             },
             {},
             {
               text: dpenyebab.nomorPenyebab,
-              alignment: 'center',
+              alignment: "center",
               bold: true,
-              fillColor: '#dddddd',
-              margin: [0, 3],
+              fillColor: "#dddddd",
+              margin: [0, 3]
             },
             {
               text: dpenyebab.memoPenyebab,
-              colSpan: 2,
+              colSpan: 2
             },
             {},
-            {},
+            {}
           ];
         });
 
         const dataRekToPdf = [];
-        data.dataRekomendasi = data.dataRekomendasi.forEach((drek) => {
-          drek.dataPelaku = drek.dataPelaku.map((dpelaku) => {
+        data.dataRekomendasi = data.dataRekomendasi.forEach(drek => {
+          drek.dataPelaku = drek.dataPelaku.map(dpelaku => {
             return [
               {},
               {},
               {},
               {
                 text: dpelaku.nomorUrut,
-                alignment: 'center',
+                alignment: "center",
                 bold: true,
-                fillColor: '#dddddd',
-                margin: [0, 3],
+                fillColor: "#dddddd",
+                margin: [0, 3]
               },
               {
-                text: dpelaku.nama + ' - ' + dpelaku.jabatan,
+                text: dpelaku.nama + " - " + dpelaku.jabatan
               },
-              {},
+              {}
             ];
           });
 
-          drek.dataTl = drek.dataTl.map((dtl) => {
+          drek.dataTl = drek.dataTl.map(dtl => {
             return [
               {
                 text: dtl.kodeSubKelompokTl,
-                alignment: 'center',
-                fillColor: '#dddddd',
-                margin: [0, 3],
+                alignment: "center",
+                fillColor: "#dddddd",
+                margin: [0, 3]
               },
               {},
               {},
               {
                 text: dtl.nomorTl,
-                alignment: 'center',
+                alignment: "center",
                 bold: true,
-                fillColor: '#dddddd',
-                margin: [0, 3],
+                fillColor: "#dddddd",
+                margin: [0, 3]
               },
               {
-                text: dtl.memoTl,
+                text: dtl.memoTl
               },
               {
-                text: this.$func.convertToRupiah(dtl.nilaiTl),
-              },
+                text: this.$func.convertToRupiah(dtl.nilaiTl)
+              }
             ];
           });
 
@@ -145,39 +145,39 @@ export default {
             [
               {
                 text: drek.kodeSubKelompokRekomendasi,
-                alignment: 'center',
-                fillColor: '#eeeeee',
-                margin: [0, 3],
+                alignment: "center",
+                fillColor: "#eeeeee",
+                margin: [0, 3]
               },
               {},
               {
                 text: drek.nomorRekomendasi,
-                alignment: 'center',
+                alignment: "center",
                 bold: true,
-                fillColor: '#dddddd',
-                margin: [0, 3],
+                fillColor: "#dddddd",
+                margin: [0, 3]
               },
               {
                 text: drek.memoRekomendasi,
-                colSpan: 2,
+                colSpan: 2
               },
               {},
               {
-                text: this.$func.convertToRupiah(drek.nilaiRekomendasi),
-              },
+                text: this.$func.convertToRupiah(drek.nilaiRekomendasi)
+              }
             ],
             drek.dataPelaku.length > 0 && [
               {},
               {},
               {},
               {
-                text: 'PELAKU',
+                text: "PELAKU",
                 colSpan: 2,
                 margin: [0, 7],
-                bold: true,
+                bold: true
               },
               {},
-              {},
+              {}
             ],
             ...drek.dataPelaku,
             drek.dataTl.length > 0 && [
@@ -185,27 +185,27 @@ export default {
               {},
               {},
               {
-                text: 'TINDAK LANJUT',
+                text: "TINDAK LANJUT",
                 colSpan: 2,
                 margin: [0, 7],
-                bold: true,
+                bold: true
               },
               {},
-              {},
+              {}
             ],
             ...drek.dataTl,
             drek.dataTl.length > 0 && [
               {
-                text: '',
+                text: "",
                 colSpan: 6,
-                margin: [0, 5],
+                margin: [0, 5]
               },
               {},
               {},
               {},
               {},
-              {},
-            ],
+              {}
+            ]
           ].filter(Boolean);
 
           dataRekToPdf.push(...dataRek);
@@ -215,266 +215,266 @@ export default {
           [
             {},
             {
-              text: 'TEMUAN',
+              text: "TEMUAN",
               colSpan: 4,
               margin: [0, 7],
-              bold: true,
+              bold: true
             },
             {},
             {},
             {},
-            {},
+            {}
           ],
           [
             {
               text: data.kodeSubKelompokTemuan,
-              alignment: 'center',
-              fillColor: '#eeeeff',
-              margin: [0, 3],
+              alignment: "center",
+              fillColor: "#eeeeff",
+              margin: [0, 3]
             },
             {
               text: data.nomorTemuan,
-              alignment: 'center',
+              alignment: "center",
               bold: true,
-              fillColor: '#dddddd',
-              margin: [0, 3],
+              fillColor: "#dddddd",
+              margin: [0, 3]
             },
             {
               text: data.memoTemuan,
-              colSpan: 3,
+              colSpan: 3
             },
             {},
             {},
             {
-              text: this.$func.convertToRupiah(data.nilaiTemuan),
-            },
+              text: this.$func.convertToRupiah(data.nilaiTemuan)
+            }
           ],
           data.dataPenyebab.length > 0 && [
             {},
             {},
             {
-              text: 'PENYEBAB',
+              text: "PENYEBAB",
               colSpan: 3,
               margin: [0, 7],
-              bold: true,
+              bold: true
             },
             {},
             {},
-            {},
+            {}
           ],
           ...data.dataPenyebab,
           dataRekToPdf.length > 0 && [
             {},
             {},
             {
-              text: 'REKOMENDASI',
+              text: "REKOMENDASI",
               colSpan: 3,
               margin: [0, 7],
-              bold: true,
+              bold: true
             },
             {},
             {},
-            {},
+            {}
           ],
-          ...dataRekToPdf,
+          ...dataRekToPdf
         ].filter(Boolean);
 
         dataTemuanToPdf.push(...result);
       });
 
       const docDef = {
-        pageSize: 'A4',
+        pageSize: "A4",
         // pageOrientation: 'landscape',
         pageMargins: [20, 20, 20, 30],
-        footer: function (currentPage, pageCount) {
+        footer: function(currentPage, pageCount) {
           return {
             columns: [
               {
-                text: 'Tanggal Cetak : ' + new Date().toLocaleString('id'),
+                text: "Tanggal Cetak : " + new Date().toLocaleString("id"),
                 margin: [17, 0, 0, 0],
-                fontSize: 7,
+                fontSize: 7
               },
               {
                 text:
-                  'halaman ke ' + currentPage.toString() + ' dari ' + pageCount,
-                alignment: 'right',
+                  "halaman ke " + currentPage.toString() + " dari " + pageCount,
+                alignment: "right",
                 margin: [0, 0, 40, 0],
-                fontSize: 7,
-              },
-            ],
+                fontSize: 7
+              }
+            ]
           };
         },
 
         content: [
           {
-            text: 'FORM ENTRY SHEET',
+            text: "FORM ENTRY SHEET",
             fontSize: 14,
             bold: true,
-            alignment: 'center',
+            alignment: "center"
           },
           {
-            text: 'I. DATA UMUM PEMERIKSAAN',
+            text: "I. DATA UMUM PEMERIKSAAN",
             fontSize: 12,
             bold: true,
-            margin: [0, 10, 0, 10],
+            margin: [0, 10, 0, 10]
           },
           {
             fontSize: 10,
             table: {
-              widths: [200, 50, 50, 100, '*'],
+              widths: [200, 50, 50, 100, "*"],
               headerRows: 0,
               // keepWithHeaderRows: 1,
               body: [
                 [
                   {
-                    text: '1. LHP',
-                    rowSpan: 2,
+                    text: "1. LHP",
+                    rowSpan: 2
                   },
                   {
-                    text: 'Nomor',
+                    text: "Nomor"
                   },
                   {
                     text: data.nomorLha,
-                    colSpan: 3,
+                    colSpan: 3
                   },
                   {},
-                  {},
+                  {}
                 ],
                 [
                   {},
                   {
-                    text: 'Tanggal',
+                    text: "Tanggal"
                   },
                   {
                     text: data.tglLha,
-                    colSpan: 3,
+                    colSpan: 3
                   },
                   {},
-                  {},
+                  {}
                 ],
                 [
                   {
-                    text: '2. Surat Tugas',
-                    rowSpan: 2,
+                    text: "2. Surat Tugas",
+                    rowSpan: 2
                   },
                   {
-                    text: 'Nomor',
+                    text: "Nomor"
                   },
                   {
                     text: data.nomorST,
-                    colSpan: 3,
+                    colSpan: 3
                   },
                   {},
-                  {},
+                  {}
                 ],
                 [
                   {},
                   {
-                    text: 'Tanggal',
+                    text: "Tanggal"
                   },
                   {
                     text: data.tglST,
-                    colSpan: 3,
+                    colSpan: 3
                   },
                   {},
-                  {},
+                  {}
                 ],
                 [
                   {
-                    text: '3. Tahun/No. PKPT',
+                    text: "3. Tahun/No. PKPT"
                   },
                   {
                     text: data.tahunPkpt,
-                    colSpan: 2,
+                    colSpan: 2
                   },
                   {},
                   {
-                    text: 'Nomor PKPT',
+                    text: "Nomor PKPT"
                   },
                   {
-                    text: data.nomorPkpt,
-                  },
+                    text: data.nomorPkpt
+                  }
                 ],
                 [
                   {
-                    text: '4. Inspektorat',
+                    text: "4. Inspektorat"
                   },
                   {
-                    text: data.kodeUnitAudit,
+                    text: data.kodeUnitAudit
                   },
                   {
                     text: data.unitAudit,
-                    colSpan: 3,
+                    colSpan: 3
                   },
                   {},
-                  {},
+                  {}
                 ],
                 [
                   {
-                    text: '5. Bidang/Unitwas',
+                    text: "5. Bidang/Unitwas"
                   },
                   {
-                    text: data.kodeSubUnitAudit,
+                    text: data.kodeSubUnitAudit
                   },
                   {
                     text: data.subUnitAudit,
-                    colSpan: 3,
+                    colSpan: 3
                   },
                   {},
-                  {},
+                  {}
                 ],
                 [
                   {
-                    text: '6. Jenis Pemeriksaan',
+                    text: "6. Jenis Pemeriksaan"
                   },
                   {
-                    text: data.kodeGrupLingkupAudit,
+                    text: data.kodeGrupLingkupAudit
                   },
                   {
-                    text: data.kodeLingkupAudit,
+                    text: data.kodeLingkupAudit
                   },
                   {
                     text: data.lingkupAudit,
-                    colSpan: 2,
+                    colSpan: 2
                   },
-                  {},
-                ],
-              ],
-            },
+                  {}
+                ]
+              ]
+            }
           },
           {
-            text: 'II. DATA OBYEK PEMERIKSAAN',
+            text: "II. DATA OBYEK PEMERIKSAAN",
             fontSize: 12,
             bold: true,
-            margin: [0, 15, 0, 10],
+            margin: [0, 15, 0, 10]
           },
           {
             fontSize: 10,
             table: {
-              widths: [85, 20, 40, 140, 125, 30, '*'],
+              widths: [85, 20, 40, 140, 125, 30, "*"],
               headerRows: 0,
               // keepWithHeaderRows: 1,
               body: [
                 [
                   {
-                    text: '1. Judul Laporan',
-                    rowSpan: 2,
+                    text: "1. Judul Laporan",
+                    rowSpan: 2
                   },
                   {
                     text: data.judulLaporan,
                     rowSpan: 2,
-                    colSpan: 3,
+                    colSpan: 3
                   },
                   {},
                   {},
                   {
-                    text: '7. Tahun Anggaran',
+                    text: "7. Tahun Anggaran"
                   },
                   {
                     text: data.tahunAnggaran,
-                    colSpan: 2,
+                    colSpan: 2
                   },
-                  {},
+                  {}
                 ],
                 [
                   {},
@@ -482,59 +482,59 @@ export default {
                   {},
                   {},
                   {
-                    text: '8. Nilai Anggaran',
+                    text: "8. Nilai Anggaran"
                   },
                   {
                     text: this.$func.convertToRupiah(data.rencanaAnggaran),
-                    colSpan: 2,
+                    colSpan: 2
                   },
-                  {},
+                  {}
                 ],
                 [
                   {
-                    text: '2. Jenis Obrik ',
+                    text: "2. Jenis Obrik "
                   },
                   {
                     text: data.kodeJenisObrik,
-                    colSpan: 2,
+                    colSpan: 2
                   },
                   {},
                   {
-                    text: data.jenisObrik,
+                    text: data.jenisObrik
                   },
                   {
-                    text: '9. Realisasi Anggaran',
+                    text: "9. Realisasi Anggaran"
                   },
                   {
                     text: this.$func.convertToRupiah(data.realisasiAnggaran),
-                    colSpan: 2,
+                    colSpan: 2
                   },
-                  {},
+                  {}
                 ],
                 [
                   {
-                    text: '3. Unit ',
+                    text: "3. Unit ",
                     rowSpan: 2,
-                    border: [true, true, true, false],
+                    border: [true, true, true, false]
                   },
                   {
                     text: data.kodeUnitObrik,
                     colSpan: 2,
-                    rowSpan: 2,
+                    rowSpan: 2
                   },
                   {},
                   {
                     text: data.unitObrik,
-                    rowSpan: 2,
+                    rowSpan: 2
                   },
                   {
-                    text: '10. Anggaran yang Diaudit',
+                    text: "10. Anggaran yang Diaudit"
                   },
                   {
                     text: this.$func.convertToRupiah(data.anggaranYangDiaudit),
-                    colSpan: 2,
+                    colSpan: 2
                   },
-                  {},
+                  {}
                 ],
                 [
                   {},
@@ -542,223 +542,223 @@ export default {
                   {},
                   {},
                   {
-                    text: '11. Jenis Anggaran',
+                    text: "11. Jenis Anggaran"
                   },
                   {
-                    text: data.kodeJenisAnggaran,
+                    text: data.kodeJenisAnggaran
                   },
                   {
-                    text: data.jenisAnggaran,
-                  },
+                    text: data.jenisAnggaran
+                  }
                 ],
                 [
                   {
-                    text: 'Pimpinan Obrik ',
+                    text: "Pimpinan Obrik ",
                     border: [true, false, true, true],
-                    margin: [10, 0, 0, 0],
+                    margin: [10, 0, 0, 0]
                   },
                   {
                     text: data.namaPimpinan,
                     border: [true, true, false, true],
-                    colSpan: 3,
+                    colSpan: 3
                   },
                   {},
                   {},
                   {
-                    text: 'NIP: ' + data.nipPimpinan,
+                    text: "NIP: " + data.nipPimpinan,
                     colSpan: 3,
-                    border: [false, true, true, true],
+                    border: [false, true, true, true]
                   },
                   {},
-                  {},
+                  {}
                 ],
                 [
                   {
-                    text: 'Bidang',
-                    margin: [10, 0, 0, 0],
+                    text: "Bidang",
+                    margin: [10, 0, 0, 0]
                   },
                   {
                     text: data.kodeBidangObrik,
-                    colSpan: 2,
+                    colSpan: 2
                   },
                   {},
                   {
                     text: data.bidangObrik,
-                    colSpan: 4,
+                    colSpan: 4
                   },
                   {},
                   {},
-                  {},
+                  {}
                 ],
                 [
                   {
-                    text: 'Sub Bidang',
-                    margin: [10, 0, 0, 0],
+                    text: "Sub Bidang",
+                    margin: [10, 0, 0, 0]
                   },
                   {
                     text: data.kodeSubBidangObrik,
-                    colSpan: 2,
+                    colSpan: 2
                   },
                   {},
                   {
                     text: data.subBidangObrik,
-                    colSpan: 4,
+                    colSpan: 4
                   },
                   {},
                   {},
-                  {},
+                  {}
                 ],
                 [
                   {
-                    text: '4. Provinsi',
+                    text: "4. Provinsi"
                   },
                   {
                     text: data.kodeProvinsi,
-                    colSpan: 2,
+                    colSpan: 2
                   },
                   {},
                   {
                     text: data.provinsi,
-                    colSpan: 4,
+                    colSpan: 4
                   },
                   {},
                   {},
-                  {},
+                  {}
                 ],
                 [
                   {
-                    text: '5. Kabupaten/Kota',
+                    text: "5. Kabupaten/Kota"
                   },
                   {
                     text: data.kodeKabkot,
-                    colSpan: 2,
+                    colSpan: 2
                   },
                   {},
                   {
                     text: data.kabkot,
-                    colSpan: 4,
+                    colSpan: 4
                   },
                   {},
                   {},
-                  {},
+                  {}
                 ],
                 [
                   {
-                    text: '6. Kecamatan',
+                    text: "6. Kecamatan"
                   },
                   {
                     text: data.kodeKecamatan,
-                    colSpan: 2,
+                    colSpan: 2
                   },
                   {},
                   {
                     text: data.kecamatan,
-                    colSpan: 4,
+                    colSpan: 4
                   },
                   {},
                   {},
-                  {},
-                ],
-              ],
-            },
+                  {}
+                ]
+              ]
+            }
           },
           {
-            text: 'III. TIM AUDIT',
+            text: "III. TIM AUDIT",
             fontSize: 12,
             bold: true,
-            margin: [0, 15, 0, 10],
+            margin: [0, 15, 0, 10]
           },
           {
             fontSize: 10,
-            pageBreak: 'after',
+            pageBreak: "after",
             table: {
-              widths: [25, '*', '*', '*'],
+              widths: [25, "*", "*", "*"],
               // widths: [25, 130, 190, 170],
               headerRows: 1,
               body: [
                 [
                   {
-                    text: 'No.',
-                    alignment: 'center',
+                    text: "No.",
+                    alignment: "center"
                   },
                   {
-                    text: 'NIP',
-                    alignment: 'center',
+                    text: "NIP",
+                    alignment: "center"
                   },
                   {
-                    text: 'Nama',
-                    alignment: 'center',
+                    text: "Nama",
+                    alignment: "center"
                   },
                   {
-                    text: 'Jabatan',
-                    alignment: 'center',
-                  },
+                    text: "Jabatan",
+                    alignment: "center"
+                  }
                 ],
-                ...dataTim,
-              ],
-            },
+                ...dataTim
+              ]
+            }
           },
           {
-            text: 'IV. RINCIAN TEMUAN PEMERIKSAAN SAMPAI DENGAN TINDAK LANJUT',
+            text: "IV. RINCIAN TEMUAN PEMERIKSAAN SAMPAI DENGAN TINDAK LANJUT",
             fontSize: 12,
             bold: true,
-            margin: [0, 15, 0, 10],
+            margin: [0, 15, 0, 10]
           },
           {
             fontSize: 9,
             // pageBreak: 'after',
             table: {
-              widths: [40, 20, 20, 20, '*', 80],
+              widths: [40, 20, 20, 20, "*", 80],
               headerRows: 1,
               body: [
                 [
                   {
-                    text: 'KODE',
-                    alignment: 'center',
-                    bold: true,
+                    text: "KODE",
+                    alignment: "center",
+                    bold: true
                   },
                   {
-                    text: 'URAIAN',
-                    alignment: 'center',
+                    text: "URAIAN",
+                    alignment: "center",
                     bold: true,
-                    colSpan: 4,
+                    colSpan: 4
                   },
                   {},
                   {},
                   {},
                   {
-                    text: 'NILAI TP/REK/TL',
-                    bold: true,
-                  },
+                    text: "NILAI TP/REK/TL",
+                    bold: true
+                  }
                 ],
                 // ...dataTemuan,
-                ...dataTemuanToPdf,
-              ],
+                ...dataTemuanToPdf
+              ]
             },
             layout: {
-              hLineWidth: function (i, node) {
+              hLineWidth: function(i, node) {
                 return 0;
               },
-              vLineWidth: function (i, node) {
+              vLineWidth: function(i, node) {
                 return 0;
-              },
-            },
-          },
+              }
+            }
+          }
         ],
         styles: {
           headerPeriod: {
-            alignment: 'right',
+            alignment: "right"
           },
           tableHeader: {
-            alignment: 'center',
-            fontSize: 8,
+            alignment: "center",
+            fontSize: 8
           },
           tableSubHeader: {
-            alignment: 'left',
+            alignment: "left",
             fontSize: 8,
-            bold: true,
-          },
-        },
+            bold: true
+          }
+        }
       };
 
       pdfMake.createPdf(docDef).open();
@@ -766,15 +766,15 @@ export default {
     },
     async loadReportTpTiga() {
       try {
-        await this.$store.dispatch('module_lha/loadDetailLhaById', {
-          idLha: this.idLha,
+        await this.$store.dispatch("module_lha/loadDetailLhaById", {
+          idLha: this.idLha
         });
 
-        this.reportTpTiga = this.$store.getters['module_lha/lhaById'];
+        this.reportTpTiga = this.$store.getters["module_lha/lhaById"];
       } catch (error) {
         console.log(error.message);
       }
-    },
-  },
+    }
+  }
 };
 </script>

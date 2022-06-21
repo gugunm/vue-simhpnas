@@ -28,15 +28,15 @@
 </template>
 
 <script>
-import TableRekomendasi from './TableRekomendasi.vue';
-import mixin from './mixin';
-import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
-import Loading from 'vue-loading-overlay';
+import TableRekomendasi from "./TableRekomendasi.vue";
+import mixin from "./mixin";
+import ConfirmModal from "@/components/Confirm/ConfirmModal.vue";
+import Loading from "vue-loading-overlay";
 
 const fields = [
   {
-    key: 'nomorRekomendasi',
-    label: 'Nomor Rekomendasi',
+    key: "nomorRekomendasi",
+    label: "Nomor Rekomendasi"
   },
   // { key: 'nomorRekomendasi' },
   // { key: 'kodeTemuan' },
@@ -46,41 +46,41 @@ const fields = [
   // { key: 'kodeKelompokRekomendasi' },
   // { key: 'kelompokRekomendasi' },
   // { key: 'kodeSubKelompokRekomendasi' },
-  { key: 'subKelompokRekomendasi' },
+  { key: "subKelompokRekomendasi" },
   // { key: 'memoRekomendasi' },
   // { key: 'flagPelaku' },
-  { key: 'nilaiRekomendasi' },
+  { key: "nilaiRekomendasi" },
   // { key: 'nilaiTL' },
   // { key: 'statusRekomendasi' },
   // { key: 'memoKoreksiRek' },
   // { key: 'kodeUnitObrikTl' },
-  { key: 'unitObrik' },
+  { key: "unitObrik" },
   // { key: 'kodeBidangObrikTl' },
   // { key: 'bidangObrik' },
   // { key: 'kodeSubBidangObrikTl' },
   // { key: 'subBidangObrik' },
   {
-    key: 'actions',
-    _style: 'width: 12%',
-  },
+    key: "actions",
+    _style: "width: 12%"
+  }
 ];
 
 export default {
-  name: 'Rekomendasi',
+  name: "Rekomendasi",
   components: {
     TableRekomendasi,
     ConfirmModal,
-    Loading,
+    Loading
   },
   mixins: [mixin],
   data() {
     return {
-      items: '',
+      items: "",
       fields,
       isDeleteConfirm: false,
       idToDelete: null,
       lha: {},
-      temuan: {},
+      temuan: {}
     };
   },
   watch: {
@@ -92,7 +92,7 @@ export default {
       ) {
         this.$router.go();
       }
-    },
+    }
   },
   async mounted() {
     await this.loadRekomendasi();
@@ -100,27 +100,27 @@ export default {
   methods: {
     openDetail(item) {
       this.$router.push({
-        name: 'module-detail-rekomendasi',
-        params: { idRekomendasi: item.id },
+        name: "module-detail-rekomendasi",
+        params: { idRekomendasi: item.id }
       });
     },
     openCreate() {
       this.$router.push({
-        name: 'module-create-rekomendasi',
+        name: "module-create-rekomendasi",
         query: {
           idlha: this.lha.id,
           nolha: this.lha.nomorLha,
           idtemuan: this.temuan.id,
           notemuan: this.temuan.nomorTemuan,
-          nilaitemuan: this.temuan.nilaiTemuan,
-        },
+          nilaitemuan: this.temuan.nilaiTemuan
+        }
       });
     },
 
     openEdit(item) {
       this.$router.push({
-        name: 'module-edit-rekomendasi',
-        params: { idRekomendasi: item.id },
+        name: "module-edit-rekomendasi",
+        params: { idRekomendasi: item.id }
       });
     },
 
@@ -131,12 +131,12 @@ export default {
 
     onAddTemuan(lha) {
       this.$router.push({
-        name: 'module-create-temuan',
+        name: "module-create-temuan",
         query: {
           idlha: lha.id,
           nolha: lha.nomorLha,
-          tpk: lha.flagTpk,
-        },
+          tpk: lha.flagTpk
+        }
       });
     },
 
@@ -146,22 +146,29 @@ export default {
 
     async onSelectTemuan(selectedTemuan) {
       this.temuan = selectedTemuan;
-      this.$router.push({
-        path: '/rekomendasi',
-        query: {
-          filterlha: this.lha.id,
-          filtertemuan: this.temuan.id,
-        },
-      });
+      // this.$router.push({
+      //   path: '/rekomendasi',
+      //   query: {
+      //     filterlha: this.lha.id,
+      //     filtertemuan: this.temuan.id,
+      //   },
+      // });
+      history.pushState(
+        {},
+        null,
+        `/#${this.$route.path}?filterlha=${encodeURIComponent(
+          this.lha.id
+        )}&filtertemuan=${encodeURIComponent(this.temuan.id)}`
+      );
       await this.loadRekomendasi();
     },
 
     async actionDelete() {
       try {
         const response = await this.$store.dispatch(
-          'module_rekomendasi/deleteRekomendasiById',
+          "module_rekomendasi/deleteRekomendasiById",
           {
-            idRekomendasi: this.idToDelete,
+            idRekomendasi: this.idToDelete
           }
         );
 
@@ -181,18 +188,18 @@ export default {
     async loadRekomendasi(refresh = false) {
       this.loading = true;
       try {
-        await this.$store.dispatch('module_rekomendasi/loadRekomendasi', {
+        await this.$store.dispatch("module_rekomendasi/loadRekomendasi", {
           forceRefresh: refresh,
-          idTemuan: this.temuan.id,
+          idTemuan: this.temuan.id
         });
-        this.items = this.$store.getters['module_rekomendasi/rekomendasi'];
+        this.items = this.$store.getters["module_rekomendasi/rekomendasi"];
       } catch (error) {
-        this.error = error.message || 'Something went wrong!';
+        this.error = error.message || "Something went wrong!";
       }
       this.loading = false;
-    },
+    }
 
     // mgR1oZM85x
-  },
+  }
 };
 </script>

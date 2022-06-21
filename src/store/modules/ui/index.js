@@ -1,15 +1,16 @@
-import mutations from './mutations.js';
-import actions from './actions.js';
-import getters from './getters.js';
+import mutations from "./mutations.js";
+import actions from "./actions.js";
+import getters from "./getters.js";
 
 export default {
   namespaced: true,
   state() {
     return {
-      sidebarShow: 'responsive',
+      sidebarShow: "responsive",
       sidebarMinimize: false,
       asideShow: false,
-      darkMode: false
+      darkMode: false,
+      titleHeader: "Judul Menu"
     };
   },
   mutations,

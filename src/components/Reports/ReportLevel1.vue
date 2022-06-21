@@ -24,48 +24,48 @@
 </template>
 
 <script>
-import axios from 'axios';
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
+import axios from "axios";
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 export default {
   data() {
     return {
-      report: null,
+      report: null
     };
   },
   methods: {
     async downloadPDF() {
       await this.loadReportLv1();
-      const dataShow = this.report.map((data) => {
+      const dataShow = this.report.map(data => {
         return [
           {
             text: data.bidangObrik,
             fontSize: 8,
-            margin: [10, 0],
+            margin: [10, 0]
           },
           {
-            text: data.jumlahTemuan,
+            text: data.jumlahTemuan
           },
           {
-            text: this.$func.convertToRupiah(data.totalNilaiTemuan),
+            text: this.$func.convertToRupiah(data.totalNilaiTemuan)
           },
           {
-            text: data.jumlahRekomendasi,
+            text: data.jumlahRekomendasi
           },
           {
-            text: this.$func.convertToRupiah(data.totalNilaiRekomendasi),
+            text: this.$func.convertToRupiah(data.totalNilaiRekomendasi)
           },
           {
-            text: data.jumlahTl,
+            text: data.jumlahTl
           },
           {
-            text: this.$func.convertToRupiah(data.totalNilaiTl),
+            text: this.$func.convertToRupiah(data.totalNilaiTl)
           },
           {
-            text: this.$func.convertToRupiah(data.totalSaldo),
-          },
+            text: this.$func.convertToRupiah(data.totalSaldo)
+          }
         ];
       });
 
@@ -73,88 +73,88 @@ export default {
       for (let i = 0; i < 50; i++) {
         repDummy.push([
           {
-            text: 'SEKRETARIAT DAERAH KABUPATEN',
+            text: "SEKRETARIAT DAERAH KABUPATEN",
             fontSize: 8,
-            margin: [10, 0],
+            margin: [10, 0]
           },
           {
-            text: '12',
+            text: "12"
           },
           {
-            text: 'Rp. 10,900,000,000.00',
+            text: "Rp. 10,900,000,000.00"
           },
           {
-            text: '12',
+            text: "12"
           },
           {
-            text: 'Rp. 10,900,000,000.00',
+            text: "Rp. 10,900,000,000.00"
           },
           {
-            text: '12',
+            text: "12"
           },
           {
-            text: 'Rp. 10,900,000,000.00',
+            text: "Rp. 10,900,000,000.00"
           },
           {
-            text: 'Rp. 10,900,000,000.00',
-          },
+            text: "Rp. 10,900,000,000.00"
+          }
         ]);
       }
 
       const docDef = {
-        pageSize: 'A4',
-        pageOrientation: 'landscape',
+        pageSize: "A4",
+        pageOrientation: "landscape",
         pageMargins: [17, 85, 17, 30],
         header: [
           {
             text: localStorage.namaUnit,
             fontSize: 14,
             bold: true,
-            margin: [17, 20, 0, 3],
+            margin: [17, 20, 0, 3]
           },
           {
-            text: 'Rekapitulasi Temuan dan Tindaklanjut',
+            text: "Rekapitulasi Temuan dan Tindaklanjut",
             fontSize: 13,
-            margin: [17, 0, 0, 0],
+            margin: [17, 0, 0, 0]
           },
           {
             text:
-              'Periode Pelaporan sd. ' + new Date().toLocaleDateString('id'),
+              "Periode Pelaporan sd. " + new Date().toLocaleDateString("id"),
             fontSize: 8,
-            style: 'headerPeriod',
-            margin: [0, 0, 17, 3],
+            style: "headerPeriod",
+            margin: [0, 0, 17, 3]
           },
           {
-            text: 'Tindaklanjut sd. ' + new Date().toLocaleDateString('id'),
+            text: "Tindaklanjut sd. " + new Date().toLocaleDateString("id"),
             fontSize: 8,
             margin: [0, 0, 17, 7],
-            style: 'headerPeriod',
-          },
+            style: "headerPeriod"
+          }
         ],
 
-        footer: function (currentPage, pageCount) {
+        footer: function(currentPage, pageCount) {
           return {
             columns: [
               {
-                text: 'Tanggal Cetak : ' + new Date().toLocaleString('id'),
+                text: "Tanggal Cetak : " + new Date().toLocaleString("id"),
                 margin: [17, 0, 0, 0],
-                fontSize: 7,
+                fontSize: 7
               },
               {
                 text:
-                  'halaman ke ' + currentPage.toString() + ' dari ' + pageCount,
-                alignment: 'right',
+                  "halaman ke " + currentPage.toString() + " dari " + pageCount,
+                alignment: "right",
                 margin: [0, 0, 40, 0],
-                fontSize: 7,
-              },
-            ],
+                fontSize: 7
+              }
+            ]
           };
         },
 
         content: [
           {
-            style: 'tableExample',
-            color: '#444',
+            style: "tableExample",
+            color: "#444",
             fontSize: 6,
             table: {
               widths: [400, 19, 70, 19, 70, 19, 70, 75],
@@ -163,89 +163,89 @@ export default {
               body: [
                 [
                   {
-                    text: '',
-                    style: 'tableHeader',
+                    text: "",
+                    style: "tableHeader",
                     rowSpan: 2,
-                    border: [false, true, false, true],
+                    border: [false, true, false, true]
                   },
                   {
-                    text: 'TEMUAN',
-                    style: 'tableHeader',
+                    text: "TEMUAN",
+                    style: "tableHeader",
                     colSpan: 2,
-                    border: [false, true, false, false],
+                    border: [false, true, false, false]
                   },
                   {},
                   {
-                    text: 'REKOMENDASI',
-                    style: 'tableHeader',
+                    text: "REKOMENDASI",
+                    style: "tableHeader",
                     colSpan: 2,
-                    border: [false, true, false, false],
+                    border: [false, true, false, false]
                   },
                   {},
                   {
-                    text: 'TINDAK LANJUT',
-                    style: 'tableHeader',
+                    text: "TINDAK LANJUT",
+                    style: "tableHeader",
                     colSpan: 2,
-                    border: [false, true, false, false],
+                    border: [false, true, false, false]
                   },
                   {},
                   {
-                    text: 'SALDO',
-                    style: 'tableHeader',
-                    border: [false, true, false, false],
-                  },
+                    text: "SALDO",
+                    style: "tableHeader",
+                    border: [false, true, false, false]
+                  }
                 ],
                 [
                   {},
                   {
-                    text: '#Kej.',
-                    style: 'tableSubHeader',
-                    border: [false, false, false, true],
+                    text: "#Kej.",
+                    style: "tableSubHeader",
+                    border: [false, false, false, true]
                   },
                   {
-                    text: 'Nilai Rp.',
-                    style: 'tableSubHeader',
-                    border: [false, false, false, true],
+                    text: "Nilai Rp.",
+                    style: "tableSubHeader",
+                    border: [false, false, false, true]
                   },
                   {
-                    text: '#Kej.',
-                    style: 'tableSubHeader',
-                    border: [false, false, false, true],
+                    text: "#Kej.",
+                    style: "tableSubHeader",
+                    border: [false, false, false, true]
                   },
                   {
-                    text: 'Nilai Rp.',
-                    style: 'tableSubHeader',
-                    border: [false, false, false, true],
+                    text: "Nilai Rp.",
+                    style: "tableSubHeader",
+                    border: [false, false, false, true]
                   },
                   {
-                    text: '#Kej.',
-                    style: 'tableSubHeader',
-                    border: [false, false, false, true],
+                    text: "#Kej.",
+                    style: "tableSubHeader",
+                    border: [false, false, false, true]
                   },
                   {
-                    text: 'Nilai Rp.',
-                    style: 'tableSubHeader',
-                    border: [false, false, false, true],
+                    text: "Nilai Rp.",
+                    style: "tableSubHeader",
+                    border: [false, false, false, true]
                   },
                   {
-                    text: 'Nilai Rp.',
-                    style: 'tableSubHeader',
-                    border: [false, false, false, true],
-                  },
+                    text: "Nilai Rp.",
+                    style: "tableSubHeader",
+                    border: [false, false, false, true]
+                  }
                 ],
-                ...dataShow,
+                ...dataShow
                 // ...repDummy,
-              ],
+              ]
             },
             layout: {
-              hLineWidth: function (i, node) {
+              hLineWidth: function(i, node) {
                 return i === 0 || i === 2 ? 1.5 : 0.5;
               },
-              vLineWidth: function (i, node) {
+              vLineWidth: function(i, node) {
                 return 0;
               },
-              fillColor: function (rowIndex, node, columnIndex) {
-                return rowIndex % 3 === 0 && rowIndex > 1 ? '#eeeeee' : null;
+              fillColor: function(rowIndex, node, columnIndex) {
+                return rowIndex % 3 === 0 && rowIndex > 1 ? "#eeeeee" : null;
               },
               // hLineColor: function (i, node) {
               //   return i === 0 || i === node.table.body.length
@@ -263,30 +263,30 @@ export default {
               //   return 20;
               // },
               // paddingRight: function(i, node) { return 4; },
-              paddingTop: function (i, node) {
+              paddingTop: function(i, node) {
                 return 4;
               },
-              paddingBottom: function (i, node) {
+              paddingBottom: function(i, node) {
                 return 4;
-              },
+              }
               // fillColor: function (rowIndex, node, columnIndex) { return null; }
-            },
-          },
+            }
+          }
         ],
         styles: {
           headerPeriod: {
-            alignment: 'right',
+            alignment: "right"
           },
           tableHeader: {
-            alignment: 'center',
-            fontSize: 8,
+            alignment: "center",
+            fontSize: 8
           },
           tableSubHeader: {
-            alignment: 'left',
+            alignment: "left",
             fontSize: 8,
-            bold: true,
-          },
-        },
+            bold: true
+          }
+        }
       };
 
       pdfMake.createPdf(docDef).open();
@@ -295,12 +295,12 @@ export default {
     async loadReportLv1() {
       try {
         const response = await axios({
-          method: 'GET',
+          method: "GET",
           baseURL: this.$apiAddress,
           url: `/api/reportlv1`,
           params: {
-            token: localStorage.getItem('api_token'),
-          },
+            token: localStorage.getItem("api_token")
+          }
         });
 
         if (response.status == 200) {
@@ -310,15 +310,15 @@ export default {
 
           for (const key in responseData) {
             const data = {
-              bidangObrik: responseData[key]['Bidang_Obrik'],
-              jumlahTemuan: responseData[key]['Jumlah_Temuan'],
-              totalNilaiTemuan: responseData[key]['Total_Nilai_Temuan'],
-              jumlahRekomendasi: responseData[key]['Jumlah_Rekomendasi'],
+              bidangObrik: responseData[key]["Bidang_Obrik"],
+              jumlahTemuan: responseData[key]["Jumlah_Temuan"],
+              totalNilaiTemuan: responseData[key]["Total_Nilai_Temuan"],
+              jumlahRekomendasi: responseData[key]["Jumlah_Rekomendasi"],
               totalNilaiRekomendasi:
-                responseData[key]['Total_Nilai_Rekomendasi'],
-              jumlahTl: responseData[key]['Jumlah_Tindak_Lanjut'],
-              totalNilaiTl: responseData[key]['Total_Nilai_Tindak_Lanjut'],
-              totalSaldo: responseData[key]['Total_Saldo'],
+                responseData[key]["Total_Nilai_Rekomendasi"],
+              jumlahTl: responseData[key]["Jumlah_Tindak_Lanjut"],
+              totalNilaiTl: responseData[key]["Total_Nilai_Tindak_Lanjut"],
+              totalSaldo: responseData[key]["Total_Saldo"]
             };
             repData.push(data);
           }
@@ -328,7 +328,7 @@ export default {
       } catch (error) {
         console.log(error.message);
       }
-    },
-  },
+    }
+  }
 };
 </script>

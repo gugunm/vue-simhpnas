@@ -31,15 +31,15 @@
 </template>
 
 <script>
-import TablePelaku from './TablePelaku.vue';
-import mixin from './mixin';
-import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
-import Loading from 'vue-loading-overlay';
+import TablePelaku from "./TablePelaku.vue";
+import mixin from "./mixin";
+import ConfirmModal from "@/components/Confirm/ConfirmModal.vue";
+import Loading from "vue-loading-overlay";
 
 const fields = [
   {
-    key: 'nip',
-    label: 'NIP',
+    key: "nip",
+    label: "NIP"
   },
   // {
   //   key: 'nomorLha',
@@ -51,35 +51,35 @@ const fields = [
   //   _style: 'width: 15%',
   // },
   {
-    key: 'jabatan',
+    key: "jabatan"
   },
   {
-    key: 'nama',
+    key: "nama"
   },
   {
-    key: 'actions',
-    _style: 'width: 10%',
-  },
+    key: "actions",
+    _style: "width: 10%"
+  }
 ];
 
 export default {
-  name: 'Pelaku',
+  name: "Pelaku",
   components: {
     TablePelaku,
     ConfirmModal,
-    Loading,
+    Loading
   },
   mixins: [mixin],
   data() {
     return {
-      items: '',
+      items: "",
       fields,
       isDeleteConfirm: false,
       idToDelete: null,
       lha: {},
       temuan: {},
       rekomendasi: {},
-      loading: false,
+      loading: false
     };
   },
   watch: {
@@ -91,7 +91,7 @@ export default {
       ) {
         this.$router.go();
       }
-    },
+    }
   },
   async mounted() {
     await this.loadPelaku();
@@ -99,27 +99,27 @@ export default {
   methods: {
     openDetail(item) {
       this.$router.push({
-        name: 'module-detail-pelaku',
-        params: { idPelaku: item.id },
+        name: "module-detail-pelaku",
+        params: { idPelaku: item.id }
       });
     },
     openCreate() {
       this.$router.push({
-        name: 'module-create-pelaku',
+        name: "module-create-pelaku",
         query: {
           idlha: this.lha.id,
           nolha: this.lha.nomorLha,
           idtemuan: this.temuan.id,
           notemuan: this.temuan.nomorTemuan,
           idrekomendasi: this.rekomendasi.id,
-          norekomendasi: this.rekomendasi.nomorRekomendasi,
-        },
+          norekomendasi: this.rekomendasi.nomorRekomendasi
+        }
       });
     },
     openEdit(item) {
       this.$router.push({
-        name: 'module-edit-pelaku',
-        params: { idPelaku: item.id },
+        name: "module-edit-pelaku",
+        params: { idPelaku: item.id }
       });
     },
     openDeleteModal(id) {
@@ -129,25 +129,25 @@ export default {
 
     onAddTemuan(lha) {
       this.$router.push({
-        name: 'module-create-temuan',
+        name: "module-create-temuan",
         query: {
           idlha: lha.id,
           nolha: lha.nomorLha,
-          tpk: lha.flagTpk,
-        },
+          tpk: lha.flagTpk
+        }
       });
     },
 
     onAddRekomendasi(temuan) {
       this.$router.push({
-        name: 'module-create-rekomendasi',
+        name: "module-create-rekomendasi",
         query: {
           idlha: temuan.idLha,
           nolha: temuan.nomorLha,
           idtemuan: temuan.id,
           notemuan: temuan.nomorTemuan,
-          nilaitemuan: temuan.nilaiTemuan,
-        },
+          nilaitemuan: temuan.nilaiTemuan
+        }
       });
     },
 
@@ -157,30 +157,39 @@ export default {
 
     async onSelectTemuan(selectedTemuan) {
       this.temuan = selectedTemuan;
-      if (this.temuan != 'empty') {
+      if (this.temuan != "empty") {
         await this.loadRekomendasi({ id: this.temuan.id });
       }
     },
 
     async onSelectRekomendasi(selectedRekomendasi) {
       this.rekomendasi = selectedRekomendasi;
-      this.$router.push({
-        path: '/pelaku',
-        query: {
-          filterlha: this.lha.id,
-          filtertemuan: this.temuan.id ? this.temuan.id : '',
-          filterrekomendasi: this.rekomendasi.id ? this.rekomendasi.id : '',
-        },
-      });
+      // this.$router.push({
+      //   path: '/pelaku',
+      //   query: {
+      //     filterlha: this.lha.id,
+      //     filtertemuan: this.temuan.id ? this.temuan.id : '',
+      //     filterrekomendasi: this.rekomendasi.id ? this.rekomendasi.id : '',
+      //   },
+      // });
+      history.pushState(
+        {},
+        null,
+        `/#${this.$route.path}?filterlha=${encodeURIComponent(
+          this.lha.id
+        )}&filtertemuan=${encodeURIComponent(
+          this.temuan.id
+        )}&filterrekomendasi=${encodeURIComponent(this.rekomendasi.id)}`
+      );
       await this.loadPelaku();
     },
 
     async actionDelete() {
       try {
         const response = await this.$store.dispatch(
-          'module_pelaku/deletePelakuById',
+          "module_pelaku/deletePelakuById",
           {
-            idPelaku: this.idToDelete,
+            idPelaku: this.idToDelete
           }
         );
 
@@ -201,20 +210,20 @@ export default {
     async loadPelaku(refresh = false) {
       this.loading = true;
       try {
-        if (this.rekomendasi != 'empty' || this.temuan != 'empty') {
-          await this.$store.dispatch('module_pelaku/loadPelaku', {
+        if (this.rekomendasi != "empty" || this.temuan != "empty") {
+          await this.$store.dispatch("module_pelaku/loadPelaku", {
             forceRefresh: refresh,
-            idRekomendasi: this.rekomendasi.id,
+            idRekomendasi: this.rekomendasi.id
           });
-          this.items = this.$store.getters['module_pelaku/pelaku'];
+          this.items = this.$store.getters["module_pelaku/pelaku"];
         } else {
           this.items = [];
         }
       } catch (error) {
-        this.error = error.message || 'Something went wrong!';
+        this.error = error.message || "Something went wrong!";
       }
       this.loading = false;
-    },
-  },
+    }
+  }
 };
 </script>

@@ -2,8 +2,12 @@
   <CRow>
     <CCol sm="12">
       <div class="text-2xl mb-4 font-semibold">
-        <h3 v-if="mode == 'create'">Create Laporan Hasil Audit</h3>
-        <h3 v-else>Edit Laporan Hasil Audit</h3>
+        <h3 v-if="mode == 'create'">
+          Create Laporan Hasil Audit
+        </h3>
+        <h3 v-else>
+          Edit Laporan Hasil Audit
+        </h3>
       </div>
       <CCard>
         <!-- <CCardBody> -->
@@ -17,7 +21,9 @@
               :guide="true"
             /> -->
             <div class="p-3" style="background: #f9fafb">
-              <h5 class="text-base font-semibold">Data Umum LHA</h5>
+              <h5 class="text-base font-semibold">
+                Data Umum LHA
+              </h5>
             </div>
             <div class="p-3">
               <!-- ROW 1 -->
@@ -196,7 +202,9 @@
             </div>
 
             <div class="p-3" style="background: #f9fafb">
-              <h5 class="text-base font-semibold">Data Obrik</h5>
+              <h5 class="text-base font-semibold">
+                Data Obrik
+              </h5>
             </div>
 
             <div class="p-3">
@@ -305,7 +313,9 @@
             </div>
 
             <div class="p-3" style="background: #f9fafb">
-              <h5 class="text-base font-semibold">Data Anggaran</h5>
+              <h5 class="text-base font-semibold">
+                Data Anggaran
+              </h5>
             </div>
 
             <div class="p-3">
@@ -379,7 +389,9 @@
             </div>
 
             <div class="p-3" style="background: #f9fafb">
-              <h5 class="text-base font-semibold">Data Wilayah</h5>
+              <h5 class="text-base font-semibold">
+                Data Wilayah
+              </h5>
             </div>
 
             <div class="p-3">
@@ -459,14 +471,14 @@
                     Hapus File
                   </CButton>
                   <p class="mb-3">
-                    {{ 'Link File : ' + fileLha }}
+                    {{ "Link File : " + fileLha }}
                   </p>
                 </CCol>
               </CRow>
               <CRow
                 v-else-if="
                   (mode == 'edit' && !editData.uploadFileLha) ||
-                  mode == 'create'
+                    mode == 'create'
                 "
               >
                 <CCol lg="6">
@@ -564,7 +576,9 @@
                     <div v-if="loading" class="px-8">
                       <CSpinner color="white" size="sm" class="mr-2" />
                     </div>
-                    <template v-else> Submit Data </template>
+                    <template v-else>
+                      Submit Data
+                    </template>
                   </CButton>
                 </CCol>
               </CRow>
@@ -582,10 +596,8 @@
   </CRow>
 </template>
 
-
-
 <script>
-import { validationMixin } from 'vuelidate';
+import { validationMixin } from "vuelidate";
 import {
   required,
   minLength,
@@ -593,60 +605,60 @@ import {
   // minValue,
   // email,
   // sameAs,
-  helpers,
-} from 'vuelidate/lib/validators';
-import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
-import mixin from './mixin';
-import Multiselect from 'vue-multiselect';
-import { DatePicker } from 'v-calendar';
-import createNumberMask from 'text-mask-addons/dist/createNumberMask';
-import MaskedInput from 'vue-text-mask';
+  helpers
+} from "vuelidate/lib/validators";
+import ConfirmModal from "@/components/Confirm/ConfirmModal.vue";
+import mixin from "./mixin";
+import Multiselect from "vue-multiselect";
+import { DatePicker } from "v-calendar";
+import createNumberMask from "text-mask-addons/dist/createNumberMask";
+import MaskedInput from "vue-text-mask";
 
 export default {
-  name: 'LhaForm',
+  name: "LhaForm",
   components: {
     ConfirmModal,
     Multiselect,
     // MaskedInput,
-    'v-date-picker': DatePicker,
+    "v-date-picker": DatePicker
   },
   mixins: [mixin, validationMixin],
-  props: ['mode', 'selectedItem', 'idLha'],
+  props: ["mode", "selectedItem", "idLha"],
   data() {
     return {
       form: this.getEmptyForm(),
       submitted: false,
       loading: false,
       isOpenConfirm: false,
-      namaUnit: localStorage.getItem('namaUnit'),
-      namaSubUnit: localStorage.getItem('namaSubUnit'),
-      valueGroupLingkupAudit: '',
+      namaUnit: localStorage.getItem("namaUnit"),
+      namaSubUnit: localStorage.getItem("namaSubUnit"),
+      valueGroupLingkupAudit: "",
       optionsGroupLingkupAudit: [],
-      valueLingkupAudit: '',
+      valueLingkupAudit: "",
       optionsLingkupAudit: [],
-      valueJenisObrik: '',
+      valueJenisObrik: "",
       optionsJenisObrik: [],
-      valueUnitObrik: '',
+      valueUnitObrik: "",
       optionsUnitObrik: [],
-      valueBidangObrik: '',
+      valueBidangObrik: "",
       optionsBidangObrik: [],
-      valueSubBidangObrik: '',
+      valueSubBidangObrik: "",
       optionsSubBidangObrik: [],
-      valueJenisAnggaran: '',
+      valueJenisAnggaran: "",
       optionsJenisAnggaran: [],
-      valueKelurahan: '',
+      valueKelurahan: "",
       optionsKelurahan: [],
       isLoadingKelurahan: false,
-      valueKecamatan: '',
-      valueKabkot: '',
-      valueProvinsi: '',
+      valueKecamatan: "",
+      valueKabkot: "",
+      valueProvinsi: "",
       selectedDateSt: new Date(),
       selectedDateLha: new Date(),
       isLhaTpk: false,
-      fileLha: '',
+      fileLha: "",
       labelIcon: {
-        labelOn: '\u2713',
-        labelOff: '\u2715',
+        labelOn: "\u2713",
+        labelOff: "\u2715"
       },
       isStoredLha: true,
       isTemuanNihil: false,
@@ -655,9 +667,9 @@ export default {
         // prefix: 'Rp. ',
         // suffix: '',
         includeThousandsSeparator: true,
-        thousandsSeparatorSymbol: ',',
+        thousandsSeparatorSymbol: ","
       }),
-      rpRencanaAnggaran: 0,
+      rpRencanaAnggaran: 0
     };
   },
   computed: {},
@@ -670,44 +682,44 @@ export default {
     },
     isDirty() {
       return this.$v.form.$anyDirty;
-    },
+    }
   },
   watch: {
-    valueGroupLingkupAudit: function (curVal, oldVal) {
+    valueGroupLingkupAudit: function(curVal, oldVal) {
       this.$v.form.groupLingkupAudit.$model = curVal.id;
-      this.valueLingkupAudit = '';
+      this.valueLingkupAudit = "";
       this.loadLingkupAudit();
     },
 
-    valueLingkupAudit: function (curVal, oldVal) {
+    valueLingkupAudit: function(curVal, oldVal) {
       this.$v.form.lingkupAudit.$model = curVal.id;
     },
 
-    valueJenisObrik: function (curVal, oldVal) {
+    valueJenisObrik: function(curVal, oldVal) {
       this.$v.form.jenisObrik.$model = curVal.id;
     },
 
-    valueUnitObrik: function (curVal, oldVal) {
+    valueUnitObrik: function(curVal, oldVal) {
       this.$v.form.unitObrik.$model = curVal.id;
-      this.valueBidangObrik = '';
+      this.valueBidangObrik = "";
       this.loadBidangObrik();
     },
 
-    valueBidangObrik: function (curVal, oldVal) {
+    valueBidangObrik: function(curVal, oldVal) {
       this.$v.form.bidangObrik.$model = curVal.id;
-      this.valueSubBidangObrik = '';
+      this.valueSubBidangObrik = "";
       this.loadSubBidangObrik();
     },
 
-    valueSubBidangObrik: function (curVal, oldVal) {
+    valueSubBidangObrik: function(curVal, oldVal) {
       this.$v.form.subBidangObrik.$model = curVal.id;
     },
 
-    valueJenisAnggaran: function (curVal, oldVal) {
+    valueJenisAnggaran: function(curVal, oldVal) {
       this.$v.form.jenisAnggaran.$model = curVal.id;
     },
 
-    valueKelurahan: function (curVal, oldVal) {
+    valueKelurahan: function(curVal, oldVal) {
       this.valueKecamatan = curVal.namaKecamatan;
       this.valueKabkot = curVal.namaKabkot;
       this.valueProvinsi = curVal.namaProvinsi;
@@ -717,21 +729,21 @@ export default {
       this.$v.form.kelurahan.$model = curVal.id;
     },
 
-    selectedDateSt: function (curVal, oldVal) {
-      this.$v.form.tglSt.$model = curVal.toLocaleDateString('fr-CA');
+    selectedDateSt: function(curVal, oldVal) {
+      this.$v.form.tglSt.$model = curVal.toLocaleDateString("fr-CA");
     },
 
-    selectedDateLha: function (curVal, oldVal) {
-      this.$v.form.tglLha.$model = curVal.toLocaleDateString('fr-CA');
+    selectedDateLha: function(curVal, oldVal) {
+      this.$v.form.tglLha.$model = curVal.toLocaleDateString("fr-CA");
     },
 
-    isLhaTpk: function (curVal) {
+    isLhaTpk: function(curVal) {
       if (curVal == true) {
         this.$v.form.flagTpk.$model = 1;
       } else {
         this.$v.form.flagTpk.$model = 0;
       }
-    },
+    }
   },
   validations: {
     form: {
@@ -751,11 +763,11 @@ export default {
       // text
       noLha: {
         required,
-        minLength: minLength(1),
+        minLength: minLength(1)
       },
       // date
       tglLha: {
-        required,
+        required
         // minValue: minValue((value) => value > this.$v.form.tglSt.$model),
       },
       // autocomplete
@@ -806,9 +818,9 @@ export default {
 
       accept: {
         required,
-        mustAccept: (val) => val,
-      },
-    },
+        mustAccept: val => val
+      }
+    }
   },
   async mounted() {
     await this.loadGroupLingkupAudit();
@@ -816,19 +828,19 @@ export default {
     await this.loadUnitObrik();
     await this.loadJenisAnggaran();
 
-    if (this.mode == 'edit') {
+    if (this.mode == "edit") {
       await this.loadEditLhaById();
 
       this.selectedDateSt = new Date(this.form.tglSt);
       this.selectedDateLha = new Date(this.form.tglLha);
 
       this.valueGroupLingkupAudit = this.optionsGroupLingkupAudit.filter(
-        (data) => data.id == this.form.groupLingkupAudit
+        data => data.id == this.form.groupLingkupAudit
       )[0];
 
       await this.loadLingkupAudit();
       this.valueLingkupAudit = this.optionsLingkupAudit.filter(
-        (data) => data.id == this.form.lingkupAudit
+        data => data.id == this.form.lingkupAudit
       )[0];
 
       this.isLhaTpk = this.editData.flagTpk == 1 ? true : false;
@@ -836,25 +848,25 @@ export default {
       this.isTemuanNihil = this.editData.isTemuanNihil == 1 ? true : false;
 
       this.valueJenisObrik = this.optionsJenisObrik.filter(
-        (data) => data.id == this.form.jenisObrik
+        data => data.id == this.form.jenisObrik
       )[0];
 
       this.valueUnitObrik = this.optionsUnitObrik.filter(
-        (data) => data.id == this.form.unitObrik
+        data => data.id == this.form.unitObrik
       )[0];
 
       await this.loadBidangObrik();
       this.valueBidangObrik = this.optionsBidangObrik.filter(
-        (data) => data.id == this.form.bidangObrik
+        data => data.id == this.form.bidangObrik
       )[0];
 
       await this.loadSubBidangObrik();
       this.valueSubBidangObrik = this.optionsSubBidangObrik.filter(
-        (data) => data.id == this.editData.subBidangObrik
+        data => data.id == this.editData.subBidangObrik
       )[0];
 
       this.valueJenisAnggaran = this.optionsJenisAnggaran.filter(
-        (data) => data.id == this.form.jenisAnggaran
+        data => data.id == this.form.jenisAnggaran
       )[0];
 
       this.valueKelurahan = await this.loadKelurahanById();
@@ -865,8 +877,8 @@ export default {
 
   methods: {
     onDeleteFileUpdate() {
-      this.editData.uploadFileLha = '';
-      this.fileLha = '';
+      this.editData.uploadFileLha = "";
+      this.fileLha = "";
     },
 
     onUploadLha(e) {
@@ -889,10 +901,10 @@ export default {
         const resultFormData = this.appendToFormData();
 
         try {
-          if (this.mode == 'create') {
+          if (this.mode == "create") {
             this.loading = true;
             const response = await this.$store.dispatch(
-              'module_lha/createLha',
+              "module_lha/createLha",
               resultFormData
             );
 
@@ -902,19 +914,19 @@ export default {
             if (response.status == 200) {
               setTimeout(() => {
                 this.loading = false;
-                this.$router.push('/lha');
+                this.$router.push("/lha");
                 this.toastSuccess(
-                  'Berhasil menyimpan data dengan ID ' + responseData.Nomor_LHA
+                  "Berhasil menyimpan data dengan ID " + responseData.Nomor_LHA
                 );
               }, 500);
             }
-          } else if (this.mode == 'edit') {
+          } else if (this.mode == "edit") {
             this.loading = true;
             const response = await this.$store.dispatch(
-              'module_lha/updateLhaById',
+              "module_lha/updateLhaById",
               {
                 idLha: this.idLha,
-                data: resultFormData,
+                data: resultFormData
               }
             );
 
@@ -924,15 +936,15 @@ export default {
             if (response.status == 200) {
               setTimeout(() => {
                 this.loading = false;
-                this.$router.push('/lha');
-                this.toastSuccess('Berhasil edit data LHA');
+                this.$router.push("/lha");
+                this.toastSuccess("Berhasil edit data LHA");
               }, 500);
             }
           }
         } catch (error) {
           setTimeout(() => {
             this.loading = false;
-            this.toastError('Terjadi kesalahan saat submit data');
+            this.toastError("Terjadi kesalahan saat submit data");
           }, 500);
         }
       }
@@ -947,7 +959,7 @@ export default {
       deskripsi,
       namaKabkot,
       namaKecamatan,
-      namaProvinsi,
+      namaProvinsi
     }) {
       return `${deskripsi} | ${namaProvinsi}, ${namaKabkot}, ${namaKecamatan}`;
     },
@@ -957,7 +969,7 @@ export default {
       if (!field.$dirty) {
         return null;
       }
-      return !(field.$invalid || field.$model === '');
+      return !(field.$invalid || field.$model === "");
     },
 
     validate() {
@@ -975,45 +987,45 @@ export default {
         // Data Umum
         // unitAudit: localStorage.getItem('idUnitKerja'),
         // subUnitAudit: localStorage.getItem('idSubUnitKerja'),
-        noPkpt: '',
-        tahunPkpt: '',
-        noSt: '',
-        tglSt: new Date().toLocaleDateString('fr-CA'),
-        noLha: '',
-        tglLha: new Date().toLocaleDateString('fr-CA'),
-        groupLingkupAudit: '',
-        lingkupAudit: '',
-        ringkasanLha: '',
+        noPkpt: "",
+        tahunPkpt: "",
+        noSt: "",
+        tglSt: new Date().toLocaleDateString("fr-CA"),
+        noLha: "",
+        tglLha: new Date().toLocaleDateString("fr-CA"),
+        groupLingkupAudit: "",
+        lingkupAudit: "",
+        ringkasanLha: "",
         flagTpk: false,
         // Data Obrik
-        judulLaporan: '',
-        jenisObrik: '',
-        unitObrik: '',
-        bidangObrik: '',
+        judulLaporan: "",
+        jenisObrik: "",
+        unitObrik: "",
+        bidangObrik: "",
         // subBidangObrik: '',
-        namaPimpinan: '',
-        nipPimpinan: '',
+        namaPimpinan: "",
+        nipPimpinan: "",
         // Data Anggaran
-        tahunAnggaran: '',
-        jenisAnggaran: '',
+        tahunAnggaran: "",
+        jenisAnggaran: "",
         nilaiRencana: 0,
         nilaiRealisasi: 0,
         nilaiDiaudit: 0,
         // Data Wilayah
-        kelurahan: '',
-        kecamatan: '',
-        kabkot: '',
-        provinsi: '',
+        kelurahan: "",
+        kecamatan: "",
+        kabkot: "",
+        provinsi: "",
         // accept all form
-        accept: false,
+        accept: false
       };
     },
 
     appendToFormData() {
       const fd = new FormData();
 
-      if (this.mode == 'edit') {
-        fd.append('_method', 'PATCH');
+      if (this.mode == "edit") {
+        fd.append("_method", "PATCH");
       }
 
       // console.log('LHA HEREE!!');
@@ -1048,54 +1060,54 @@ export default {
       //   Kode_Sub_Bidang_Obrik: this.valueSubBidangObrik.id,
       // });
 
-      fd.append('Nomor_PKPT', this.$v.form.noPkpt.$model);
-      fd.append('Tahun_PKPT', this.$v.form.tahunPkpt.$model);
-      fd.append('Nomor_LHA', this.$v.form.noLha.$model);
-      fd.append('Tanggal_LHA', this.$v.form.tglLha.$model);
-      fd.append('Nomor_ST', this.$v.form.noSt.$model);
-      fd.append('Tanggal_ST', this.$v.form.tglSt.$model);
+      fd.append("Nomor_PKPT", this.$v.form.noPkpt.$model);
+      fd.append("Tahun_PKPT", this.$v.form.tahunPkpt.$model);
+      fd.append("Nomor_LHA", this.$v.form.noLha.$model);
+      fd.append("Tanggal_LHA", this.$v.form.tglLha.$model);
+      fd.append("Nomor_ST", this.$v.form.noSt.$model);
+      fd.append("Tanggal_ST", this.$v.form.tglSt.$model);
       fd.append(
-        'Kode_Grup_Lingkup_Audit',
+        "Kode_Grup_Lingkup_Audit",
         this.$v.form.groupLingkupAudit.$model
       );
-      fd.append('Kode_Lingkup_Audit', this.$v.form.lingkupAudit.$model);
-      fd.append('Kode_Jenis_Obrik', this.$v.form.jenisObrik.$model);
-      fd.append('Kode_Unit_Obrik', this.$v.form.unitObrik.$model);
-      fd.append('Kode_Bidang_Obrik', this.$v.form.bidangObrik.$model);
+      fd.append("Kode_Lingkup_Audit", this.$v.form.lingkupAudit.$model);
+      fd.append("Kode_Jenis_Obrik", this.$v.form.jenisObrik.$model);
+      fd.append("Kode_Unit_Obrik", this.$v.form.unitObrik.$model);
+      fd.append("Kode_Bidang_Obrik", this.$v.form.bidangObrik.$model);
 
-      fd.append('Kode_Provinsi', this.$v.form.provinsi.$model);
-      fd.append('Kode_KabupatenKota', this.$v.form.kabkot.$model);
-      fd.append('Kode_Kecamatan', this.$v.form.kecamatan.$model);
-      fd.append('Kode_Kelurahan', this.$v.form.kelurahan.$model);
+      fd.append("Kode_Provinsi", this.$v.form.provinsi.$model);
+      fd.append("Kode_KabupatenKota", this.$v.form.kabkot.$model);
+      fd.append("Kode_Kecamatan", this.$v.form.kecamatan.$model);
+      fd.append("Kode_Kelurahan", this.$v.form.kelurahan.$model);
 
-      fd.append('Judul_laporan', this.$v.form.judulLaporan.$model);
-      fd.append('Tahun_Anggaran', this.$v.form.tahunAnggaran.$model);
-      fd.append('Kode_Jenis_anggaran', this.$v.form.jenisAnggaran.$model);
+      fd.append("Judul_laporan", this.$v.form.judulLaporan.$model);
+      fd.append("Tahun_Anggaran", this.$v.form.tahunAnggaran.$model);
+      fd.append("Kode_Jenis_anggaran", this.$v.form.jenisAnggaran.$model);
 
-      fd.append('Nama_Pimpinan', this.$v.form.namaPimpinan.$model);
-      fd.append('NIP_Pimpinan', this.$v.form.nipPimpinan.$model);
-      fd.append('Rencana_Anggaran', this.$v.form.nilaiRencana.$model);
-      fd.append('Realisasi_Anggaran', this.$v.form.nilaiRealisasi.$model);
-      fd.append('Anggaran_yang_diaudit', this.$v.form.nilaiDiaudit.$model);
+      fd.append("Nama_Pimpinan", this.$v.form.namaPimpinan.$model);
+      fd.append("NIP_Pimpinan", this.$v.form.nipPimpinan.$model);
+      fd.append("Rencana_Anggaran", this.$v.form.nilaiRencana.$model);
+      fd.append("Realisasi_Anggaran", this.$v.form.nilaiRealisasi.$model);
+      fd.append("Anggaran_yang_diaudit", this.$v.form.nilaiDiaudit.$model);
 
-      fd.append('Ringkasan_LHA', this.$v.form.ringkasanLha.$model);
-      fd.append('Flag_TPK', this.convertBoolean(this.isLhaTpk)); // this.$v.form.flagTpk.$model);
+      fd.append("Ringkasan_LHA", this.$v.form.ringkasanLha.$model);
+      fd.append("Flag_TPK", this.convertBoolean(this.isLhaTpk)); // this.$v.form.flagTpk.$model);
 
       // OPSIONAL
-      fd.append('is_stored', this.convertBoolean(this.isStoredLha));
-      fd.append('is_temuan_nihil', this.convertBoolean(this.isTemuanNihil));
+      fd.append("is_stored", this.convertBoolean(this.isStoredLha));
+      fd.append("is_temuan_nihil", this.convertBoolean(this.isTemuanNihil));
 
       if (this.fileLha) {
-        fd.append('Upload_file_LHA', this.fileLha);
+        fd.append("Upload_file_LHA", this.fileLha);
       }
 
       if (this.valueSubBidangObrik) {
-        fd.append('Kode_Sub_Bidang_Obrik', this.valueSubBidangObrik.id);
+        fd.append("Kode_Sub_Bidang_Obrik", this.valueSubBidangObrik.id);
       }
 
       return fd;
-    },
-  },
+    }
+  }
 };
 </script>
 
