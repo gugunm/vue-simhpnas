@@ -11,6 +11,14 @@
       </CCol>
     </CRow>
     <WidgetsDropdown :data="dashData" />
+    <div>
+      <VueApexChart
+        width="700"
+        type="bar"
+        :options="chartOptions"
+        :series="series"
+      />
+    </div>
     <!-- <SamplePDF class="mb-4" /> -->
     <!-- <TpTiga /> -->
   </div>
@@ -32,7 +40,21 @@ export default {
   data() {
     return {
       namaUnit: "",
-      dashData: ""
+      dashData: "",
+      chartOptions: {
+        chart: {
+          id: "vuechart-example"
+        },
+        xaxis: {
+          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+        }
+      },
+      series: [
+        {
+          name: "series-1",
+          data: [30, 40, 35, 50, 49, 60, 70, 91]
+        }
+      ]
     };
   },
   async mounted() {

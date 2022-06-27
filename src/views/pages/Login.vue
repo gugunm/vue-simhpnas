@@ -1,14 +1,18 @@
 <template>
   <div class="flex lg:w-full h-screen justify-center">
     <div class="img-login hidden lg:block lg:w-2/6 bg-red-500">
-      <div class="flex flex-col px-8 h-full text-white justify-center">
-        <!-- <h1 class="text-4xl text-center">SIMHPNAS</h1> -->
-        <div class="text-left px-4">
-          <CImg
+      <div
+        class="blur-div flex flex-col px-8 h-full w-full text-white justify-center"
+      >
+        <div class="text-left px-8">
+          <!-- <CImg
             class="inline-block w-52 lg:w-64 mb-2"
             src="img/simhp/logo-white-login.svg"
-          />
-          <p class="text-left text-base lg:text-lg tracking-wide">
+          /> -->
+          <h1 class="title-gradient-login tracking-wide">
+            SimhpNas
+          </h1>
+          <p class="text-base lg:text-2xl tracking-wide mt-4 text-red-500">
             Sistem Infomasi Manajemen Hasil Pengawasan Nasional
           </p>
         </div>
@@ -262,5 +266,10 @@ export default {
   background-position-x: 80%;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.blur-div {
+  backdrop-filter: blur(50px);
+  -webkit-backdrop-filter: blur(50px);
 }
 </style>

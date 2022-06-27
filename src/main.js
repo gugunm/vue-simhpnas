@@ -8,6 +8,8 @@ import { iconsSet as icons } from './assets/icons/icons.js'
 import vuexI18n from 'vuex-i18n';
 import Locales from './locale/vue-i18n-locales.generated.js';
 
+import VueApexCharts from 'vue-apexcharts'
+
 import { API_URL } from './utils/api.js';
 
 import './assets/tailwind.css';
@@ -29,6 +31,8 @@ Vue.use(IdleVue, {
   // idleTime: 5000 
 })
 
+Vue.use(VueApexCharts)
+Vue.component('VueApexChart', VueApexCharts)
 
 /**
  * *Ini adalah global variable dan function yang dapat

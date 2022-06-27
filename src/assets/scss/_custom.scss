@@ -155,3 +155,23 @@ li.c-sidebar-nav-item > a.router-link-exact-active.c-active.c-sidebar-nav-link {
 .c-sidebar .c-sidebar-nav-dropdown-toggle::after {
   color: red !important;
 }
+
+// title gradient SIMHPNAS
+.title-gradient {
+  // background: linear-gradient(to right, #0ea5e9, #6366f1);
+  background: linear-gradient(to right, #d00000, rgb(255, 179, 0));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 22px;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+}
+
+.title-gradient-login {
+  background: linear-gradient(to right, #d00000, rgb(255, 179, 0));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 60px;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+}

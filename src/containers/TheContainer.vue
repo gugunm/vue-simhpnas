@@ -38,7 +38,7 @@
         @change-locale="changeLocale"
       />
       <!-- </div> -->
-      <div class="overflow-auto">
+      <div class="overflow-auto p-4">
         <TheSidebar
           v-if="!mobileScreen"
           :locale="locale"
@@ -116,14 +116,5 @@ export default {
   height: 100vh;
   isolation: isolate;
   /* grid grid-columns-[minmax(300px, 1fr) 4fr] grid-rows-[80px auto] h-screen */
-}
-
-.title-gradient {
-  background: linear-gradient(to right, #0ea5e9, #6366f1);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-size: 22px;
-  font-family: "Poppins", sans-serif;
-  font-weight: bold;
 }
 </style>
