@@ -92,6 +92,10 @@
   color: #a3aed0;
 }
 
+.text-black-tw {
+  color: #0f172a;
+}
+
 /* Header */
 .c-header .c-subheader {
   border: none !important;
@@ -159,19 +163,24 @@ li.c-sidebar-nav-item > a.router-link-exact-active.c-active.c-sidebar-nav-link {
 // title gradient SIMHPNAS
 .title-gradient {
   // background: linear-gradient(to right, #0ea5e9, #6366f1);
-  background: linear-gradient(to right, #d00000, rgb(255, 179, 0));
+  background: linear-gradient(to right, #d00000, rgb(255, 140, 0));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-size: 22px;
+  font-size: 24px;
   font-family: "Poppins", sans-serif;
   font-weight: bold;
 }
 
 .title-gradient-login {
-  background: linear-gradient(to right, #d00000, rgb(255, 179, 0));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  // background: linear-gradient(to right, #0e0d0d, rgb(255, 17, 0));
+  // -webkit-background-clip: text;
+  // -webkit-text-fill-color: transparent;
+  color: #0f172a;
   font-size: 60px;
   font-family: "Poppins", sans-serif;
   font-weight: bold;
+}
+
+.c-sidebar-nav-dropdown-toggle::after {
+  background-image: url("/img/simhp/right-arrow.png") !important;
 }

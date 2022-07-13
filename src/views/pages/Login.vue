@@ -10,11 +10,33 @@
             src="img/simhp/logo-white-login.svg"
           /> -->
           <h1 class="title-gradient-login tracking-wide">
+            <!-- <h1 class="text-black tracking-wide"> -->
             SimhpNas
           </h1>
-          <p class="text-base lg:text-2xl tracking-wide mt-4 text-red-500">
+          <p class="text-base lg:text-2xl tracking-wide mt-4 text-black-tw">
             Sistem Infomasi Manajemen Hasil Pengawasan Nasional
           </p>
+          <div class="mt-3">
+            <span class="text-black-tw text-base"
+              >Managed by
+              <a
+                href="https://bpkp.go.id"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="font-bold underline"
+                >Badan Pengawasan Keuangan dan Pembangunan</a
+              ></span
+            >
+          </div>
+          <div class="mt-12">
+            <CImg
+              class="inline-block w-6 lg:w-5"
+              src="img/simhp/v_avocado.svg"
+            />
+            <span class="text-black-tw font-medium ml-2 tracking-wide"
+              >Versi Alpukat</span
+            >
+          </div>
         </div>
       </div>
     </div>
@@ -22,7 +44,7 @@
       class="flex-initial content-center w-full lg:w-4/6 bg-white p-6 lg:py-14"
     >
       <div class="w-full h-full m-auto lg:max-w-xl">
-        <div class="flex h-5/6 flex-col justify-center text-left w-full">
+        <div class="flex h-5/6 flex-col justify-center text-left w-full mt-10">
           <div class="flex justify-start content-center mb-4 lg:hidden">
             <!-- <CImg class="inline-block w-8 mr-2" src="/img/simhp/logo.svg" /> -->
             <CImg
@@ -34,7 +56,7 @@
           <!-- <div>
 
           </div> -->
-          <p class="text-3xl leading-normal tracking-wide font-medium mb-4">
+          <p class="text-3xl leading-normal tracking-wide font-bold mb-4">
             Halo,<br />Selamat Datang!
           </p>
           <form
@@ -157,7 +179,7 @@
             </a>
           </p>
         </div>
-        <div class="text-left h-1/6 flex flex-col justify-end">
+        <!-- <div class="text-left h-1/6 flex flex-col justify-end">
           <div class="pb-10">
             <CImg
               class="inline-block w-6 lg:w-5"
@@ -167,7 +189,7 @@
               >Versi Alpukat</span
             >
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -269,7 +291,7 @@ export default {
 }
 
 .blur-div {
-  backdrop-filter: blur(50px);
-  -webkit-backdrop-filter: blur(50px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 </style>
