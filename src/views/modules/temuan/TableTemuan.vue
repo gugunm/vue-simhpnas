@@ -243,7 +243,7 @@ export default {
       return Number(this.valueLha.flagKirim) % 2 == 0 ? false : true;
     },
     statusTemuan: function() {
-      return this.valueLha.isTemuanNihil == 0 ? true : false;
+      return this.valueLha.flagTemuanNihil == 0 ? true : false;
     }
   },
   async mounted() {

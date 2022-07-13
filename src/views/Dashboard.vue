@@ -11,14 +11,14 @@
       </CCol>
     </CRow>
     <WidgetsDropdown :data="dashData" />
-    <div>
+    <!-- <div>
       <VueApexChart
         width="700"
         type="bar"
         :options="chartOptions"
         :series="series"
       />
-    </div>
+    </div> -->
     <!-- <SamplePDF class="mb-4" /> -->
     <!-- <TpTiga /> -->
   </div>

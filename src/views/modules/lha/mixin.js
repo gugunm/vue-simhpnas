@@ -4,16 +4,17 @@ export default {
       this.loading = true;
       try {
         await this.$store.dispatch(
-          'm_ref_lingkup_audit/loadRefGroupLingkupAudit', {
-            forceRefresh: refresh,
+          "m_ref_lingkup_audit/loadRefGroupLingkupAudit",
+          {
+            forceRefresh: refresh
           }
         );
 
-        this.optionsGroupLingkupAudit =
-          this.$store.getters['m_ref_lingkup_audit/refGroupLingkupAudit'];
-        
+        this.optionsGroupLingkupAudit = this.$store.getters[
+          "m_ref_lingkup_audit/refGroupLingkupAudit"
+        ];
       } catch (error) {
-        this.error = error.message || 'Something went wrong!';
+        this.error = error.message || "Something went wrong!";
       }
       this.loading = false;
     },
@@ -21,13 +22,15 @@ export default {
     async loadLingkupAudit(refresh = false) {
       this.loading = true;
       try {
-        await this.$store.dispatch('m_ref_lingkup_audit/loadRefLingkupAudit', {
+        await this.$store.dispatch("m_ref_lingkup_audit/loadRefLingkupAudit", {
           idGroupLingkupAudit: this.valueGroupLingkupAudit.id,
-          forceRefresh: refresh,
+          forceRefresh: refresh
         });
-        this.optionsLingkupAudit = this.$store.getters['m_ref_lingkup_audit/refLingkupAudit'];       
+        this.optionsLingkupAudit = this.$store.getters[
+          "m_ref_lingkup_audit/refLingkupAudit"
+        ];
       } catch (error) {
-        this.error = error.message || 'Something went wrong!';
+        this.error = error.message || "Something went wrong!";
       }
       this.loading = false;
     },
@@ -35,13 +38,14 @@ export default {
     async loadJenisObrik(refresh = false) {
       this.loading = true;
       try {
-        await this.$store.dispatch('m_ref_jenis_obrik/loadRefJenisObrik', {
-          forceRefresh: refresh,
+        await this.$store.dispatch("m_ref_jenis_obrik/loadRefJenisObrik", {
+          forceRefresh: refresh
         });
-        this.optionsJenisObrik = this.$store.getters['m_ref_jenis_obrik/refJenisObrik'];
-     
+        this.optionsJenisObrik = this.$store.getters[
+          "m_ref_jenis_obrik/refJenisObrik"
+        ];
       } catch (error) {
-        this.error = error.message || 'Something went wrong!';
+        this.error = error.message || "Something went wrong!";
       }
       this.loading = false;
     },
@@ -49,15 +53,15 @@ export default {
     async loadUnitObrik(refresh = false) {
       this.loading = true;
       try {
-
-        await this.$store.dispatch('m_ref_unit_obrik/loadRefUnitObrik', {
-          forceRefresh: refresh,
+        await this.$store.dispatch("m_ref_unit_obrik/loadRefUnitObrik", {
+          forceRefresh: refresh
         });
 
-        this.optionsUnitObrik = this.$store.getters['m_ref_unit_obrik/refUnitObrik'];
-     
+        this.optionsUnitObrik = this.$store.getters[
+          "m_ref_unit_obrik/refUnitObrik"
+        ];
       } catch (error) {
-        this.error = error.message || 'Something went wrong!';
+        this.error = error.message || "Something went wrong!";
       }
       this.loading = false;
     },
@@ -65,16 +69,16 @@ export default {
     async loadBidangObrik(refresh = false) {
       this.loading = true;
       try {
-
-        await this.$store.dispatch('m_ref_unit_obrik/loadRefBidangObrik', {
+        await this.$store.dispatch("m_ref_unit_obrik/loadRefBidangObrik", {
           idUnitObrik: this.valueUnitObrik.id,
-          forceRefresh: refresh,
+          forceRefresh: refresh
         });
 
-        this.optionsBidangObrik = this.$store.getters['m_ref_unit_obrik/refBidangObrik'];
-     
+        this.optionsBidangObrik = this.$store.getters[
+          "m_ref_unit_obrik/refBidangObrik"
+        ];
       } catch (error) {
-        this.error = error.message || 'Something went wrong!';
+        this.error = error.message || "Something went wrong!";
       }
       this.loading = false;
     },
@@ -82,16 +86,16 @@ export default {
     async loadSubBidangObrik(refresh = false) {
       this.loading = true;
       try {
-
-        await this.$store.dispatch('m_ref_unit_obrik/loadRefSubBidangObrik', {
+        await this.$store.dispatch("m_ref_unit_obrik/loadRefSubBidangObrik", {
           idBidangObrik: this.valueBidangObrik.id,
-          forceRefresh: refresh,
+          forceRefresh: refresh
         });
 
-        this.optionsSubBidangObrik = this.$store.getters['m_ref_unit_obrik/refSubBidangObrik'];
-     
+        this.optionsSubBidangObrik = this.$store.getters[
+          "m_ref_unit_obrik/refSubBidangObrik"
+        ];
       } catch (error) {
-        this.error = error.message || 'Something went wrong!';
+        this.error = error.message || "Something went wrong!";
       }
       this.loading = false;
     },
@@ -100,60 +104,62 @@ export default {
       this.loading = true;
       try {
         await this.$store.dispatch(
-          'm_ref_jenis_anggaran/loadRefJenisAnggaran',
+          "m_ref_jenis_anggaran/loadRefJenisAnggaran",
           {
-            forceRefresh: refresh,
+            forceRefresh: refresh
           }
         );
-        this.optionsJenisAnggaran =
-          this.$store.getters['m_ref_jenis_anggaran/refJenisAnggaran'];
-     
+        this.optionsJenisAnggaran = this.$store.getters[
+          "m_ref_jenis_anggaran/refJenisAnggaran"
+        ];
       } catch (error) {
-        this.error = error.message || 'Something went wrong!';
+        this.error = error.message || "Something went wrong!";
       }
       this.loading = false;
     },
 
     async loadSearchKelurahan(query, refresh = false) {
-      this.loadingKelurahan = true
+      this.loadingKelurahan = true;
       try {
-
-        await this.$store.dispatch('m_ref_wilayah/loadSearchKelurahan', {
+        await this.$store.dispatch("m_ref_wilayah/loadSearchKelurahan", {
           textSearch: query,
-          forceRefresh: refresh,
+          forceRefresh: refresh
         });
 
-        this.optionsKelurahan = this.$store.getters['m_ref_wilayah/searchKelurahan'];
+        this.optionsKelurahan = this.$store.getters[
+          "m_ref_wilayah/searchKelurahan"
+        ];
 
-        this.loadingKelurahan = false
-     
+        this.loadingKelurahan = false;
       } catch (error) {
-        this.error = error.message || 'Something went wrong!';
+        this.error = error.message || "Something went wrong!";
       }
     },
 
     async loadKelurahanById(refresh = false) {
       try {
-        const kelurahanById = await this.$store.dispatch('m_ref_wilayah/loadKelurahanById', {
-          idKelurahan: this.form.kelurahan,
-          forceRefresh: refresh,
-        });
+        const kelurahanById = await this.$store.dispatch(
+          "m_ref_wilayah/loadKelurahanById",
+          {
+            idKelurahan: this.form.kelurahan,
+            forceRefresh: refresh
+          }
+        );
 
-        return kelurahanById
+        return kelurahanById;
       } catch (error) {
-        this.error = error.message || 'Something went wrong!';
+        this.error = error.message || "Something went wrong!";
       }
     },
-
 
     async loadEditLhaById() {
       this.loading = true;
       try {
-        await this.$store.dispatch('module_lha/loadLhaById', {
-          idLha: this.idLha,
+        await this.$store.dispatch("module_lha/loadLhaById", {
+          idLha: this.idLha
         });
-        
-        const data = this.$store.getters['module_lha/lhaById'];
+
+        const data = this.$store.getters["module_lha/lhaById"];
 
         this.form = {
           noPkpt: data.nomorPkpt,
@@ -188,14 +194,14 @@ export default {
           nilaiDiaudit: data.anggaranYangDiaudit,
           ringkasanLha: data.ringkasanLha,
           flagTpk: data.flagTpk,
+          flagTemuanNihil: data.flagTemuanNihil,
 
-          accept: false,
-        }
+          accept: false
+        };
 
-        this.editData = data
-
+        this.editData = data;
       } catch (error) {
-        this.error = error.message || 'Something went wrong!';
+        this.error = error.message || "Something went wrong!";
       }
       this.loading = false;
     },
@@ -203,21 +209,19 @@ export default {
     toastSuccess(msg) {
       this.$toast.open({
         message: msg,
-        type: 'success',
-        position: 'top-right',
-        duration: 3000,
+        type: "success",
+        position: "top-right",
+        duration: 3000
       });
     },
-
 
     toastError(msg) {
       this.$toast.open({
         message: msg,
-        type: 'error',
-        position: 'top-right',
-        duration: 5000,
+        type: "error",
+        position: "top-right",
+        duration: 5000
       });
-    },
-
+    }
   }
-}
+};

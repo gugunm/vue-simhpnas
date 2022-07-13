@@ -65,7 +65,7 @@
           </CCol>
         </CRow>
       </CCardHeader>
-      <div v-if="valueLha.isTemuanNihil == 1">
+      <div v-if="valueLha.flagTemuanNihil == 1">
         <CCol class="text-center">
           <h5 class="h5 text-base tracking-wide py-4 text-red-400">
             Temuan Nihil

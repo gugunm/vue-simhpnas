@@ -1,23 +1,23 @@
-import axios from 'axios';
-import { API_URL } from '@/utils/api.js'
+import axios from "axios";
+import { API_URL } from "@/utils/api.js";
 
 export default {
   async loadTindakLanjut(context, payload) {
     const response = await axios({
-      method: 'GET',
+      method: "GET",
       baseURL: API_URL,
-      url: '/api/tl',
+      url: "/api/tl",
       params: {
         kode_rekomendasi: payload.idRekomendasi,
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
 
     if (response.status != 200) {
       const error = new Error(
-        responseData.message || 'Failed to fetch data unit kerja.'
+        responseData.message || "Failed to fetch data unit kerja."
       );
       throw error;
     }
@@ -64,32 +64,29 @@ export default {
         userGabung: responseData[key]["User_Gabung"],
         statusPostTl: responseData[key]["Status_post_tl"],
         memoKoreksiTl: responseData[key]["Memo_Koreksi_tl"],
-        uploadFileTl: responseData[key]["Upload_file_TL"],
-        
+        uploadFileTl: responseData[key]["Upload_file_TL"]
       };
       tl.push(data);
     }
 
-    context.commit('setTindakLanjut', tl);
-    context.commit('setFetchTimestamp');
+    context.commit("setTindakLanjut", tl);
+    context.commit("setFetchTimestamp");
   },
 
   async loadTindakLanjutById(context, payload) {
     const response = await axios({
-      method: 'GET',
+      method: "GET",
       baseURL: API_URL,
       url: `/api/tl/${payload.idTl}`,
       params: {
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
 
     if (response.status != 200) {
-      const error = new Error(
-        responseData.message || 'Failed to fetch data'
-      );
+      const error = new Error(responseData.message || "Failed to fetch data");
       throw error;
     }
 
@@ -135,79 +132,74 @@ export default {
       isStored: responseData["is_stored"],
       uploadFileTl: responseData["Upload_file_TL"],
       nilaiRekomendasi: responseData["Nilai_Rekomendasi"],
+      tglTl: responseData["tglTl"]
     };
 
-    context.commit('setTindakLanjutById', data);
+    context.commit("setTindakLanjutById", data);
   },
 
   async createTindakLanjut(context, payload) {
     const response = await axios({
-      method: 'POST',
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       data: payload,
       baseURL: API_URL,
-      url: '/api/tl',
+      url: "/api/tl",
       params: {
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
-    
+
     if (response.status != 200) {
-      const error = new Error(
-        responseData.message || 'Failed to save data'
-      );
+      const error = new Error(responseData.message || "Failed to save data");
       throw error;
     }
-    
-    return response
+
+    return response;
   },
 
   async deleteTindakLanjutById(context, payload) {
     const response = await axios({
-      method: 'DELETE',
+      method: "DELETE",
       headers: { "Content-Type": "application/json" },
       baseURL: API_URL,
       url: `/api/tl/${payload.idTl}`,
       params: {
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
 
     if (response.status != 200) {
-      const error = new Error(
-        responseData.message || 'Failed to delete data'
-      );
+      const error = new Error(responseData.message || "Failed to delete data");
       throw error;
     }
 
-    return response
+    return response;
   },
 
-  async updateTindakLanjutById(context, payload){
+  async updateTindakLanjutById(context, payload) {
     const response = await axios({
-      method: 'POST',
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       data: payload.data,
       baseURL: API_URL,
       url: `/api/tl/${payload.idTl}`,
       params: {
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
 
     if (response.status != 200) {
-      const error = new Error(
-        responseData.message || 'Failed to update data'
-      );
+      const error = new Error(responseData.message || "Failed to update data");
       throw error;
     }
 
-    return response
-  },
-}
+    return response;
+  }
+};

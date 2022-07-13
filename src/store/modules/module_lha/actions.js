@@ -1,22 +1,22 @@
-import axios from 'axios';
-import { API_URL } from '@/utils/api.js'
+import axios from "axios";
+import { API_URL } from "@/utils/api.js";
 
 export default {
   async loadLha(context) {
     const response = await axios({
-      method: 'GET',
+      method: "GET",
       baseURL: API_URL,
-      url: '/api/lha',
+      url: "/api/lha",
       params: {
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
 
     if (response.status != 200) {
       const error = new Error(
-        responseData.message || 'Failed to fetch data unit kerja.'
+        responseData.message || "Failed to fetch data unit kerja."
       );
       throw error;
     }
@@ -55,33 +55,31 @@ export default {
         flagDaltu: responseData[key]["Flag_Daltu"],
         flagAdmin: responseData[key]["Flag_Admin"],
         isStored: responseData[key]["is_stored"],
-        isTemuanNihil: responseData[key]["is_temuan_nihil"],    
-        catatanDalnis: responseData[key]["Catatan_Dalnis"],    
-        catatanDaltu: responseData[key]["Catatan_Daltu"],    
+        flagTemuanNihil: responseData[key]["flagTemuanNihil"],
+        catatanDalnis: responseData[key]["Catatan_Dalnis"],
+        catatanDaltu: responseData[key]["Catatan_Daltu"]
       };
       lha.push(data);
     }
 
-    context.commit('setLha', lha);
-    context.commit('setFetchTimestamp');
+    context.commit("setLha", lha);
+    context.commit("setFetchTimestamp");
   },
 
   async loadLhaById(context, payload) {
     const response = await axios({
-      method: 'GET',
+      method: "GET",
       baseURL: API_URL,
       url: `/api/lha/${payload.idLha}/edit`,
       params: {
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
 
     if (response.status != 200) {
-      const error = new Error(
-        responseData.message || 'Failed to fetch data'
-      );
+      const error = new Error(responseData.message || "Failed to fetch data");
       throw error;
     }
 
@@ -120,70 +118,67 @@ export default {
       uploadFileLha: responseData["Upload_file_LHA"],
 
       flagTpk: responseData["Flag_TPK"],
-      isTemuanNihil: responseData["is_temuan_nihil"]
+      flagTemuanNihil: responseData["flagTemuanNihil"]
     };
 
-    context.commit('setLhaById', lha);
+    context.commit("setLhaById", lha);
   },
 
   async loadDetailLhaById(context, payload) {
     const response = await axios({
-      method: 'GET',
+      method: "GET",
       baseURL: API_URL,
       url: `/api/lha/${payload.idLha}`,
       params: {
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
 
     if (response.status != 200) {
-      const error = new Error(
-        responseData.message || 'Failed to fetch data'
-      );
+      const error = new Error(responseData.message || "Failed to fetch data");
       throw error;
     }
 
-
-    const timAudit = []
-    for (const key in responseData["dataTimAudit"]){
+    const timAudit = [];
+    for (const key in responseData["dataTimAudit"]) {
       const data = {
         id: responseData["dataTimAudit"][key]["kode_timaudit"],
         nama: responseData["dataTimAudit"][key]["Nama"],
         nip: responseData["dataTimAudit"][key]["NIP"],
         kodePeran: responseData["dataTimAudit"][key]["Kode_Peran"],
-        peran: responseData["dataTimAudit"][key]["Peran"],
-      }
+        peran: responseData["dataTimAudit"][key]["Peran"]
+      };
       timAudit.push(data);
     }
 
-    const temuans = []
-    for (const key in responseData["dataTemuan"]){
-
-      const dataTemuanKeyPenyebab = responseData["dataTemuan"][key]["dataPenyebab"]
-      const penyebabs = []
+    const temuans = [];
+    for (const key in responseData["dataTemuan"]) {
+      const dataTemuanKeyPenyebab =
+        responseData["dataTemuan"][key]["dataPenyebab"];
+      const penyebabs = [];
 
       // for (const keyPenyebab in responseData["dataTemuan"]){
-      for (const keyPenyebab in dataTemuanKeyPenyebab){
+      for (const keyPenyebab in dataTemuanKeyPenyebab) {
         penyebabs.push({
           id: dataTemuanKeyPenyebab[keyPenyebab]["kode_penyebab"],
           nomorPenyebab: dataTemuanKeyPenyebab[keyPenyebab]["Nomor_Penyebab"],
           kodePenyebab: dataTemuanKeyPenyebab[keyPenyebab]["Ref_Kode_Penyebab"],
           deskripsi: dataTemuanKeyPenyebab[keyPenyebab]["diskripsi"],
-          memoPenyebab: dataTemuanKeyPenyebab[keyPenyebab]["Memo_Penyebab"],   
-        })
+          memoPenyebab: dataTemuanKeyPenyebab[keyPenyebab]["Memo_Penyebab"]
+        });
       }
 
-      const dataTemuanKeyRekomendasi = responseData["dataTemuan"][key]["dataRekomendasi"]
-      const rekomendasis = []
+      const dataTemuanKeyRekomendasi =
+        responseData["dataTemuan"][key]["dataRekomendasi"];
+      const rekomendasis = [];
 
-      for (const keyRekomendasi in dataTemuanKeyRekomendasi){
+      for (const keyRekomendasi in dataTemuanKeyRekomendasi) {
+        const dataRekKeyTl = dataTemuanKeyRekomendasi[keyRekomendasi]["dataTL"];
+        const tl = [];
 
-        const dataRekKeyTl = dataTemuanKeyRekomendasi[keyRekomendasi]["dataTL"]
-        const tl = []
-
-        for (const keyTl in dataRekKeyTl){
+        for (const keyTl in dataRekKeyTl) {
           tl.push({
             id: dataRekKeyTl[keyTl]["kode_tl"],
             nomorTl: dataRekKeyTl[keyTl]["Nomor_TL"],
@@ -215,14 +210,15 @@ export default {
             catatanAdmin: dataRekKeyTl[keyTl]["Catatan_Admin"],
             statusPostTl: dataRekKeyTl[keyTl]["Status_post_tl"],
             memoKoreksiTl: dataRekKeyTl[keyTl]["Memo_Koreksi_tl"],
-            uploadFileTl: dataRekKeyTl[keyTl]["Upload_file_TL"],
-          })
+            uploadFileTl: dataRekKeyTl[keyTl]["Upload_file_TL"]
+          });
         }
 
-        const dataRekKeyPelaku = dataTemuanKeyRekomendasi[keyRekomendasi]["dataPelaku"]
-        const pelaku = []
+        const dataRekKeyPelaku =
+          dataTemuanKeyRekomendasi[keyRekomendasi]["dataPelaku"];
+        const pelaku = [];
 
-        for (const keyPelaku in dataRekKeyPelaku){
+        for (const keyPelaku in dataRekKeyPelaku) {
           pelaku.push({
             id: dataRekKeyPelaku[keyPelaku]["kode_pelaku"],
             nomorUrut: dataRekKeyPelaku[keyPelaku]["Nomor_Urut"],
@@ -230,27 +226,42 @@ export default {
             nip: dataRekKeyPelaku[keyPelaku]["NIP"],
             kodeJabatan: dataRekKeyPelaku[keyPelaku]["Kode_Jabatan"],
             jabatan: dataRekKeyPelaku[keyPelaku]["Nama_Jabatan"],
-            memoKesalahan: dataRekKeyPelaku[keyPelaku]["Memo_kesalahan"],
-          })
+            memoKesalahan: dataRekKeyPelaku[keyPelaku]["Memo_kesalahan"]
+          });
         }
 
         rekomendasis.push({
           id: dataTemuanKeyRekomendasi[keyRekomendasi]["kode_rekomendasi"],
-          nomorRekomendasi: dataTemuanKeyRekomendasi[keyRekomendasi]["Nomor_Rekomendasi"],
-          kodeKelompokRekomendasi: dataTemuanKeyRekomendasi[keyRekomendasi]["Kode_Kelompok_Rekomendasi"],
-          kelompokRekomendasi: dataTemuanKeyRekomendasi[keyRekomendasi]["Kelompok_Rekomendasi"],
-          kodeSubKelompokRekomendasi: dataTemuanKeyRekomendasi[keyRekomendasi]["Kode_Sub_Kelompok_Rekomendasi"],
-          subKelompokRekomendasi: dataTemuanKeyRekomendasi[keyRekomendasi]["Sub_Kelompok_Rekomendasi"],
-          memoRekomendasi: dataTemuanKeyRekomendasi[keyRekomendasi]["Memo_Rekomendasi"],
+          nomorRekomendasi:
+            dataTemuanKeyRekomendasi[keyRekomendasi]["Nomor_Rekomendasi"],
+          kodeKelompokRekomendasi:
+            dataTemuanKeyRekomendasi[keyRekomendasi][
+              "Kode_Kelompok_Rekomendasi"
+            ],
+          kelompokRekomendasi:
+            dataTemuanKeyRekomendasi[keyRekomendasi]["Kelompok_Rekomendasi"],
+          kodeSubKelompokRekomendasi:
+            dataTemuanKeyRekomendasi[keyRekomendasi][
+              "Kode_Sub_Kelompok_Rekomendasi"
+            ],
+          subKelompokRekomendasi:
+            dataTemuanKeyRekomendasi[keyRekomendasi][
+              "Sub_Kelompok_Rekomendasi"
+            ],
+          memoRekomendasi:
+            dataTemuanKeyRekomendasi[keyRekomendasi]["Memo_Rekomendasi"],
           flagPelaku: dataTemuanKeyRekomendasi[keyRekomendasi]["Flag_Pelaku"],
-          nilaiRekomendasi: dataTemuanKeyRekomendasi[keyRekomendasi]["Nilai_Rekomendasi"],
+          nilaiRekomendasi:
+            dataTemuanKeyRekomendasi[keyRekomendasi]["Nilai_Rekomendasi"],
           nilaiTL: dataTemuanKeyRekomendasi[keyRekomendasi]["Nilai_TL"],
-          statusRekomendasi: dataTemuanKeyRekomendasi[keyRekomendasi]["Status_Rekomendasi"],
-          memoKoreksiRek: dataTemuanKeyRekomendasi[keyRekomendasi]["Memo_Koreksi_rek"],
+          statusRekomendasi:
+            dataTemuanKeyRekomendasi[keyRekomendasi]["Status_Rekomendasi"],
+          memoKoreksiRek:
+            dataTemuanKeyRekomendasi[keyRekomendasi]["Memo_Koreksi_rek"],
 
           dataPelaku: pelaku,
           dataTl: tl
-        })
+        });
       }
 
       temuans.push({
@@ -258,20 +269,24 @@ export default {
         nomorTemuan: responseData["dataTemuan"][key]["Nomor_Temuan"],
         jenisTemuan: responseData["dataTemuan"][key]["Jenis_Temuan"],
         kelompokTemuan: responseData["dataTemuan"][key]["Kelompok_Temuan"],
-        subKelompokTemuan: responseData["dataTemuan"][key]["Sub_Kelompok_Temuan"],
-        kodeSubKelompokTemuan: responseData["dataTemuan"][key]["Kode_Sub_Kelompok_Temuan"],
+        subKelompokTemuan:
+          responseData["dataTemuan"][key]["Sub_Kelompok_Temuan"],
+        kodeSubKelompokTemuan:
+          responseData["dataTemuan"][key]["Kode_Sub_Kelompok_Temuan"],
         memoTemuan: responseData["dataTemuan"][key]["Memo_Temuan"],
         flagTpk: responseData["dataTemuan"][key]["Flag_TPK"],
         posisiKasus: responseData["dataTemuan"][key]["Posisi_Kasus"],
         modusOperandi: responseData["dataTemuan"][key]["Modus_Operandi"],
         nilaiTemuan: responseData["dataTemuan"][key]["Nilai_Temuan"],
-        jumlahRekomendasi: responseData["dataTemuan"][key]["Jumlah_Rekomendasi"],
-        jumlahSaldoRekomendasi: responseData["dataTemuan"][key]["Jumlah_Saldo_Rekomendasi"],
+        jumlahRekomendasi:
+          responseData["dataTemuan"][key]["Jumlah_Rekomendasi"],
+        jumlahSaldoRekomendasi:
+          responseData["dataTemuan"][key]["Jumlah_Saldo_Rekomendasi"],
         statusTemuan: responseData["dataTemuan"][key]["Status_Temuan"],
         memoKoreksiTemuan: responseData["dataTemuan"][key]["Memo_Koreksi_Tem"],
         dataPenyebab: penyebabs,
         dataRekomendasi: rekomendasis
-      })
+      });
     }
 
     const lha = {
@@ -280,17 +295,17 @@ export default {
       tglLha: responseData["Tanggal_LHA"],
       nomorST: responseData["Nomor_ST"],
       tglST: responseData["Tanggal_ST"],
-      kodeUnitAudit : responseData["Kode_Unit_Audit"],
-      kodeSubUnitAudit : responseData["Kode_Sub_Unit_Audit"],
-      unitAudit : responseData["Unit_Audit"],
-      subUnitAudit : responseData["Sub_Unit_Audit"],
-      kodeGrupLingkupAudit : responseData["Kode_Grup_Lingkup_Audit"],
-      kodeLingkupAudit : responseData["Kode_Lingkup_Audit"],
-      kodeJenisObrik : responseData["Kode_Jenis_Obrik"],
-      kodeUnitObrik : responseData["Kode_Unit_Obrik"],
-      kodeBidangObrik : responseData["Kode_Bidang_Obrik"],
-      kodeSubBidangObrik : responseData["Kode_Sub_Bidang_Obrik"],
-      kodeJenisAnggaran : responseData["kode_jenis_anggaran"],
+      kodeUnitAudit: responseData["Kode_Unit_Audit"],
+      kodeSubUnitAudit: responseData["Kode_Sub_Unit_Audit"],
+      unitAudit: responseData["Unit_Audit"],
+      subUnitAudit: responseData["Sub_Unit_Audit"],
+      kodeGrupLingkupAudit: responseData["Kode_Grup_Lingkup_Audit"],
+      kodeLingkupAudit: responseData["Kode_Lingkup_Audit"],
+      kodeJenisObrik: responseData["Kode_Jenis_Obrik"],
+      kodeUnitObrik: responseData["Kode_Unit_Obrik"],
+      kodeBidangObrik: responseData["Kode_Bidang_Obrik"],
+      kodeSubBidangObrik: responseData["Kode_Sub_Bidang_Obrik"],
+      kodeJenisAnggaran: responseData["kode_jenis_anggaran"],
       grupLingkupAudit: responseData["Grup_Lingkup_Audit"],
       lingkupAudit: responseData["Lingkup_Audit"],
       jenisObrik: responseData["Jenis_Obrik"],
@@ -315,84 +330,80 @@ export default {
       tahunPkpt: responseData["Tahun_PKPT"],
       ringkasanLha: responseData["Ringkasan_LHA"],
       isStored: responseData["is_stored"],
-      isTemuanNihil: responseData["is_temuan_nihil"],
+      flagTemuanNihil: responseData["flagTemuanNihil"],
       uploadFileLha: responseData["Upload_file_LHA"],
-      kodeProvinsi : responseData["Kode_Provinsi"],
-      kodeKabkot : responseData["Kode_KabupatenKota"],
-      kodeKecamatan : responseData["Kode_Kecamatan"],
-      kodeKelurahan : responseData["Kode_Kelurahan"],
+      kodeProvinsi: responseData["Kode_Provinsi"],
+      kodeKabkot: responseData["Kode_KabupatenKota"],
+      kodeKecamatan: responseData["Kode_Kecamatan"],
+      kodeKelurahan: responseData["Kode_Kelurahan"],
       provinsi: responseData["Provinsi"],
       kabkot: responseData["Kabkot"],
       kecamatan: responseData["Kecamatan"],
       kelurahan: responseData["Kelurahan"],
       dataTimAudit: timAudit,
-      dataTemuan: temuans,
+      dataTemuan: temuans
     };
 
-    context.commit('setLhaById', lha);
+    context.commit("setLhaById", lha);
   },
 
   async createLha(context, payload) {
     const response = await axios({
-      method: 'POST',
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       data: payload,
       baseURL: API_URL,
-      url: '/api/lha',
+      url: "/api/lha",
       params: {
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
 
     // console.log("RESPONSE STATUS CREATE LHA");
     // console.log(response.status);
-    
+
     if (response.status != 200) {
-      const error = new Error(
-        responseData.message || 'Failed to save data'
-      );
+      const error = new Error(responseData.message || "Failed to save data");
       throw error;
     }
-    
-    return response
+
+    return response;
   },
 
   async deleteLhaById(context, payload) {
     const response = await axios({
-      method: 'DELETE',
+      method: "DELETE",
       headers: { "Content-Type": "application/json" },
       baseURL: API_URL,
       url: `/api/lha/${payload.idLha}`,
       params: {
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
 
     if (response.status != 200) {
-      const error = new Error(
-        responseData.message || 'Failed to delete data'
-      );
+      const error = new Error(responseData.message || "Failed to delete data");
       throw error;
     }
 
-    return response
+    return response;
   },
 
-  async updateLhaById(context, payload){
+  async updateLhaById(context, payload) {
     const response = await axios({
-      method: 'POST',
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       data: payload.data,
       baseURL: API_URL,
       url: `/api/lha/${payload.idLha}`,
       params: {
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
 
@@ -400,58 +411,52 @@ export default {
     // console.log(response.status);
 
     if (response.status != 200) {
-      const error = new Error(
-        responseData.message || 'Failed to update data'
-      );
+      const error = new Error(responseData.message || "Failed to update data");
       throw error;
     }
 
-    return response
+    return response;
   },
 
-  async sendLhaById(context, payload){
+  async sendLhaById(context, payload) {
     const response = await axios({
-      method: 'PATCH',
+      method: "PATCH",
       headers: { "Content-Type": "application/json" },
       baseURL: API_URL,
       url: `/api/kirimlha/${payload.idLha}`,
       params: {
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     if (response.status != 200) {
-      const error = new Error(
-        response.data.message || 'Failed to send data'
-      );
+      const error = new Error(response.data.message || "Failed to send data");
 
       throw error;
-    } 
+    }
 
-    return response
+    return response;
   },
 
   async dalnisAddMemo(context, payload) {
     const response = await axios({
-      method: 'POST',
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       data: payload.data,
       baseURL: API_URL,
       url: `/api/dalnisaddmemo/${payload.idLha}`,
       params: {
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
 
     if (response.status != 200) {
-      const error = new Error(
-        responseData.message || 'Failed to save data'
-      );
+      const error = new Error(responseData.message || "Failed to save data");
       throw error;
     }
 
-    return response
+    return response;
   }
-}
+};

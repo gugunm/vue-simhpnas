@@ -14,14 +14,8 @@
       </div>
       <CCard>
         <!-- <CCardBody> -->
-        <CForm
-          class="form-tl"
-          @submit.prevent="submit"
-        >
-          <div
-            class="p-3"
-            style="background: #f9fafb"
-          >
+        <CForm class="form-tl" @submit.prevent="submit">
+          <div class="p-3" style="background: #f9fafb">
             <h5 class="text-base font-semibold">
               Data Tindak Lanjut
             </h5>
@@ -40,10 +34,7 @@
                   :disabled="true"
                 />
               </CCol>
-              <CCol
-                v-if="mode == 'view' && form.uploadFileTl"
-                class="pt-2"
-              >
+              <CCol v-if="mode == 'view' && form.uploadFileTl" class="pt-2">
                 <CButton
                   shape="pill"
                   class="px-3 mt-3"
@@ -90,6 +81,19 @@
                   invalid-feedback="Nomor TL wajib diisi"
                   :disabled="mode == 'view'"
                 />
+              </CCol>
+              <CCol lg="3">
+                <div>
+                  <label class="typo__label block">Tanggal TL</label>
+                  <v-date-picker
+                    v-model="selectedDateTl"
+                    mode="single"
+                    :input-debounce="500"
+                    is-required
+                    :masks="{ input: ['DD/MM/YYYY'] }"
+                  />
+                  <!-- :masks="{ input: ['D MMM YYYY'], data: ['YYYY-MM-DD'] }" -->
+                </div>
               </CCol>
             </CRow>
 
@@ -215,9 +219,9 @@
                       v-bind="labelIcon"
                       :checked.sync="isStoredTl"
                     />
-                    <span
-                      v-if="isStoredTl"
-                    >Upload File Tindak Lanjut di Server SIMHPNAS</span>
+                    <span v-if="isStoredTl"
+                      >Upload File Tindak Lanjut di Server SIMHPNAS</span
+                    >
                     <span v-else>
                       Upload File Tindak Lanjut di Server Internal
                     </span>
@@ -227,7 +231,7 @@
                     type="file"
                     class="mb-4"
                     @change="onUploadTl"
-                  >
+                  />
                   <!-- id="file-tl" -->
                   <!-- name="file-tl" -->
                   <CInput
@@ -256,11 +260,7 @@
 
             <div class="px-3">
               <CRow class="mb-2 view-form">
-                <CCol
-                  sm="12"
-                  lg="6"
-                  class="mb-3"
-                >
+                <CCol sm="12" lg="6" class="mb-3">
                   <CButton
                     v-if="mode != 'view'"
                     variant="outline"
@@ -299,15 +299,8 @@
                     :disabled="!isValid"
                   >
                     <!-- @click="submit" -->
-                    <div
-                      v-if="loading"
-                      class="px-8"
-                    >
-                      <CSpinner
-                        color="white"
-                        size="sm"
-                        class="mr-2"
-                      />
+                    <div v-if="loading" class="px-8">
+                      <CSpinner color="white" size="sm" class="mr-2" />
                     </div>
                     <template v-else>
                       Submit Data
@@ -321,12 +314,7 @@
         <!-- </CCardBody> -->
       </CCard>
     </CCol>
-    <CModal
-      title="File LHA"
-      color="info"
-      :show.sync="isOpenFile"
-      size="lg"
-    >
+    <CModal title="File LHA" color="info" :show.sync="isOpenFile" size="lg">
       <embed
         :src="
           form.isStored == 1
@@ -336,7 +324,7 @@
         type="application/pdf"
         width="100%"
         height="550px"
-      >
+      />
       <template #footer-wrapper>
         <div />
       </template>
@@ -349,41 +337,42 @@
   </CRow>
 </template>
 
-
-
 <script>
-import { validationMixin } from 'vuelidate';
-import { required, minLength, maxLength } from 'vuelidate/lib/validators';
-import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
-import mixin from './mixin';
-import Multiselect from 'vue-multiselect';
+import { validationMixin } from "vuelidate";
+import { required, minLength, maxLength } from "vuelidate/lib/validators";
+import ConfirmModal from "@/components/Confirm/ConfirmModal.vue";
+import mixin from "./mixin";
+import Multiselect from "vue-multiselect";
+import { DatePicker } from "v-calendar";
 
 export default {
-  name: 'LhaForm',
+  name: "LhaForm",
   components: {
     ConfirmModal,
     Multiselect,
+    "v-date-picker": DatePicker
   },
   mixins: [validationMixin, mixin],
-  props: ['mode', 'selectedItem', 'idTl'],
+  props: ["mode", "selectedItem", "idTl"],
   data() {
     return {
       form: this.getEmptyForm(),
       submitted: false,
       loading: false,
       isOpenConfirm: false,
-      valueKlpTl: '',
+      valueKlpTl: "",
       optionsKlpTl: [],
-      valueSubKlpTl: '',
+      valueSubKlpTl: "",
       optionsSubKlpTl: [],
-      fileTl: '',
+      fileTl: "",
       editData: {},
       labelIcon: {
-        labelOn: '\u2713',
-        labelOff: '\u2715',
+        labelOn: "\u2713",
+        labelOff: "\u2715"
       },
       isStoredTl: true,
       isOpenFile: false,
+      selectedDateTl: new Date()
     };
   },
   computed: {
@@ -395,39 +384,47 @@ export default {
     },
     isDirty() {
       return this.$v.form.$anyDirty;
-    },
+    }
   },
   watch: {
-    valueKlpTl: function (val) {
-      this.valueSubKlpTl = '';
+    valueKlpTl: function(val) {
+      this.valueSubKlpTl = "";
       this.optionsSubKlpTl = [];
       this.$v.form.klpTl.$model = val.id;
 
       this.loadSubKlpTl({ id: this.valueKlpTl.id });
     },
 
-    valueSubKlpTl: function (val) {
+    valueSubKlpTl: function(val) {
       this.$v.form.subKlpTl.$model = val.id;
     },
+
+    selectedDateTl: function(curVal, oldVal) {
+      this.$v.form.tglTl.$model = curVal.toLocaleDateString("fr-CA");
+    }
   },
   async mounted() {
     await this.loadKlpTl();
-    if (this.mode == 'view') {
+    if (this.mode == "view") {
       await this.loadTlById();
-    } else if (this.mode == 'edit') {
+    } else if (this.mode == "edit") {
       await this.loadEditTlById();
+
+      // console.log("--> Data TL : ", this.editData);
+
+      this.selectedDateTl = new Date(this.form.tglTl);
 
       this.isStoredTl = this.editData.isStored == 1 ? true : false;
 
       this.fileTl = this.editData.uploadFileTl;
 
       this.valueKlpTl = this.optionsKlpTl.filter(
-        (data) => data.id == this.form.klpTl
+        data => data.id == this.form.klpTl
       )[0];
 
       await this.loadSubKlpTl({ id: this.valueKlpTl.id });
       this.valueSubKlpTl = this.optionsSubKlpTl.filter(
-        (data) => data.id == this.form.subKlpTl
+        data => data.id == this.form.subKlpTl
       )[0];
     }
   },
@@ -436,28 +433,29 @@ export default {
       nomorTl: {
         required,
         minLength: minLength(1),
-        maxLength: maxLength(1),
+        maxLength: maxLength(1)
       },
       klpTl: {
-        required,
+        required
       },
       subKlpTl: {
-        required,
+        required
       },
       memoTl: {
-        required,
+        required
       },
       nilaiTl: {
-        required,
+        required
       },
       statusTl: {
-        required,
+        required
       },
+      tglTl: { required },
       accept: {
         required,
-        mustAccept: (val) => val,
-      },
-    },
+        mustAccept: val => val
+      }
+    }
   },
   methods: {
     onOpenFile() {
@@ -465,8 +463,8 @@ export default {
     },
 
     onDeleteFileUpdate() {
-      this.editData.uploadFileTl = '';
-      this.fileTl = '';
+      this.editData.uploadFileTl = "";
+      this.fileTl = "";
     },
 
     onUploadTl(e) {
@@ -491,7 +489,7 @@ export default {
       if (!field.$dirty) {
         return null;
       }
-      return !(field.$invalid || field.$model === '');
+      return !(field.$invalid || field.$model === "");
     },
 
     async submit() {
@@ -501,14 +499,14 @@ export default {
         const resultFormData = this.appendToFormData();
 
         try {
-          if (this.mode == 'create') {
+          if (this.mode == "create") {
             this.loading = true;
             const response = await this.$store.dispatch(
-              'module_tindak_lanjut/createTindakLanjut',
+              "module_tindak_lanjut/createTindakLanjut",
               resultFormData
             );
 
-            // console.log('RESPONSE HERE');
+            // console.log("---> RESPONSE HERE");
             // console.log(response);
 
             if (response.status == 200) {
@@ -516,27 +514,27 @@ export default {
                 this.loading = false;
                 // this.$router.back();
                 this.$router.push({
-                  name: 'module-tindak-lanjut',
+                  name: "module-tindak-lanjut",
                   query: {
                     filterlha: this.$route.query.idlha,
                     filtertemuan: this.$route.query.idtemuan,
-                    filterrekomendasi: this.$route.query.idrekomendasi,
-                  },
+                    filterrekomendasi: this.$route.query.idrekomendasi
+                  }
                 });
-                this.toastSuccess(response.status == 200);
+                this.toastSuccess(response.data.message);
               }, 500);
             } else {
               this.loading = false;
               this.toastError(response.data.message);
             }
-          } else if (this.mode == 'edit') {
+          } else if (this.mode == "edit") {
             this.loading = true;
 
             const responseData = await this.$store.dispatch(
-              'module_tindak_lanjut/updateTindakLanjutById',
+              "module_tindak_lanjut/updateTindakLanjutById",
               {
                 idTl: this.editData.id,
-                data: resultFormData,
+                data: resultFormData
               }
             );
 
@@ -546,14 +544,14 @@ export default {
                 // window.history.back();
                 // this.$router.back();
                 this.$router.push({
-                  name: 'module-tindak-lanjut',
+                  name: "module-tindak-lanjut",
                   query: {
                     filterlha: this.editData.kodeLha,
                     filtertemuan: this.editData.kodeTemuan,
-                    filterrekomendasi: this.editData.kodeRekomendasi,
-                  },
+                    filterrekomendasi: this.editData.kodeRekomendasi
+                  }
                 });
-                this.toastSuccess('Berhasil edit data TL');
+                this.toastSuccess("Berhasil edit data TL");
               }, 500);
             }
           }
@@ -578,42 +576,44 @@ export default {
 
     getEmptyForm() {
       return {
-        nomorTl: '',
-        klpTl: '',
-        subKlpTl: '',
-        memoTl: '',
+        nomorTl: "",
+        klpTl: "",
+        subKlpTl: "",
+        memoTl: "",
         nilaiTl: 0,
         statusTl: 0,
+        tglTl: new Date().toLocaleDateString("fr-CA"),
 
-        accept: false,
+        accept: false
       };
     },
 
     appendToFormData() {
       const fd = new FormData();
 
-      if (this.mode == 'edit') {
-        fd.append('_method', 'PATCH');
-      } else if (this.mode == 'create') {
-        fd.append('kode_rekomendasi', this.$route.query.idrekomendasi);
-        fd.append('kode_temuan', this.$route.query.idtemuan);
-        fd.append('kode_lha', this.$route.query.idlha);
+      if (this.mode == "edit") {
+        fd.append("_method", "PATCH");
+      } else if (this.mode == "create") {
+        fd.append("kode_rekomendasi", this.$route.query.idrekomendasi);
+        fd.append("kode_temuan", this.$route.query.idtemuan);
+        fd.append("kode_lha", this.$route.query.idlha);
       }
 
-      fd.append('is_stored', this.convertBoolean(this.isStoredTl));
-      fd.append('Upload_File_TL', this.fileTl);
+      fd.append("is_stored", this.convertBoolean(this.isStoredTl));
+      fd.append("Upload_File_TL", this.fileTl);
 
-      fd.append('Nomor_TL', this.$v.form.nomorTl.$model);
-      fd.append('Kode_Kelompok_TL', this.$v.form.klpTl.$model);
-      fd.append('Kode_Sub_Kelompok_TL', this.$v.form.subKlpTl.$model);
-      fd.append('Memo_TL', this.$v.form.memoTl.$model);
-      fd.append('Nilai_TL', this.$v.form.nilaiTl.$model);
-      fd.append('Status_TL', this.$v.form.statusTl.$model);
+      fd.append("Nomor_TL", this.$v.form.nomorTl.$model);
+      fd.append("Kode_Kelompok_TL", this.$v.form.klpTl.$model);
+      fd.append("Kode_Sub_Kelompok_TL", this.$v.form.subKlpTl.$model);
+      fd.append("Memo_TL", this.$v.form.memoTl.$model);
+      fd.append("Nilai_TL", this.$v.form.nilaiTl.$model);
+      fd.append("Status_TL", this.$v.form.statusTl.$model);
+      fd.append("tglTl", this.$v.form.tglTl.$model);
 
       // fd.append('Upload_File_TL', this.fileTl);
       return fd;
-    },
-  },
+    }
+  }
 };
 </script>
 

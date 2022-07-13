@@ -11,10 +11,7 @@
       </div>
       <CCard>
         <!-- <CCardBody> -->
-        <CForm
-          class="form-lha"
-          @submit.prevent="submit"
-        >
+        <CForm class="form-lha" @submit.prevent="submit">
           <CCardBody>
             <!-- <masked-input
               v-model="rpRencana.$model"
@@ -23,10 +20,7 @@
               :mask="numberMask"
               :guide="true"
             /> -->
-            <div
-              class="p-3"
-              style="background: #f9fafb"
-            >
+            <div class="p-3" style="background: #f9fafb">
               <h5 class="text-base font-semibold">
                 Data Umum LHA
               </h5>
@@ -180,8 +174,8 @@
                   />
                 </CCol>
               </CRow>
-              <CRow>
-                <CCol lg="6">
+              <CRow v-if="mode == 'create'">
+                <CCol lg="3">
                   <CInputCheckbox
                     :is-valid="checkIfValid('flagTpk')"
                     :checked.sync="$v.form.flagTpk.$model"
@@ -190,10 +184,16 @@
                     class="my-2 text-base ml-2 font-semibold lower"
                   />
                 </CCol>
-                <CCol
-                  v-if="mode == 'create'"
-                  lg="6"
-                >
+                <CCol lg="3">
+                  <CInputCheckbox
+                    :is-valid="checkIfValid('flagTemuanNihil')"
+                    :checked.sync="$v.form.flagTemuanNihil.$model"
+                    label="Centang jika temuan nihil"
+                    custom
+                    class="my-2 text-base ml-2 font-semibold lower"
+                  />
+                </CCol>
+                <!-- <CCol v-if="mode == 'create'" lg="6">
                   <label class="mb-3">Status Temuan</label>
                   <div class="flex">
                     <CSwitch
@@ -206,14 +206,11 @@
                     <span v-if="isTemuanNihil">Temuan nihil untuk LHA ini</span>
                     <span v-else>LHA memiliki temuan</span>
                   </div>
-                </CCol>
+                </CCol> -->
               </CRow>
             </div>
 
-            <div
-              class="p-3"
-              style="background: #f9fafb"
-            >
+            <div class="p-3 mt-4" style="background: #f9fafb">
               <h5 class="text-base font-semibold">
                 Data Obrik
               </h5>
@@ -324,10 +321,7 @@
               </CRow>
             </div>
 
-            <div
-              class="p-3"
-              style="background: #f9fafb"
-            >
+            <div class="p-3" style="background: #f9fafb">
               <h5 class="text-base font-semibold">
                 Data Anggaran
               </h5>
@@ -403,10 +397,7 @@
               </CRow>
             </div>
 
-            <div
-              class="p-3"
-              style="background: #f9fafb"
-            >
+            <div class="p-3" style="background: #f9fafb">
               <h5 class="text-base font-semibold">
                 Data Wilayah
               </h5>
@@ -417,10 +408,7 @@
               <CRow>
                 <CCol lg="6">
                   <div>
-                    <label
-                      class="typo__label"
-                      for="ajax"
-                    >Kelurahan/Desa</label>
+                    <label class="typo__label" for="ajax">Kelurahan/Desa</label>
                     <multiselect
                       v-if="optionsKelurahan"
                       id="ajax"
@@ -504,10 +492,9 @@
               >
                 <CCol lg="6">
                   <div class="flex flex-col">
-                    <label
-                      for="file-lha"
-                      class="block mb-3"
-                    >Upload File LHA</label>
+                    <label for="file-lha" class="block mb-3"
+                      >Upload File LHA</label
+                    >
                     <div class="flex items-center mb-4">
                       <CSwitch
                         class="mx-1 mr-3"
@@ -516,9 +503,9 @@
                         v-bind="labelIcon"
                         :checked.sync="isStoredLha"
                       />
-                      <span
-                        v-if="isStoredLha"
-                      >Upload File LHA di Server SIMHPNAS</span>
+                      <span v-if="isStoredLha"
+                        >Upload File LHA di Server SIMHPNAS</span
+                      >
                       <span v-else> Upload File LHA di Server Internal </span>
                     </div>
                     <input
@@ -528,7 +515,7 @@
                       name="file-lha"
                       class="mb-4"
                       @change="onUploadLha"
-                    >
+                    />
                     <CInput
                       v-else
                       class="mb-4"
@@ -556,11 +543,7 @@
 
             <div class="px-3">
               <CRow class="mb-2 view-form">
-                <CCol
-                  sm="12"
-                  lg="6"
-                  class="mb-3"
-                >
+                <CCol sm="12" lg="6" class="mb-3">
                   <CButton
                     v-if="mode != 'view'"
                     variant="outline"
@@ -599,15 +582,8 @@
                     class="px-4 ml-1"
                     :disabled="!isValid"
                   >
-                    <div
-                      v-if="loading"
-                      class="px-8"
-                    >
-                      <CSpinner
-                        color="white"
-                        size="sm"
-                        class="mr-2"
-                      />
+                    <div v-if="loading" class="px-8">
+                      <CSpinner color="white" size="sm" class="mr-2" />
                     </div>
                     <template v-else>
                       Submit Data
@@ -688,13 +664,13 @@ export default {
       selectedDateSt: new Date(),
       selectedDateLha: new Date(),
       isLhaTpk: false,
+      isTemuanNihil: false,
       fileLha: "",
       labelIcon: {
         labelOn: "\u2713",
         labelOff: "\u2715"
       },
       isStoredLha: true,
-      isTemuanNihil: false,
       editData: {},
       numberMask: createNumberMask({
         // prefix: 'Rp. ',
@@ -776,6 +752,14 @@ export default {
       } else {
         this.$v.form.flagTpk.$model = 0;
       }
+    },
+
+    isTemuanNihil: function(curVal) {
+      if (curVal == true) {
+        this.$v.form.flagTemuanNihil.$model = 1;
+      } else {
+        this.$v.form.flagTemuanNihil.$model = 0;
+      }
     }
   },
   validations: {
@@ -848,6 +832,7 @@ export default {
       ringkasanLha: { required },
       // checkbox
       flagTpk: { required },
+      flagTemuanNihil: { required },
 
       accept: {
         required,
@@ -877,8 +862,9 @@ export default {
       )[0];
 
       this.isLhaTpk = this.editData.flagTpk == 1 ? true : false;
+      this.isTemuanNihil = this.editData.flagTemuanNihil == 1 ? true : false;
       this.isStoredLha = this.editData.isStored == 1 ? true : false;
-      this.isTemuanNihil = this.editData.isTemuanNihil == 1 ? true : false;
+      // this.isTemuanNihil = this.editData.isTemuanNihil == 1 ? true : false;
 
       this.valueJenisObrik = this.optionsJenisObrik.filter(
         data => data.id == this.form.jenisObrik
@@ -1030,6 +1016,7 @@ export default {
         lingkupAudit: "",
         ringkasanLha: "",
         flagTpk: false,
+        flagTemuanNihil: false,
         // Data Obrik
         judulLaporan: "",
         jenisObrik: "",
@@ -1124,11 +1111,14 @@ export default {
       fd.append("Anggaran_yang_diaudit", this.$v.form.nilaiDiaudit.$model);
 
       fd.append("Ringkasan_LHA", this.$v.form.ringkasanLha.$model);
-      fd.append("Flag_TPK", this.convertBoolean(this.isLhaTpk)); // this.$v.form.flagTpk.$model);
+      fd.append("Flag_TPK", this.convertBoolean(this.$v.form.flagTpk.$model)); // this.$v.form.flagTpk.$model);
+      fd.append(
+        "flagTemuanNihil",
+        this.convertBoolean(this.$v.form.flagTemuanNihil.$model)
+      );
 
       // OPSIONAL
       fd.append("is_stored", this.convertBoolean(this.isStoredLha));
-      fd.append("is_temuan_nihil", this.convertBoolean(this.isTemuanNihil));
 
       if (this.fileLha) {
         fd.append("Upload_file_LHA", this.fileLha);
@@ -1137,6 +1127,8 @@ export default {
       if (this.valueSubBidangObrik) {
         fd.append("Kode_Sub_Bidang_Obrik", this.valueSubBidangObrik.id);
       }
+
+      console.log("---> Form Data LHA : ", this.$v.form);
 
       return fd;
     }
