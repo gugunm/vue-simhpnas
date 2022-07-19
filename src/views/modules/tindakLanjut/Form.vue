@@ -117,6 +117,11 @@
                     label="deskripsi"
                     track-by="deskripsi"
                   />
+                  <span
+                    v-if="someNotSelected && valueKlpTl == ''"
+                    class="text-error-multiselect"
+                    >Kelompok TL wajiib dipilih</span
+                  >
                 </div>
               </CCol>
               <CCol lg="6">
@@ -137,6 +142,11 @@
                     label="deskripsi"
                     track-by="deskripsi"
                   />
+                  <span
+                    v-if="someNotSelected && valueSubKlpTl == ''"
+                    class="text-error-multiselect"
+                    >Sub kelompok TL wajiib dipilih</span
+                  >
                 </div>
               </CCol>
             </CRow>
@@ -566,6 +576,10 @@ export default {
 
     validate() {
       this.$v.$touch();
+
+      const listMultiselectValue = [this.valueKlpTl, this.valueSubKlpTl];
+
+      this.someNotSelected = listMultiselectValue.some(el => el == "");
     },
 
     reset() {

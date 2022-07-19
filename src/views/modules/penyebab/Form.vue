@@ -15,10 +15,7 @@
       <CCard>
         <!-- <CCardBody> -->
         <CForm @submit.prevent="submit">
-          <div
-            class="p-3"
-            style="background: #f9fafb"
-          >
+          <div class="p-3" style="background: #f9fafb">
             <h5 class="text-base font-semibold">
               Data Penyebab (Termasuk untuk TPK)
             </h5>
@@ -82,6 +79,11 @@
                     label="deskripsi"
                     track-by="deskripsi"
                   />
+                  <span
+                    v-if="someNotSelected && valuePenyebab == ''"
+                    class="text-error-multiselect"
+                    >Penyebab wajiib dipilih</span
+                  >
                 </div>
               </CCol>
             </CRow>
@@ -118,11 +120,7 @@
           </div>
           <div class="px-3">
             <CRow class="mb-2 view-form">
-              <CCol
-                sm="12"
-                lg="6"
-                class="mb-3"
-              >
+              <CCol sm="12" lg="6" class="mb-3">
                 <CButton
                   v-if="mode != 'view'"
                   variant="outline"
@@ -160,15 +158,8 @@
                   class="px-4 ml-1"
                   :disabled="!isValid"
                 >
-                  <div
-                    v-if="loading"
-                    class="px-8"
-                  >
-                    <CSpinner
-                      color="white"
-                      size="sm"
-                      class="mr-2"
-                    />
+                  <div v-if="loading" class="px-8">
+                    <CSpinner color="white" size="sm" class="mr-2" />
                   </div>
                   <template v-else>
                     Submit Data
@@ -189,32 +180,31 @@
   </CRow>
 </template>
 
-
-
 <script>
-import { validationMixin } from 'vuelidate';
-import { required, minLength, maxLength } from 'vuelidate/lib/validators';
-import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
-import mixin from './mixin';
-import Multiselect from 'vue-multiselect';
+import { validationMixin } from "vuelidate";
+import { required, minLength, maxLength } from "vuelidate/lib/validators";
+import ConfirmModal from "@/components/Confirm/ConfirmModal.vue";
+import mixin from "./mixin";
+import Multiselect from "vue-multiselect";
 
 export default {
-  name: 'LhaForm',
+  name: "LhaForm",
   components: {
     ConfirmModal,
-    Multiselect,
+    Multiselect
   },
   mixins: [validationMixin, mixin],
-  props: ['mode', 'selectedItem', 'idPenyebab'],
+  props: ["mode", "selectedItem", "idPenyebab"],
   data() {
     return {
       form: this.getEmptyForm(),
       submitted: false,
       loading: false,
       isOpenConfirm: false,
-      valuePenyebab: '',
+      valuePenyebab: "",
       optionsPenyebab: [],
       editData: {},
+      someNotSelected: false
     };
   },
   computed: {
@@ -226,22 +216,22 @@ export default {
     },
     isDirty() {
       return this.$v.form.$anyDirty;
-    },
+    }
   },
   watch: {
-    valuePenyebab: function (val) {
+    valuePenyebab: function(val) {
       this.$v.form.kodePenyebab.$model = val.id;
-    },
+    }
   },
   async mounted() {
     await this.loadKodePenyebab();
-    if (this.mode == 'view') {
+    if (this.mode == "view") {
       await this.loadPenyebabById();
-    } else if (this.mode == 'edit') {
+    } else if (this.mode == "edit") {
       await this.loadEditPenyebabById();
 
       this.valuePenyebab = this.optionsPenyebab.filter(
-        (penyebab) => penyebab.id == this.form.kodePenyebab
+        penyebab => penyebab.id == this.form.kodePenyebab
       )[0];
     }
   },
@@ -250,16 +240,16 @@ export default {
       nomorPenyebab: {
         required,
         minLength: minLength(1),
-        maxLength: maxLength(2),
+        maxLength: maxLength(2)
       },
       kodePenyebab: { required },
       memoPenyebab: { required },
 
       accept: {
         required,
-        mustAccept: (val) => val,
-      },
-    },
+        mustAccept: val => val
+      }
+    }
   },
   methods: {
     viewSelectSearch({ id, deskripsi }) {
@@ -271,7 +261,7 @@ export default {
       if (!field.$dirty) {
         return null;
       }
-      return !(field.$invalid || field.$model === '');
+      return !(field.$invalid || field.$model === "");
     },
 
     async submit() {
@@ -281,10 +271,10 @@ export default {
         const resultFormData = this.appendToFormData();
 
         try {
-          if (this.mode == 'create') {
+          if (this.mode == "create") {
             this.loading = true;
             const responseData = await this.$store.dispatch(
-              'module_penyebab/createPenyebab',
+              "module_penyebab/createPenyebab",
               resultFormData
             );
 
@@ -293,18 +283,18 @@ export default {
                 this.loading = false;
                 this.$router.back();
                 this.toastSuccess(
-                  'Berhasil menyimpan data dengan ID ' +
+                  "Berhasil menyimpan data dengan ID " +
                     responseData.Nomor_Penyebab
                 );
               }, 500);
             }
-          } else if (this.mode == 'edit') {
+          } else if (this.mode == "edit") {
             this.loading = true;
             const responseData = await this.$store.dispatch(
-              'module_penyebab/updatePenyebabById',
+              "module_penyebab/updatePenyebabById",
               {
                 idPenyebab: this.editData.id,
-                data: resultFormData,
+                data: resultFormData
               }
             );
 
@@ -313,7 +303,7 @@ export default {
                 this.loading = false;
                 this.$router.back();
                 this.toastSuccess(
-                  'Berhasil edit data dengan ID ' + responseData.Nomor_Penyebab
+                  "Berhasil edit data dengan ID " + responseData.Nomor_Penyebab
                 );
               }, 500);
             }
@@ -321,7 +311,7 @@ export default {
         } catch (error) {
           setTimeout(() => {
             this.loading = false;
-            this.toastError('Terjadi kesalahan saat submit data');
+            this.toastError("Terjadi kesalahan saat submit data");
           }, 500);
         }
       }
@@ -329,6 +319,10 @@ export default {
 
     validate() {
       this.$v.$touch();
+
+      const listMultiselectValue = [this.valuePenyebab];
+
+      this.someNotSelected = listMultiselectValue.some(el => el == "");
     },
 
     reset() {
@@ -339,28 +333,28 @@ export default {
 
     getEmptyForm() {
       return {
-        nomorPenyebab: '',
-        kodePenyebab: '',
-        memoPenyebab: '',
+        nomorPenyebab: "",
+        kodePenyebab: "",
+        memoPenyebab: "",
 
-        accept: false,
+        accept: false
       };
     },
 
     appendToFormData() {
       const fd = new FormData();
-      if (this.mode == 'create') {
-        fd.append('kode_temuan', this.$route.query.idtemuan);
-        fd.append('kode_lha', this.$route.query.idlha);
-      } else if (this.mode == 'edit') {
-        fd.append('_method', 'PATCH');
+      if (this.mode == "create") {
+        fd.append("kode_temuan", this.$route.query.idtemuan);
+        fd.append("kode_lha", this.$route.query.idlha);
+      } else if (this.mode == "edit") {
+        fd.append("_method", "PATCH");
       }
-      fd.append('Nomor_Penyebab', this.$v.form.nomorPenyebab.$model);
-      fd.append('Ref_Kode_Penyebab', this.$v.form.kodePenyebab.$model);
-      fd.append('Memo_Penyebab', this.$v.form.memoPenyebab.$model);
+      fd.append("Nomor_Penyebab", this.$v.form.nomorPenyebab.$model);
+      fd.append("Ref_Kode_Penyebab", this.$v.form.kodePenyebab.$model);
+      fd.append("Memo_Penyebab", this.$v.form.memoPenyebab.$model);
       return fd;
-    },
-  },
+    }
+  }
 };
 </script>
 

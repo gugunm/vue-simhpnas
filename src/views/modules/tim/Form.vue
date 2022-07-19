@@ -12,10 +12,7 @@
           Edit Tim Audit
         </h3>
       </div>
-      <div
-        v-if="mode == 'create'"
-        class="mb-4"
-      >
+      <div v-if="mode == 'create'" class="mb-4">
         <CAlert
           v-if="items.length > 0"
           color="info"
@@ -27,11 +24,7 @@
           </p>
           <div class="pl-4 pt-2">
             <ol class="list-decimal text-sm">
-              <li
-                v-for="item in items"
-                :key="item.id"
-                class="leading-loose"
-              >
+              <li v-for="item in items" :key="item.id" class="leading-loose">
                 {{ item.nama }} - ({{ item.kodePeran }}) {{ item.peran }}
               </li>
             </ol>
@@ -41,10 +34,7 @@
       <CCard>
         <!-- <CCardBody> -->
         <CForm @submit.prevent="submit">
-          <div
-            class="p-3"
-            style="background: #f9fafb"
-          >
+          <div class="p-3" style="background: #f9fafb">
             <h5 class="text-base font-semibold">
               Data Tim Audit
             </h5>
@@ -64,6 +54,9 @@
                 />
               </CCol>
               <CCol lg="6">
+                <!-- <pre>
+                  {{ $v.form }}
+                </pre> -->
                 <CInput
                   v-if="mode == 'view'"
                   label="Peran"
@@ -81,6 +74,11 @@
                     label="deskripsi"
                     track-by="deskripsi"
                   />
+                  <span
+                    v-if="someNotSelected && valuePeran == ''"
+                    class="text-error-multiselect"
+                    >Peran wajiib dipilih</span
+                  >
                 </div>
               </CCol>
             </CRow>
@@ -128,11 +126,7 @@
 
           <div class="px-3">
             <CRow class="mb-2 view-form">
-              <CCol
-                sm="12"
-                lg="6"
-                class="mb-3"
-              >
+              <CCol sm="12" lg="6" class="mb-3">
                 <CButton
                   v-if="mode != 'view'"
                   variant="outline"
@@ -171,15 +165,8 @@
                   class="px-4 ml-1"
                   :disabled="!isValid"
                 >
-                  <div
-                    v-if="loading"
-                    class="px-8"
-                  >
-                    <CSpinner
-                      color="white"
-                      size="sm"
-                      class="mr-2"
-                    />
+                  <div v-if="loading" class="px-8">
+                    <CSpinner color="white" size="sm" class="mr-2" />
                   </div>
                   <template v-else>
                     Submit Data
@@ -200,33 +187,32 @@
   </CRow>
 </template>
 
-
-
 <script>
-import { validationMixin } from 'vuelidate';
-import { required, minLength, maxLength } from 'vuelidate/lib/validators';
+import { validationMixin } from "vuelidate";
+import { required, minLength, maxLength } from "vuelidate/lib/validators";
 // import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
-import mixin from './mixin';
-import Multiselect from 'vue-multiselect';
+import mixin from "./mixin";
+import Multiselect from "vue-multiselect";
 
 export default {
-  name: 'LhaForm',
+  name: "LhaForm",
   components: {
     // ConfirmModal,
-    Multiselect,
+    Multiselect
   },
   mixins: [validationMixin, mixin],
-  props: ['mode', 'selectedItem', 'idTim', 'items'],
+  props: ["mode", "selectedItem", "idTim", "items"],
   data() {
     return {
       form: this.getEmptyForm(),
       submitted: false,
       loading: false,
       isOpenConfirm: false,
-      valuePeran: '',
+      valuePeran: "",
       optionsPeran: [],
       editData: {},
       alertMembers: true,
+      someNotSelected: false
     };
   },
   computed: {
@@ -238,20 +224,20 @@ export default {
     },
     isDirty() {
       return this.$v.form.$anyDirty;
-    },
+    }
   },
   watch: {
-    valuePeran: function (val) {
+    valuePeran: function(val) {
       this.$v.form.peran.$model = val.kodePeran;
-    },
+    }
   },
   async mounted() {
     await this.loadPeran();
-    if (this.mode == 'view') {
+    if (this.mode == "view") {
       await this.loadTimById();
-    } else if (this.mode == 'edit') {
+    } else if (this.mode == "edit") {
       await this.loadEditTimById();
-      const dataPeran = this.optionsPeran.filter((peran) => {
+      const dataPeran = this.optionsPeran.filter(peran => {
         return peran.kodePeran == this.form.peran;
       });
       this.valuePeran = dataPeran[0];
@@ -261,24 +247,24 @@ export default {
     form: {
       nip: {
         required,
-        minLength: minLength(1),
+        minLength: minLength(1)
         // maxLength: maxLength(18),
       },
 
       nama: {
         required,
-        minLength: minLength(2),
+        minLength: minLength(2)
       },
 
       peran: {
-        required,
+        required
       },
 
       accept: {
         required,
-        mustAccept: (val) => val,
-      },
-    },
+        mustAccept: val => val
+      }
+    }
   },
   methods: {
     viewSelectSearch({ id, kodePeran, deskripsi }) {
@@ -290,7 +276,7 @@ export default {
       if (!field.$dirty) {
         return null;
       }
-      return !(field.$invalid || field.$model === '');
+      return !(field.$invalid || field.$model === "");
     },
 
     async submit() {
@@ -300,11 +286,11 @@ export default {
         const resultFormData = this.appendToFormData();
 
         try {
-          if (this.mode == 'create') {
+          if (this.mode == "create") {
             this.loading = true;
 
             const responseData = await this.$store.dispatch(
-              'module_tim/createTim',
+              "module_tim/createTim",
               resultFormData
             );
 
@@ -312,23 +298,23 @@ export default {
               setTimeout(() => {
                 this.loading = false;
                 // this.$router.back();
-                this.$emit('on-load-tim');
+                this.$emit("on-load-tim");
                 this.toastSuccess(
-                  'Berhasil menyimpan data dengan kode ' +
+                  "Berhasil menyimpan data dengan kode " +
                     responseData.Kode_Peran
                 );
               }, 500);
               this.reset();
               await this.loadPeran();
             }
-          } else if (this.mode == 'edit') {
+          } else if (this.mode == "edit") {
             this.loading = true;
 
             const responseData = await this.$store.dispatch(
-              'module_tim/updateTimById',
+              "module_tim/updateTimById",
               {
                 idTim: this.editData.id,
-                data: resultFormData,
+                data: resultFormData
               }
             );
 
@@ -337,7 +323,7 @@ export default {
                 this.loading = false;
                 this.$router.back();
                 this.toastSuccess(
-                  'Berhasil edit data dengan ID ' + responseData.Kode_Peran
+                  "Berhasil edit data dengan ID " + responseData.Kode_Peran
                 );
               }, 500);
             }
@@ -345,7 +331,7 @@ export default {
         } catch (error) {
           setTimeout(() => {
             this.loading = false;
-            this.toastError('Terjadi kesalahan saat submit data');
+            this.toastError("Terjadi kesalahan saat submit data");
           }, 500);
         }
       }
@@ -353,6 +339,10 @@ export default {
 
     validate() {
       this.$v.$touch();
+
+      const listMultiselectValue = [this.valuePeran];
+
+      this.someNotSelected = listMultiselectValue.some(el => el == "");
     },
 
     reset() {
@@ -360,32 +350,32 @@ export default {
       this.submitted = false;
       this.$v.$reset();
 
-      this.valuePeran = '';
-      this.optionsPeran = [];
+      this.valuePeran = "";
+      // this.optionsPeran = [];
     },
 
     getEmptyForm() {
       return {
-        nip: '',
-        nama: '',
-        peran: '',
-        accept: false,
+        nip: "",
+        nama: "",
+        peran: "",
+        accept: false
       };
     },
 
     appendToFormData() {
       const fd = new FormData();
-      if (this.mode == 'create') {
-        fd.append('kode_lha', this.$route.query.idlha);
-      } else if (this.mode == 'edit') {
-        fd.append('_method', 'PATCH');
+      if (this.mode == "create") {
+        fd.append("kode_lha", this.$route.query.idlha);
+      } else if (this.mode == "edit") {
+        fd.append("_method", "PATCH");
       }
-      fd.append('Kode_Peran', this.$v.form.peran.$model);
-      fd.append('Nama', this.$v.form.nama.$model);
-      fd.append('NIP', this.$v.form.nip.$model);
+      fd.append("Kode_Peran", this.$v.form.peran.$model);
+      fd.append("Nama", this.$v.form.nama.$model);
+      fd.append("NIP", this.$v.form.nip.$model);
       return fd;
-    },
-  },
+    }
+  }
 };
 </script>
 

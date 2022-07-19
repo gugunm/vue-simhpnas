@@ -1,23 +1,27 @@
 export const func = {
-  convertToRupiah: (payload) => {
-    let rupiah = '';
+  convertToRupiah: payload => {
+    let rupiah = "";
     if (payload) {
-      const angkarev = payload.toString().split('').reverse().join('');
+      const angkarev = payload
+        .toString()
+        .split("")
+        .reverse()
+        .join("");
       for (var i = 0; i < angkarev.length; i++)
-        if (i % 3 == 0) rupiah += angkarev.substr(i, 3) + ',';
+        if (i % 3 == 0) rupiah += angkarev.substr(i, 3) + ".";
       return (
-        'Rp ' +
+        "Rp " +
         rupiah
-          .split('', rupiah.length - 1)
+          .split("", rupiah.length - 1)
           .reverse()
-          .join('')
+          .join("")
       );
     }
-    return 'Rp 0';
+    return "Rp 0";
   },
 
-  rupiahToNumber: (payload) => {
-    return  Number(payload.replace(/[^0-9.-]+/g,""));
+  rupiahToNumber: payload => {
+    return Number(payload.replace(/[^0-9.-]+/g, ""));
   },
 
   isGanjil(value) {
@@ -26,6 +30,5 @@ export const func = {
 
   isGenap(value) {
     return value % 2 == 0 ? true : false;
-  },
-
-}
+  }
+};

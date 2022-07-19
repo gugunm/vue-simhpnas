@@ -143,6 +143,11 @@
                       label="deskripsi"
                       track-by="deskripsi"
                     />
+                    <span
+                      v-if="someNotSelected && valueGroupLingkupAudit == ''"
+                      class="text-error-multiselect"
+                      >Institusi wajiib dipilih</span
+                    >
                   </div>
                 </CCol>
                 <CCol lg="5">
@@ -157,6 +162,11 @@
                       label="deskripsi"
                       track-by="deskripsi"
                     />
+                    <span
+                      v-if="someNotSelected && valueLingkupAudit == ''"
+                      class="text-error-multiselect"
+                      >Jenis kegiatan wajiib dipilih</span
+                    >
                   </div>
                 </CCol>
               </CRow>
@@ -174,8 +184,8 @@
                   />
                 </CCol>
               </CRow>
-              <CRow v-if="mode == 'create'">
-                <CCol lg="3">
+              <CRow>
+                <CCol v-if="mode == 'create'" lg="3">
                   <CInputCheckbox
                     :is-valid="checkIfValid('flagTpk')"
                     :checked.sync="$v.form.flagTpk.$model"
@@ -184,6 +194,7 @@
                     class="my-2 text-base ml-2 font-semibold lower"
                   />
                 </CCol>
+                <!-- <pre>{{ isTemuanNihil }}</pre> -->
                 <CCol lg="3">
                   <CInputCheckbox
                     :is-valid="checkIfValid('flagTemuanNihil')"
@@ -246,6 +257,11 @@
                       label="deskripsi"
                       track-by="deskripsi"
                     />
+                    <span
+                      v-if="someNotSelected && valueJenisObrik == ''"
+                      class="text-error-multiselect"
+                      >Jenis obrik wajiib dipilih</span
+                    >
                   </div>
                 </CCol>
               </CRow>
@@ -263,6 +279,11 @@
                       label="deskripsi"
                       track-by="deskripsi"
                     />
+                    <span
+                      v-if="someNotSelected && valueUnitObrik == ''"
+                      class="text-error-multiselect"
+                      >Unit obrik wajiib dipilih</span
+                    >
                   </div>
                 </CCol>
                 <CCol lg="4">
@@ -277,6 +298,11 @@
                       label="deskripsi"
                       track-by="deskripsi"
                     />
+                    <span
+                      v-if="someNotSelected && valueBidangObrik == ''"
+                      class="text-error-multiselect"
+                      >Bidang obrik wajiib dipilih</span
+                    >
                   </div>
                 </CCol>
                 <CCol lg="4">
@@ -291,6 +317,11 @@
                       label="deskripsi"
                       track-by="deskripsi"
                     />
+                    <!-- <span
+                      v-if="someNotSelected && valueSubBidangObrik == ''"
+                      class="text-error-multiselect"
+                      >Subbidang obrik wajiib dipilih</span
+                    > -->
                   </div>
                 </CCol>
               </CRow>
@@ -353,6 +384,11 @@
                       label="deskripsi"
                       track-by="deskripsi"
                     />
+                    <span
+                      v-if="someNotSelected && valueJenisAnggaran == ''"
+                      class="text-error-multiselect"
+                      >Jenis anggaran wajiib dipilih</span
+                    >
                   </div>
                 </CCol>
               </CRow>
@@ -428,6 +464,11 @@
                       :custom-label="viewSelectSearchKelurahan"
                       @search-change="loadSearchKelurahan"
                     />
+                    <span
+                      v-if="someNotSelected && valueKelurahan == ''"
+                      class="text-error-multiselect"
+                      >Kelurahan/Desa wajiib dipilih</span
+                    >
                   </div>
                 </CCol>
                 <CCol lg="6">
@@ -678,7 +719,8 @@ export default {
         includeThousandsSeparator: true,
         thousandsSeparatorSymbol: ","
       }),
-      rpRencanaAnggaran: 0
+      rpRencanaAnggaran: 0,
+      someNotSelected: false
     };
   },
   computed: {},
@@ -993,6 +1035,19 @@ export default {
 
     validate() {
       this.$v.$touch();
+
+      const listMultiselectValue = [
+        this.valueGroupLingkupAudit,
+        this.valueLingkupAudit,
+        this.valueJenisObrik,
+        this.valueUnitObrik,
+        this.valueBidangObrik,
+        // this.valueSubBidangObrik,
+        this.valueJenisAnggaran,
+        this.valueKelurahan
+      ];
+
+      this.someNotSelected = listMultiselectValue.some(el => el == "");
     },
 
     reset() {

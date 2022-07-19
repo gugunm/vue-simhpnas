@@ -184,3 +184,11 @@ li.c-sidebar-nav-item > a.router-link-exact-active.c-active.c-sidebar-nav-link {
 .c-sidebar-nav-dropdown-toggle::after {
   background-image: url("/img/simhp/right-arrow.png") !important;
 }
+
+.text-error-multiselect {
+  @apply text-red-500 mt-2 inline-block text-xs;
+}
+
+// .multiselect > .multiselect__tags {
+//   border: 1px solid #e55353;
+// }

@@ -14,24 +14,13 @@
       </div>
       <CCard>
         <!-- <CCardBody> -->
-        <CForm
-          class="form-temuan"
-          @submit.prevent="submit"
-        >
-          <div
-            v-if="!isAuditTpk"
-            class="p-3"
-            style="background: #f9fafb"
-          >
+        <CForm class="form-temuan" @submit.prevent="submit">
+          <div v-if="!isAuditTpk" class="p-3" style="background: #f9fafb">
             <h5 class="text-base font-semibold">
               Data Temuan
             </h5>
           </div>
-          <div
-            v-else
-            class="p-3"
-            style="background: #f9fafb"
-          >
+          <div v-else class="p-3" style="background: #f9fafb">
             <h5 class="text-base font-semibold text-red-500">
               Data Temuan Investigatif
             </h5>
@@ -68,10 +57,7 @@
               </CCol>
             </CRow>
 
-            <CRow
-              v-if="mode == 'view'"
-              class="mb-3"
-            >
+            <CRow v-if="mode == 'view'" class="mb-3">
               <CCol lg="12">
                 <CInput
                   v-if="mode == 'view'"
@@ -99,10 +85,7 @@
             </CRow>
 
             <!-- ROW 3 -->
-            <CRow
-              v-else
-              class="mb-3"
-            >
+            <CRow v-else class="mb-3">
               <CCol lg="4">
                 <div>
                   <label class="typo__label">Jenis Temuan</label>
@@ -115,6 +98,11 @@
                     label="deskripsi"
                     track-by="deskripsi"
                   />
+                  <span
+                    v-if="someNotSelected && valueJenisTemuan == ''"
+                    class="text-error-multiselect"
+                    >Jenis temuan wajiib dipilih</span
+                  >
                 </div>
               </CCol>
               <CCol lg="4">
@@ -129,6 +117,11 @@
                     label="deskripsi"
                     track-by="deskripsi"
                   />
+                  <span
+                    v-if="someNotSelected && valueKlpTemuan == ''"
+                    class="text-error-multiselect"
+                    >Kelompok temuan wajiib dipilih</span
+                  >
                 </div>
               </CCol>
               <CCol lg="4">
@@ -143,6 +136,11 @@
                     label="deskripsi"
                     track-by="deskripsi"
                   />
+                  <span
+                    v-if="someNotSelected && valueSubKlpTemuan == ''"
+                    class="text-error-multiselect"
+                    >Sub kelompok temuan wajiib dipilih</span
+                  >
                 </div>
               </CCol>
             </CRow>
@@ -170,7 +168,7 @@
               <CCol lg="6">
                 <div class="flex items-center">
                   <p class="inline-block mr-3 font-semibold">
-                    {{ isAuditTpk ? '' : 'Bukan' }} Temuan Tindak Pidana Khusus
+                    {{ isAuditTpk ? "" : "Bukan" }} Temuan Tindak Pidana Khusus
                   </p>
                   <CSwitch
                     disabled
@@ -231,7 +229,25 @@
             </div>
 
             <!-- ROW 7 -->
-            <CRow>
+            <CRow class="mb-4">
+              <!-- <CCol lg="2">
+                <CInput
+                  type="text"
+                  inputmode="decimal"
+                  :label="
+                    isAuditTpk
+                      ? 'Nilai Temuan (Jumlah Kerugian Negara)'
+                      : 'Nilai Temuan'
+                  "
+                  :lazy="false"
+                  :value.sync="$v.form.nilaiTemuan.$model"
+                  :is-valid="checkIfValid('nilaiTemuan')"
+                  placeholder="Nilai Temuan"
+                  autocomplete="nilaiTemuan"
+                  invalid-feedback="Nilai Temuan wajib diisi"
+                  :disabled="mode == 'view'"
+                />
+              </CCol>
               <CCol lg="2">
                 <CInput
                   type="number"
@@ -248,7 +264,17 @@
                   invalid-feedback="Nilai Temuan wajib diisi"
                   :disabled="mode == 'view'"
                 />
+              </CCol> -->
+              <CCol lg="2">
+                <!-- <label for="">Nilai Temuan</label> -->
+                <CurrencyInput
+                  class="form-control"
+                  :value="valueNilaiTemuan"
+                  :options="{ currency: 'IDR' }"
+                  @change="valueNilaiTemuan = $event"
+                />
               </CCol>
+              <pre>{{ valueNilaiTemuan }}</pre>
             </CRow>
 
             <!-- ROW 8 -->
@@ -268,11 +294,7 @@
 
           <div class="px-3">
             <CRow class="mb-2 view-form">
-              <CCol
-                sm="12"
-                lg="6"
-                class="mb-3"
-              >
+              <CCol sm="12" lg="6" class="mb-3">
                 <CButton
                   v-if="mode != 'view'"
                   variant="outline"
@@ -310,15 +332,8 @@
                   class="px-4 ml-1"
                   :disabled="!isValid"
                 >
-                  <div
-                    v-if="loading"
-                    class="px-8"
-                  >
-                    <CSpinner
-                      color="white"
-                      size="sm"
-                      class="mr-2"
-                    />
+                  <div v-if="loading" class="px-8">
+                    <CSpinner color="white" size="sm" class="mr-2" />
                   </div>
                   <template v-else>
                     Submit Data
@@ -339,23 +354,23 @@
   </CRow>
 </template>
 
-
-
 <script>
-import { validationMixin } from 'vuelidate';
-import { required, minLength, maxLength } from 'vuelidate/lib/validators';
-import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
-import mixin from './mixin';
-import Multiselect from 'vue-multiselect';
+import { validationMixin } from "vuelidate";
+import { required, minLength, maxLength } from "vuelidate/lib/validators";
+import ConfirmModal from "@/components/Confirm/ConfirmModal.vue";
+import mixin from "./mixin";
+import Multiselect from "vue-multiselect";
+import CurrencyInput from "@/components/CustomInput/CurrencyInput.vue";
 
 export default {
-  name: 'LhaForm',
+  name: "LhaForm",
   components: {
     ConfirmModal,
     Multiselect,
+    CurrencyInput
   },
   mixins: [validationMixin, mixin],
-  props: ['mode', 'selectedItem', 'idTemuan'],
+  props: ["mode", "selectedItem", "idTemuan"],
   data() {
     return {
       form: this.getEmptyForm(),
@@ -364,16 +379,17 @@ export default {
       isOpenConfirm: false,
       isAuditTpk: false,
       labelIcon: {
-        labelOn: '\u2713',
-        labelOff: '\u2715',
+        labelOn: "\u2713",
+        labelOff: "\u2715"
       },
-      valueJenisTemuan: '',
+      valueJenisTemuan: "",
       optionsJenisTemuan: [],
-      valueKlpTemuan: '',
+      valueKlpTemuan: "",
       optionsKlpTemuan: [],
-      valueSubKlpTemuan: '',
+      valueSubKlpTemuan: "",
       optionsSubKlpTemuan: [],
       editData: {},
+      valueNilaiTemuan: 0
     };
   },
   computed: {
@@ -385,57 +401,65 @@ export default {
     },
     isDirty() {
       return this.$v.form.$anyDirty;
-    },
+    }
   },
   watch: {
-    valueJenisTemuan: function (val) {
+    valueJenisTemuan: function(val) {
       this.$v.form.jenisTemuan.$model = val.id;
-      this.valueKlpTemuan = '';
+      this.valueKlpTemuan = "";
       this.optionsKlpTemuan = [];
       this.loadKlpTemuan();
     },
-    valueKlpTemuan: function (val) {
+    valueKlpTemuan: function(val) {
       this.$v.form.klpTemuan.$model = val.id;
-      this.valueSubKlpTemuan = '';
+      this.valueSubKlpTemuan = "";
       this.optionsSubKlpTemuan = [];
       this.loadSubKlpTemuan();
     },
-    valueSubKlpTemuan: function (val) {
+    valueSubKlpTemuan: function(val) {
       this.$v.form.subKlpTemuan.$model = val.id;
     },
-    isAuditTpk: function (val) {
+    isAuditTpk: function(val) {
       if (!val) {
         this.$v.form.posisiKasus.$model = 0;
-        this.$v.form.modusOperandi.$model = 'TIDAK ADA';
+        this.$v.form.modusOperandi.$model = "TIDAK ADA";
       } else {
-        this.$v.form.posisiKasus.$model = '';
-        this.$v.form.modusOperandi.$model = '';
+        this.$v.form.posisiKasus.$model = "";
+        this.$v.form.modusOperandi.$model = "";
       }
     },
+    valueNilaiTemuan: function(val) {
+      this.$v.form.nilaiTemuan.$model = val;
+    }
   },
   async mounted() {
     await this.loadJenisTemuan();
+    // this.valueNilaiTemuan = 1;
 
-    if (this.mode == 'view') {
+    if (this.mode == "view") {
       await this.loadTemuanById();
-    } else if (this.mode == 'edit') {
+    } else if (this.mode == "edit") {
       await this.loadEditTemuanById();
 
-      this.valueJenisTemuan = this.optionsJenisTemuan.filter((jt) => {
+      this.valueNilaiTemuan = this.form.nilaiTemuan;
+
+      this.valueJenisTemuan = this.optionsJenisTemuan.filter(jt => {
         return jt.id == this.form.jenisTemuan;
       })[0];
 
       await this.loadKlpTemuan();
 
-      this.valueKlpTemuan = this.optionsKlpTemuan.filter((kt) => {
+      this.valueKlpTemuan = this.optionsKlpTemuan.filter(kt => {
         return kt.id == this.form.klpTemuan;
       })[0];
 
       await this.loadSubKlpTemuan();
 
-      this.valueSubKlpTemuan = this.optionsSubKlpTemuan.filter((skt) => {
+      this.valueSubKlpTemuan = this.optionsSubKlpTemuan.filter(skt => {
         return skt.id == this.form.subKlpTemuan;
       })[0];
+
+      // alert(this.form.nilaiTemuan);
     }
 
     if (
@@ -453,7 +477,7 @@ export default {
       nomorTemuan: {
         required,
         minLength: minLength(1),
-        maxLength: maxLength(2),
+        maxLength: maxLength(2)
       },
       jenisTemuan: { required },
       klpTemuan: { required },
@@ -462,15 +486,15 @@ export default {
       posisiKasus: {
         required,
         minLength: minLength(1),
-        maxLength: maxLength(2),
+        maxLength: maxLength(2)
       },
       modusOperandi: { required, minLength: minLength(2) },
       nilaiTemuan: { required },
       accept: {
         required,
-        mustAccept: (val) => val,
-      },
-    },
+        mustAccept: val => val
+      }
+    }
   },
   methods: {
     viewSelectSearch({ id, deskripsi }) {
@@ -482,7 +506,7 @@ export default {
       if (!field.$dirty) {
         return null;
       }
-      return !(field.$invalid || field.$model === '');
+      return !(field.$invalid || field.$model === "");
     },
 
     async submit() {
@@ -492,10 +516,10 @@ export default {
         const resultFormData = this.appendToFormData();
 
         try {
-          if (this.mode == 'create') {
+          if (this.mode == "create") {
             this.loading = true;
             const responseData = await this.$store.dispatch(
-              'module_temuan/createTemuan',
+              "module_temuan/createTemuan",
               resultFormData
             );
 
@@ -504,19 +528,19 @@ export default {
                 this.loading = false;
                 this.$router.back();
                 this.toastSuccess(
-                  'Berhasil menyimpan data dengan ID ' +
+                  "Berhasil menyimpan data dengan ID " +
                     responseData.Nomor_Temuan
                 );
               }, 500);
             }
-          } else if (this.mode == 'edit') {
+          } else if (this.mode == "edit") {
             this.loading = true;
 
             const responseData = await this.$store.dispatch(
-              'module_temuan/updateTemuanById',
+              "module_temuan/updateTemuanById",
               {
                 idTemuan: this.editData.id,
-                data: resultFormData,
+                data: resultFormData
               }
             );
 
@@ -525,7 +549,7 @@ export default {
                 this.loading = false;
                 this.$router.back();
                 this.toastSuccess(
-                  'Berhasil edit data dengan ID ' + responseData.Nomor_Temuan
+                  "Berhasil edit data dengan ID " + responseData.Nomor_Temuan
                 );
               }, 500);
             }
@@ -533,7 +557,7 @@ export default {
         } catch (error) {
           setTimeout(() => {
             this.loading = false;
-            this.toastError('Terjadi kesalahan saat submit data');
+            this.toastError("Terjadi kesalahan saat submit data");
           }, 500);
         }
       }
@@ -541,6 +565,14 @@ export default {
 
     validate() {
       this.$v.$touch();
+
+      const listMultiselectValue = [
+        this.valueJenisTemuan,
+        this.valueKlpTemuan,
+        this.valueSubKlpTemuan
+      ];
+
+      this.someNotSelected = listMultiselectValue.some(el => el == "");
     },
 
     reset() {
@@ -551,39 +583,39 @@ export default {
 
     getEmptyForm() {
       return {
-        nomorTemuan: '',
-        jenisTemuan: '',
-        klpTemuan: '',
-        subKlpTemuan: '',
-        memoTemuan: '',
+        nomorTemuan: "",
+        jenisTemuan: "",
+        klpTemuan: "",
+        subKlpTemuan: "",
+        memoTemuan: "",
         posisiKasus: 0,
-        modusOperandi: 'TIDAK ADA',
+        modusOperandi: "TIDAK ADA",
         nilaiTemuan: 0,
-        accept: false,
+        accept: false
       };
     },
 
     appendToFormData() {
       const fd = new FormData();
-      if (this.mode == 'edit') {
-        fd.append('_method', 'PATCH');
-        fd.append('kode_lha', this.editData.nomorLha);
-        fd.append('Flag_TPK', this.editData.flagTpk);
-      } else if (this.mode == 'create') {
-        fd.append('kode_lha', this.$route.query.idlha);
-        fd.append('Flag_TPK', this.$route.query.tpk);
+      if (this.mode == "edit") {
+        fd.append("_method", "PATCH");
+        fd.append("kode_lha", this.editData.nomorLha);
+        fd.append("Flag_TPK", this.editData.flagTpk);
+      } else if (this.mode == "create") {
+        fd.append("kode_lha", this.$route.query.idlha);
+        fd.append("Flag_TPK", this.$route.query.tpk);
       }
-      fd.append('Nomor_Temuan', this.$v.form.nomorTemuan.$model);
-      fd.append('Kode_Jenis_Temuan', this.$v.form.jenisTemuan.$model);
-      fd.append('Kode_Kelompok_Temuan', this.$v.form.klpTemuan.$model);
-      fd.append('Kode_Sub_Kelompok_Temuan', this.$v.form.subKlpTemuan.$model);
-      fd.append('Memo_Temuan', this.$v.form.memoTemuan.$model);
-      fd.append('Posisi_Kasus', this.$v.form.posisiKasus.$model);
-      fd.append('Modus_Operandi', this.$v.form.modusOperandi.$model);
-      fd.append('Nilai_Temuan', this.$v.form.nilaiTemuan.$model);
+      fd.append("Nomor_Temuan", this.$v.form.nomorTemuan.$model);
+      fd.append("Kode_Jenis_Temuan", this.$v.form.jenisTemuan.$model);
+      fd.append("Kode_Kelompok_Temuan", this.$v.form.klpTemuan.$model);
+      fd.append("Kode_Sub_Kelompok_Temuan", this.$v.form.subKlpTemuan.$model);
+      fd.append("Memo_Temuan", this.$v.form.memoTemuan.$model);
+      fd.append("Posisi_Kasus", this.$v.form.posisiKasus.$model);
+      fd.append("Modus_Operandi", this.$v.form.modusOperandi.$model);
+      fd.append("Nilai_Temuan", this.$v.form.nilaiTemuan.$model);
       return fd;
-    },
-  },
+    }
+  }
 };
 </script>
 

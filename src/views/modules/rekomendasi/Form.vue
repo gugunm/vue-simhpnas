@@ -15,10 +15,7 @@
       <CCard>
         <!-- <CCardBody> -->
         <CForm @submit.prevent="submit">
-          <div
-            class="p-3"
-            style="background: #f9fafb"
-          >
+          <div class="p-3" style="background: #f9fafb">
             <h5 class="text-base font-semibold">
               Data Rekomendasi (Termasuk untuk TPK)
             </h5>
@@ -66,10 +63,7 @@
               </CCol>
             </CRow>
 
-            <CRow
-              v-if="mode == 'view'"
-              class="mb-3"
-            >
+            <CRow v-if="mode == 'view'" class="mb-3">
               <CCol lg="12">
                 <CInput
                   v-if="mode == 'view'"
@@ -89,10 +83,7 @@
             </CRow>
 
             <!-- ROW 3 -->
-            <CRow
-              v-else
-              class="mb-3"
-            >
+            <CRow v-else class="mb-3">
               <CCol lg="6">
                 <div>
                   <label class="typo__label">Kode Rekomendasi</label>
@@ -105,6 +96,11 @@
                     label="deskripsi"
                     track-by="deskripsi"
                   />
+                  <span
+                    v-if="someNotSelected && valueRekomendasi == ''"
+                    class="text-error-multiselect"
+                    >Rekomendasi wajiib dipilih</span
+                  >
                 </div>
               </CCol>
               <CCol lg="6">
@@ -119,6 +115,11 @@
                     label="deskripsi"
                     track-by="deskripsi"
                   />
+                  <span
+                    v-if="someNotSelected && valueSubKlpRekomendasi == ''"
+                    class="text-error-multiselect"
+                    >Sub rekomendasi wajiib dipilih</span
+                  >
                 </div>
               </CCol>
             </CRow>
@@ -173,8 +174,8 @@
                   <p class="inline-block mr-3 font-semibold uppercase">
                     {{
                       isPelaku
-                        ? 'Terdapat pelaku dalam rekomendasi'
-                        : 'Rekomendasi tanpa pelaku'
+                        ? "Terdapat pelaku dalam rekomendasi"
+                        : "Rekomendasi tanpa pelaku"
                     }}
                   </p>
                 </div>
@@ -197,11 +198,7 @@
           </div>
           <div class="px-3">
             <CRow class="mb-2 view-form">
-              <CCol
-                sm="12"
-                lg="6"
-                class="mb-3"
-              >
+              <CCol sm="12" lg="6" class="mb-3">
                 <CButton
                   v-if="mode != 'view'"
                   variant="outline"
@@ -239,15 +236,8 @@
                   class="px-4 ml-1"
                   :disabled="!isValid"
                 >
-                  <div
-                    v-if="loading"
-                    class="px-8"
-                  >
-                    <CSpinner
-                      color="white"
-                      size="sm"
-                      class="mr-2"
-                    />
+                  <div v-if="loading" class="px-8">
+                    <CSpinner color="white" size="sm" class="mr-2" />
                   </div>
                   <template v-else>
                     Submit Data
@@ -258,6 +248,7 @@
           </div>
         </CForm>
         <!-- </CCardBody> -->
+        <!-- <pre>{{ $v.form }}</pre> -->
       </CCard>
     </CCol>
     <confirm-modal
@@ -268,23 +259,21 @@
   </CRow>
 </template>
 
-
-
 <script>
-import { validationMixin } from 'vuelidate';
-import { required, minLength, maxLength } from 'vuelidate/lib/validators';
-import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
-import mixin from './mixin';
-import Multiselect from 'vue-multiselect';
+import { validationMixin } from "vuelidate";
+import { required, minLength, maxLength } from "vuelidate/lib/validators";
+import ConfirmModal from "@/components/Confirm/ConfirmModal.vue";
+import mixin from "./mixin";
+import Multiselect from "vue-multiselect";
 
 export default {
-  name: 'LhaForm',
+  name: "LhaForm",
   components: {
     ConfirmModal,
-    Multiselect,
+    Multiselect
   },
   mixins: [validationMixin, mixin],
-  props: ['mode', 'selectedItem', 'idRekomendasi'],
+  props: ["mode", "selectedItem", "idRekomendasi"],
   data() {
     return {
       form: this.getEmptyForm(),
@@ -293,14 +282,14 @@ export default {
       isOpenConfirm: false,
       isPelaku: false,
       labelIcon: {
-        labelOn: '\u2713',
-        labelOff: '\u2715',
+        labelOn: "\u2713",
+        labelOff: "\u2715"
       },
-      valueRekomendasi: '',
+      valueRekomendasi: "",
       optionsRekomendasi: [],
-      valueSubKlpRekomendasi: '',
+      valueSubKlpRekomendasi: "",
       optionsSubKlpRekomendasi: [],
-      editData: {},
+      editData: {}
     };
   },
   computed: {
@@ -312,43 +301,43 @@ export default {
     },
     isDirty() {
       return this.$v.form.$anyDirty;
-    },
+    }
   },
   watch: {
-    valueRekomendasi: function (val) {
-      this.valueSubKlpRekomendasi = '';
+    valueRekomendasi: function(val) {
+      this.valueSubKlpRekomendasi = "";
       this.optionsSubKlpRekomendasi = [];
       this.$v.form.klpRekomendasi.$model = val.id;
 
       this.loadSubKlpRekomendasi();
     },
-    valueSubKlpRekomendasi: function (val) {
+    valueSubKlpRekomendasi: function(val) {
       this.$v.form.subKlpRekomendasi.$model = val.id;
     },
-    isPelaku: function (val) {
+    isPelaku: function(val) {
       if (val) {
         this.$v.form.flagPelaku.$model = 1;
       } else {
         this.$v.form.flagPelaku.$model = 0;
       }
-    },
+    }
   },
   async mounted() {
-    if (this.mode == 'create') {
+    if (this.mode == "create") {
       await this.loadSearchRekomendasi();
-    } else if (this.mode == 'view') {
+    } else if (this.mode == "view") {
       await this.loadRekomendasiById();
-    } else if (this.mode == 'edit') {
+    } else if (this.mode == "edit") {
       await this.loadEditRekomendasiById();
 
       await this.loadSearchRekomendasi();
       this.valueRekomendasi = this.optionsRekomendasi.filter(
-        (rek) => rek.id == this.form.klpRekomendasi
+        rek => rek.id == this.form.klpRekomendasi
       )[0];
 
       await this.loadSubKlpRekomendasi();
       this.valueSubKlpRekomendasi = this.optionsSubKlpRekomendasi.filter(
-        (rek) => rek.id == this.form.subKlpRekomendasi
+        rek => rek.id == this.form.subKlpRekomendasi
       )[0];
     }
 
@@ -363,7 +352,7 @@ export default {
       nomorRekomendasi: {
         required,
         minLength: minLength(1),
-        maxLength: maxLength(2),
+        maxLength: maxLength(2)
       },
       klpRekomendasi: { required },
       subKlpRekomendasi: { required },
@@ -372,9 +361,9 @@ export default {
       nilaiRekomendasi: { required },
       accept: {
         required,
-        mustAccept: (val) => val,
-      },
-    },
+        mustAccept: val => val
+      }
+    }
   },
   methods: {
     viewSelectSearch({ id, deskripsi }) {
@@ -386,7 +375,7 @@ export default {
       if (!field.$dirty) {
         return null;
       }
-      return !(field.$invalid || field.$model === '');
+      return !(field.$invalid || field.$model === "");
     },
 
     async submit() {
@@ -396,10 +385,10 @@ export default {
         const resultFormData = this.appendToFormData();
 
         try {
-          if (this.mode == 'create') {
+          if (this.mode == "create") {
             this.loading = true;
             const response = await this.$store.dispatch(
-              'module_rekomendasi/createRekomendasi',
+              "module_rekomendasi/createRekomendasi",
               resultFormData
             );
 
@@ -413,15 +402,15 @@ export default {
               this.loading = false;
               this.toastError(response.data.message);
             }
-          } else if (this.mode == 'edit') {
+          } else if (this.mode == "edit") {
             this.loading = true;
 
             const response = await this.$store.dispatch(
-              'module_rekomendasi/updateRekomendasiById',
+              "module_rekomendasi/updateRekomendasiById",
               {
                 // idRekomendasi: this.editData.id,
                 idRekomendasi: this.idRekomendasi,
-                data: resultFormData,
+                data: resultFormData
               }
             );
 
@@ -430,7 +419,7 @@ export default {
                 this.loading = false;
                 this.$router.back();
                 // this.toastSuccess(response.data.message);
-                this.toastSuccess('Berhasil merubah data');
+                this.toastSuccess("Berhasil merubah data");
               }, 500);
             } else {
               this.toastError(response.data.message);
@@ -447,6 +436,13 @@ export default {
 
     validate() {
       this.$v.$touch();
+
+      const listMultiselectValue = [
+        this.valueRekomendasi,
+        this.valueSubKlpRekomendasi
+      ];
+
+      this.someNotSelected = listMultiselectValue.some(el => el == "");
     },
 
     reset() {
@@ -457,42 +453,42 @@ export default {
 
     getEmptyForm() {
       return {
-        nomorRekomendasi: '',
-        klpRekomendasi: '',
-        subKlpRekomendasi: '',
-        memoRekomendasi: '',
+        nomorRekomendasi: "",
+        klpRekomendasi: "",
+        subKlpRekomendasi: "",
+        memoRekomendasi: "",
         flagPelaku: 0,
         nilaiRekomendasi: 0,
-        accept: false,
+        accept: false
       };
     },
 
     appendToFormData() {
       const fd = new FormData();
 
-      if (this.mode == 'edit') {
-        fd.append('_method', 'PATCH');
-      } else if (this.mode == 'create') {
-        fd.append('kode_temuan', this.$route.query.idtemuan);
-        fd.append('kode_lha', this.$route.query.idlha);
+      if (this.mode == "edit") {
+        fd.append("_method", "PATCH");
+      } else if (this.mode == "create") {
+        fd.append("kode_temuan", this.$route.query.idtemuan);
+        fd.append("kode_lha", this.$route.query.idlha);
       }
 
-      fd.append('Nomor_Rekomendasi', this.$v.form.nomorRekomendasi.$model);
+      fd.append("Nomor_Rekomendasi", this.$v.form.nomorRekomendasi.$model);
       fd.append(
-        'Kode_Kelompok_Rekomendasi',
+        "Kode_Kelompok_Rekomendasi",
         this.$v.form.klpRekomendasi.$model
       );
       fd.append(
-        'Kode_Sub_Kelompok_Rekomendasi',
+        "Kode_Sub_Kelompok_Rekomendasi",
         this.$v.form.subKlpRekomendasi.$model
       );
-      fd.append('Memo_Rekomendasi', this.$v.form.memoRekomendasi.$model);
-      fd.append('Nilai_Rekomendasi', this.$v.form.nilaiRekomendasi.$model);
-      fd.append('Flag_Pelaku', this.$v.form.flagPelaku.$model);
+      fd.append("Memo_Rekomendasi", this.$v.form.memoRekomendasi.$model);
+      fd.append("Nilai_Rekomendasi", this.$v.form.nilaiRekomendasi.$model);
+      fd.append("Flag_Pelaku", this.$v.form.flagPelaku.$model);
 
       return fd;
-    },
-  },
+    }
+  }
 };
 </script>
 
