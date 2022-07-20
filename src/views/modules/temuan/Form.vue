@@ -101,7 +101,7 @@
                   <span
                     v-if="someNotSelected && valueJenisTemuan == ''"
                     class="text-error-multiselect"
-                    >Jenis temuan wajiib dipilih</span
+                    >Jenis temuan wajib dipilih</span
                   >
                 </div>
               </CCol>
@@ -120,7 +120,7 @@
                   <span
                     v-if="someNotSelected && valueKlpTemuan == ''"
                     class="text-error-multiselect"
-                    >Kelompok temuan wajiib dipilih</span
+                    >Kelompok temuan wajib dipilih</span
                   >
                 </div>
               </CCol>
@@ -139,7 +139,7 @@
                   <span
                     v-if="someNotSelected && valueSubKlpTemuan == ''"
                     class="text-error-multiselect"
-                    >Sub kelompok temuan wajiib dipilih</span
+                    >Sub kelompok temuan wajib dipilih</span
                   >
                 </div>
               </CCol>
@@ -149,6 +149,7 @@
             <CRow>
               <CCol lg="12">
                 <CTextarea
+                  class="custom-textarea"
                   rows="4"
                   :label="
                     isAuditTpk ? 'Memo Temuan / Uraian Kasus' : 'Memo Temuan'
@@ -210,12 +211,14 @@
                 <CCol lg="8">
                   <CTextarea
                     v-if="mode == 'view'"
+                    class="custom-textarea"
                     label="Modus Operandi"
                     :value="form.modusOperandi"
                     :disabled="true"
                   />
                   <CTextarea
                     v-else
+                    class="custom-textarea"
                     label="Modus Operandi"
                     :lazy="false"
                     :value.sync="$v.form.modusOperandi.$model"
@@ -231,24 +234,6 @@
             <!-- ROW 7 -->
             <CRow class="mb-4">
               <!-- <CCol lg="2">
-                <CInput
-                  type="text"
-                  inputmode="decimal"
-                  :label="
-                    isAuditTpk
-                      ? 'Nilai Temuan (Jumlah Kerugian Negara)'
-                      : 'Nilai Temuan'
-                  "
-                  :lazy="false"
-                  :value.sync="$v.form.nilaiTemuan.$model"
-                  :is-valid="checkIfValid('nilaiTemuan')"
-                  placeholder="Nilai Temuan"
-                  autocomplete="nilaiTemuan"
-                  invalid-feedback="Nilai Temuan wajib diisi"
-                  :disabled="mode == 'view'"
-                />
-              </CCol>
-              <CCol lg="2">
                 <CInput
                   type="number"
                   :label="
@@ -266,15 +251,23 @@
                 />
               </CCol> -->
               <CCol lg="2">
-                <!-- <label for="">Nilai Temuan</label> -->
+                <label>{{
+                  isAuditTpk
+                    ? "Nilai Temuan (Jumlah Kerugian Negara)"
+                    : "Nilai Temuan"
+                }}</label>
                 <CurrencyInput
-                  class="form-control"
-                  :value="valueNilaiTemuan"
-                  :options="{ currency: 'IDR' }"
-                  @change="valueNilaiTemuan = $event"
+                  :value="$v.form.nilaiTemuan.$model"
+                  :disabled="mode == 'view'"
+                  @change="$v.form.nilaiTemuan.$model = $event"
                 />
+                <span
+                  v-if="someNotSelected && $v.form.nilaiTemuan.$model === null"
+                  class="text-error-multiselect"
+                  >Nilai temuan tidak boleh null</span
+                >
               </CCol>
-              <pre>{{ valueNilaiTemuan }}</pre>
+              <!-- <pre>{{ $v.form.nilaiTemuan }}</pre> -->
             </CRow>
 
             <!-- ROW 8 -->
@@ -389,7 +382,7 @@ export default {
       valueSubKlpTemuan: "",
       optionsSubKlpTemuan: [],
       editData: {},
-      valueNilaiTemuan: 0
+      someNotSelected: false
     };
   },
   computed: {
@@ -427,21 +420,15 @@ export default {
         this.$v.form.posisiKasus.$model = "";
         this.$v.form.modusOperandi.$model = "";
       }
-    },
-    valueNilaiTemuan: function(val) {
-      this.$v.form.nilaiTemuan.$model = val;
     }
   },
   async mounted() {
     await this.loadJenisTemuan();
-    // this.valueNilaiTemuan = 1;
 
     if (this.mode == "view") {
       await this.loadTemuanById();
     } else if (this.mode == "edit") {
       await this.loadEditTemuanById();
-
-      this.valueNilaiTemuan = this.form.nilaiTemuan;
 
       this.valueJenisTemuan = this.optionsJenisTemuan.filter(jt => {
         return jt.id == this.form.jenisTemuan;
@@ -458,8 +445,18 @@ export default {
       this.valueSubKlpTemuan = this.optionsSubKlpTemuan.filter(skt => {
         return skt.id == this.form.subKlpTemuan;
       })[0];
+    } else {
+      const dataTemuan = await this.$store.dispatch(
+        "module_temuan/loadTemuanCreate",
+        {
+          forceRefresh: false,
+          idLha: this.$route.query.idlha
+        }
+      );
 
-      // alert(this.form.nilaiTemuan);
+      this.$v.form.nomorTemuan.$model = this.$func.getNextNomorUrutFromArray(
+        dataTemuan.noTemuan
+      );
     }
 
     if (
@@ -569,10 +566,13 @@ export default {
       const listMultiselectValue = [
         this.valueJenisTemuan,
         this.valueKlpTemuan,
-        this.valueSubKlpTemuan
+        this.valueSubKlpTemuan,
+        this.$v.form.nilaiTemuan.$model
       ];
 
-      this.someNotSelected = listMultiselectValue.some(el => el == "");
+      this.someNotSelected = listMultiselectValue.some(
+        el => el == "" || el === null
+      );
     },
 
     reset() {

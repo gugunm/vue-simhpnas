@@ -13,10 +13,7 @@
       @on-send-lha="onSendLha"
       @on-load-lha="onLoadLha"
     />
-    <Loading
-      :active.sync="loading"
-      :is-full-page="true"
-    />
+    <Loading :active.sync="loading" :is-full-page="true" />
     <confirm-modal
       v-model="isDeleteConfirm"
       title="Hapus data"
@@ -35,89 +32,94 @@
 </template>
 
 <script>
-import TableLha from './TableLha.vue';
-import mixin from './mixin';
-import ConfirmModal from '@/components/Confirm/ConfirmModal.vue';
+import TableLha from "./TableLha.vue";
+import mixin from "./mixin";
+import ConfirmModal from "@/components/Confirm/ConfirmModal.vue";
 
-import Loading from 'vue-loading-overlay';
+import Loading from "vue-loading-overlay";
 
 const fields = [
   {
-    key: 'nomorLha',
-    label: 'Nomor LHA',
+    key: "statusLha",
+    label: "Status LHA",
+    align: "center"
   },
   {
-    key: 'tglLha',
-    label: 'Tanggal',
+    key: "nomorLha",
+    label: "Nomor LHA"
   },
   {
-    key: 'judulLaporan',
-    _style: 'width: 50%',
+    key: "tglLha",
+    label: "Tanggal"
   },
   {
-    key: 'bidangObrik',
-    label: 'Nama Obrik',
+    key: "judulLaporan",
+    _style: "width: 50%"
+  },
+  {
+    key: "bidangObrik",
+    label: "Nama Obrik"
     // _style: 'width: 30%',
   },
 
   {
-    key: 'jenisAnggaran',
+    key: "jenisAnggaran"
     // _style: 'width: 8%',
   },
 
   {
-    key: 'anggaranYangDiaudit',
+    key: "anggaranYangDiaudit"
     // _style: 'width: 15%',
   },
   {
-    key: 'jumlahTemuan',
+    key: "jumlahTemuan"
   },
   {
-    key: 'nilaiTemuan',
+    key: "nilaiTemuan"
   },
   {
-    key: 'jumlahRekomendasi',
+    key: "jumlahRekomendasi"
   },
   {
-    key: 'nilaiRekomendasi',
+    key: "nilaiRekomendasi"
   },
   {
-    key: 'jumlahTl',
-    label: 'Jumlah TL',
+    key: "jumlahTl",
+    label: "Jumlah TL"
   },
   {
-    key: 'nilaiTl',
-    label: 'Nilai TL',
-  },
+    key: "nilaiTl",
+    label: "Nilai TL"
+  }
 ];
 
 const fieldsKtOperator = [
   {
-    key: 'nomor',
-    label: 'No',
+    key: "nomor",
+    label: "No"
   },
   {
-    key: 'print',
-    label: 'Print',
+    key: "print",
+    label: "Print"
   },
   {
-    key: 'actions',
-    label: 'Aksi',
-    _style: 'width: 20%',
+    key: "actions",
+    label: "Aksi",
+    _style: "width: 20%"
   },
   {
-    key: 'send',
-    label: 'Kirim',
-  },
+    key: "send",
+    label: "Kirim"
+  }
 ];
 
 const fieldsDalnisDaltu = [
   {
-    key: 'nomor',
-    label: 'No',
+    key: "nomor",
+    label: "No"
   },
   {
-    key: 'print',
+    key: "print"
   },
   // {
   //   key: 'memoDalnisDaltu',
@@ -125,42 +127,42 @@ const fieldsDalnisDaltu = [
   //   _style: 'width: 10%',
   // },
   {
-    key: 'actionsDalnisDaltu',
-    label: 'Aksi',
-    _style: 'width: 10%',
-  },
+    key: "actionsDalnisDaltu",
+    label: "Aksi",
+    _style: "width: 10%"
+  }
 ];
 
 const fieldsAdmin = [
   {
-    key: 'nomor',
-    label: 'No',
+    key: "nomor",
+    label: "No"
   },
   {
-    key: 'actionsAdmin',
-    label: 'Aksi',
-    _style: 'width: 10%',
-  },
+    key: "actionsAdmin",
+    label: "Aksi",
+    _style: "width: 10%"
+  }
 ];
 
 export default {
-  name: 'LHA',
+  name: "LHA",
   components: {
     TableLha,
     ConfirmModal,
-    Loading,
+    Loading
   },
   mixins: [mixin],
   data() {
     return {
-      items: '',
+      items: "",
       fields: [],
       isDeleteConfirm: false,
       idToDelete: null,
       isSendLhaConfirm: false,
       idToSend: null,
-      level: '',
-      loading: false,
+      level: "",
+      loading: false
     };
   },
   watch: {
@@ -172,7 +174,7 @@ export default {
       ) {
         this.$router.go();
       }
-    },
+    }
   },
   async mounted() {
     await this.loadLha();
@@ -191,19 +193,19 @@ export default {
   methods: {
     openDetail(item) {
       this.$router.push({
-        name: 'module-detail-lha',
-        params: { idLha: item.id },
+        name: "module-detail-lha",
+        params: { idLha: item.id }
       });
     },
     openCreate() {
       this.$router.push({
-        name: 'module-create-lha',
+        name: "module-create-lha"
       });
     },
     openEdit(item) {
       this.$router.push({
-        name: 'module-edit-lha',
-        params: { idLha: item.id },
+        name: "module-edit-lha",
+        params: { idLha: item.id }
       });
     },
     openDeleteModal(id) {
@@ -213,9 +215,9 @@ export default {
     async actionDelete() {
       try {
         const response = await this.$store.dispatch(
-          'module_lha/deleteLhaById',
+          "module_lha/deleteLhaById",
           {
-            idLha: this.idToDelete,
+            idLha: this.idToDelete
           }
         );
 
@@ -224,12 +226,12 @@ export default {
         if (response.status == 200) {
           await this.loadLha();
 
-          this.toastSuccess(response.data['dataPelaku']);
-          this.toastSuccess(response.data['dataRekomendasi']);
-          this.toastSuccess(response.data['dataPenyebab']);
-          this.toastSuccess(response.data['dataTemuan']);
-          this.toastSuccess(response.data['dataTimAudit']);
-          this.toastSuccess(response.data['dataLha']);
+          this.toastSuccess(response.data["dataPelaku"]);
+          this.toastSuccess(response.data["dataRekomendasi"]);
+          this.toastSuccess(response.data["dataPenyebab"]);
+          this.toastSuccess(response.data["dataTemuan"]);
+          this.toastSuccess(response.data["dataTimAudit"]);
+          this.toastSuccess(response.data["dataLha"]);
         }
       } catch (error) {
         this.toastError(error.message);
@@ -238,14 +240,14 @@ export default {
     async loadLha(refresh = false) {
       this.loading = true;
       try {
-        await this.$store.dispatch('module_lha/loadLha', {
-          forceRefresh: refresh,
+        await this.$store.dispatch("module_lha/loadLha", {
+          forceRefresh: refresh
         });
-        this.items = this.$store.getters['module_lha/lha'];
+        this.items = this.$store.getters["module_lha/lha"];
 
         this.items = this.items.map((item, index) => ({
           no: index + 1,
-          ...item,
+          ...item
         }));
       } catch (error) {
         this.toastError(error.message);
@@ -260,15 +262,15 @@ export default {
 
     async actionSendLha() {
       try {
-        const res = await this.$store.dispatch('module_lha/sendLhaById', {
-          idLha: this.idToSend,
+        const res = await this.$store.dispatch("module_lha/sendLhaById", {
+          idLha: this.idToSend
         });
 
         this.isSendLhaConfirm = false;
 
         if (res.status == 200) {
           await this.loadLha();
-          this.toastSuccess('Berhasil mengirim LHA');
+          this.toastSuccess("Berhasil mengirim LHA");
         }
       } catch (error) {
         this.isSendLhaConfirm = false;
@@ -279,7 +281,7 @@ export default {
 
     async onLoadLha() {
       await this.loadLha();
-    },
-  },
+    }
+  }
 };
 </script>

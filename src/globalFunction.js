@@ -1,23 +1,6 @@
 export const func = {
   convertToRupiah: payload => {
-    let rupiah = "";
-    if (payload) {
-      const angkarev = payload
-        .toString()
-        .split("")
-        .reverse()
-        .join("");
-      for (var i = 0; i < angkarev.length; i++)
-        if (i % 3 == 0) rupiah += angkarev.substr(i, 3) + ".";
-      return (
-        "Rp " +
-        rupiah
-          .split("", rupiah.length - 1)
-          .reverse()
-          .join("")
-      );
-    }
-    return "Rp 0";
+    return payload ? "Rp " + payload.toLocaleString("id-ID") : "Rp 0";
   },
 
   rupiahToNumber: payload => {
@@ -30,5 +13,11 @@ export const func = {
 
   isGenap(value) {
     return value % 2 == 0 ? true : false;
+  },
+
+  getNextNomorUrutFromArray(currentLen) {
+    currentLen = currentLen < 10 ? "0" + currentLen : currentLen;
+
+    return currentLen;
   }
 };

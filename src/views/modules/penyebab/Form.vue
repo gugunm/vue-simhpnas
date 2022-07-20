@@ -82,7 +82,7 @@
                   <span
                     v-if="someNotSelected && valuePenyebab == ''"
                     class="text-error-multiselect"
-                    >Penyebab wajiib dipilih</span
+                    >Penyebab wajib dipilih</span
                   >
                 </div>
               </CCol>
@@ -90,8 +90,9 @@
 
             <!-- ROW 3 -->
             <CRow>
-              <CCol lg="8">
+              <CCol lg="12">
                 <CTextarea
+                  class="custom-textarea"
                   label="Memo Penyebab"
                   :lazy="false"
                   :value.sync="$v.form.memoPenyebab.$model"
@@ -233,6 +234,20 @@ export default {
       this.valuePenyebab = this.optionsPenyebab.filter(
         penyebab => penyebab.id == this.form.kodePenyebab
       )[0];
+    } else {
+      const dataPenyebab = await this.$store.dispatch(
+        "module_penyebab/loadPenyebabCreate",
+        {
+          forceRefresh: false,
+          idTemuan: this.$route.query.idtemuan
+        }
+      );
+
+      // console.log("---> dataPenyebab", dataPenyebab);
+
+      this.$v.form.nomorPenyebab.$model = this.$func.getNextNomorUrutFromArray(
+        dataPenyebab.noPenyebab
+      );
     }
   },
   validations: {

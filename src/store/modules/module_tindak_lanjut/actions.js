@@ -2,6 +2,29 @@ import axios from "axios";
 import { API_URL } from "@/utils/api.js";
 
 export default {
+  async loadTindakLanjutCreate(context, payload) {
+    const response = await axios({
+      method: "GET",
+      baseURL: API_URL,
+      url: "/api/tl/create",
+      params: {
+        kode_rekomendasi: payload.idRekomendasi,
+        token: localStorage.getItem("api_token")
+      }
+    });
+
+    const responseData = response.data;
+
+    if (response.status != 200) {
+      const error = new Error(
+        responseData.message || "Failed to fetch data unit kerja."
+      );
+      throw error;
+    }
+
+    return responseData;
+  },
+
   async loadTindakLanjut(context, payload) {
     const response = await axios({
       method: "GET",

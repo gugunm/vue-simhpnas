@@ -320,8 +320,8 @@
       <div class="text-right">
         <CTextarea
           v-model="textMemo"
+          class="custom-textarea py-2"
           rows="10"
-          class="py-2"
           :disabled="isLevelAccess"
           placeholder="Tuliskan memo disini.."
         />

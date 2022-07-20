@@ -99,7 +99,7 @@
                   <span
                     v-if="someNotSelected && valueRekomendasi == ''"
                     class="text-error-multiselect"
-                    >Rekomendasi wajiib dipilih</span
+                    >Rekomendasi wajib dipilih</span
                   >
                 </div>
               </CCol>
@@ -118,7 +118,7 @@
                   <span
                     v-if="someNotSelected && valueSubKlpRekomendasi == ''"
                     class="text-error-multiselect"
-                    >Sub rekomendasi wajiib dipilih</span
+                    >Sub rekomendasi wajib dipilih</span
                   >
                 </div>
               </CCol>
@@ -126,8 +126,9 @@
 
             <!-- ROW 4 -->
             <CRow>
-              <CCol lg="8">
+              <CCol lg="12">
                 <CTextarea
+                  class="custom-textarea"
                   label="Memo Rekomendasi"
                   :lazy="false"
                   :value.sync="$v.form.memoRekomendasi.$model"
@@ -141,22 +142,44 @@
             </CRow>
 
             <!-- ROW 5 -->
-            <CRow>
+            <CRow class="mb-4">
               <CCol lg="2">
-                <CInput
-                  label="Nilai Temuan"
+                <label>Nilai Temuan</label>
+                <CurrencyInput
                   :value="$route.query.nilaitemuan || editData.nilaiTemuan"
                   :disabled="true"
                 />
               </CCol>
               <CCol lg="2">
+                <label>Nilai Rekomendasi</label>
+                <CurrencyInput
+                  :value="$v.form.nilaiRekomendasi.$model"
+                  :disabled="mode == 'view'"
+                  @change="$v.form.nilaiRekomendasi.$model = $event"
+                />
+                <span
+                  v-if="
+                    someNotSelected && $v.form.nilaiRekomendasi.$model === null
+                  "
+                  class="text-error-multiselect"
+                  >Nilai rekomendasi tidak boleh null</span
+                >
+              </CCol>
+              <!-- <CCol lg="2">
+                <CInput
+                  label="Nilai Temuan"
+                  :value="$route.query.nilaitemuan || editData.nilaiTemuan"
+                  :disabled="true"
+                />
+              </CCol> -->
+              <!-- <CCol lg="2">
                 <CInput
                   label="Nilai Rekomendasi"
                   type="number"
                   :value.sync="$v.form.nilaiRekomendasi.$model"
                   :disabled="mode == 'view'"
                 />
-              </CCol>
+              </CCol> -->
             </CRow>
 
             <CRow class="mb-4">
@@ -265,12 +288,14 @@ import { required, minLength, maxLength } from "vuelidate/lib/validators";
 import ConfirmModal from "@/components/Confirm/ConfirmModal.vue";
 import mixin from "./mixin";
 import Multiselect from "vue-multiselect";
+import CurrencyInput from "@/components/CustomInput/CurrencyInput.vue";
 
 export default {
   name: "LhaForm",
   components: {
     ConfirmModal,
-    Multiselect
+    Multiselect,
+    CurrencyInput
   },
   mixins: [validationMixin, mixin],
   props: ["mode", "selectedItem", "idRekomendasi"],
@@ -289,7 +314,8 @@ export default {
       optionsRekomendasi: [],
       valueSubKlpRekomendasi: "",
       optionsSubKlpRekomendasi: [],
-      editData: {}
+      editData: {},
+      someNotSelected: false
     };
   },
   computed: {
@@ -325,6 +351,18 @@ export default {
   async mounted() {
     if (this.mode == "create") {
       await this.loadSearchRekomendasi();
+
+      const dataRekomendasi = await this.$store.dispatch(
+        "module_rekomendasi/loadRekomendasiCreate",
+        {
+          forceRefresh: false,
+          idTemuan: this.$route.query.idtemuan
+        }
+      );
+
+      this.$v.form.nomorRekomendasi.$model = this.$func.getNextNomorUrutFromArray(
+        dataRekomendasi.noRekomendasi
+      );
     } else if (this.mode == "view") {
       await this.loadRekomendasiById();
     } else if (this.mode == "edit") {
@@ -439,10 +477,13 @@ export default {
 
       const listMultiselectValue = [
         this.valueRekomendasi,
-        this.valueSubKlpRekomendasi
+        this.valueSubKlpRekomendasi,
+        this.$v.form.nilaiRekomendasi.$model
       ];
 
-      this.someNotSelected = listMultiselectValue.some(el => el == "");
+      this.someNotSelected = listMultiselectValue.some(
+        el => el == "" || el === null
+      );
     },
 
     reset() {

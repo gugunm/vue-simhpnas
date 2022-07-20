@@ -57,7 +57,8 @@ export default {
         isStored: responseData[key]["is_stored"],
         flagTemuanNihil: responseData[key]["flagTemuanNihil"],
         catatanDalnis: responseData[key]["Catatan_Dalnis"],
-        catatanDaltu: responseData[key]["Catatan_Daltu"]
+        catatanDaltu: responseData[key]["Catatan_Daltu"],
+        statusLha: responseData[key]["statusLha"]
       };
       lha.push(data);
     }

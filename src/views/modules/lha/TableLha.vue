@@ -30,6 +30,11 @@
           :table-filter="{ label: 'Search: ', placeholder: 'teks..' }"
           :items-per-page-select="{ label: 'Item per halaman: ' }"
         >
+          <template #statusLha="{ item }">
+            <td class="font-semibold text-center">
+              <p>{{ item.statusLha }}</p>
+            </td>
+          </template>
           <template #nomor="{ item }">
             <td class="font-semibold">
               {{ item.no + "/" + items.length }}
@@ -332,8 +337,8 @@
       <div class="text-right">
         <CTextarea
           v-model="textMemo"
+          class="custom-textarea py-2"
           rows="10"
-          class="py-2"
           :disabled="isLevelAccess"
           placeholder="Tuliskan memo disini.."
         />

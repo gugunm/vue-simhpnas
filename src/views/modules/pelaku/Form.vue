@@ -124,7 +124,7 @@
                   <span
                     v-if="someNotSelected && valueJabatan == ''"
                     class="text-error-multiselect"
-                    >Jabatan wajiib dipilih</span
+                    >Jabatan wajib dipilih</span
                   >
                 </div>
               </CCol>
@@ -133,6 +133,7 @@
             <CRow>
               <CCol lg="8">
                 <CTextarea
+                  class="custom-textarea"
                   label="Memo Kesalahan"
                   :lazy="false"
                   :value.sync="$v.form.memoKesalahan.$model"
@@ -275,6 +276,20 @@ export default {
       this.valueJabatan = this.optionsJabatan.filter(
         jabatan => jabatan.id == this.form.idJabatan
       )[0];
+    } else {
+      const dataPelaku = await this.$store.dispatch(
+        "module_pelaku/loadPelakuCreate",
+        {
+          forceRefresh: false,
+          idRekomendasi: this.$route.query.idrekomendasi
+        }
+      );
+
+      // console.log("--> Data TL : ", dataTl);
+
+      this.$v.form.nomorUrut.$model = this.$func.getNextNomorUrutFromArray(
+        dataPelaku.noPelaku
+      );
     }
   },
   validations: {
@@ -282,7 +297,7 @@ export default {
       nomorUrut: {
         required,
         minLength: minLength(1),
-        maxLength: maxLength(1)
+        maxLength: maxLength(2)
       },
       nama: {
         required

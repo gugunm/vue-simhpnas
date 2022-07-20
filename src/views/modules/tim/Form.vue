@@ -77,7 +77,7 @@
                   <span
                     v-if="someNotSelected && valuePeran == ''"
                     class="text-error-multiselect"
-                    >Peran wajiib dipilih</span
+                    >Peran wajib dipilih</span
                   >
                 </div>
               </CCol>

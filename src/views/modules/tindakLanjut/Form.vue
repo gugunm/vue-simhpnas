@@ -120,7 +120,7 @@
                   <span
                     v-if="someNotSelected && valueKlpTl == ''"
                     class="text-error-multiselect"
-                    >Kelompok TL wajiib dipilih</span
+                    >Kelompok TL wajib dipilih</span
                   >
                 </div>
               </CCol>
@@ -145,7 +145,7 @@
                   <span
                     v-if="someNotSelected && valueSubKlpTl == ''"
                     class="text-error-multiselect"
-                    >Sub kelompok TL wajiib dipilih</span
+                    >Sub kelompok TL wajib dipilih</span
                   >
                 </div>
               </CCol>
@@ -153,8 +153,9 @@
 
             <!-- ROW 4 -->
             <CRow>
-              <CCol lg="8">
+              <CCol lg="12">
                 <CTextarea
+                  class="custom-textarea"
                   label="Memo Tindak Lanjut"
                   :lazy="false"
                   :value.sync="$v.form.memoTl.$model"
@@ -168,10 +169,10 @@
             </CRow>
 
             <!-- ROW 5 -->
-            <CRow>
+            <CRow class="mb-4">
               <CCol lg="2">
-                <CInput
-                  label="Nilai Rekomendasi"
+                <label>Nilai Rekomendasi</label>
+                <CurrencyInput
                   :value="
                     $route.query.nilairekomendasi ||
                       editData.nilaiRekomendasi ||
@@ -181,6 +182,30 @@
                 />
               </CCol>
               <CCol lg="2">
+                <label>Nilai Tindak Lanjut</label>
+                <CurrencyInput
+                  :value="$v.form.nilaiTl.$model"
+                  :disabled="mode == 'view'"
+                  @change="$v.form.nilaiTl.$model = $event"
+                />
+                <span
+                  v-if="someNotSelected && $v.form.nilaiTl.$model === null"
+                  class="text-error-multiselect"
+                  >Nilai tindak lanjut tidak boleh null</span
+                >
+              </CCol>
+              <!-- <CCol lg="2">
+                <CInput
+                  label="Nilai Rekomendasi"
+                  :value="
+                    $route.query.nilairekomendasi ||
+                      editData.nilaiRekomendasi ||
+                      form.nilaiRekomendasi
+                  "
+                  :disabled="true"
+                />
+              </CCol> -->
+              <!-- <CCol lg="2">
                 <CInput
                   type="number"
                   label="Nilai Tindak Lanjut"
@@ -192,7 +217,7 @@
                   invalid-feedback="Nilai TL wajib diisi"
                   :disabled="mode == 'view'"
                 />
-              </CCol>
+              </CCol> -->
             </CRow>
 
             <!-- editData.uploadFileTl -->
@@ -354,13 +379,15 @@ import ConfirmModal from "@/components/Confirm/ConfirmModal.vue";
 import mixin from "./mixin";
 import Multiselect from "vue-multiselect";
 import { DatePicker } from "v-calendar";
+import CurrencyInput from "@/components/CustomInput/CurrencyInput.vue";
 
 export default {
   name: "LhaForm",
   components: {
     ConfirmModal,
     Multiselect,
-    "v-date-picker": DatePicker
+    "v-date-picker": DatePicker,
+    CurrencyInput
   },
   mixins: [validationMixin, mixin],
   props: ["mode", "selectedItem", "idTl"],
@@ -382,7 +409,8 @@ export default {
       },
       isStoredTl: true,
       isOpenFile: false,
-      selectedDateTl: new Date()
+      selectedDateTl: new Date(),
+      someNotSelected: false
     };
   },
   computed: {
@@ -436,6 +464,20 @@ export default {
       this.valueSubKlpTl = this.optionsSubKlpTl.filter(
         data => data.id == this.form.subKlpTl
       )[0];
+    } else {
+      const dataTl = await this.$store.dispatch(
+        "module_tindak_lanjut/loadTindakLanjutCreate",
+        {
+          forceRefresh: false,
+          idRekomendasi: this.$route.query.idrekomendasi
+        }
+      );
+
+      // console.log("--> Data TL : ", dataTl);
+
+      this.$v.form.nomorTl.$model = this.$func.getNextNomorUrutFromArray(
+        dataTl.noTl
+      );
     }
   },
   validations: {
@@ -443,7 +485,7 @@ export default {
       nomorTl: {
         required,
         minLength: minLength(1),
-        maxLength: maxLength(1)
+        maxLength: maxLength(2)
       },
       klpTl: {
         required
@@ -577,9 +619,15 @@ export default {
     validate() {
       this.$v.$touch();
 
-      const listMultiselectValue = [this.valueKlpTl, this.valueSubKlpTl];
+      const listMultiselectValue = [
+        this.valueKlpTl,
+        this.valueSubKlpTl,
+        this.$v.form.nilaiTl.$model
+      ];
 
-      this.someNotSelected = listMultiselectValue.some(el => el == "");
+      this.someNotSelected = listMultiselectValue.some(
+        el => el == "" || el === null
+      );
     },
 
     reset() {

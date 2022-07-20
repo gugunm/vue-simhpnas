@@ -1,25 +1,45 @@
-import axios from 'axios';
-import { API_URL } from '@/utils/api.js'
+import axios from "axios";
+import { API_URL } from "@/utils/api.js";
 
 export default {
-  async loadTemuan(context, payload) {
+  async loadTemuanCreate(context, payload) {
     const response = await axios({
-      method: 'GET',
+      method: "GET",
       baseURL: API_URL,
       headers: { "Content-Type": "application/json" },
-      url: '/api/temuan',
+      url: "/api/temuan/create",
       params: {
         kode_lha: payload.idLha,
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
+
+    const responseData = response.data;
+
+    if (response.status != 200) {
+      const error = new Error(responseData.message || "Failed to fetch data");
+      throw error;
+    }
+
+    return responseData;
+  },
+
+  async loadTemuan(context, payload) {
+    const response = await axios({
+      method: "GET",
+      baseURL: API_URL,
+      headers: { "Content-Type": "application/json" },
+      url: "/api/temuan",
+      params: {
+        kode_lha: payload.idLha,
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
 
     if (response.status != 200) {
-      const error = new Error(
-        responseData.message || 'Failed to fetch data'
-      );
+      const error = new Error(responseData.message || "Failed to fetch data");
       throw error;
     }
 
@@ -48,32 +68,30 @@ export default {
         jumlahSaldoRekomendasi: responseData[key]["Nilai_Rekomendasi"],
         nilaiTl: responseData[key]["Nilai_TL"],
         statusTemuan: responseData[key]["Status_Temuan"],
-        memoKoreksiTemuan: responseData[key]["Memo_Koreksi_Tem"],
+        memoKoreksiTemuan: responseData[key]["Memo_Koreksi_Tem"]
       };
 
       temuan.push(data);
     }
 
-    context.commit('setTemuan', temuan);
-    context.commit('setFetchTimestamp');
+    context.commit("setTemuan", temuan);
+    context.commit("setFetchTimestamp");
   },
 
   async loadTemuanById(context, payload) {
     const response = await axios({
-      method: 'GET',
+      method: "GET",
       baseURL: API_URL,
       url: `/api/temuan/${payload.idTemuan}`,
       params: {
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
 
     if (response.status != 200) {
-      const error = new Error(
-        responseData.message || 'Failed to fetch data'
-      );
+      const error = new Error(responseData.message || "Failed to fetch data");
       throw error;
     }
 
@@ -97,80 +115,74 @@ export default {
       jumlahSaldoRekomendasi: responseData["Jumlah_Saldo_Rekomendasi"],
       nilaiTl: responseData["Nilai_TL"],
       statusTemuan: responseData["Status_Temuan"],
-      memoKoreksiTemuan: responseData["Memo_Koreksi_Tem"],
+      memoKoreksiTemuan: responseData["Memo_Koreksi_Tem"]
     };
 
-    context.commit('setTemuanById', data);
+    context.commit("setTemuanById", data);
   },
 
   async createTemuan(context, payload) {
     const response = await axios({
-      method: 'POST',
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       data: payload,
       baseURL: API_URL,
-      url: '/api/temuan',
+      url: "/api/temuan",
       params: {
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
-    
+
     if (response.status != 200) {
-      const error = new Error(
-        responseData.message || 'Failed to save data'
-      );
+      const error = new Error(responseData.message || "Failed to save data");
       throw error;
     }
-    
-    return responseData
+
+    return responseData;
   },
 
   async deleteTemuanById(context, payload) {
     const response = await axios({
-      method: 'DELETE',
+      method: "DELETE",
       headers: { "Content-Type": "application/json" },
       baseURL: API_URL,
       url: `/api/temuan/${payload.idTemuan}`,
       params: {
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
 
     if (response.status != 200) {
-      const error = new Error(
-        responseData.message || 'Failed to delete data'
-      );
+      const error = new Error(responseData.message || "Failed to delete data");
       throw error;
     }
 
-    return response
+    return response;
   },
 
-  async updateTemuanById(context, payload){
+  async updateTemuanById(context, payload) {
     const response = await axios({
-      method: 'POST',
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       data: payload.data,
       baseURL: API_URL,
       url: `/api/temuan/${payload.idTemuan}`,
       params: {
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
 
     if (response.status != 200) {
-      const error = new Error(
-        responseData.message || 'Failed to update data'
-      );
+      const error = new Error(responseData.message || "Failed to update data");
       throw error;
     }
 
-    return response
-  },
-}
+    return response;
+  }
+};

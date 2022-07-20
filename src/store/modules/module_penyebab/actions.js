@@ -1,23 +1,45 @@
-import axios from 'axios';
-import { API_URL } from '@/utils/api.js'
+import axios from "axios";
+import { API_URL } from "@/utils/api.js";
 
 export default {
-  async loadPenyebab(context, payload) {
+  async loadPenyebabCreate(context, payload) {
     const response = await axios({
-      method: 'GET',
+      method: "GET",
       baseURL: API_URL,
-      url: '/api/datapenyebab',
+      headers: { "Content-Type": "application/json" },
+      url: "/api/datapenyebab/create",
       params: {
         kode_temuan: payload.idTemuan,
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
+
+    const responseData = response.data;
+
+    if (response.status != 200) {
+      const error = new Error(responseData.message || "Failed to fetch data");
+      throw error;
+    }
+
+    return responseData;
+  },
+
+  async loadPenyebab(context, payload) {
+    const response = await axios({
+      method: "GET",
+      baseURL: API_URL,
+      url: "/api/datapenyebab",
+      params: {
+        kode_temuan: payload.idTemuan,
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
 
     if (response.status != 200) {
       const error = new Error(
-        responseData.message || 'Failed to fetch data unit kerja.'
+        responseData.message || "Failed to fetch data unit kerja."
       );
       throw error;
     }
@@ -34,31 +56,29 @@ export default {
         nomorPenyebab: responseData[key]["Nomor_Penyebab"],
         refKodePenyebab: responseData[key]["Ref_Kode_Penyebab"],
         deskripsi: responseData[key]["diskripsi"],
-        memoPenyebab: responseData[key]["Memo_Penyebab"],        
+        memoPenyebab: responseData[key]["Memo_Penyebab"]
       };
       penyebab.push(data);
     }
 
-    context.commit('setPenyebab', penyebab);
-    context.commit('setFetchTimestamp');
+    context.commit("setPenyebab", penyebab);
+    context.commit("setFetchTimestamp");
   },
 
   async loadPenyebabById(context, payload) {
     const response = await axios({
-      method: 'GET',
+      method: "GET",
       baseURL: API_URL,
       url: `/api/datapenyebab/${payload.idPenyebab}`,
       params: {
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
 
     if (response.status != 200) {
-      const error = new Error(
-        responseData.message || 'Failed to fetch data'
-      );
+      const error = new Error(responseData.message || "Failed to fetch data");
       throw error;
     }
 
@@ -71,80 +91,74 @@ export default {
       nomorPenyebab: responseData["Nomor_Penyebab"],
       refKodePenyebab: responseData["Ref_Kode_Penyebab"],
       deskripsi: responseData["diskripsi"],
-      memoPenyebab: responseData["Memo_Penyebab"],        
+      memoPenyebab: responseData["Memo_Penyebab"]
     };
 
-    context.commit('setPenyebabById', data);
+    context.commit("setPenyebabById", data);
   },
 
   async createPenyebab(context, payload) {
     const response = await axios({
-      method: 'POST',
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       data: payload,
       baseURL: API_URL,
-      url: '/api/datapenyebab',
+      url: "/api/datapenyebab",
       params: {
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
-    
+
     if (response.status != 200) {
-      const error = new Error(
-        responseData.message || 'Failed to save data'
-      );
+      const error = new Error(responseData.message || "Failed to save data");
       throw error;
     }
-    
-    return responseData
+
+    return responseData;
   },
 
   async deletePenyebabById(context, payload) {
     const response = await axios({
-      method: 'DELETE',
+      method: "DELETE",
       headers: { "Content-Type": "application/json" },
       baseURL: API_URL,
       url: `/api/datapenyebab/${payload.idPenyebab}`,
       params: {
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
 
     if (response.status != 200) {
-      const error = new Error(
-        responseData.message || 'Failed to delete data'
-      );
+      const error = new Error(responseData.message || "Failed to delete data");
       throw error;
     }
 
-    return response
+    return response;
   },
 
-  async updatePenyebabById(context, payload){
+  async updatePenyebabById(context, payload) {
     const response = await axios({
-      method: 'POST',
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       data: payload.data,
       baseURL: API_URL,
       url: `/api/datapenyebab/${payload.idPenyebab}`,
       params: {
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
 
     if (response.status != 200) {
-      const error = new Error(
-        responseData.message || 'Failed to update data'
-      );
+      const error = new Error(responseData.message || "Failed to update data");
       throw error;
     }
 
-    return response
-  },
-}
+    return response;
+  }
+};

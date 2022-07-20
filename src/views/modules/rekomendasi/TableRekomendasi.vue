@@ -420,9 +420,11 @@ export default {
       id,
       nomorTemuan,
       subKelompokTemuan,
-      kodeSubKelompokTemuan
+      kodeSubKelompokTemuan,
+      memoTemuan
     }) {
-      return `${nomorTemuan} - (${kodeSubKelompokTemuan}) ${subKelompokTemuan} `;
+      // return `${nomorTemuan} - (${kodeSubKelompokTemuan}) ${subKelompokTemuan} `;
+      return `(${nomorTemuan} - ${kodeSubKelompokTemuan}) ${memoTemuan}`;
     },
 
     onAddPelaku(item) {

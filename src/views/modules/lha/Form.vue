@@ -146,7 +146,7 @@
                     <span
                       v-if="someNotSelected && valueGroupLingkupAudit == ''"
                       class="text-error-multiselect"
-                      >Institusi wajiib dipilih</span
+                      >Institusi wajib dipilih</span
                     >
                   </div>
                 </CCol>
@@ -165,7 +165,7 @@
                     <span
                       v-if="someNotSelected && valueLingkupAudit == ''"
                       class="text-error-multiselect"
-                      >Jenis kegiatan wajiib dipilih</span
+                      >Jenis kegiatan wajib dipilih</span
                     >
                   </div>
                 </CCol>
@@ -173,6 +173,7 @@
               <CRow>
                 <CCol lg="10">
                   <CTextarea
+                    class="custom-textarea"
                     type=""
                     label="Ringkasan LHA"
                     :lazy="false"
@@ -195,7 +196,9 @@
                   />
                 </CCol>
                 <!-- <pre>{{ isTemuanNihil }}</pre> -->
-                <CCol lg="3">
+
+                <span v-if="mode == 'edit' && editData.flagTemuanNihil == 0" />
+                <CCol v-else lg="3">
                   <CInputCheckbox
                     :is-valid="checkIfValid('flagTemuanNihil')"
                     :checked.sync="$v.form.flagTemuanNihil.$model"
@@ -232,6 +235,7 @@
               <CRow>
                 <CCol lg="8">
                   <CTextarea
+                    class="custom-textarea"
                     type=""
                     label="Judul Laporan"
                     :lazy="false"
@@ -260,7 +264,7 @@
                     <span
                       v-if="someNotSelected && valueJenisObrik == ''"
                       class="text-error-multiselect"
-                      >Jenis obrik wajiib dipilih</span
+                      >Jenis obrik wajib dipilih</span
                     >
                   </div>
                 </CCol>
@@ -282,7 +286,7 @@
                     <span
                       v-if="someNotSelected && valueUnitObrik == ''"
                       class="text-error-multiselect"
-                      >Unit obrik wajiib dipilih</span
+                      >Unit obrik wajib dipilih</span
                     >
                   </div>
                 </CCol>
@@ -301,7 +305,7 @@
                     <span
                       v-if="someNotSelected && valueBidangObrik == ''"
                       class="text-error-multiselect"
-                      >Bidang obrik wajiib dipilih</span
+                      >Bidang obrik wajib dipilih</span
                     >
                   </div>
                 </CCol>
@@ -320,7 +324,7 @@
                     <!-- <span
                       v-if="someNotSelected && valueSubBidangObrik == ''"
                       class="text-error-multiselect"
-                      >Subbidang obrik wajiib dipilih</span
+                      >Subbidang obrik wajib dipilih</span
                     > -->
                   </div>
                 </CCol>
@@ -387,48 +391,54 @@
                     <span
                       v-if="someNotSelected && valueJenisAnggaran == ''"
                       class="text-error-multiselect"
-                      >Jenis anggaran wajiib dipilih</span
+                      >Jenis anggaran wajib dipilih</span
                     >
                   </div>
                 </CCol>
               </CRow>
               <!-- ROW 2 -->
-              <CRow>
+              <CRow class="mb-4">
                 <CCol lg="2">
-                  <CInput
-                    type="number"
-                    label="Rencana"
-                    :lazy="false"
-                    :value.sync="$v.form.nilaiRencana.$model"
-                    :is-valid="checkIfValid('nilaiRencana')"
-                    placeholder="Rencana"
-                    autocomplete="nilaiRencana"
-                    invalid-feedback="Rencana wajib diisi"
+                  <label>Nilai Rencana</label>
+                  <CurrencyInput
+                    :value="$v.form.nilaiRencana.$model"
+                    @change="$v.form.nilaiRencana.$model = $event"
                   />
+                  <span
+                    v-if="
+                      someNotSelected && $v.form.nilaiRencana.$model === null
+                    "
+                    class="text-error-multiselect"
+                    >Nilai rencana tidak boleh null</span
+                  >
                 </CCol>
                 <CCol lg="2">
-                  <CInput
-                    type="number"
-                    label="Realisasi"
-                    :lazy="false"
-                    :value.sync="$v.form.nilaiRealisasi.$model"
-                    :is-valid="checkIfValid('nilaiRealisasi')"
-                    placeholder="Realisasi"
-                    autocomplete="nilaiRealisasi"
-                    invalid-feedback="Realisasi wajib diisi"
+                  <label>Nilai Realisasi</label>
+                  <CurrencyInput
+                    :value="$v.form.nilaiRealisasi.$model"
+                    @change="$v.form.nilaiRealisasi.$model = $event"
                   />
+                  <span
+                    v-if="
+                      someNotSelected && $v.form.nilaiRealisasi.$model === null
+                    "
+                    class="text-error-multiselect"
+                    >Nilai realisasi tidak boleh null</span
+                  >
                 </CCol>
                 <CCol lg="2">
-                  <CInput
-                    type="number"
-                    label="Yang Diaudit"
-                    :lazy="false"
-                    :value.sync="$v.form.nilaiDiaudit.$model"
-                    :is-valid="checkIfValid('nilaiDiaudit')"
-                    placeholder="Yang Diaudit"
-                    autocomplete="nilaiDiaudit"
-                    invalid-feedback="Yang Diaudit wajib diisi"
+                  <label>Nilai yang Diaudit</label>
+                  <CurrencyInput
+                    :value="$v.form.nilaiDiaudit.$model"
+                    @change="$v.form.nilaiDiaudit.$model = $event"
                   />
+                  <span
+                    v-if="
+                      someNotSelected && $v.form.nilaiDiaudit.$model === null
+                    "
+                    class="text-error-multiselect"
+                    >Nilai yang diaudit tidak boleh null</span
+                  >
                 </CCol>
               </CRow>
             </div>
@@ -467,7 +477,7 @@
                     <span
                       v-if="someNotSelected && valueKelurahan == ''"
                       class="text-error-multiselect"
-                      >Kelurahan/Desa wajiib dipilih</span
+                      >Kelurahan/Desa wajib dipilih</span
                     >
                   </div>
                 </CCol>
@@ -663,6 +673,7 @@ import Multiselect from "vue-multiselect";
 import { DatePicker } from "v-calendar";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import MaskedInput from "vue-text-mask";
+import CurrencyInput from "@/components/CustomInput/CurrencyInput.vue";
 
 export default {
   name: "LhaForm",
@@ -670,7 +681,8 @@ export default {
     ConfirmModal,
     Multiselect,
     // MaskedInput,
-    "v-date-picker": DatePicker
+    "v-date-picker": DatePicker,
+    CurrencyInput
   },
   mixins: [mixin, validationMixin],
   props: ["mode", "selectedItem", "idLha"],
@@ -1044,10 +1056,15 @@ export default {
         this.valueBidangObrik,
         // this.valueSubBidangObrik,
         this.valueJenisAnggaran,
-        this.valueKelurahan
+        this.valueKelurahan,
+        this.$v.form.nilaiRencana.$model,
+        this.$v.form.nilaiRealisasi.$model,
+        this.$v.form.nilaiDiaudit.$model
       ];
 
-      this.someNotSelected = listMultiselectValue.some(el => el == "");
+      this.someNotSelected = listMultiselectValue.some(
+        el => el == "" || el === null
+      );
     },
 
     reset() {

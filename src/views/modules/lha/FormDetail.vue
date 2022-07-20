@@ -129,6 +129,7 @@
                 <CRow>
                   <CCol lg="12">
                     <CTextarea
+                      class="custom-textarea"
                       rows="5"
                       label="Ringkasan LHA"
                       :value="form.ringkasanLha"
@@ -150,6 +151,7 @@
                 <CRow>
                   <CCol lg="12">
                     <CTextarea
+                      class="custom-textarea"
                       rows="3"
                       label="Judul Laporan"
                       :value="form.judulLaporan"
@@ -377,6 +379,7 @@
                     <CRow>
                       <CCol lg="6">
                         <CTextarea
+                          class="custom-textarea"
                           row="3"
                           label="Jenis Temuan"
                           :value="itemTemuan.jenisTemuan"
@@ -385,6 +388,7 @@
                       </CCol>
                       <CCol lg="6">
                         <CTextarea
+                          class="custom-textarea"
                           row="3"
                           label="Kelompok Temuan"
                           :value="itemTemuan.kelompokTemuan"
@@ -402,6 +406,7 @@
                       </CCol>
                       <CCol lg="6">
                         <CTextarea
+                          class="custom-textarea"
                           row="3"
                           label="Sub Kelompok Temuan"
                           :value="itemTemuan.subKelompokTemuan"
@@ -412,6 +417,7 @@
                     <CRow>
                       <CCol lg="12">
                         <CTextarea
+                          class="custom-textarea"
                           row="3"
                           label="Memo Temuan"
                           :value="itemTemuan.memoTemuan"
@@ -464,6 +470,7 @@
                               <CRow>
                                 <CCol lg="12">
                                   <CTextarea
+                                    class="custom-textarea"
                                     row="4"
                                     label="Memo Penyebab"
                                     :value="itemPenyebab.memoPenyebab"
@@ -505,6 +512,7 @@
                               <CRow>
                                 <CCol lg="6">
                                   <CTextarea
+                                    class="custom-textarea"
                                     label="Kelompok Rekomendasi"
                                     :value="itemRek.kelompokRekomendasi"
                                     :readonly="true"
@@ -512,6 +520,7 @@
                                 </CCol>
                                 <CCol lg="6">
                                   <CTextarea
+                                    class="custom-textarea"
                                     label="Sub Kelompok Rekomendasi"
                                     :value="itemRek.subKelompokRekomendasi"
                                     :readonly="true"
@@ -537,6 +546,7 @@
                               <CRow>
                                 <CCol lg="12">
                                   <CTextarea
+                                    class="custom-textarea"
                                     label="Memo Rekomendasi"
                                     :value="itemRek.memoRekomendasi"
                                     :readonly="true"
@@ -597,6 +607,7 @@
                                         <CRow>
                                           <CCol lg="12">
                                             <CTextarea
+                                              class="custom-textarea"
                                               label="Memo Kesalahan"
                                               :value="itemPelaku.memoKesalahan"
                                               :readonly="true"
@@ -638,6 +649,7 @@
                                         <CRow>
                                           <CCol lg="6">
                                             <CTextarea
+                                              class="custom-textarea"
                                               label="Kelompok TL"
                                               :value="itemTl.kelompokTl"
                                               :readonly="true"
@@ -645,6 +657,7 @@
                                           </CCol>
                                           <CCol lg="6">
                                             <CTextarea
+                                              class="custom-textarea"
                                               label="Sub Kelompok TL"
                                               :value="itemTl.subKelompokTl"
                                               :readonly="true"
@@ -663,6 +676,7 @@
                                         <CRow>
                                           <CCol lg="12">
                                             <CTextarea
+                                              class="custom-textarea"
                                               label="Memo TL"
                                               :value="itemTl.memoTl"
                                               :readonly="true"

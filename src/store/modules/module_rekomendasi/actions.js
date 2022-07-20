@@ -1,24 +1,43 @@
-import axios from 'axios';
-import { API_URL } from '@/utils/api.js'
+import axios from "axios";
+import { API_URL } from "@/utils/api.js";
 
 export default {
-  async loadRekomendasi(context, payload) {
+  async loadRekomendasiCreate(context, payload) {
     const response = await axios({
-      method: 'GET',
+      method: "GET",
       baseURL: API_URL,
-      url: '/api/rekomendasi',
+      url: "/api/rekomendasi/create",
       params: {
         kode_temuan: payload.idTemuan,
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
+
+    const responseData = response.data;
+
+    if (response.status != 200) {
+      const error = new Error(responseData.message || "Failed to fetch data");
+      throw error;
+    }
+
+    return responseData;
+  },
+
+  async loadRekomendasi(context, payload) {
+    const response = await axios({
+      method: "GET",
+      baseURL: API_URL,
+      url: "/api/rekomendasi",
+      params: {
+        kode_temuan: payload.idTemuan,
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
 
     if (response.status != 200) {
-      const error = new Error(
-        responseData.message || 'Failed to fetch data'
-      );
+      const error = new Error(responseData.message || "Failed to fetch data");
       throw error;
     }
 
@@ -34,7 +53,8 @@ export default {
         nomorRekomendasi: responseData[key]["Nomor_Rekomendasi"],
         kodeKelompokRekomendasi: responseData[key]["Kode_Kelompok_Rekomendasi"],
         kelompokRekomendasi: responseData[key]["Kelompok_Rekomendasi"],
-        kodeSubKelompokRekomendasi: responseData[key]["Kode_Sub_Kelompok_Rekomendasi"],
+        kodeSubKelompokRekomendasi:
+          responseData[key]["Kode_Sub_Kelompok_Rekomendasi"],
         subKelompokRekomendasi: responseData[key]["Sub_Kelompok_Rekomendasi"],
         memoRekomendasi: responseData[key]["Memo_Rekomendasi"],
         flagPelaku: responseData[key]["Flag_Pelaku"],
@@ -48,32 +68,29 @@ export default {
         kodeBidangObrikTl: responseData[key]["Kode_Bidang_Obrik_TL"],
         bidangObrik: responseData[key]["Bidang_Obrik"],
         kodeSubBidangObrikTl: responseData[key]["Kode_Sub_Bidang_Obrik_TL"],
-        subBidangObrik: responseData[key]["Sub_Bidang_Obrik"],
-
+        subBidangObrik: responseData[key]["Sub_Bidang_Obrik"]
       };
       rekomendasi.push(data);
     }
 
-    context.commit('setRekomendasi', rekomendasi);
-    context.commit('setFetchTimestamp');
+    context.commit("setRekomendasi", rekomendasi);
+    context.commit("setFetchTimestamp");
   },
 
   async loadRekomendasiById(context, payload) {
     const response = await axios({
-      method: 'GET',
+      method: "GET",
       baseURL: API_URL,
       url: `/api/rekomendasi/${payload.idRekomendasi}`,
       params: {
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
 
     if (response.status != 200) {
-      const error = new Error(
-        responseData.message || 'Failed to fetch data'
-      );
+      const error = new Error(responseData.message || "Failed to fetch data");
       throw error;
     }
 
@@ -100,53 +117,49 @@ export default {
       kodeBidangObrikTl: responseData["Kode_Bidang_Obrik_TL"],
       bidangObrik: responseData["Bidang_Obrik"],
       kodeSubBidangObrikTl: responseData["Kode_Sub_Bidang_Obrik_TL"],
-      subBidangObrik: responseData["Sub_Bidang_Obrik"],
+      subBidangObrik: responseData["Sub_Bidang_Obrik"]
     };
 
-    context.commit('setRekomendasiById', data);
+    context.commit("setRekomendasiById", data);
   },
 
   async createRekomendasi(context, payload) {
     const response = await axios({
-      method: 'POST',
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       data: payload,
       baseURL: API_URL,
-      url: '/api/rekomendasi',
+      url: "/api/rekomendasi",
       params: {
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
-    
+
     if (response.status != 200) {
-      const error = new Error(
-        responseData.message || 'Failed to save data'
-      );
+      const error = new Error(responseData.message || "Failed to save data");
       throw error;
     }
-    
-    return response
+
+    return response;
   },
 
   async loadSearchRekomendasi(context, payload) {
     const response = await axios({
-      method: 'GET',
+      method: "GET",
       baseURL: API_URL,
-      url: '/api/searchrekomendasi',
+      url: "/api/searchrekomendasi",
       params: {
         kode_temuan: payload.idTemuan,
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
 
     if (response.status != 200) {
-      const error = new Error(
-        responseData.message || 'Failed to fetch data'
-      );
+      const error = new Error(responseData.message || "Failed to fetch data");
       throw error;
     }
 
@@ -155,59 +168,54 @@ export default {
     for (const key in responseData) {
       const data = {
         id: responseData[key]["kode_kelompok_rekomendasi"],
-        deskripsi: responseData[key]["diskripsi"],
+        deskripsi: responseData[key]["diskripsi"]
       };
       rekomendasi.push(data);
     }
 
-    context.commit('setSearchRekomendasi', rekomendasi);
+    context.commit("setSearchRekomendasi", rekomendasi);
   },
 
   async deleteRekomendasiById(context, payload) {
     const response = await axios({
-      method: 'DELETE',
+      method: "DELETE",
       headers: { "Content-Type": "application/json" },
       baseURL: API_URL,
       url: `/api/rekomendasi/${payload.idRekomendasi}`,
       params: {
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
 
     if (response.status != 200) {
-      const error = new Error(
-        responseData.message || 'Failed to delete data'
-      );
+      const error = new Error(responseData.message || "Failed to delete data");
       throw error;
     }
 
-    return response
+    return response;
   },
 
-  async updateRekomendasiById(context, payload){
+  async updateRekomendasiById(context, payload) {
     const response = await axios({
-      method: 'POST',
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       data: payload.data,
       baseURL: API_URL,
       url: `/api/rekomendasi/${payload.idRekomendasi}`,
       params: {
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
 
     if (response.status != 200) {
-      const error = new Error(
-        responseData.message || 'Failed to update data'
-      );
+      const error = new Error(responseData.message || "Failed to update data");
       throw error;
     }
 
-    return response
-  },
-
-}
+    return response;
+  }
+};

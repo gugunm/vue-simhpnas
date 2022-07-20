@@ -13,10 +13,7 @@
       @open-delete-modal="openDeleteModal"
       @on-select-lha="onSelectLha"
     />
-    <Loading
-      :active.sync="loading"
-      :is-full-page="true"
-    />
+    <Loading :active.sync="loading" :is-full-page="true" />
     <confirm-modal
       v-model="isDeleteConfirm"
       title="Hapus data"
@@ -187,19 +184,6 @@ export default {
       } catch (error) {
         this.toastError(error.message);
       }
-    },
-    async loadTemuan(refresh = false) {
-      this.loading = true;
-      try {
-        await this.$store.dispatch("module_temuan/loadTemuan", {
-          forceRefresh: refresh,
-          idLha: this.lha.id
-        });
-        this.items = this.$store.getters["module_temuan/temuan"];
-      } catch (error) {
-        this.error = error.message || "Something went wrong!";
-      }
-      this.loading = false;
     }
   }
 };

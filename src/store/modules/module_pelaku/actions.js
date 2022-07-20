@@ -1,23 +1,46 @@
-import axios from 'axios';
-import { API_URL } from '@/utils/api.js'
+import axios from "axios";
+import { API_URL } from "@/utils/api.js";
 
 export default {
-  async loadPelaku(context, payload) {
+  async loadPelakuCreate(context, payload) {
     const response = await axios({
-      method: 'GET',
+      method: "GET",
       baseURL: API_URL,
-      url: '/api/pelaku',
+      url: "/api/pelaku/create",
       params: {
         kode_rekomendasi: payload.idRekomendasi,
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
+
+    const responseData = response.data;
+
+    if (response.status != 200) {
+      const error = new Error(
+        responseData.message || "Failed to fetch data unit kerja."
+      );
+      throw error;
+    }
+
+    return responseData;
+  },
+
+  async loadPelaku(context, payload) {
+    const response = await axios({
+      method: "GET",
+      baseURL: API_URL,
+      url: "/api/pelaku",
+      params: {
+        kode_rekomendasi: payload.idRekomendasi,
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
 
     if (response.status != 200) {
       const error = new Error(
-        responseData.message || 'Failed to fetch data unit kerja.'
+        responseData.message || "Failed to fetch data unit kerja."
       );
       throw error;
     }
@@ -44,31 +67,29 @@ export default {
         bidangObrik: responseData[key]["Bidang_Obrik"],
         kodeSubBidangObrikTl: responseData[key]["Kode_Sub_Bidang_Obrik_TL"],
         subBidangObrik: responseData[key]["Sub_Bidang_Obrik"],
-        memoKesalahan: responseData[key]["Memo_kesalahan"],
+        memoKesalahan: responseData[key]["Memo_kesalahan"]
       };
       pelaku.push(data);
     }
 
-    context.commit('setPelaku', pelaku);
-    context.commit('setFetchTimestamp');
+    context.commit("setPelaku", pelaku);
+    context.commit("setFetchTimestamp");
   },
 
   async loadPelakuById(context, payload) {
     const response = await axios({
-      method: 'GET',
+      method: "GET",
       baseURL: API_URL,
       url: `/api/pelaku/${payload.idPelaku}`,
       params: {
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
 
     if (response.status != 200) {
-      const error = new Error(
-        responseData.message || 'Failed to fetch data'
-      );
+      const error = new Error(responseData.message || "Failed to fetch data");
       throw error;
     }
 
@@ -91,80 +112,74 @@ export default {
       bidangObrik: responseData["Bidang_Obrik"],
       kodeSubBidangObrikTl: responseData["Kode_Sub_Bidang_Obrik_TL"],
       subBidangObrik: responseData["Sub_Bidang_Obrik"],
-      memoKesalahan: responseData["Memo_kesalahan"],
+      memoKesalahan: responseData["Memo_kesalahan"]
     };
 
-    context.commit('setPelakuById', data);
+    context.commit("setPelakuById", data);
   },
 
   async createPelaku(context, payload) {
     const response = await axios({
-      method: 'POST',
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       data: payload,
       baseURL: API_URL,
-      url: '/api/pelaku',
+      url: "/api/pelaku",
       params: {
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
-    
+
     if (response.status != 200) {
-      const error = new Error(
-        responseData.message || 'Failed to save data'
-      );
+      const error = new Error(responseData.message || "Failed to save data");
       throw error;
     }
-    
-    return responseData
+
+    return responseData;
   },
 
   async deletePelakuById(context, payload) {
     const response = await axios({
-      method: 'DELETE',
+      method: "DELETE",
       headers: { "Content-Type": "application/json" },
       baseURL: API_URL,
       url: `/api/pelaku/${payload.idPelaku}`,
       params: {
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
 
     if (response.status != 200) {
-      const error = new Error(
-        responseData.message || 'Failed to delete data'
-      );
+      const error = new Error(responseData.message || "Failed to delete data");
       throw error;
     }
 
-    return response
+    return response;
   },
 
-  async updatePelakuById(context, payload){
+  async updatePelakuById(context, payload) {
     const response = await axios({
-      method: 'POST',
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       data: payload.data,
       baseURL: API_URL,
       url: `/api/pelaku/${payload.idPelaku}`,
       params: {
-        token: localStorage.getItem('api_token')
-      },
-    })
+        token: localStorage.getItem("api_token")
+      }
+    });
 
     const responseData = await response.data;
 
     if (response.status != 200) {
-      const error = new Error(
-        responseData.message || 'Failed to update data'
-      );
+      const error = new Error(responseData.message || "Failed to update data");
       throw error;
     }
 
-    return response
-  },
-}
+    return response;
+  }
+};
