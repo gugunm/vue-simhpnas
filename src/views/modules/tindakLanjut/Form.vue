@@ -182,6 +182,10 @@
                 />
               </CCol>
               <CCol lg="2">
+                <label>Sisa Nilai Tindak Lanjut</label>
+                <CurrencyInput :value="dataTl.sisaNilaiTl" :disabled="true" />
+              </CCol>
+              <CCol lg="2">
                 <label>Nilai Tindak Lanjut</label>
                 <CurrencyInput
                   :value="$v.form.nilaiTl.$model"
@@ -410,7 +414,8 @@ export default {
       isStoredTl: true,
       isOpenFile: false,
       selectedDateTl: new Date(),
-      someNotSelected: false
+      someNotSelected: false,
+      dataTl: {}
     };
   },
   computed: {
@@ -465,7 +470,7 @@ export default {
         data => data.id == this.form.subKlpTl
       )[0];
     } else {
-      const dataTl = await this.$store.dispatch(
+      this.dataTl = await this.$store.dispatch(
         "module_tindak_lanjut/loadTindakLanjutCreate",
         {
           forceRefresh: false,
@@ -476,7 +481,7 @@ export default {
       // console.log("--> Data TL : ", dataTl);
 
       this.$v.form.nomorTl.$model = this.$func.getNextNomorUrutFromArray(
-        dataTl.noTl
+        this.dataTl.noTl
       );
     }
   },

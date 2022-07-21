@@ -74,23 +74,21 @@ export default {
             {
               text: dpenyebab.kodePenyebab,
               alignment: "center",
-              fillColor: "#555555",
-              bold: true,
-              color: "white",
+              fillColor: "#eeeeee",
               margin: [0, 3]
             },
+            {},
             {
               text: dpenyebab.nomorPenyebab,
               alignment: "center",
               bold: true,
-              // fillColor: "#dddddd",
+              fillColor: "#dddddd",
               margin: [0, 3]
             },
             {
               text: dpenyebab.memoPenyebab,
-              colSpan: 3
+              colSpan: 2
             },
-            {},
             {},
             {}
           ];
@@ -107,7 +105,7 @@ export default {
                 text: dpelaku.nomorUrut,
                 alignment: "center",
                 bold: true,
-                // fillColor: "#dddddd",
+                fillColor: "#dddddd",
                 margin: [0, 3]
               },
               {
@@ -122,24 +120,21 @@ export default {
               {
                 text: dtl.kodeSubKelompokTl,
                 alignment: "center",
-                fillColor: "#999999",
-                color: "white",
-                bold: true,
+                fillColor: "#dddddd",
                 margin: [0, 3]
               },
+              {},
+              {},
               {
                 text: dtl.nomorTl,
                 alignment: "center",
                 bold: true,
-                // fillColor: "#dddddd",
+                fillColor: "#dddddd",
                 margin: [0, 3]
               },
               {
-                text: dtl.memoTl,
-                colSpan: 3
+                text: dtl.memoTl
               },
-              {},
-              {},
               {
                 text: this.$func.convertToRupiah(dtl.nilaiTl)
               }
@@ -149,6 +144,7 @@ export default {
           const dataRek = [
             [
               {},
+              {},
               {
                 text: "REKOMENDASI",
                 colSpan: 3,
@@ -157,29 +153,27 @@ export default {
               },
               {},
               {},
-              {},
               {}
             ],
             [
               {
                 text: drek.kodeSubKelompokRekomendasi,
                 alignment: "center",
-                fillColor: "#555555",
-                color: "white",
+                fillColor: "#eeeeee",
                 margin: [0, 3]
               },
+              {},
               {
                 text: drek.nomorRekomendasi,
                 alignment: "center",
                 bold: true,
-                // fillColor: "#dddddd",
+                fillColor: "#dddddd",
                 margin: [0, 3]
               },
               {
                 text: drek.memoRekomendasi,
-                colSpan: 3
+                colSpan: 2
               },
-              {},
               {},
               {
                 text: this.$func.convertToRupiah(drek.nilaiRekomendasi)
@@ -201,14 +195,14 @@ export default {
             ...drek.dataPelaku,
             drek.dataTl.length > 0 && [
               {},
+              {},
+              {},
               {
                 text: "TINDAK LANJUT",
-                colSpan: 3,
+                colSpan: 2,
                 margin: [0, 7],
                 bold: true
               },
-              {},
-              {},
               {},
               {}
             ],
@@ -248,16 +242,14 @@ export default {
             {
               text: data.kodeSubKelompokTemuan,
               alignment: "center",
-              fillColor: "#111111",
-              color: "white",
-              bold: true,
+              fillColor: "#eeeeff",
               margin: [0, 3]
             },
             {
               text: data.nomorTemuan,
               alignment: "center",
               bold: true,
-              // fillColor: "#dddddd",
+              fillColor: "#dddddd",
               margin: [0, 3]
             },
             {
@@ -272,6 +264,7 @@ export default {
           ],
           data.dataPenyebab.length > 0 && [
             {},
+            {},
             {
               text: "PENYEBAB",
               colSpan: 3,
@@ -280,11 +273,11 @@ export default {
             },
             {},
             {},
-            {},
             {}
           ],
           ...data.dataPenyebab,
           // dataRekToPdf.length > 0 && [
+          //   {},
           //   {},
           //   {
           //     text: "REKOMENDASI",
@@ -292,7 +285,6 @@ export default {
           //     margin: [0, 7],
           //     bold: true
           //   },
-          //   {},
           //   {},
           //   {},
           //   {}

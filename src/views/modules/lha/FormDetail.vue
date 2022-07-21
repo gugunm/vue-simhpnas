@@ -7,7 +7,7 @@
       <CCard>
         <CCardBody>
           <CTabs add-tab-classes="">
-            <CTab>
+            <CTab active>
               <template slot="title">
                 <CIcon name="cil-find-in-page" /> Data Umum
               </template>
@@ -312,45 +312,27 @@
               <template slot="title">
                 <CIcon name="cil-people" /> Tim Audit
               </template>
-              <div
-                v-if="form.dataTimAudit.length == 0"
-                class="text-center my-4 font-semibold"
-              >
-                <h5>Laporan ini Belum Memiliki Tim Audit</h5>
-              </div>
-              <div class="mt-4">
-                <div
-                  v-for="(item, index) in form.dataTimAudit"
-                  :key="item.nip"
-                  class="px-4 mb-3"
-                >
-                  <div>
-                    <!-- ROW 1 -->
-                    <CRow class="mb-2 h5">
-                      <span class="mr-2"> {{ index + 1 }}. </span>
-                      <span>{{ item.peran }}</span>
-                    </CRow>
-                    <CRow>
-                      <CCol lg="6">
-                        <CInput
-                          label="Nama Lengkap"
-                          :value="item.nama"
-                          :readonly="true"
-                        />
-                      </CCol>
-                      <CCol lg="6">
-                        <CInput
-                          label="NIP"
-                          :value="item.nip"
-                          :readonly="true"
-                        />
-                      </CCol>
-                    </CRow>
-                  </div>
-                </div>
-              </div>
+
+              <master-table
+                :column-filter="true"
+                :items="form.dataTimAudit"
+                :fields="[
+                  {
+                    key: 'nip',
+                    label: 'NIP'
+                  },
+                  {
+                    key: 'nama',
+                    label: 'Nama Lengkap'
+                  },
+                  {
+                    key: 'peran',
+                    label: 'Peran'
+                  }
+                ]"
+              />
             </CTab>
-            <CTab acttive>
+            <CTab>
               <template slot="title">
                 <CIcon name="cil-color-border" /> Temuan
               </template>
@@ -730,11 +712,13 @@
 <script>
 import ConfirmModal from "@/components/Confirm/ConfirmModal.vue";
 import mixin from "./mixin";
+import MasterTable from "@/components/MasterTable";
 
 export default {
   name: "LhaForm",
   components: {
-    ConfirmModal
+    ConfirmModal,
+    MasterTable
   },
   mixins: [mixin],
   props: ["mode", "selectedItem", "idLha"],
@@ -821,10 +805,5 @@ export default {
 .detail-lha .form-control:disabled,
 .detail-lha .form-control[readonly] {
   background-color: #ffffff;
-}
-
-.detail-lha .form-control {
-  border: none !important;
-  padding: 0 !important;
 }
 </style>

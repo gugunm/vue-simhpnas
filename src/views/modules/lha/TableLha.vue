@@ -25,14 +25,25 @@
           hover
           column-filter
           sorter
-          :items-per-page="5"
+          :items-per-page="10"
           pagination
           :table-filter="{ label: 'Search: ', placeholder: 'teks..' }"
           :items-per-page-select="{ label: 'Item per halaman: ' }"
         >
           <template #statusLha="{ item }">
-            <td class="font-semibold text-center">
-              <p>{{ item.statusLha }}</p>
+            <td class="font-semibold text-center text-white ">
+              <p
+                class="py-2"
+                :class="{
+                  'bg-black': item.statusLha == 0,
+                  'bg-red-500': item.statusLha == 1,
+                  'bg-yellow-500': item.statusLha == 2,
+                  'bg-green-500': item.statusLha == 3
+                }"
+              >
+                <!-- :class="item.statusLha == 0 ? 'bg-red-600' : 'bg-yellow-500'" -->
+                {{ item.statusLha }}
+              </p>
             </td>
           </template>
           <template #nomor="{ item }">

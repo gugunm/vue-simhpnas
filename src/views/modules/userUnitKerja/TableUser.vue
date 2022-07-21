@@ -25,7 +25,7 @@
           hover
           column-filter
           sorter
-          :items-per-page="5"
+          :items-per-page="10"
           pagination
           :table-filter="{ label: 'Search: ', placeholder: 'teks..' }"
           :items-per-page-select="{ label: 'Item per halaman: ' }"

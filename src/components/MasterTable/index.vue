@@ -25,11 +25,11 @@
           :items="items"
           :fields="fields"
           hover
-          column-filter
+          :column-filter="columnFilter"
           sorter
           table-filter
           items-per-page-select
-          :items-per-page="5"
+          :items-per-page="10"
           pagination
         >
           <!-- :clickable-rows="clickableRows"
@@ -118,6 +118,10 @@ export default {
       default: true
     },
     isAddButton: {
+      type: Boolean,
+      default: true
+    },
+    columnFilter: {
       type: Boolean,
       default: true
     }

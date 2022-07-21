@@ -150,6 +150,13 @@
                   :disabled="true"
                 />
               </CCol>
+              <CCol v-if="mode == 'create'" lg="2">
+                <label>Sisa Rekomendasi</label>
+                <CurrencyInput
+                  :value="dataRekomendasi.sisaNilaiRekomendasi"
+                  :disabled="true"
+                />
+              </CCol>
               <CCol lg="2">
                 <label>Nilai Rekomendasi</label>
                 <CurrencyInput
@@ -315,7 +322,8 @@ export default {
       valueSubKlpRekomendasi: "",
       optionsSubKlpRekomendasi: [],
       editData: {},
-      someNotSelected: false
+      someNotSelected: false,
+      dataRekomendasi: {}
     };
   },
   computed: {
@@ -352,7 +360,7 @@ export default {
     if (this.mode == "create") {
       await this.loadSearchRekomendasi();
 
-      const dataRekomendasi = await this.$store.dispatch(
+      this.dataRekomendasi = await this.$store.dispatch(
         "module_rekomendasi/loadRekomendasiCreate",
         {
           forceRefresh: false,
@@ -361,7 +369,7 @@ export default {
       );
 
       this.$v.form.nomorRekomendasi.$model = this.$func.getNextNomorUrutFromArray(
-        dataRekomendasi.noRekomendasi
+        this.dataRekomendasi.noRekomendasi
       );
     } else if (this.mode == "view") {
       await this.loadRekomendasiById();
