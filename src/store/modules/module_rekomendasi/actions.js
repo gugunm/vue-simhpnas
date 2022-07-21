@@ -68,7 +68,10 @@ export default {
         kodeBidangObrikTl: responseData[key]["Kode_Bidang_Obrik_TL"],
         bidangObrik: responseData[key]["Bidang_Obrik"],
         kodeSubBidangObrikTl: responseData[key]["Kode_Sub_Bidang_Obrik_TL"],
-        subBidangObrik: responseData[key]["Sub_Bidang_Obrik"]
+        subBidangObrik: responseData[key]["Sub_Bidang_Obrik"],
+        unitObrik: responseData["Unit_Obrik"],
+        bidangObrik: responseData["Bidang_Obrik"]
+        // subBidangObrik: responseData["Sub_Bidang_Obrik"],
       };
       rekomendasi.push(data);
     }
@@ -117,7 +120,11 @@ export default {
       kodeBidangObrikTl: responseData["Kode_Bidang_Obrik_TL"],
       bidangObrik: responseData["Bidang_Obrik"],
       kodeSubBidangObrikTl: responseData["Kode_Sub_Bidang_Obrik_TL"],
-      subBidangObrik: responseData["Sub_Bidang_Obrik"]
+      subBidangObrik: responseData["Sub_Bidang_Obrik"],
+      unitObrik: responseData["kodeUnitObrik"],
+      bidangObrik: responseData["kodeBidangObrik"],
+      subBidangObrik: responseData["kodeSubBidangObrik"]
+      // subBidangObrik: responseData[key]["Sub_Bidang_Obrik"],
     };
 
     context.commit("setRekomendasiById", data);

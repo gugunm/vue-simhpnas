@@ -161,6 +161,8 @@ export default {
 
         const data = this.$store.getters["module_lha/lhaById"];
 
+        console.log("--> data edit lha : ", data);
+
         this.form = {
           noPkpt: data.nomorPkpt,
           tahunPkpt: data.tahunPkpt,

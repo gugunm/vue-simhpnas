@@ -40,11 +40,6 @@ import Loading from "vue-loading-overlay";
 
 const fields = [
   {
-    key: "statusLha",
-    label: "Status LHA",
-    align: "center"
-  },
-  {
     key: "nomorLha",
     label: "Nomor LHA"
   },
@@ -110,6 +105,16 @@ const fieldsKtOperator = [
   {
     key: "send",
     label: "Kirim"
+  },
+  {
+    key: "statusLha",
+    label: "Status",
+    align: "center"
+  },
+  {
+    key: "statusPostLha",
+    label: "Status Posting",
+    align: "center"
   }
 ];
 

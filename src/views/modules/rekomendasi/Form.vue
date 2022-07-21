@@ -23,7 +23,7 @@
           <div class="p-3">
             <!-- ROW 1 -->
             <CRow>
-              <CCol lg="6">
+              <CCol lg="4">
                 <CInput
                   label="Nomor LHA"
                   :value="
@@ -34,7 +34,7 @@
                   :disabled="true"
                 />
               </CCol>
-              <CCol lg="6">
+              <CCol lg="4">
                 <CInput
                   label="Nomor Temuan"
                   :value="
@@ -45,11 +45,7 @@
                   :disabled="true"
                 />
               </CCol>
-            </CRow>
-
-            <!-- ROW 2 -->
-            <CRow>
-              <CCol lg="6">
+              <CCol lg="4">
                 <CInput
                   label="Nomor Rekomendasi"
                   :lazy="false"
@@ -60,6 +56,62 @@
                   invalid-feedback="Nomor Rekomendasi wajib diisi 1-2 angka"
                   :disabled="mode == 'view'"
                 />
+              </CCol>
+            </CRow>
+
+            <!-- ROW 2 -->
+            <CRow class="mb-3">
+              <CCol lg="4">
+                <div>
+                  <label class="typo__label">Unit Obrik</label>
+                  <multiselect
+                    v-if="optionsUnitObrik"
+                    v-model="valueUnitObrik"
+                    :options="optionsUnitObrik"
+                    :custom-label="viewSelectSearch"
+                    placeholder="Select unit obrik"
+                    label="deskripsi"
+                    track-by="deskripsi"
+                  />
+                  <span
+                    v-if="someNotSelected && valueUnitObrik == ''"
+                    class="text-error-multiselect"
+                    >Unit obrik wajib dipilih</span
+                  >
+                </div>
+              </CCol>
+              <CCol lg="4">
+                <div>
+                  <label class="typo__label">Bidang Obrik</label>
+                  <multiselect
+                    v-if="optionsBidangObrik"
+                    v-model="valueBidangObrik"
+                    :options="optionsBidangObrik"
+                    :custom-label="viewSelectSearch"
+                    placeholder="Select bidang obrik"
+                    label="deskripsi"
+                    track-by="deskripsi"
+                  />
+                  <span
+                    v-if="someNotSelected && valueBidangObrik == ''"
+                    class="text-error-multiselect"
+                    >Bidang obrik wajib dipilih</span
+                  >
+                </div>
+              </CCol>
+              <CCol lg="4">
+                <div>
+                  <label class="typo__label">Sub Bidang Obrik</label>
+                  <multiselect
+                    v-if="optionsSubBidangObrik"
+                    v-model="valueSubBidangObrik"
+                    :options="optionsSubBidangObrik"
+                    :custom-label="viewSelectSearch"
+                    placeholder="Select sub bidang obrik"
+                    label="deskripsi"
+                    track-by="deskripsi"
+                  />
+                </div>
               </CCol>
             </CRow>
 
@@ -323,7 +375,13 @@ export default {
       optionsSubKlpRekomendasi: [],
       editData: {},
       someNotSelected: false,
-      dataRekomendasi: {}
+      dataRekomendasi: {},
+      valueUnitObrik: "",
+      optionsUnitObrik: [],
+      valueBidangObrik: "",
+      optionsBidangObrik: [],
+      valueSubBidangObrik: "",
+      optionsSubBidangObrik: []
     };
   },
   computed: {
@@ -354,11 +412,27 @@ export default {
       } else {
         this.$v.form.flagPelaku.$model = 0;
       }
+    },
+    valueUnitObrik: function(curVal, oldVal) {
+      this.$v.form.unitObrik.$model = curVal.id;
+      this.valueBidangObrik = "";
+      this.loadBidangObrik();
+    },
+
+    valueBidangObrik: function(curVal, oldVal) {
+      this.$v.form.bidangObrik.$model = curVal.id;
+      this.valueSubBidangObrik = "";
+      this.loadSubBidangObrik();
+    },
+
+    valueSubBidangObrik: function(curVal, oldVal) {
+      this.$v.form.subBidangObrik.$model = curVal.id;
     }
   },
   async mounted() {
     if (this.mode == "create") {
       await this.loadSearchRekomendasi();
+      await this.loadUnitObrik();
 
       this.dataRekomendasi = await this.$store.dispatch(
         "module_rekomendasi/loadRekomendasiCreate",
@@ -385,6 +459,25 @@ export default {
       this.valueSubKlpRekomendasi = this.optionsSubKlpRekomendasi.filter(
         rek => rek.id == this.form.subKlpRekomendasi
       )[0];
+
+      await this.loadUnitObrik();
+      this.valueUnitObrik = this.optionsUnitObrik.filter(
+        data => data.id == this.form.unitObrik
+      )[0];
+
+      await this.loadBidangObrik();
+      this.valueBidangObrik = this.optionsBidangObrik.filter(
+        data => data.id == this.form.bidangObrik
+      )[0];
+
+      await this.loadSubBidangObrik();
+      this.valueSubBidangObrik = this.optionsSubBidangObrik.filter(
+        data => data.id == this.editData.subBidangObrik
+      )[0];
+
+      // console.log("--> UNIT OBRIK : ", this.optionsUnitObrik);
+      // console.log("--> BIDANG OBRIK : ", this.valueBidangObrik);
+      // console.log("--> SUB BIDANG OBRIK : ", this.valueSubBidangObrik);
     }
 
     if (this.form.flagPelaku == 0 || this.editData.flagPelaku == 0) {
@@ -405,6 +498,8 @@ export default {
       memoRekomendasi: { required },
       flagPelaku: { required },
       nilaiRekomendasi: { required },
+      unitObrik: { required },
+      bidangObrik: { required },
       accept: {
         required,
         mustAccept: val => val
@@ -486,7 +581,9 @@ export default {
       const listMultiselectValue = [
         this.valueRekomendasi,
         this.valueSubKlpRekomendasi,
-        this.$v.form.nilaiRekomendasi.$model
+        this.$v.form.nilaiRekomendasi.$model,
+        this.valueUnitObrik,
+        this.valueBidangObrik
       ];
 
       this.someNotSelected = listMultiselectValue.some(
@@ -508,7 +605,9 @@ export default {
         memoRekomendasi: "",
         flagPelaku: 0,
         nilaiRekomendasi: 0,
-        accept: false
+        accept: false,
+        unitObrik: "",
+        bidangObrik: ""
       };
     },
 
@@ -534,6 +633,13 @@ export default {
       fd.append("Memo_Rekomendasi", this.$v.form.memoRekomendasi.$model);
       fd.append("Nilai_Rekomendasi", this.$v.form.nilaiRekomendasi.$model);
       fd.append("Flag_Pelaku", this.$v.form.flagPelaku.$model);
+
+      fd.append("Kode_Unit_Obrik", this.$v.form.unitObrik.$model);
+      fd.append("Kode_Bidang_Obrik", this.$v.form.bidangObrik.$model);
+
+      if (this.valueSubBidangObrik) {
+        fd.append("Kode_Sub_Bidang_Obrik", this.valueSubBidangObrik.id);
+      }
 
       return fd;
     }

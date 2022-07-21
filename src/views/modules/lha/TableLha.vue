@@ -31,9 +31,13 @@
           :items-per-page-select="{ label: 'Item per halaman: ' }"
         >
           <template #statusLha="{ item }">
-            <td class="font-semibold text-center text-white ">
-              <p
-                class="py-2"
+            <td class="font-bold text-center  ">
+              <CButton
+                v-c-tooltip="{
+                  content: contentStatusLha(item.statusLha),
+                  placement: 'top'
+                }"
+                class="py-2 rounded text-white"
                 :class="{
                   'bg-black': item.statusLha == 0,
                   'bg-red-500': item.statusLha == 1,
@@ -41,8 +45,21 @@
                   'bg-green-500': item.statusLha == 3
                 }"
               >
-                <!-- :class="item.statusLha == 0 ? 'bg-red-600' : 'bg-yellow-500'" -->
                 {{ item.statusLha }}
+              </CButton>
+            </td>
+          </template>
+          <template #statusPostLha="{ item }">
+            <td class="text-center  ">
+              <p
+                class="py-2 px-4 rounded"
+                :class="{
+                  'border border-solid border-blue-500 text-blue-500':
+                    item.statusPostLha == 0,
+                  'shadow-inner text-gray-400': item.statusPostLha == 1
+                }"
+              >
+                {{ item.statusPostLha == 1 ? "Posted" : "Submitted" }}
               </p>
             </td>
           </template>
@@ -463,6 +480,9 @@ export default {
       isLevelAccess: false
     };
   },
+  computed: {
+    // a computed getter
+  },
   mounted() {
     //  ${this.title} ${this.descTitle | this.descCamelCase}
     this.$store.commit("ui/setTitleHeader", `${this.topTitle}`);
@@ -479,6 +499,24 @@ export default {
     "on-load-lha"
   ],
   methods: {
+    contentStatusLha(val) {
+      switch (val) {
+        case 1:
+          return "Belum input TL";
+        case 2:
+          return "Input TL sebagian";
+        case 3:
+          return "Laporan tuntas";
+        default:
+          return "Draft";
+      }
+      // `this` points to the component instance
+      // if (val == 0) {
+      //   return "Belum Diproses";
+      // }
+      // return "Sudah Diproses";
+    },
+
     onLihatCatatan(item) {
       this.memoModal = true;
       this.textMemo = item.catatanDalnis;

@@ -1200,7 +1200,7 @@ export default {
         fd.append("Kode_Sub_Bidang_Obrik", this.valueSubBidangObrik.id);
       }
 
-      console.log("---> Form Data LHA : ", this.$v.form);
+      // console.log("---> Form Data LHA : ", this.$v.form);
 
       return fd;
     }

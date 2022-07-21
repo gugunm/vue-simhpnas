@@ -58,7 +58,8 @@ export default {
         flagTemuanNihil: responseData[key]["flagTemuanNihil"],
         catatanDalnis: responseData[key]["Catatan_Dalnis"],
         catatanDaltu: responseData[key]["Catatan_Daltu"],
-        statusLha: responseData[key]["statusLha"]
+        statusLha: responseData[key]["statusLha"],
+        statusPostLha: responseData[key]["statusPostLha"]
       };
       lha.push(data);
     }
