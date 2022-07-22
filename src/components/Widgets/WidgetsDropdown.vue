@@ -152,7 +152,7 @@
       </CWidgetDropdown>
     </CCol>
   </CRow> -->
-  
+
   <div>
     <CRow>
       <WidgetsDropdownItem
@@ -179,20 +179,24 @@
         direct-link="/tindak-lanjut"
         :total-count="data.JumlahTL"
       />
+      <WidgetsDropdownItem
+        card-color="purple"
+        title="Saldo TL"
+        :nilai="$func.convertToRupiah(data.Saldo)"
+        total-count="Total saldo rekomendasi yang belum ditindaklanjut"
+      />
     </CRow>
   </div>
 </template>
 
 <script>
-import WidgetsDropdownItem from '@/components/Widgets/WidgetsDropdownItem.vue';
+import WidgetsDropdownItem from "@/components/Widgets/WidgetsDropdownItem.vue";
 
 export default {
-  name: 'TopDashboard',
+  name: "TopDashboard",
   components: {
-    WidgetsDropdownItem,
+    WidgetsDropdownItem
   },
-  props: ['data'],
+  props: ["data"]
 };
 </script>
-
-
